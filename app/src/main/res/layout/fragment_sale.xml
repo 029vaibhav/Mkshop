@@ -1,0 +1,285 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.mobiles.mkshop.Fragments.SaleFragment">
+
+
+    <TextView
+        android:id="@+id/fortitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Please fill the sales form" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fortitle">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <RadioButton
+                    android:id="@+id/radiomobile"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="Mobile" />
+
+                <RadioButton
+                    android:id="@+id/radioAccessory"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Accessory" />
+            </RadioGroup>
+
+
+            <TextView
+                android:text="Brand"
+
+                android:visibility="gone"
+                android:id="@+id/accessorytitle"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/radiogroup"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="15sp"/>
+
+
+            <TextView
+                android:id="@+id/accessoryType"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/accessorytitle"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/right_arrow"
+                android:gravity="center"
+                android:hint="Accesory"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:text="Brand"
+
+                android:id="@+id/brandtitle"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/accessoryType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/brandtitle"
+                    android:id="@+id/brandtext"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_text"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_arrow"
+                    android:editable="false"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="20sp" />
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/brandtext"-->
+            <!--fontPath="fonts/rr.ttf"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/accessoryType"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:background="@drawable/border_text"-->
+            <!--android:drawableRight="@drawable/right_arrow"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:hint="Brand"-->
+            <!--android:textSize="20dp" />-->
+
+            <TextView
+                android:text="Model"
+
+                android:id="@+id/modeltitle"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/brandtext"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="15sp"/>
+
+
+            <TextView
+                android:id="@+id/modeltext"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/modeltitle"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/right_arrow"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/otheredit"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/modeltext"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_name"
+                android:gravity="center"
+                android:hint="Model no"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:text="Quantity"
+                android:id="@+id/priceEdit_text_input_layout"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/otheredit"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="15sp"/>
+
+
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/priceEdit_text_input_layout"
+                    android:drawableRight="@drawable/ic_action_transparent"
+                    android:id="@+id/quantityEdit"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_text"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="20sp" />
+
+
+            <TextView
+                android:text="Price"
+
+                android:id="@+id/text_input_layout"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/quantityEdit"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="15sp"/>
+
+
+                <EditText
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/text_input_layout"
+                    android:drawableLeft="@drawable/ic_action_rupees"
+                    android:id="@+id/priceEdit"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_text"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="20sp" />
+
+
+
+            <Button
+                android:id="@+id/submit"
+                style="?android:buttonBarButtonStyle"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/priceEdit"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_selector"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:shadowRadius="0"
+                android:text="submit" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+</RelativeLayout>

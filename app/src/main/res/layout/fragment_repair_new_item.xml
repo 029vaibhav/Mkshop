@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Brand"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/brandtext"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/right_arrow"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="20dp" />
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Model"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/modeltext"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/right_arrow"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/otheredit"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_name"
+                android:gravity="center"
+                android:hint="Model no"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Status"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_status"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="20dp" />
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Job no"
+                android:textSize="15sp" />
+
+            <EditText
+
+                android:id="@+id/jobnoedit"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_transparent"
+                android:ems="10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20sp" />
+
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Problem"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/problemedit"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_text"
+
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/ic_action_transparent"
+                android:ems="10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="false"
+                android:textSize="20sp" />
+
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Price"
+                android:textSize="15sp" />
+
+
+            <EditText
+                android:id="@+id/priceEdit"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:drawableLeft="@drawable/ic_action_rupees"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:background="@drawable/border_text"
+
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20sp" />
+
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Brand"
+                android:textSize="15sp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/datetext"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/border_text"
+                android:drawableLeft="@drawable/ic_action_smallcalendar"
+                android:gravity="center"
+                android:hint="Delivery Date"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+
+            <Button
+                android:id="@+id/submit"
+                style="?android:buttonBarButtonStyle"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_selector"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:shadowRadius="0"
+                android:text="submit" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

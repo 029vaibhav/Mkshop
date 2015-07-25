@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mobiles.mkshop.Fragments.ViewProductFragment">
+
+
+
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <AutoCompleteTextView
+                android:hint="Brand"
+                android:id="@+id/brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/border_text"
+                android:padding="10dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brand"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Submit" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <AutoCompleteTextView
+        android:visibility="gone"
+        android:layout_alignParentTop="true"
+        android:id="@+id/search"
+        android:drawableRight="@drawable/ic_action_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/search"
+        android:visibility="gone"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#50F0F7FF"
+        />
+
+</RelativeLayout>

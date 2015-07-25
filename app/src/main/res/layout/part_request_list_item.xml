@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        fontPath="fonts/rr.ttf"
+        android:id="@+id/customerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/repairjobno"
+        android:drawableLeft="@drawable/ic_action_person"
+        android:ellipsize="marquee"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:text="model"
+        android:textSize="20sp" />
+
+    <TextView
+        fontPath="fonts/rr.ttf"
+        android:layout_toLeftOf="@+id/reapirstatus"
+        android:id="@+id/partName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/customerName"
+        android:drawableLeft="@drawable/ic_action_chip"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:text="date"
+        android:textSize="15sp" />
+
+    <TextView
+        fontPath="fonts/rr.ttf"
+        android:id="@+id/repairjobno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/ic_action_smallcalendar"
+        android:gravity="center_vertical|right"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:text="job no"
+        android:textSize="20sp" />
+
+    <TextView
+        fontPath="fonts/rr.ttf"
+        android:id="@+id/reapirstatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/repairjobno"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="pending"
+        android:textSize="15sp" />
+
+</RelativeLayout>

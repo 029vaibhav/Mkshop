@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/cardlist_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="@dimen/cardview_default_elevation"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
+
+    <LinearLayout
+
+        android:background="@drawable/border_list"
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/name"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:ellipsize="marquee"
+                android:gravity="center_vertical"
+                android:paddingRight="10dp"
+                android:text="Brand"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/attendace"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/Brand"
+                android:layout_weight="4"
+                android:drawableLeft="@drawable/ic_action_calendar2"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="20/30 june"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mobile"
+            fontPath="fonts/rr.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear"
+            android:layout_weight="5"
+            android:ellipsize="marquee"
+            android:gravity="center_vertical"
+            android:paddingRight="10dp"
+            android:text="Brand"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

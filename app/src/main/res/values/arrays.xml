@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="items">
+        <item name="Pending">Pending</item>
+        <item name="Processing">Processing</item>
+        <item name="Pna">Pna</item>
+        <item name="Done">Done</item>
+        <item name="Return">Return</item>
+        <item name="Delivered">Delivered</item>
+        <item name="Returned">Delivered</item>
+
+
+    </string-array>
+
+
+    <string-array name="requestPartStatus">
+        <item name="Pending">Pending</item>
+        <item name="Recieved">Recieved</item>
+        <item name="Delivered">Delivered</item>
+
+    </string-array>
+
+
+    <string-array name="revenueComparator">
+        <item name="brandStore">Brand (Mobile)</item>
+        <item name="salesService">Product Type</item>
+        <item name="brandService">Brand (Service Center)</item>
+        <item name="brandStoreOfAcc">Brand (Accessory)</item>
+
+    </string-array>
+
+</resources>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/accessoryType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Customer name"
+                android:textSize="15sp" />
+
+
+            <EditText
+                android:id="@+id/customername"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_person"
+                android:gravity="center"
+
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20dp" />
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/accessoryType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Mobile no"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/mobile"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_call"
+                android:gravity="center"
+                android:hint="Mobile no"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20dp" />
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/accessoryType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Required part"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/partsrequired"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_name"
+                android:gravity="center"
+                android:hint="Part name"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20dp" />
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/accessoryType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Status"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_status"
+                android:gravity="center"
+                android:hint="status"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20dp"
+                 />
+
+
+            <TextView
+                android:text="Price"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/accessoryType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="15sp"
+                />
+
+
+            <EditText
+                android:id="@+id/priceEdit"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/otheredit"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableLeft="@drawable/rupees"
+                android:gravity="center"
+                android:hint="Price"
+                android:inputType="number"
+                android:padding="10dp"
+                android:textSize="20dp" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/date_title"
+                android:text="Delivery date"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/accessoryType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="15sp"
+                />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/datetext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawableLeft="@drawable/ic_action_smallcalendar"
+                    android:gravity="center"
+                    android:hint="Date"
+                    android:padding="10dp"
+                    android:textSize="20dp" />
+
+
+
+            <Button
+                android:id="@+id/submit"
+                style="?android:buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_selector"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:shadowRadius="0"
+                android:text="submit" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

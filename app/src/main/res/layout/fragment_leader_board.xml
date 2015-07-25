@@ -1,0 +1,107 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="2dp">
+
+
+        <TextView
+            fontPath="fonts/rr.ttf"
+            android:drawableLeft="@drawable/ic_action_smallcalendar"
+            android:id="@+id/fromDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:padding="1dp"
+            android:text="From" />
+
+        <TextView
+            android:drawableLeft="@drawable/ic_action_smallcalendar"
+            fontPath="fonts/rr.ttf"
+            android:id="@+id/toDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:padding="1dp"
+            android:text="To" />
+
+    </LinearLayout>
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs_leader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed" />
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/borderGrey"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            fontPath="fonts/rr.ttf"
+            android:id="@+id/Brand"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textSize="20sp" />
+
+        <TextView
+            fontPath="fonts/rr.ttf"
+            android:id="@+id/quantity"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/text_selector"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:shadowRadius="0"
+            android:text="Qty"
+            android:textSize="15sp" />
+
+
+        <TextView
+            fontPath="fonts/rr.ttf"
+            android:id="@+id/revenue"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/Brand"
+            android:layout_weight="3"
+            android:background="@drawable/text_selector"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="Revenue"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager_leader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+
+</LinearLayout>
