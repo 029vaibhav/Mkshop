@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.mobiles.mkshop.Pojos.AttendanceDates;
 import com.mobiles.mkshop.Pojos.Leader;
+import com.mobiles.mkshop.Pojos.Location;
 import com.mobiles.mkshop.Pojos.LoginDetails;
 import com.mobiles.mkshop.Pojos.NewUser;
 import com.mobiles.mkshop.Pojos.PartsRequests;
@@ -115,7 +116,14 @@ public enum Client {
 
         @Multipart
         @POST("/mk/webservice/image.php")
-        void upload(@Part("myfile") TypedFile file, @Part("description") String description, Callback<String> cb);
+        void upload(@Query("username") String username, @Part("myfile") TypedFile file, @Part("description") String description, Callback<String> cb);
+
+        @GET("/mk/webservice/location.php")
+        void getAllLocation(Callback<List<Location>> response);
+
+        @POST("/mk/webservice/latlong.php")
+        void setLocation(@Body Location location, Callback<String> callback);
+
     }
 
 
@@ -225,5 +233,18 @@ public enum Client {
 
     public void getproductid(String id, Callback<List<Product>> response) {
         mobileService.getproductid(id, response);
+    }
+
+    public void uploadImage(String username, TypedFile file, String description, Callback<String> callback) {
+        mobileService.upload(username, file, description, callback);
+    }
+
+
+    public void getAllLocation(Callback<List<Location>> response) {
+        mobileService.getAllLocation(response);
+    }
+
+    public void setLocation(Location location, Callback<String> callback) {
+        mobileService.setLocation(location, callback);
     }
 }

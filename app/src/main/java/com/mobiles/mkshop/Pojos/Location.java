@@ -6,7 +6,7 @@ package com.mobiles.mkshop.Pojos;
 public class Location {
 
     int id;
-    double latitude,longitude,radius;
+    String latitude,longitude,radius;
     String role;
 
     public int getId() {
@@ -17,27 +17,27 @@ public class Location {
         this.id = id;
     }
 
-    public double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public double getRadius() {
+    public String getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(String radius) {
         this.radius = radius;
     }
 
