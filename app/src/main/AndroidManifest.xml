@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <permission
         android:name="com.mobiles.mkshop.permission.C2D_MESSAGE"
@@ -19,18 +21,19 @@
 
 
     <application
+        android:name=".gcm.Controller"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name">
 
 
         </activity>
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,16 +49,19 @@
         </activity>
 
         <receiver
-            android:name="com.mobiles.mkshop.GCMReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
+
+                <!-- Receives the actual messages. -->
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- Receives the registration id. -->
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <category android:name="com.mobiles.mkshop" />
             </intent-filter>
         </receiver>
-
+        <service android:name=".GCMIntentService" />
 
     </application>
 

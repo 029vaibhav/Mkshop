@@ -28,8 +28,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mobiles.mkshop.Application.MkShop;
-import com.mobiles.mkshop.Pojos.UserType;
+import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.pojos.UserType;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -131,17 +131,17 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
             items.add(new NavigationItem("Request Part", getResources().getDrawable(R.drawable.parts)));
             items.add(new NavigationItem("Service center", getResources().getDrawable(R.drawable.repair)));
             items.add(new NavigationItem("View Product", getResources().getDrawable(R.drawable.question)));
-            items.add(new NavigationItem("My Profile", getResources().getDrawable(R.drawable.question)));
             items.add(new NavigationItem("Todays Offers", getResources().getDrawable(R.drawable.prize)));
         } else {
 
             items.add(new NavigationItem("Sales Report", getResources().getDrawable(R.drawable.ic_action_calendar)));
             items.add(new NavigationItem("Service Report", getResources().getDrawable(R.drawable.mobile)));
-            items.add(new NavigationItem("Send Notification", getResources().getDrawable(R.drawable.parts)));
+            items.add(new NavigationItem("Part Requested", getResources().getDrawable(R.drawable.parts)));
             items.add(new NavigationItem("User Data", getResources().getDrawable(R.drawable.repair)));
             items.add(new NavigationItem("Learboard", getResources().getDrawable(R.drawable.question)));
-            items.add(new NavigationItem("My Profile", getResources().getDrawable(R.drawable.question)));
             items.add(new NavigationItem("Revenue Comparator", getResources().getDrawable(R.drawable.mobile)));
+            items.add(new NavigationItem("Location", getResources().getDrawable(R.drawable.question)));
+
             //  items.add(new NavigationItem("Todays Offers", getResources().getDrawable(R.drawable.prize)));
 
         }

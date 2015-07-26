@@ -2,5 +2,13 @@
     <item
         android:id="@+id/action_settings"
         android:title="@string/logout" />
+    <item
+        android:id="@+id/profile"
+        android:title="@string/myprofile" />
+
+    <item
+        android:id="@+id/notification"
+        android:title="Enable notification" />
+
 
 </menu>
