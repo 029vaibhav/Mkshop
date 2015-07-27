@@ -23,6 +23,7 @@ import retrofit.RestAdapter;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
@@ -47,89 +48,100 @@ public enum Client {
     private interface MobileService {
 
         @GET("/mk/webservice/login.php")
-        void login(@Query("email") String username, @Query("pwd") String password, Callback<LoginDetails> callback);
+        void login(@Query("email") String username, @Query("pwd") String password, Callback<String> callback);
 
         @Headers("Content-Type: application/json")
         @POST("/mk/webservice/sales.php")
-        void sales(@Body Sales sales, Callback<Response> response);
+        void sales(@Header("AUTH") String auth, @Body Sales sales, Callback<String> response);
 
 
         @Headers("Content-Type: application/json")
         @POST("/mk/webservice/service.php")
-        void sendService(@Body RepairPojo service, Callback<String> response);
+        void sendService(@Header("AUTH") String auth, @Body RepairPojo service, Callback<String> response);
 
 
         @GET("/mk/webservice/salesreport.php")
-        void getSalesReport(@Query("from") String from, @Query("to") String to, Callback<List<Sales>> salesCallback);
+        void getSalesReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<Sales>> salesCallback);
 
         @GET("/mk/webservice/salesreport.php")
-        List<Sales> getSalesReport1(@Query("from") String from, @Query("to") String to);
+        List<Sales> getSalesReport1(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to);
 
         @GET("/mk/webservice/serviceList.php")
-        void getServiceList(Callback<List<RepairPojo>> callback);
+        void getServiceList(@Header("AUTH") String auth, Callback<List<RepairPojo>> callback);
 
         @GET("/mk/webservice/partList.php")
-        void getPartList(Callback<List<PartsRequests>> callback);
+        void getPartList(@Header("AUTH") String auth, Callback<List<PartsRequests>> callback);
 
 
         @Headers("Content-Type: application/json")
         @POST("/mk/webservice/partRequest.php")
-        void sendPartRequest(@Body PartsRequests partsRequests, Callback<String> response);
+        void sendPartRequest(@Header("AUTH") String auth, @Body PartsRequests partsRequests, Callback<String> response);
 
 
         @GET("/mk/webservice/profile.php")
-        void getProfile(@Query("username") String username, Callback<Response> response);
+        void getProfile(@Header("AUTH") String auth, @Query("username") String username, Callback<Response> response);
 
         @POST("/mk/webservice/profile.php")
-        void updateProfile(@Query("username") String username, @QueryMap Map<String, String> options, Callback<String> response);
+        void updateProfile(@Header("AUTH") String auth, @Query("username") String username, @QueryMap Map<String, String> options, Callback<String> response);
 
 
         @Headers("Content-Type: application/json")
         @POST("/mk/webservice/register.php")
-        void createUser(@Body NewUser newUser, Callback<String> response);
+        void createUser(@Header("AUTH") String auth, @Body NewUser newUser, Callback<String> response);
 
 
         @GET("/mk/webservice/AttenReport.php")
-        void getUserList(Callback<List<UserListAttendance>> response);
+        void getUserList(@Header("AUTH") String auth, Callback<List<UserListAttendance>> response);
 
 
         @GET("/mk/webservice/AttenReport.php")
-        void getUserAttendance(@Query("username") String username, Callback<List<AttendanceDates>> response);
+        void getUserAttendance(@Header("AUTH") String auth, @Query("username") String username, Callback<List<AttendanceDates>> response);
 
 
         @GET("/mk/webservice/leaderboard.php")
-        void getLeaderBoard(@Query("from") String from, @Query("to") String to, Callback<List<Leader>> callback);
+        void getLeaderBoard(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<Leader>> callback);
 
 
         @GET("/mk/webservice/servicereport.php")
-        void getServiceReport(@Query("from") String from, @Query("to") String to, Callback<List<RepairPojo>> callback);
+        void getServiceReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<RepairPojo>> callback);
 
 
         @GET("/mk/webservice/report.php")
-        void getpricecompator(@Query("from") String from, @Query("to") String to, @Query("category") String category, Callback<List<PriceCompartorService>> callback);
+        void getpricecompator(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, @Query("category") String category, Callback<List<PriceCompartorService>> callback);
 
 
         @GET("/mk/webservice/product.php")
-        void getproduct(Callback<List<Sales>> response);
+        void getproduct(@Header("AUTH") String auth, Callback<List<Sales>> response);
 
         @GET("/mk/webservice/product.php")
-        void getproductid(@Query("id") String id, Callback<List<Product>> response);
+        void getproductid(@Header("AUTH") String auth, @Query("id") String id, Callback<List<Product>> response);
 
         @Multipart
         @POST("/mk/webservice/image.php")
-        void upload(@Query("username") String username, @Part("myfile") TypedFile file, @Part("description") String description, Callback<String> cb);
+        void upload(@Header("AUTH") String auth, @Query("username") String username, @Part("myfile") TypedFile file, @Part("description") String description, Callback<String> cb);
 
         @GET("/mk/webservice/location.php")
-        void getAllLocation(Callback<List<Location>> response);
+        void getAllLocation(@Header("AUTH") String auth, Callback<List<Location>> response);
 
         @POST("/mk/webservice/latlong.php")
-        void setLocation(@Body Location location, Callback<String> callback);
+        void setLocation(@Header("AUTH") String auth, @Body Location location, Callback<String> callback);
 
         @GET("/mk/webservice/message.php")
-        void getNotificationDetail(@Query("role") String role, Callback<List<Notification>> response);
+        void getNotificationDetail(@Header("AUTH") String auth, @Query("role") String role, Callback<List<Notification>> response);
 
         @POST("/mk/webservice/message.php")
-        void sendNotification(@Body Notification notification, Callback<String> callback);
+        void sendNotification(@Header("AUTH") String auth, @Body Notification notification, Callback<String> callback);
+
+
+        @GET("/mk/webservice/login.php")
+        void getLoginData(@Header("AUTH") String auth, @Query("username") String username, Callback<LoginDetails> callback);
+
+        @POST("/mk/webservice/attendance.php")
+        void markAttendance(@Header("AUTH") String auth, @Query("username") String username, Callback<String> callback);
+
+        @POST("/mk/webservice/logout.php")
+        void logout(@Query("username") String username, Callback<String> callback);
+
 
     }
 
@@ -155,112 +167,127 @@ public enum Client {
     }
 
 
-    public void login(String username, String password, Callback<LoginDetails> responseCallback)
+    public void login(String username, String password, Callback<String> responseCallback)
 
     {
         mobileService.login(username, password, responseCallback);
     }
 
 
-    public void sales(Sales sales, Callback<Response> responseCallback)
+    public void sales(String auth, Sales sales, Callback<String> responseCallback)
 
     {
-        mobileService.sales(sales, responseCallback);
+        mobileService.sales(auth, sales, responseCallback);
     }
 
 
-    public void getSalesReport(String from, String to, Callback<List<Sales>> salesCallback) {
-        mobileService.getSalesReport(from, to, salesCallback);
-
-    }
-
-
-    public List<Sales> getSalesReport1(String from, String to) {
-        return mobileService.getSalesReport1(from, to);
+    public void getSalesReport(String auth, String from, String to, Callback<List<Sales>> salesCallback) {
+        mobileService.getSalesReport(auth, from, to, salesCallback);
 
     }
 
 
-    public void sendService(RepairPojo service, Callback<String> callback) {
-        mobileService.sendService(service, callback);
+    public List<Sales> getSalesReport1(String auth, String from, String to) {
+        return mobileService.getSalesReport1(auth, from, to);
 
     }
 
-    public void getServiceList(Callback<List<RepairPojo>> callback) {
-        mobileService.getServiceList(callback);
+
+    public void sendService(String auth, RepairPojo service, Callback<String> callback) {
+        mobileService.sendService(auth, service, callback);
 
     }
 
-    public void getPartList(Callback<List<PartsRequests>> callback) {
-        mobileService.getPartList(callback);
+    public void getServiceList(String auth, Callback<List<RepairPojo>> callback) {
+        mobileService.getServiceList(auth, callback);
 
     }
 
-    public void sendPartRequest(PartsRequests partsRequests, Callback<String> callback) {
-        mobileService.sendPartRequest(partsRequests, callback);
+    public void getPartList(String auth, Callback<List<PartsRequests>> callback) {
+        mobileService.getPartList(auth, callback);
 
     }
 
-    public void getProfile(String username, Callback<Response> response) {
-        mobileService.getProfile(username, response);
+    public void sendPartRequest(String auth, PartsRequests partsRequests, Callback<String> callback) {
+        mobileService.sendPartRequest(auth, partsRequests, callback);
 
     }
 
-    public void updateProfile(String username, Map<String, String> map, Callback<String> callback) {
-        mobileService.updateProfile(username, map, callback);
-    }
-
-    public void createUser(NewUser newUser, Callback<String> callback) {
-        mobileService.createUser(newUser, callback);
-    }
-
-    public void getUserList(Callback<List<UserListAttendance>> callback) {
-        mobileService.getUserList(callback);
-    }
-
-    public void getUserAttendance(String username, Callback<List<AttendanceDates>> response) {
-        mobileService.getUserAttendance(username, response);
-    }
-
-    public void getLeaderBoard(String from, String to, Callback<List<Leader>> response) {
-        mobileService.getLeaderBoard(from, to, response);
-    }
-
-    public void getpricecompator(String from, String to, String category, Callback<List<PriceCompartorService>> response) {
-        mobileService.getpricecompator(from, to, category, response);
-    }
-
-    public void getServiceReport(String from, String to, Callback<List<RepairPojo>> response) {
-        mobileService.getServiceReport(from, to, response);
-    }
-
-    public void getproduct(Callback<List<Sales>> response) {
-        mobileService.getproduct(response);
-    }
-
-    public void getproductid(String id, Callback<List<Product>> response) {
-        mobileService.getproductid(id, response);
-    }
-
-    public void uploadImage(String username, TypedFile file, String description, Callback<String> callback) {
-        mobileService.upload(username, file, description, callback);
-    }
-
-
-    public void getAllLocation(Callback<List<Location>> response) {
-        mobileService.getAllLocation(response);
-    }
-
-    public void setLocation(Location location, Callback<String> callback) {
-        mobileService.setLocation(location, callback);
-    }
-
-    public void getNotificationDetail(String role, Callback<List<Notification>> response) {
-        mobileService.getNotificationDetail(role, response);
+    public void getProfile(String auth, String username, Callback<Response> response) {
+        mobileService.getProfile(auth, username, response);
 
     }
 
-    public void sendNotification(@Body Notification notification, Callback<String> callback) {
-        mobileService.sendNotification(notification, callback);
+    public void updateProfile(String auth, String username, Map<String, String> map, Callback<String> callback) {
+        mobileService.updateProfile(auth, username, map, callback);
     }
+
+    public void createUser(String auth, NewUser newUser, Callback<String> callback) {
+        mobileService.createUser(auth, newUser, callback);
+    }
+
+    public void getUserList(String auth, Callback<List<UserListAttendance>> callback) {
+        mobileService.getUserList(auth, callback);
+    }
+
+    public void getUserAttendance(String auth, String username, Callback<List<AttendanceDates>> response) {
+        mobileService.getUserAttendance(auth, username, response);
+    }
+
+    public void getLeaderBoard(String auth, String from, String to, Callback<List<Leader>> response) {
+        mobileService.getLeaderBoard(auth, from, to, response);
+    }
+
+    public void getpricecompator(String auth, String from, String to, String category, Callback<List<PriceCompartorService>> response) {
+        mobileService.getpricecompator(auth, from, to, category, response);
+    }
+
+    public void getServiceReport(String auth, String from, String to, Callback<List<RepairPojo>> response) {
+        mobileService.getServiceReport(auth, from, to, response);
+    }
+
+    public void getproduct(String auth, Callback<List<Sales>> response) {
+        mobileService.getproduct(auth, response);
+    }
+
+    public void getproductid(String auth, String id, Callback<List<Product>> response) {
+        mobileService.getproductid(auth, id, response);
+    }
+
+    public void uploadImage(String auth, String username, TypedFile file, String description, Callback<String> callback) {
+        mobileService.upload(auth, username, file, description, callback);
+    }
+
+
+    public void getAllLocation(String auth, Callback<List<Location>> response) {
+        mobileService.getAllLocation(auth, response);
+    }
+
+    public void setLocation(String auth, Location location, Callback<String> callback) {
+        mobileService.setLocation(auth, location, callback);
+    }
+
+    public void getNotificationDetail(String auth, String role, Callback<List<Notification>> response) {
+        mobileService.getNotificationDetail(auth, role, response);
+
+    }
+
+    public void sendNotification(String auth, Notification notification, Callback<String> callback) {
+        mobileService.sendNotification(auth, notification, callback);
+    }
+
+    public void getLoginData(String auth, String username, Callback<LoginDetails> callback) {
+        mobileService.getLoginData(auth, username, callback);
+    }
+
+    public void markAttendance(String auth, String username, Callback<String> callback) {
+        mobileService.markAttendance(auth, username, callback);
+
+    }
+
+    public void logout(@Query("username") String username, Callback<String> callback) {
+        mobileService.logout(username, callback);
+    }
+
+
 }

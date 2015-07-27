@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.mobiles.mkshop.adapters.Decorators;
 import com.mobiles.mkshop.application.Client;
+import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.AttendanceDates;
 import com.mobiles.mkshop.R;
 import com.squareup.timessquare.CalendarCellDecorator;
@@ -106,7 +107,7 @@ public class CalendarFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-            Client.INSTANCE.getUserAttendance(username, new Callback<List<AttendanceDates>>() {
+            Client.INSTANCE.getUserAttendance(MkShop.AUTH,username, new Callback<List<AttendanceDates>>() {
                 @Override
                 public void success(List<AttendanceDates> attendanceDates, Response response) {
 

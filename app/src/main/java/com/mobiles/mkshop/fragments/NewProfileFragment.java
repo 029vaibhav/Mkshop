@@ -138,7 +138,7 @@ public class NewProfileFragment extends Fragment {
         protected Void doInBackground(Void... params) {
 
 
-            Client.INSTANCE.createUser(newUser, new Callback<String>() {
+            Client.INSTANCE.createUser(MkShop.AUTH,newUser, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {
 

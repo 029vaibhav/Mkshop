@@ -31,7 +31,7 @@ public class PartsRequestNewItemFragment extends Fragment {
 
 
     public static String TAG = "RepairNewItemFragment";
-    private TextView date, status,dateTitle;
+    private TextView date, status, dateTitle;
     EditText price, customerName, part, mobileNo;
     Button submit;
     String Stringdate, stringStatus;
@@ -80,8 +80,8 @@ public class PartsRequestNewItemFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                        Stringdate = "" + year + "/" + monthOfYear + "/" + dayOfMonth;
-                        date.setText("" + dayOfMonth + "/" + monthOfYear +"/"+year);
+                        Stringdate = "" + year + "-" + monthOfYear + "-" + dayOfMonth;
+                        date.setText("" + dayOfMonth + "/" + monthOfYear + "/" + year);
                         datePickerDialog.dismiss();
 
                     }
@@ -130,7 +130,7 @@ public class PartsRequestNewItemFragment extends Fragment {
                 } else if (mobileNo.getText().length() < 10 || mobileNo.getText().length() > 10) {
                     MkShop.toast(getActivity(), "check mobile no");
 
-                } else if (!stringStatus.equalsIgnoreCase(Status.PENDING.name())) {
+                } else if (!stringStatus.equalsIgnoreCase(Status.PENDING.name()) && date.getText().length() == 0) {
                     MkShop.toast(getActivity(), "please select delivery date");
 
                 } else if (price.getText().length() <= 0) {
@@ -145,25 +145,25 @@ public class PartsRequestNewItemFragment extends Fragment {
                     PartsRequests partsRequests = new PartsRequests();
                     partsRequests.setCustomerName(customerName.getText().toString());
                     partsRequests.setMobileNo(mobileNo.getText().toString());
-                            partsRequests.setStatus(stringStatus);
-                            partsRequests.setPrice(price.getText().toString());
-                            partsRequests.setPart(part.getText().toString());
+                    partsRequests.setStatus(stringStatus);
+                    partsRequests.setPrice(price.getText().toString());
+                    partsRequests.setPart(part.getText().toString());
 
-                    if(date.getText().toString().length() > 0 && !date.getText().toString().equalsIgnoreCase("date"))
-                    partsRequests.setDeliveryDate(Stringdate);
+                    if (date.getText().toString().length() > 0 && !date.getText().toString().equalsIgnoreCase("date"))
+                        partsRequests.setDeliveryDate(Stringdate);
 
 
-                    Client.INSTANCE.sendPartRequest(partsRequests, new Callback<String>() {
+                    Client.INSTANCE.sendPartRequest(MkShop.AUTH, partsRequests, new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
 
-                            Toast.makeText(getActivity(),s,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
 
-                            Toast.makeText(getActivity(),error.getMessage().toString(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                         }
                     });

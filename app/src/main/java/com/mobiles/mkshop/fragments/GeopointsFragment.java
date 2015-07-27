@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.mobiles.mkshop.application.Client;
+import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.Location;
 import com.mobiles.mkshop.R;
 
@@ -47,7 +48,7 @@ public class GeopointsFragment extends Fragment {
 
         listView = (ListView) viewGroup.findViewById(R.id.locationList);
 
-        Client.INSTANCE.getAllLocation(new Callback<List<Location>>() {
+        Client.INSTANCE.getAllLocation(MkShop.AUTH,new Callback<List<Location>>() {
             @Override
             public void success(final List<Location> locations, Response response) {
 

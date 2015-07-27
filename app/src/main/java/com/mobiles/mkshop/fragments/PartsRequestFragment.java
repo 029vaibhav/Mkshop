@@ -40,7 +40,6 @@ public class PartsRequestFragment extends Fragment {
     ListView listView;
 
 
-
     public static PartsRequestFragment newInstance() {
         PartsRequestFragment fragment = new PartsRequestFragment();
         return fragment;
@@ -51,13 +50,12 @@ public class PartsRequestFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        MkShop.SCRREN="PartsRequestFragment";
-        ViewGroup viewGroup=(ViewGroup)inflater.inflate(R.layout.fragment_parts_request, container, false);
+        MkShop.SCRREN = "PartsRequestFragment";
+        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_parts_request, container, false);
 
 
         partsRequestsList = new ArrayList<PartsRequests>();
@@ -69,14 +67,11 @@ public class PartsRequestFragment extends Fragment {
                 .content("please wait")
                 .build();
 
-         listView = (ListView) viewGroup.findViewById(R.id.repairlist);
+        listView = (ListView) viewGroup.findViewById(R.id.repairlist);
         FloatingActionButton fab = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
         fab.attachToListView(listView);
 
         new ListInitializer().execute();
-
-
-
 
 
         search.addTextChangedListener(new TextWatcher() {
@@ -126,13 +121,12 @@ public class PartsRequestFragment extends Fragment {
     }
 
 
-    private class ListInitializer extends AsyncTask<Void,Void,Void> {
+    private class ListInitializer extends AsyncTask<Void, Void, Void> {
 
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
 
 
             materialDialog.show();
@@ -142,7 +136,7 @@ public class PartsRequestFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Client.INSTANCE.getPartList(new Callback<List<PartsRequests>>() {
+            Client.INSTANCE.getPartList(MkShop.AUTH, new Callback<List<PartsRequests>>() {
                 @Override
                 public void success(List<PartsRequests> partsRequestses, Response response) {
                     materialDialog.dismiss();
@@ -157,13 +151,10 @@ public class PartsRequestFragment extends Fragment {
                 public void failure(RetrofitError error) {
                     materialDialog.dismiss();
 
-                    if(error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    {
+                    if (error.getKind().equals(RetrofitError.Kind.NETWORK)) {
                         MkShop.toast(getActivity(), "Please check your internet connection");
-                    }
-                    else
-                    {
-                        MkShop.toast(getActivity(), "something went wrong");
+                    } else {
+                        MkShop.toast(getActivity(), error.getMessage());
 
                     }
 

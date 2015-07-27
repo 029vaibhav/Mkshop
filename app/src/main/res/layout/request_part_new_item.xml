@@ -172,7 +172,7 @@
             <TextView
                 android:visibility="gone"
                 android:id="@+id/date_title"
-                android:text="Delivery date"
+                android:text="Expected Delivery date"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

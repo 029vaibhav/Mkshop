@@ -16,6 +16,7 @@ public class MkShop extends Controller {
     public static String SCRREN = "";
     public static String Role = "sm";
     public static String Username = "amrut";
+    public static String AUTH = "";
 
 
     @Override

@@ -32,4 +32,5 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_admin">AdminActivity</string>
+    <string name="title_activity_get_login_details">GetLoginDetailsActivity</string>
 </resources>

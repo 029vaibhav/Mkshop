@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mobiles.mkshop">
+    package="com.mobiles.mkshop" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
 
     <permission
         android:name="com.mobiles.mkshop.permission.C2D_MESSAGE"
@@ -19,27 +18,24 @@
     <!-- This app has permission to register and receive data message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-
     <application
         android:name=".gcm.Controller"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name">
-
-
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
-
 
                     <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
@@ -61,8 +57,13 @@
                 <category android:name="com.mobiles.mkshop" />
             </intent-filter>
         </receiver>
+
         <service android:name=".GCMIntentService" />
 
+        <activity
+            android:name=".activities.GetLoginDetailsActivity"
+            android:label="@string/title_activity_get_login_details" >
+        </activity>
     </application>
 
 </manifest>

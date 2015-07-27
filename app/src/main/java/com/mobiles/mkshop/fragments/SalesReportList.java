@@ -26,9 +26,9 @@ public class SalesReportList extends Fragment {
         pt = getArguments() != null ? getArguments().getInt("num") : 1;
 
         if (pt == 0) {
-            productType = ProductType.MOBILE;
+            productType = ProductType.Mobile;
         } else {
-            productType = ProductType.ACCESSORY;
+            productType = ProductType.Accessory;
         }
 
     }

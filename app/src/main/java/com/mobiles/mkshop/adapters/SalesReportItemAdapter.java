@@ -50,7 +50,7 @@ public class SalesReportItemAdapter extends RecyclerView.Adapter<SalesReportItem
         holder.quantity.setText(sales.getQuantity());
         holder.revenue.setText(sales.getPrice());
 
-        if (productType == ProductType.ACCESSORY) {
+        if (productType == ProductType.Accessory) {
             holder.accessoryType.setVisibility(View.VISIBLE);
             holder.accessoryType.setText(sales.getAccessoryType());
         }

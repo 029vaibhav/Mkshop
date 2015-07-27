@@ -65,9 +65,9 @@ public enum Myenum {
 
     public List<Sales> getSalesList(ProductType type) {
 
-        if (ProductType.MOBILE == type) {
+        if (ProductType.Mobile == type) {
             return mobileSales;
-        } else if (ProductType.ACCESSORY == type) {
+        } else if (ProductType.Accessory == type) {
             return accessorySales;
         }
 
@@ -180,7 +180,7 @@ public enum Myenum {
     Predicate<Sales> predicateMobileList = new Predicate<Sales>() {
         @Override
         public boolean apply(Sales input) {
-            return input.getProductType().equalsIgnoreCase(ProductType.MOBILE.name());
+            return input.getProductType().equalsIgnoreCase(ProductType.Mobile.name());
         }
 
     };
@@ -188,7 +188,7 @@ public enum Myenum {
     Predicate<Sales> predicateAccList = new Predicate<Sales>() {
         @Override
         public boolean apply(Sales input) {
-            return input.getProductType().equalsIgnoreCase(ProductType.ACCESSORY.name());
+            return input.getProductType().equalsIgnoreCase(ProductType.Accessory.name());
         }
 
     };

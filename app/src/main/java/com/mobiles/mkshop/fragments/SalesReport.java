@@ -72,55 +72,7 @@ public class SalesReport extends Fragment {
         MkShop.SCRREN = "SalesReport";
 
 
-//        salesList = new ArrayList<Sales>();
-//        Sales sales = new Sales();
-//        sales.setProductType("mobile");
-//        sales.setBrand("sony");
-//        sales.setModel("abc");
-//        sales.setQuantity("20");
-//        sales.setPrice("12000");
-//        salesList.add(sales);
-//        sales = new Sales();
-//        sales.setProductType("Accessory");
-//        sales.setAccessoryType("earphone");
-//        sales.setBrand("creative");
-//        sales.setModel("abc");
-//        sales.setQuantity("20");
-//        sales.setPrice("12000");
-//        salesList.add(sales);
-//        sales = new Sales();
-//        sales.setProductType("mobile");
-//        sales.setBrand("sony");
-//        sales.setModel("abc");
-//        sales.setQuantity("30");
-//        sales.setPrice("12000");
-//        salesList.add(sales);
-//        sales = new Sales();
-//        sales.setProductType("mobile");
-//        sales.setBrand("sony");
-//        sales.setModel("abc");
-//        sales.setQuantity("10");
-//        sales.setPrice("12000");
-//        salesList.add(sales);
-//        sales = new Sales();
-//        sales.setProductType("Accessory");
-//        sales.setAccessoryType("earphone");
-//        sales.setBrand("creative");
-//        sales.setModel("abc");
-//        sales.setQuantity("10");
-//        sales.setPrice("12000");
-//        salesList.add(sales);
-//        sales = new Sales();
-//        sales.setProductType("Accessory");
-//        sales.setAccessoryType("earphone");
-//        sales.setBrand("creative");
-//        sales.setModel("abc");
-//        sales.setQuantity("50");
-//        sales.setPrice("12000");
-//        salesList.add(sales);
-//
-//
-//        Myenum.INSTANCE.setSalesList(salesList);
+
 
         materialDialog = new MaterialDialog.Builder(getActivity())
                 .progress(true, 0)
@@ -160,7 +112,7 @@ public class SalesReport extends Fragment {
                 if (position == 0) {
 
 
-                    sales1 = Myenum.INSTANCE.getSalesList(ProductType.MOBILE);
+                    sales1 = Myenum.INSTANCE.getSalesList(ProductType.Mobile);
                     for (int i = 0; i < sales1.size(); i++) {
                         tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
                         tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getPrice());
@@ -169,7 +121,7 @@ public class SalesReport extends Fragment {
                     totalQuantity.setText("" + tempQuantity);
 
                 } else if (position == 1) {
-                    sales1 = Myenum.INSTANCE.getSalesList(ProductType.ACCESSORY);
+                    sales1 = Myenum.INSTANCE.getSalesList(ProductType.Accessory);
                     for (int i = 0; i < sales1.size(); i++) {
                         tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
                         tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getPrice());
@@ -285,7 +237,7 @@ public class SalesReport extends Fragment {
 
 
 
-        Client.INSTANCE.getSalesReport(sFromdate, sToDate, new Callback<List<Sales>>() {
+        Client.INSTANCE.getSalesReport(MkShop.AUTH,sFromdate, sToDate, new Callback<List<Sales>>() {
             @Override
             public void success(final List<Sales> sales, Response response) {
 
@@ -299,7 +251,7 @@ public class SalesReport extends Fragment {
                 tempQuantity = 0;
                 tempRevenue = 0;
 
-                List<Sales> sales1 = Myenum.INSTANCE.getSalesList(ProductType.MOBILE);
+                List<Sales> sales1 = Myenum.INSTANCE.getSalesList(ProductType.Mobile);
                 for (int i = 0; i < sales1.size(); i++) {
                     tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
                     tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getPrice());

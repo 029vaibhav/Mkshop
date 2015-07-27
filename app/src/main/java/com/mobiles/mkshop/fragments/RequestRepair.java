@@ -144,7 +144,7 @@ public class RequestRepair extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Client.INSTANCE.getServiceList(new Callback<List<RepairPojo>>() {
+            Client.INSTANCE.getServiceList(MkShop.AUTH,new Callback<List<RepairPojo>>() {
                 @Override
                 public void success(List<RepairPojo> repairPojos, Response response) {
                     materialDialog.dismiss();

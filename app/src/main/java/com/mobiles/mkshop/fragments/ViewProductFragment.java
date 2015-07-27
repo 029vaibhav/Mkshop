@@ -18,11 +18,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.ViewProductadapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.pojos.ProductType;
 import com.mobiles.mkshop.pojos.Sales;
-import com.mobiles.mkshop.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,11 +76,19 @@ public class ViewProductFragment extends Fragment {
                 .progress(true, 0)
                 .show();
 
-        Client.INSTANCE.getproduct(new Callback<List<Sales>>() {
+        Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
             @Override
             public void success(List<Sales> sales, Response response) {
 
-                salesList = sales;
+//                salesList = sales;
+
+                salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<Sales>() {
+                    @Override
+                    public boolean apply(Sales input) {
+                        return (input.getProductType().equalsIgnoreCase(ProductType.Mobile.name()));
+                    }
+                }));
+
                 List<String> brandStrings = new ArrayList<String>();
                 Set<String> brand = new HashSet();
                 for (int i = 0; i < sales.size(); i++) {
@@ -115,10 +124,9 @@ public class ViewProductFragment extends Fragment {
                             gridRecyclerView.setHasFixedSize(true);
                             gridRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                            final ViewProductadapter listItemAdapter = new ViewProductadapter(ViewProductFragment.this,getActivity(), modelListByBrand);
+                            final ViewProductadapter listItemAdapter = new ViewProductadapter(ViewProductFragment.this, getActivity(), modelListByBrand);
                             gridRecyclerView.setAdapter(listItemAdapter);
                             (brandTextView).setInputType(0);
-
 
 
                             dialog.dismiss();
@@ -150,6 +158,11 @@ public class ViewProductFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
+                dialog.dismiss();
+                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                    MkShop.toast(getActivity(), "please check your internet connection");
+                else MkShop.toast(getActivity(), error.getMessage());
+
 
             }
         });

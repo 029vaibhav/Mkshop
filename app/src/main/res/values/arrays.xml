@@ -7,7 +7,7 @@
         <item name="Done">Done</item>
         <item name="Return">Return</item>
         <item name="Delivered">Delivered</item>
-        <item name="Returned">Delivered</item>
+        <item name="Returned">Returned</item>
 
 
     </string-array>

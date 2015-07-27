@@ -5,8 +5,8 @@ package com.mobiles.mkshop.pojos;
  */
 public enum  ProductType {
 
-    MOBILE("Mobile"),
-    ACCESSORY("Accessory");
+    Mobile("Mobile"),
+    Accessory("Accessory");
 
 
     private String productType;

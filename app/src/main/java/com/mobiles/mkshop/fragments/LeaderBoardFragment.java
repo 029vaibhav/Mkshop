@@ -241,7 +241,7 @@ public class LeaderBoardFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Client.INSTANCE.getLeaderBoard(sFromdate, sToDate, new Callback<List<Leader>>() {
+            Client.INSTANCE.getLeaderBoard(MkShop.AUTH,sFromdate, sToDate, new Callback<List<Leader>>() {
                 @Override
                 public void success(List<Leader> leaders, Response response) {
 

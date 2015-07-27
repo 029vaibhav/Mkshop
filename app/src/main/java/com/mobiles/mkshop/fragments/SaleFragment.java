@@ -51,7 +51,7 @@ public class SaleFragment extends Fragment {
     List<String> brandList, modelList, accessoryTypeList;
 
 
-    String stringBrand = null, stringProductType = "mobile", stringAccessory = null, stringModel = null;
+    String stringBrand = null, stringProductType = ProductType.Mobile.name(), stringAccessory = null, stringModel = null;
 
 
     public static SaleFragment newInstance(String brand, String model) {
@@ -107,9 +107,12 @@ public class SaleFragment extends Fragment {
         brandList = new ArrayList<>();
         productTypeList = new ArrayList<>();
         accessoryTypeList = new ArrayList<>();
+        modelSalesList = new ArrayList<>();
+        modelList = new ArrayList<>();
+        ;
 
         materialDialog.show();
-        Client.INSTANCE.getproduct(new Callback<List<Sales>>() {
+        Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
             @Override
             public void success(List<Sales> sales, Response response) {
 
@@ -283,13 +286,13 @@ public class SaleFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stringProductType.equalsIgnoreCase(ProductType.ACCESSORY.name()) && stringAccessory == null) {
+                if (stringProductType.equalsIgnoreCase(ProductType.Accessory.name()) && stringAccessory == null) {
                     toast(getActivity(), "please select accessory type");
 
                 } else if (stringBrand == null) {
                     toast(getActivity(), "please select brand");
 
-                } else if (stringModel == null) {
+                } else if (modelNo.getText().length() == 0 || modelNo.getText().toString().equalsIgnoreCase("other") && other.getText().toString().length() == 0) {
                     toast(getActivity(), "please select model");
 
                 } else if (price.getText().length() <= 0) {
@@ -317,7 +320,7 @@ public class SaleFragment extends Fragment {
                 switch (checkedId) {
                     case R.id.radiomobile:
                         accessoryType.setVisibility(View.GONE);
-                        stringProductType = ProductType.MOBILE.name();
+                        stringProductType = ProductType.Mobile.name();
                         accessoryType.setText("");
                         brand.setText("");
                         modelNo.setText("");
@@ -351,7 +354,7 @@ public class SaleFragment extends Fragment {
                         break;
                     case R.id.radioAccessory:
                         accessoryType.setVisibility(View.VISIBLE);
-                        stringProductType = ProductType.ACCESSORY.name();
+                        stringProductType = ProductType.Accessory.name();
                         accessoryType.setText("");
                         brand.setText("");
                         modelNo.setText("");
@@ -416,14 +419,19 @@ public class SaleFragment extends Fragment {
             sales.setProductType(stringProductType);
             sales.setBrand(stringBrand);
             sales.setModel(stringModel);
+            if (stringAccessory == null)
+                sales.setAccessoryType("");
+            else
+                sales.setAccessoryType(stringAccessory);
             sales.setQuantity("1");
             sales.setPrice(price.getText().toString());
             sales.setUsername(MkShop.Username);
 
-            Client.INSTANCE.sales(sales, new Callback<Response>() {
+            Client.INSTANCE.sales(MkShop.AUTH, sales, new Callback<String>() {
                 @Override
-                public void success(Response response, Response response2) {
+                public void success(String response, Response response2) {
 
+                    MkShop.toast(getActivity(), response);
                     dialog.dismiss();
 
 
@@ -432,8 +440,11 @@ public class SaleFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
+                    dialog.dismiss();
                     if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(getActivity(), "check your internet connection");
+                    else
+                        MkShop.toast(getActivity(), error.getMessage());
 
                 }
             });

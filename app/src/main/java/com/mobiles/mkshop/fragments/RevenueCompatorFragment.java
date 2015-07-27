@@ -82,53 +82,14 @@ public class RevenueCompatorFragment extends Fragment {
 
                                         category.setText(text.toString());
 
-                                        Client.INSTANCE.getpricecompator(sFromdate, sToDate, ""+which, new Callback<List<PriceCompartorService>>() {
+                                        Client.INSTANCE.getpricecompator(MkShop.AUTH,sFromdate, sToDate, ""+which, new Callback<List<PriceCompartorService>>() {
                                             @Override
                                             public void success(List<PriceCompartorService> response1, Response response) {
 
 
                                                 listItemAdapter = new RevenueCompartorAdapter(getActivity(), response1);
                                                 listView.setAdapter(listItemAdapter);
-
-
-//                                                switch (which) {
-//                                                    case 0:
-//
-//                                                        List<Sales> list = new Gson().fromJson(result, new TypeToken<List<Sales>>() {
-//                                                        }.getType());
-//
-//
-//
-//                                                        break;
-//                                                    case 3:
-//                                                        List<Sales> list2 = new Gson().fromJson(result, new TypeToken<List<Sales>>() {
-//                                                        }.getType());
-//
-//                                                        listItemAdapter = new RevenueCompartorAdapter(getActivity(),list2,null);
-//                                                        listView.setAdapter(listItemAdapter);
-//
-//                                                        break;
-//                                                    case 1:
-//
-//                                                        List<PriceCompartorService> list3 = new Gson().fromJson(result, new TypeToken<List<PriceCompartorService>>() {
-//                                                        }.getType());
-//
-//                                                        listItemAdapter = new RevenueCompartorAdapter(getActivity(),null, list3);
-//                                                        listView.setAdapter(listItemAdapter);
-//
-//                                                        break;
-//                                                    case 2:
-//
-//                                                        List<Sales> list4  = new Gson().fromJson(result, new TypeToken<List<Sales>>() {
-//                                                        }.getType());
-//
-//                                                        listItemAdapter = new RevenueCompartorAdapter(getActivity(),list4, null);
-//                                                        listView.setAdapter(listItemAdapter);
-//                                                        break;
-//                                                }
-
-
-                                            }
+                     }
 
                                             @Override
                                             public void failure(RetrofitError error) {

@@ -55,13 +55,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
     @Override
     public void onBindViewHolder(final VersionViewHolder versionViewHolder, int i) {
 
-        versionViewHolder.title.setText(list.get(i).getTitle());
+
+        if (!list.get(i).getTitle().equalsIgnoreCase("photo")){
+            versionViewHolder.title.setText(list.get(i).getTitle());
         versionViewHolder.subTitle.setText(list.get(i).getvalue());
-        if(!MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name()) && versionViewHolder.title.getText().toString().equalsIgnoreCase("role"))
+        if (!MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name()) && versionViewHolder.title.getText().toString().equalsIgnoreCase("role"))
             versionViewHolder.imageView.setEnabled(false);
         else
             versionViewHolder.imageView.setEnabled(true);
-
 
 
         versionViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
@@ -74,22 +75,22 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
                             public void onInput(MaterialDialog dialog, final CharSequence input) {
 
                                 Map map = new HashMap();
-                                map.put(versionViewHolder.title.getText(),input.toString());
-                                Client.INSTANCE.updateProfile(username,map, new Callback<String>() {
+                                map.put(versionViewHolder.title.getText(), input.toString());
+                                Client.INSTANCE.updateProfile(MkShop.AUTH, username, map, new Callback<String>() {
                                     @Override
                                     public void success(String s, Response response) {
 
-                                        MkShop.toast(context,s);
-                                        if(s!=null && s.equalsIgnoreCase("profile updated"))
-                                            versionViewHolder.subTitle.setText(input.toString()) ;
+                                        MkShop.toast(context, s);
+                                        if (s != null && s.equalsIgnoreCase("profile updated"))
+                                            versionViewHolder.subTitle.setText(input.toString());
 
                                     }
 
                                     @Override
                                     public void failure(RetrofitError error) {
 
-                                        if(error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                            MkShop.toast(context,"please check your internet connection");
+                                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                            MkShop.toast(context, "please check your internet connection");
 
 
                                     }
@@ -100,7 +101,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
         });
 
 
-    }
+    } }
 
     @Override
     public int getItemCount() {

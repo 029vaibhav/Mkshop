@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mobiles.mkshop.NavigationDrawerCallbacks;
 import com.mobiles.mkshop.NavigationDrawerFragment;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.Attendance;
 import com.mobiles.mkshop.fragments.GeopointsFragment;
@@ -44,6 +45,10 @@ import com.mobiles.mkshop.pojos.LoginDetails;
 import com.mobiles.mkshop.pojos.UserType;
 
 import java.lang.reflect.Type;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class MainActivity extends AppCompatActivity
@@ -134,11 +139,11 @@ public class MainActivity extends AppCompatActivity
 
                 case 4:
                     //View Product
-                    fragment = getFragmentManager().findFragmentByTag(ViewProductFragment.TAG);
-                    if (fragment == null) {
+
                         fragment = new ViewProductFragment();
-                    }
+
                     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
                 case 5:
                     //offers
                     fragment = getFragmentManager().findFragmentByTag(OffersFragment.TAG);
@@ -206,6 +211,7 @@ public class MainActivity extends AppCompatActivity
                         fragment = new RevenueCompatorFragment();
                     }
                     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
                 case 6:
                     fragment = getFragmentManager().findFragmentByTag(SendNotificationFragment.TAG);
                     if (fragment == null) {
@@ -263,7 +269,33 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.logOut) {
+
+            Client.INSTANCE.logout(MkShop.Username, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+
+
+                    sharedPreferences.edit().putString("AUTH", null).apply();
+                    sharedPreferences.edit().putString("USERNAME", null).apply();
+                    sharedPreferences.edit().putString("DETAIL", null).apply();
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                        MkShop.toast(MainActivity.this, "please check your internet connection");
+                    else MkShop.toast(MainActivity.this, "something went wrong");
+
+                }
+            });
+
             return true;
         } else if (id == R.id.profile) {
 

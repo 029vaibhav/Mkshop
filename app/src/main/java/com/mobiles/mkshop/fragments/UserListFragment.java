@@ -98,7 +98,7 @@ public class UserListFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-            Client.INSTANCE.getUserList(new Callback<List<UserListAttendance>>() {
+            Client.INSTANCE.getUserList(MkShop.AUTH,new Callback<List<UserListAttendance>>() {
                 @Override
                 public void success(List<UserListAttendance> userListAttendances, Response response) {
 

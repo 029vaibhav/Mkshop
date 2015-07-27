@@ -19,6 +19,19 @@
 
             <TextView
                 fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Brand"
+                android:textSize="15sp" />
+
+            <TextView
+                android:drawableRight="@drawable/blank"
+                fontPath="fonts/rr.ttf"
                 android:id="@+id/brandtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,8 +43,21 @@
                 android:hint="Brand"
                 android:padding="10dp"
                 android:textSize="20dp" />
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Status"
+                android:textSize="15sp" />
+
 
             <TextView
+                android:drawableRight="@drawable/blank"
                 android:id="@+id/modeltext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,6 +86,19 @@
                 android:textSize="20dp"
                 android:visibility="gone" />
 
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Status"
+                android:textSize="15sp" />
+
+
 
             <TextView
                 fontPath="fonts/rr.ttf"
@@ -76,6 +115,19 @@
                 android:padding="10dp"
                 android:textSize="20dp" />
 
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Job no"
+                android:textSize="15sp" />
+
             <EditText
                 android:id="@+id/jobnoedit"
                 android:layout_width="match_parent"
@@ -91,6 +143,20 @@
                 android:singleLine="true"
                 android:textSize="20dp" />
 
+
+            <TextView
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Problem"
+                android:textSize="15sp" />
+
+
             <EditText
                 fontPath="fonts/rr.ttf"
                 android:id="@+id/problemedit"
@@ -105,6 +171,8 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textSize="20dp" />
+
+
 
             <LinearLayout
                 android:id="@+id/linear"
@@ -126,6 +194,8 @@
                     android:padding="10dp"
                     android:textSize="20dp"
                     android:visibility="gone" />
+
+
 
                 <EditText
                     android:id="@+id/priceEdit"

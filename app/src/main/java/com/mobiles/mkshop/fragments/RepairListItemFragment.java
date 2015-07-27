@@ -153,6 +153,7 @@ public class RepairListItemFragment extends Fragment {
                 service.setStatus(stringStatus);
                 service.setProblem(problem.getText().toString());
                 service.setDeliveryDate(dateTime.toString("yyyy-MM-dd"));
+                service.setUsername(MkShop.Username);
                 new SendData().execute();
             }
         });
@@ -207,7 +208,7 @@ public class RepairListItemFragment extends Fragment {
         protected Void doInBackground(Void... params) {
 
 
-            Client.INSTANCE.sendService(service, new Callback<String>() {
+            Client.INSTANCE.sendService(MkShop.AUTH,service, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {
                     MkShop.toast(getActivity(), s);

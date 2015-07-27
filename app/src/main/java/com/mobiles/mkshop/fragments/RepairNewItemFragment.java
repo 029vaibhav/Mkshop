@@ -16,11 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.RepairPojo;
-import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.pojos.UserType;
 
 import org.joda.time.DateTime;
@@ -36,8 +36,6 @@ import retrofit.client.Response;
 public class RepairNewItemFragment extends Fragment {
 
     public static String TAG = "RepairNewItemFragment";
-    //  private RadioGroup radiogroup;
-    private TextView brand, modelNo, date, status;
     EditText price, other, problem;
     Button submit;
     String Stringdate = "", stringModel, stringBrand, stringStatus;
@@ -45,17 +43,18 @@ public class RepairNewItemFragment extends Fragment {
     RepairPojo service;
     DatePickerDialog datePickerDialog;
     EditText jobNo;
+    //  private RadioGroup radiogroup;
+    private TextView brand, modelNo, date, status;
 
-
-    public static RepairNewItemFragment newInstance() {
-        RepairNewItemFragment fragment = new RepairNewItemFragment();
-        return fragment;
-    }
 
     public RepairNewItemFragment() {
         // Required empty public constructor
     }
 
+    public static RepairNewItemFragment newInstance() {
+        RepairNewItemFragment fragment = new RepairNewItemFragment();
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -252,6 +251,29 @@ public class RepairNewItemFragment extends Fragment {
         return v;
     }
 
+    private int setindex(String status) {
+
+
+        if (status.equalsIgnoreCase("Pending")) {
+            index = 0;
+        } else if (status.equalsIgnoreCase("Processing")) {
+            index = 1;
+        } else if (status.equalsIgnoreCase("Pna")) {
+
+            index = 2;
+        } else if (status.equalsIgnoreCase("Done")) {
+            index = 3;
+        } else if (status.equalsIgnoreCase("Return")) {
+            index = 4;
+        } else if (status.equalsIgnoreCase("Delivered")) {
+            index = 5;
+        } else if (status.equalsIgnoreCase("Returned")) {
+            index = 6;
+        }
+        return index;
+
+    }
+
     private class SendData extends AsyncTask<Void, Void, Void> {
 
         MaterialDialog dialog;
@@ -277,7 +299,7 @@ public class RepairNewItemFragment extends Fragment {
         protected Void doInBackground(Void... params) {
 
 
-            Client.INSTANCE.sendService(service, new Callback<String>() {
+            Client.INSTANCE.sendService(MkShop.AUTH, service, new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
                             MkShop.toast(getActivity(), s);
@@ -295,28 +317,5 @@ public class RepairNewItemFragment extends Fragment {
             );
             return null;
         }
-    }
-
-    private int setindex(String status) {
-
-
-        if (status.equalsIgnoreCase("Pending")) {
-            index = 0;
-        } else if (status.equalsIgnoreCase("Processing")) {
-            index = 1;
-        } else if (status.equalsIgnoreCase("Pna")) {
-
-            index = 2;
-        } else if (status.equalsIgnoreCase("Done")) {
-            index = 3;
-        } else if (status.equalsIgnoreCase("Return")) {
-            index = 4;
-        } else if (status.equalsIgnoreCase("Delivered")) {
-            index = 5;
-        } else if (status.equalsIgnoreCase("Returned")) {
-            index = 6;
-        }
-        return index;
-
     }
 }

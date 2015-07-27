@@ -27,12 +27,17 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.gps.GPSTracker;
 import com.mobiles.mkshop.pojos.LoginDetails;
 import com.mobiles.mkshop.R;
 
 import java.lang.reflect.Type;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class Attendance extends Fragment implements com.google.android.gms.location.LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -89,7 +94,20 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
                     end.setLongitude(Double.parseDouble(loginDetailsList.getLocation().getLongitude()));
                     double distance = start.distanceTo(end);
                     if (distance <= Integer.parseInt(loginDetailsList.getLocation().getRadius())) {
-                        MkShop.toast(getActivity(), "coverage area");
+                        Client.INSTANCE.markAttendance(MkShop.AUTH, MkShop.Username, new Callback<String>() {
+                            @Override
+                            public void success(String s, Response response) {
+                                MkShop.toast(getActivity(), s);
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                    MkShop.toast(getActivity(), "please check your internet connection");
+                                else MkShop.toast(getActivity(), error.getMessage());
+
+                            }
+                        });
                     } else {
                         MkShop.toast(getActivity(), "your are not in the coverage area");
                     }

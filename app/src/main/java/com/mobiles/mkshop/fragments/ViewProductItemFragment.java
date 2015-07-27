@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.mobiles.mkshop.adapters.ViewPagerAdapter;
 import com.mobiles.mkshop.application.Client;
+import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.Product;
 import com.mobiles.mkshop.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -77,7 +78,7 @@ public class ViewProductItemFragment extends Fragment {
         mLayout = (SlidingUpPanelLayout) viewGroup.findViewById(R.id.sliding_layout);
 
 
-        Client.INSTANCE.getproductid(id, new Callback<List<Product>>() {
+        Client.INSTANCE.getproductid(MkShop.AUTH,id, new Callback<List<Product>>() {
             @Override
             public void success(List<Product> prodcutSales, Response response) {
 

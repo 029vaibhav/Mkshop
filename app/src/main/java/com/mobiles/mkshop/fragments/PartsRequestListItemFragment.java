@@ -176,7 +176,7 @@ public class PartsRequestListItemFragment extends Fragment {
                     if(!date.getText().toString().equalsIgnoreCase("date") || date.getText().toString().length() > 0)
                     partsRequests.setDeliveryDate(Stringdate);
 
-                    Client.INSTANCE.sendPartRequest(partsRequests, new Callback<String>() {
+                    Client.INSTANCE.sendPartRequest(MkShop.AUTH,partsRequests, new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
 
@@ -186,7 +186,7 @@ public class PartsRequestListItemFragment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
 
-                            Toast.makeText(getActivity(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });                }

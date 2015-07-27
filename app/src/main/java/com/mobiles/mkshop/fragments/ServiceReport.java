@@ -76,62 +76,6 @@ public class ServiceReport extends Fragment {
 
 
 
-//        List<RepairPojo> serviceList = new ArrayList<RepairPojo>();
-//        RepairPojo sales = new RepairPojo();
-//        sales.setBrand("sony-pending");
-//        sales.setModelNo("abc");
-//        sales.setProblem("lcd");
-//        sales.setPrice("12000");
-//        sales.setPlace("shop");
-//        sales.setStatus(Status.PENDING.name());
-//        serviceList.add(sales);
-//
-//        sales = new RepairPojo();
-//        sales.setBrand("creative-processing");
-//        sales.setModelNo("abc");
-//        sales.setProblem("20");
-//        sales.setPrice("12000");
-//        sales.setPlace("service");
-//        sales.setStatus(Status.PROCESSING.name());
-//        serviceList.add(sales);
-//
-//        sales = new RepairPojo();
-//        sales.setBrand("sony-pna");
-//        sales.setModelNo("abc");
-//        sales.setProblem("30");
-//        sales.setPrice("12000");
-//        sales.setPlace("shop");
-//        sales.setStatus(Status.PNA.name());
-//        serviceList.add(sales);
-//
-//        sales = new RepairPojo();
-//        sales.setBrand("sony-delivered");
-//        sales.setModelNo("abc");
-//        sales.setProblem("10");
-//        sales.setPrice("12000");
-//        sales.setPlace("shop");
-//        sales.setStatus(Status.DELIVERED.name());
-//        serviceList.add(sales);
-//
-//        sales = new RepairPojo();
-//        sales.setBrand("creative-done");
-//        sales.setModelNo("abc");
-//        sales.setProblem("10");
-//        sales.setPrice("12000");
-//        serviceList.add(sales);
-//        sales.setPlace("shop");
-//        sales.setStatus(Status.DONE.name());
-//        serviceList.add(sales);
-//
-//        sales = new RepairPojo();
-//        sales.setBrand("creative-return");
-//        sales.setModelNo("abc");
-//        sales.setProblem("50");
-//        sales.setPrice("12000");
-//        sales.setPlace("service");
-//        sales.setStatus(Status.RETURN.name());
-//        serviceList.add(sales);
-
 
 
 
@@ -211,7 +155,7 @@ public class ServiceReport extends Fragment {
 
         materialDialog.show();
 
-        Client.INSTANCE.getServiceReport(sFromdate, sToDate, new Callback<List<RepairPojo>>() {
+        Client.INSTANCE.getServiceReport(MkShop.AUTH,sFromdate, sToDate, new Callback<List<RepairPojo>>() {
             @Override
             public void success(final List<RepairPojo> serviceList, Response response) {
 
