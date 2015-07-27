@@ -51,7 +51,8 @@ public class LoginActivity extends Activity {
 
                             String json = new Gson().toJson(response);
 
-                            MkShop.Role= response.getRole();
+                            MkShop.Role = response.getRole();
+                            MkShop.Username = response.getUsername();
 
                             sharedPreferences.edit().putString("DETAIL", json).apply();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);

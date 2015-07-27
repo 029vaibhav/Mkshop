@@ -21,6 +21,7 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.RepairPojo;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.pojos.UserType;
 
 import org.joda.time.DateTime;
 
@@ -43,7 +44,7 @@ public class RepairNewItemFragment extends Fragment {
     int index;
     RepairPojo service;
     DatePickerDialog datePickerDialog;
-    android.support.v7.widget.AppCompatEditText jobNo;
+    EditText jobNo;
 
 
     public static RepairNewItemFragment newInstance() {
@@ -73,12 +74,11 @@ public class RepairNewItemFragment extends Fragment {
         modelNo = (TextView) v.findViewById(R.id.modeltext);
         price = (EditText) v.findViewById(R.id.priceEdit);
         other = (EditText) v.findViewById(R.id.otheredit);
-        jobNo = (android.support.v7.widget.AppCompatEditText) v.findViewById(R.id.jobnoedit);
+        jobNo = (EditText) v.findViewById(R.id.jobnoedit);
         problem = (EditText) v.findViewById(R.id.problemedit);
         submit = (Button) v.findViewById(R.id.submit);
 
         date.setOnClickListener(new View.OnClickListener() {
-
 
 
             @Override
@@ -204,13 +204,13 @@ public class RepairNewItemFragment extends Fragment {
                     service.setJobNo("" + jobNo.getText().toString());
                     service.setDeliveryDate(Stringdate);
 
-                    if (MkShop.Role.equalsIgnoreCase("sm")) {
+                    if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name()) || MkShop.Role.equalsIgnoreCase(UserType.SALESMAN.name())) {
                         service.setPlace("shop");
-                    } else if (MkShop.Role.equalsIgnoreCase("sc")) {
+                    } else if (MkShop.Role.equalsIgnoreCase(UserType.TECHNICIAN.name())) {
                         service.setPlace("service");
                     }
                     service.setProblem(problem.getText().toString());
-                    service.setUsername("111111");
+                    service.setUsername(MkShop.Username);
 
                     new SendData().execute();
                 }
@@ -278,23 +278,24 @@ public class RepairNewItemFragment extends Fragment {
 
 
             Client.INSTANCE.sendService(service, new Callback<String>() {
-                @Override
-                public void success(String s, Response response) {
-                    MkShop.toast(getActivity(), s);
-                    dialog.dismiss();
-                    Fragment fragment = new RequestRepair();
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                }
-                    @Override
-                    public void failure (RetrofitError error){
+                        @Override
+                        public void success(String s, Response response) {
+                            MkShop.toast(getActivity(), s);
+                            dialog.dismiss();
+                            Fragment fragment = new RequestRepair();
+                            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                        }
 
+                        @Override
+                        public void failure(RetrofitError error) {
+
+                        }
                     }
-                }
 
-                );
-                return null;
-            }
+            );
+            return null;
         }
+    }
 
     private int setindex(String status) {
 

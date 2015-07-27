@@ -47,8 +47,8 @@ public class SaleFragment extends Fragment {
     private TextView brand, accessoryType, modelNo;
     EditText quantity, price, other;
     Button submit;
-    List<Sales> salesList,modelSalesList,productTypeList;
-    List<String> brandList, modelList,accessoryTypeList;
+    List<Sales> salesList, modelSalesList, productTypeList;
+    List<String> brandList, modelList, accessoryTypeList;
 
 
     String stringBrand = null, stringProductType = "mobile", stringAccessory = null, stringModel = null;
@@ -165,7 +165,13 @@ public class SaleFragment extends Fragment {
                         modelSalesList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<Sales>() {
                             @Override
                             public boolean apply(Sales input) {
-                                return (input.getBrand().equalsIgnoreCase(stringBrand) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
+
+                                if (stringAccessory == null)
+                                    return (input.getBrand().equalsIgnoreCase(stringBrand));
+                                else
+                                    return (input.getBrand().equalsIgnoreCase(stringBrand) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
+
+
                             }
                         }));
 
@@ -222,7 +228,6 @@ public class SaleFragment extends Fragment {
                             brand.add(newArrayList.get(i).getBrand());
                         }
                         brandList.addAll(brand);
-
 
 
                     }
@@ -287,9 +292,6 @@ public class SaleFragment extends Fragment {
                 } else if (stringModel == null) {
                     toast(getActivity(), "please select model");
 
-                } else if (quantity.getText().length() <= 0) {
-                    toast(getActivity(), "please enter quantity");
-
                 } else if (price.getText().length() <= 0) {
                     toast(getActivity(), "please enter price");
 
@@ -327,6 +329,10 @@ public class SaleFragment extends Fragment {
                         stringAccessory = null;
                         stringBrand = null;
 
+                        modelSalesList.clear();
+                        productTypeList.clear();
+                        modelList.clear();
+                        accessoryTypeList.clear();
                         brandList.clear();
                         productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
                             @Override
@@ -358,6 +364,10 @@ public class SaleFragment extends Fragment {
                         stringBrand = null;
 
 
+                        modelSalesList.clear();
+                        productTypeList.clear();
+                        modelList.clear();
+                        accessoryTypeList.clear();
                         brandList.clear();
                         productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
                             @Override
@@ -368,7 +378,7 @@ public class SaleFragment extends Fragment {
 
                         Set<String> accessoryStrings = new HashSet();
                         for (int i = 0; i < productTypeList.size(); i++) {
-                            accessoryStrings.add(productTypeList.get(i).getBrand());
+                            accessoryStrings.add(productTypeList.get(i).getAccessoryType());
                         }
                         accessoryTypeList.addAll(accessoryStrings);
 
@@ -406,8 +416,9 @@ public class SaleFragment extends Fragment {
             sales.setProductType(stringProductType);
             sales.setBrand(stringBrand);
             sales.setModel(stringModel);
-            sales.setQuantity(quantity.getText().toString());
+            sales.setQuantity("1");
             sales.setPrice(price.getText().toString());
+            sales.setUsername(MkShop.Username);
 
             Client.INSTANCE.sales(sales, new Callback<Response>() {
                 @Override
@@ -420,6 +431,9 @@ public class SaleFragment extends Fragment {
 
                 @Override
                 public void failure(RetrofitError error) {
+
+                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                        MkShop.toast(getActivity(), "check your internet connection");
 
                 }
             });

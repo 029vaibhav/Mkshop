@@ -7,6 +7,7 @@ import com.mobiles.mkshop.pojos.Leader;
 import com.mobiles.mkshop.pojos.Location;
 import com.mobiles.mkshop.pojos.LoginDetails;
 import com.mobiles.mkshop.pojos.NewUser;
+import com.mobiles.mkshop.pojos.Notification;
 import com.mobiles.mkshop.pojos.PartsRequests;
 import com.mobiles.mkshop.pojos.PriceCompartorService;
 import com.mobiles.mkshop.pojos.Product;
@@ -123,6 +124,12 @@ public enum Client {
 
         @POST("/mk/webservice/latlong.php")
         void setLocation(@Body Location location, Callback<String> callback);
+
+        @GET("/mk/webservice/message.php")
+        void getNotificationDetail(@Query("role") String role, Callback<List<Notification>> response);
+
+        @POST("/mk/webservice/message.php")
+        void sendNotification(@Body Notification notification, Callback<String> callback);
 
     }
 
@@ -246,5 +253,14 @@ public enum Client {
 
     public void setLocation(Location location, Callback<String> callback) {
         mobileService.setLocation(location, callback);
+    }
+
+    public void getNotificationDetail(String role, Callback<List<Notification>> response) {
+        mobileService.getNotificationDetail(role, response);
+
+    }
+
+    public void sendNotification(@Body Notification notification, Callback<String> callback) {
+        mobileService.sendNotification(notification, callback);
     }
 }

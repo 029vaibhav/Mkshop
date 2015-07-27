@@ -20,26 +20,28 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mobiles.mkshop.NavigationDrawerCallbacks;
+import com.mobiles.mkshop.NavigationDrawerFragment;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.Attendance;
 import com.mobiles.mkshop.fragments.GeopointsFragment;
 import com.mobiles.mkshop.fragments.LeaderBoardFragment;
+import com.mobiles.mkshop.fragments.OffersFragment;
 import com.mobiles.mkshop.fragments.PartsRequestFragment;
 import com.mobiles.mkshop.fragments.ProfileFragment;
 import com.mobiles.mkshop.fragments.RequestRepair;
 import com.mobiles.mkshop.fragments.RevenueCompatorFragment;
 import com.mobiles.mkshop.fragments.SaleFragment;
 import com.mobiles.mkshop.fragments.SalesReport;
+import com.mobiles.mkshop.fragments.SendNotificationFragment;
 import com.mobiles.mkshop.fragments.ServiceReport;
 import com.mobiles.mkshop.fragments.UserListFragment;
 import com.mobiles.mkshop.fragments.ViewProductFragment;
 import com.mobiles.mkshop.gcm.Config;
 import com.mobiles.mkshop.gcm.Controller;
-import com.mobiles.mkshop.NavigationDrawerCallbacks;
-import com.mobiles.mkshop.NavigationDrawerFragment;
 import com.mobiles.mkshop.pojos.LoginDetails;
 import com.mobiles.mkshop.pojos.UserType;
-import com.mobiles.mkshop.R;
 
 import java.lang.reflect.Type;
 
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity
 
         mNavigationDrawerFragment.setUserData(loginDetailsList.getName(), "", loginDetailsList.getPhoto());
         // populate the navigation drawer
+
+
     }
 
 
@@ -135,6 +139,13 @@ public class MainActivity extends AppCompatActivity
                         fragment = new ViewProductFragment();
                     }
                     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                case 5:
+                    //offers
+                    fragment = getFragmentManager().findFragmentByTag(OffersFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new OffersFragment();
+                    }
+                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
 
             }
@@ -180,8 +191,9 @@ public class MainActivity extends AppCompatActivity
                     }
                     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
-                //My profile
-                case 6:
+
+                case 7:
+                    //set location
                     fragment = getFragmentManager().findFragmentByTag(GeopointsFragment.TAG);
                     if (fragment == null) {
                         fragment = new GeopointsFragment();
@@ -192,6 +204,12 @@ public class MainActivity extends AppCompatActivity
                     fragment = getFragmentManager().findFragmentByTag(RevenueCompatorFragment.TAG);
                     if (fragment == null) {
                         fragment = new RevenueCompatorFragment();
+                    }
+                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                case 6:
+                    fragment = getFragmentManager().findFragmentByTag(SendNotificationFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new SendNotificationFragment();
                     }
                     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
@@ -266,6 +284,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void notification() {
+        aController = (Controller) getApplicationContext();
         GCMRegistrar.checkDevice(this);
         GCMRegistrar.checkManifest(this);
         registerReceiver(mHandleMessageReceiver, new IntentFilter(
@@ -285,7 +304,28 @@ public class MainActivity extends AppCompatActivity
             if (GCMRegistrar.isRegisteredOnServer(this)) {
 
                 // Skips registration.
-                Toast.makeText(getApplicationContext(), "Already registered with GCM Server", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Already enabled notification", Toast.LENGTH_LONG).show();
+                mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+
+                        // Register on our server
+                        // On server creates a new user
+                        aController.register(MainActivity.this, loginDetailsList.getUsername(), "vaibns@gma.com", regId);
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        mRegisterTask = null;
+                    }
+
+                };
+
+                // execute AsyncTask
+                mRegisterTask.execute(null, null, null);
 
             } else {
 
@@ -301,7 +341,7 @@ public class MainActivity extends AppCompatActivity
 
                         // Register on our server
                         // On server creates a new user
-                        aController.register(MainActivity.this, "vaibs", "vaibns@gma.com", regId);
+                        aController.register(MainActivity.this, loginDetailsList.getUsername(), "vaibns@gma.com", regId);
 
                         return null;
                     }

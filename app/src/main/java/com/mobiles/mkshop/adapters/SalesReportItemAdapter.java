@@ -66,44 +66,7 @@ public class SalesReportItemAdapter extends RecyclerView.Adapter<SalesReportItem
         return salesList.size();
     }
 
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//
-//        View row = convertView;
-//        ViewHolder holder = null;
-//        if (row == null) {
-//
-//            LayoutInflater inflater = context.getActivity().getLayoutInflater();
-//            row = inflater.inflate(R.layout.sales_report_list_item,
-//                    parent, false);
-//            holder = new ViewHolder();
-//            holder.brand = (TextView) row.findViewById(R.id.Brand);
-//            holder.model = (TextView) row.findViewById(R.id.model);
-//            holder.quantity = (TextView) row.findViewById(R.id.quantity);
-//            holder.revenue = (TextView) row.findViewById(R.id.revenue);
-//
-//            if (productType == ProductType.ACCESSORY) {
-//                holder.accessoryType = (TextView) row.findViewById(R.id.accessoryType);
-//                holder.accessoryType.setVisibility(View.VISIBLE);
-//            }
-//
-//            row.setTag(holder);
-//        } else {
-//            holder = (ViewHolder) row.getTag();
-//        }
-//
-//        Sales sales = salesList.get(position);
-//        holder.brand.setText(sales.getBrand());
-//        holder.model.setText(sales.getModel());
-//        holder.quantity.setText(sales.getQuantity());
-//        holder.revenue.setText(sales.getPrice());
-//
-//        if (productType == ProductType.ACCESSORY) {
-//            holder.accessoryType.setText(sales.getAccessoryType());
-//        }
-//
-//        return row;
-//    }
+
 
     public void sortquantiy(boolean sort) {
 

@@ -190,6 +190,7 @@
 
 
             <TextView
+                android:visibility="gone"
                 android:text="Quantity"
                 android:id="@+id/priceEdit_text_input_layout"
                 fontPath="fonts/rr.ttf"
@@ -205,6 +206,7 @@
 
 
                 <EditText
+                    android:visibility="gone"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_below="@+id/priceEdit_text_input_layout"

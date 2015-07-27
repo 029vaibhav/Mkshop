@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Sales {
 
     long id;
-    String productType,brand,modelNo,quantity,price,accessoryType, username,path;
+    String type,brand,modelNo,quantity,price,accessoryType, username,path;
 
     public long getId() {
         return id;
@@ -21,7 +21,7 @@ public class Sales {
     }
 
     public String getProductType() {
-        return productType;
+        return type;
     }
 
     public String getUsername() {
@@ -41,7 +41,7 @@ public class Sales {
     }
 
     public void setProductType(String productType) {
-        this.productType = productType;
+        this.type = productType;
     }
 
     public String getBrand() {
