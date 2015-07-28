@@ -82,7 +82,6 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
         super.onCreate(savedInstanceState);
         username = getArguments() != null ? getArguments().getString("username") : "";
 
-
     }
 
     @Override
@@ -243,7 +242,7 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
             super.onPreExecute();
 
             dialog = new MaterialDialog.Builder(getActivity())
-                    .content("plese wait")
+                    .content("please wait")
                     .progress(true, 0)
                     .show();
         }

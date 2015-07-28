@@ -405,7 +405,7 @@ public class SaleFragment extends Fragment {
             super.onPreExecute();
 
             dialog = new MaterialDialog.Builder(getActivity())
-                    .content("plese wait")
+                    .content("please wait")
                     .progress(true, 0)
                     .show();
         }

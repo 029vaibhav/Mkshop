@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.adapters;
 
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.Leader;
-import com.mobiles.mkshop.R;
 
 import java.util.Collections;
 import java.util.Comparator;

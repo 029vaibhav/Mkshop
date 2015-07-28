@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mobiles.mkshop.adapters.LeaderBoardItemAdapter;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.adapters.LeaderBoardItemAdapter;
 
 
 public class LeaderBoardList extends Fragment {

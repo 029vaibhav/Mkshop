@@ -1,32 +1,36 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.RepairPojo;
+import com.mobiles.mkshop.pojos.Sales;
 import com.mobiles.mkshop.pojos.UserType;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -44,7 +48,13 @@ public class RepairNewItemFragment extends Fragment {
     DatePickerDialog datePickerDialog;
     EditText jobNo;
     //  private RadioGroup radiogroup;
-    private TextView brand, modelNo, date, status;
+    private TextView date, status;
+    AutoCompleteTextView brand, modelNo;
+
+    List<Sales> salesList, modelSalesList;
+    List<String> brandList;
+
+    MaterialDialog dialog;
 
 
     public RepairNewItemFragment() {
@@ -67,15 +77,97 @@ public class RepairNewItemFragment extends Fragment {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_repair_new_item, container, false);
 
 
-        brand = (TextView) v.findViewById(R.id.brandtext);
+        modelSalesList = new ArrayList<>();
+        brandList = new ArrayList<>();
+        salesList = new ArrayList<>();
+
+
+        dialog = new MaterialDialog.Builder(getActivity())
+                .content("please wait")
+                .progress(true, 0)
+                .build();
+
+
+        brand = (AutoCompleteTextView) v.findViewById(R.id.brandtext);
         status = (TextView) v.findViewById(R.id.status);
         date = (TextView) v.findViewById(R.id.datetext);
-        modelNo = (TextView) v.findViewById(R.id.modeltext);
+        modelNo = (AutoCompleteTextView) v.findViewById(R.id.modeltext);
         price = (EditText) v.findViewById(R.id.priceEdit);
         other = (EditText) v.findViewById(R.id.otheredit);
         jobNo = (EditText) v.findViewById(R.id.jobnoedit);
         problem = (EditText) v.findViewById(R.id.problemedit);
         submit = (Button) v.findViewById(R.id.submit);
+
+
+        dialog.show();
+        Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
+            @Override
+            public void success(List<Sales> sales, Response response) {
+
+                dialog.dismiss();
+
+                salesList = sales;
+                brandList.clear();
+                Set<String> brandStrings = new HashSet();
+                for (int i = 0; i < sales.size(); i++) {
+                    brandStrings.add(sales.get(i).getBrand());
+                }
+                brandList.addAll(brandStrings);
+
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                        (getActivity(), android.R.layout.select_dialog_item, brandList);
+                brand.setThreshold(1);
+                brand.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                dialog.dismiss();
+
+                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                    MkShop.toast(getActivity(), "please check your internect connection");
+                else
+                    MkShop.toast(getActivity(), "list is not available please try again");
+
+            }
+        });
+
+
+        modelNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (brand.getText().length() == 0)
+                        MkShop.toast(getActivity(), "please select brand first");
+                    else {
+                        brandList.clear();
+                        modelSalesList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
+                            @Override
+                            public boolean apply(Sales input) {
+                                return (input.getBrand().equalsIgnoreCase(brand.getText().toString()));
+                            }
+                        }));
+
+
+                        Set<String> brandStrings = new HashSet();
+                        for (int i = 0; i < modelSalesList.size(); i++) {
+                            brandStrings.add(modelSalesList.get(i).getModelNo());
+                        }
+                        brandList.addAll(brandStrings);
+
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                                (getActivity(), android.R.layout.select_dialog_item, brandList);
+                        modelNo.setThreshold(1);
+                        modelNo.setAdapter(adapter);
+
+
+                    }
+                }
+            }
+        });
 
         date.setOnClickListener(new View.OnClickListener() {
 
@@ -133,52 +225,13 @@ public class RepairNewItemFragment extends Fragment {
             }
         });
 
-        modelNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (stringBrand == null) {
-                    MkShop.toast(getActivity(), "please select brand");
-                } else {
-                    final List<String> modellist = new ArrayList();
-                    modellist.add("other");
-                    modellist.add("gt");
-
-                    final Dialog view = new Dialog(getActivity(), android.R.style.Theme_Holo_Light_NoActionBar);
-                    view.setContentView(R.layout.dialog_layout);
-
-                    TextView title = (TextView) view.findViewById(R.id.dialogtitle);
-                    title.setText("Model no");
-                    ListView listView = (ListView) view.findViewById(R.id.dialoglist);
-                    CustomAdapter customAdapter = new CustomAdapter(getActivity(), modellist);
-                    listView.setAdapter(customAdapter);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view2, int position, long id) {
-                            stringModel = modellist.get(position);
-                            view.dismiss();
-                            if (stringModel.equalsIgnoreCase("other")) {
-                                other.setVisibility(View.VISIBLE);
-                            } else {
-                                other.setVisibility(View.GONE);
-                                other.getText().clear();
-                            }
-
-
-                            modelNo.setText(stringModel);
-                        }
-                    });
-
-                    view.show();
-                }
-            }
-        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stringBrand == null) {
+                if (brand.getText().length() == 0) {
                     MkShop.toast(getActivity(), "please select brand");
 
-                } else if (stringModel == null) {
+                } else if (modelNo.getText().toString().length() == 0) {
                     MkShop.toast(getActivity(), "please select model");
 
                 } else if (!stringStatus.equalsIgnoreCase("Pending") && date.getText().length() <= 0 || date.getText().toString().equalsIgnoreCase("date")) {
@@ -196,8 +249,8 @@ public class RepairNewItemFragment extends Fragment {
                     }
 
                     service = new RepairPojo();
-                    service.setBrand(stringBrand);
-                    service.setModelNo(stringModel);
+                    service.setBrand(brand.getText().toString());
+                    service.setModelNo(modelNo.getText().toString());
                     service.setStatus(stringStatus);
                     service.setPrice("" + price.getText().toString());
                     service.setJobNo("" + jobNo.getText().toString());
@@ -213,37 +266,6 @@ public class RepairNewItemFragment extends Fragment {
 
                     new SendData().execute();
                 }
-            }
-        });
-
-
-        brand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final List<String> brandList = new ArrayList();
-                for (int i = 0; i < 20; i++) {
-                    brandList.add("i");
-                }
-
-                final Dialog view = new Dialog(getActivity(), android.R.style.Theme_Holo_Light_NoActionBar);
-                view.setContentView(R.layout.dialog_layout);
-
-                TextView title = (TextView) view.findViewById(R.id.dialogtitle);
-                title.setText("Brand");
-                ListView listView = (ListView) view.findViewById(R.id.dialoglist);
-                CustomAdapter customAdapter = new CustomAdapter(getActivity(), brandList);
-                listView.setAdapter(customAdapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view2, int position, long id) {
-                        stringBrand = brandList.get(position);
-                        view.dismiss();
-                        brand.setText(stringBrand);
-                    }
-                });
-
-                view.show();
             }
         });
 
@@ -283,7 +305,7 @@ public class RepairNewItemFragment extends Fragment {
             super.onPreExecute();
 
             dialog = new MaterialDialog.Builder(getActivity())
-                    .content("plese wait")
+                    .content("please wait")
                     .progress(true, 0)
                     .build();
             dialog.show();

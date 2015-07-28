@@ -72,7 +72,7 @@ public class ViewProductFragment extends Fragment {
         search = (AutoCompleteTextView) viewGroup.findViewById(R.id.search);
         submit = (TextView) viewGroup.findViewById(R.id.submit);
         dialog = new MaterialDialog.Builder(getActivity())
-                .content("plese wait")
+                .content("please wait")
                 .progress(true, 0)
                 .show();
 

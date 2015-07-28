@@ -28,7 +28,8 @@
                 android:text="Brand"
                 android:textSize="15sp" />
 
-            <TextView
+            <AutoCompleteTextView
+                android:drawableRight="@drawable/ic_action_transparent"
                 android:id="@+id/brandtext"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
@@ -37,7 +38,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
-                android:drawableRight="@drawable/right_arrow"
                 android:gravity="center"
                 android:padding="10dp"
                 android:textSize="20dp" />
@@ -54,7 +54,8 @@
                 android:text="Model"
                 android:textSize="15sp" />
 
-            <TextView
+            <AutoCompleteTextView
+                android:drawableRight="@drawable/ic_action_transparent"
                 android:id="@+id/modeltext"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
@@ -63,27 +64,10 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
-                android:drawableRight="@drawable/right_arrow"
                 android:gravity="center"
                 android:padding="10dp"
                 android:textSize="20dp" />
 
-            <EditText
-                android:id="@+id/otheredit"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawableRight="@drawable/ic_action_name"
-                android:gravity="center"
-                android:hint="Model no"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="20dp"
-                android:visibility="gone" />
 
             <TextView
                 fontPath="fonts/rr.ttf"

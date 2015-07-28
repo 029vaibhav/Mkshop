@@ -98,9 +98,12 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
 
                     start.setLatitude(gps.getLatitude());
                     start.setLongitude(gps.getLongitude());
-               com.mobiles.mkshop.pojos.Location location=     loginDetailsList.getLocation();
-                    loginDetailsList.getLocation().getLatitude();
-                    loginDetailsList.getLocation().getLongitude();
+                    if (loginDetailsList.getLocation() == null) {
+                        MkShop.toast(getActivity(), "Ask your admin to provide your location");
+                        return;
+                    }
+
+
                     end.setLatitude(Double.parseDouble(loginDetailsList.getLocation().getLatitude()));
                     end.setLongitude(Double.parseDouble(loginDetailsList.getLocation().getLongitude()));
                     double distance = start.distanceTo(end);

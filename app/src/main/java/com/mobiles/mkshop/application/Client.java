@@ -153,7 +153,7 @@ public enum Client {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 //  .setEndpoint("http://52.74.153.158:8080")
-                .setEndpoint("http://192.168.1.102:80")
+                .setEndpoint("http://mobiweb.co.in:80")
                 .setLog(new RestAdapter.Log() {
                     @Override
                     public void log(String message) {

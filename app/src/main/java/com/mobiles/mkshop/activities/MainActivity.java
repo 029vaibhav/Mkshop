@@ -219,7 +219,6 @@ public class MainActivity extends AppCompatActivity
                         fragment = new SendNotificationFragment();
                     }
                     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
                     break;
             }
         }
