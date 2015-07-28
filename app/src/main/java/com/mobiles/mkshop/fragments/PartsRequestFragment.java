@@ -92,6 +92,7 @@ public class PartsRequestFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2,
                                       int arg3) {
+                partRequestAdapter.Filter(arg0.toString());
                 // TODO Auto-generated method stub
             }
         });

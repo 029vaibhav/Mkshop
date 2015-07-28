@@ -12,11 +12,11 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.RevenueCompartorAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.PriceCompartorService;
-import com.mobiles.mkshop.R;
 
 import org.joda.time.DateTime;
 
@@ -60,7 +60,7 @@ public class RevenueCompatorFragment extends Fragment {
 
         totalQuantity = (TextView) viewGroup.findViewById(R.id.totalQuantity);
         totalRevenue = (TextView) viewGroup.findViewById(R.id.totalRevenue);
-         listView = (RecyclerView)viewGroup.findViewById(R.id.saleslistview);
+        listView = (RecyclerView) viewGroup.findViewById(R.id.saleslistview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         listView.setLayoutManager(linearLayoutManager);
 
@@ -80,21 +80,36 @@ public class RevenueCompatorFragment extends Fragment {
                                     @Override
                                     public boolean onSelection(MaterialDialog dialog, View view, final int which, CharSequence text) {
 
+                                        tempQuantity = 0;
+                                        tempRevenue = 0;
                                         category.setText(text.toString());
 
-                                        Client.INSTANCE.getpricecompator(MkShop.AUTH,sFromdate, sToDate, ""+which, new Callback<List<PriceCompartorService>>() {
+                                        Client.INSTANCE.getpricecompator(MkShop.AUTH, sFromdate, sToDate, "" + which, new Callback<List<PriceCompartorService>>() {
                                             @Override
                                             public void success(List<PriceCompartorService> response1, Response response) {
 
 
                                                 listItemAdapter = new RevenueCompartorAdapter(getActivity(), response1);
                                                 listView.setAdapter(listItemAdapter);
-                     }
+
+
+                                                for (int i = 0; i < response1.size(); i++) {
+                                                    tempQuantity = tempQuantity + Integer.parseInt(response1.get(i).getQuantity());
+                                                    tempRevenue = tempRevenue + Integer.parseInt(response1.get(i).getPrice());
+                                                }
+                                                totalRevenue.setText("" + tempRevenue);
+                                                totalQuantity.setText("" + tempQuantity);
+
+                                            }
 
                                             @Override
                                             public void failure(RetrofitError error) {
 
-                                                MkShop.toast(getActivity(),error.getMessage());
+
+                                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                                    MkShop.toast(getActivity(), "please check your internet connection");
+                                                else
+                                                    MkShop.toast(getActivity(), error.getMessage());
 
                                             }
                                         });

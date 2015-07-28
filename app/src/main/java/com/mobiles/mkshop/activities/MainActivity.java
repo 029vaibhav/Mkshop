@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     Bitmap bitmapAvtar = null;
     LoginDetails loginDetailsList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

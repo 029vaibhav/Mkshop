@@ -45,8 +45,8 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         RepairPojo repairPojo = serviceList.get(position);
-        holder.brand.setText(repairPojo.getBrand());
-        holder.model.setText(repairPojo.getModelNo());
+        holder.brand.setText(repairPojo.getModelNo());
+        holder.model.setText(repairPojo.getBrand());
         holder.place.setText(repairPojo.getPlace());
         holder.revenue.setText(repairPojo.getPrice());
         holder.problem.setText(repairPojo.getProblem());

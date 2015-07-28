@@ -45,8 +45,8 @@ public class SalesReportItemAdapter extends RecyclerView.Adapter<SalesReportItem
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Sales sales = salesList.get(position);
-        holder.brand.setText(sales.getBrand());
-        holder.model.setText(sales.getModelNo());
+        holder.brand.setText(sales.getModelNo());
+        holder.model.setText(sales.getBrand());
         holder.quantity.setText(sales.getQuantity());
         holder.revenue.setText(sales.getPrice());
 

@@ -269,13 +269,17 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
                     String photo = "";
                     for (int i = 0; i < yourList.size(); i++) {
-                        if (yourList.get(i).getTitle().equalsIgnoreCase("photo"))
+                        if (yourList.get(i).getTitle().equalsIgnoreCase("photo")){
+
                             photo = yourList.get(i).getvalue();
-                        break;
+                            Log.e("photo",photo);
+                            break;
+                        }
+
                     }
 
                     if (photo.length() > 2)
-                        Picasso.with(getActivity()).load(photo.replace("\\", "")).into(header);
+                        Picasso.with(getActivity()).load(photo.replace("\\", "").replace(",",":")).into(header);
                     else header.setImageBitmap(bitmap);
 //
                     simpleRecyclerAdapter = new ProfileAdapter(username, getActivity(), yourList);

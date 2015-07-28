@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -27,11 +28,11 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.gps.GPSTracker;
 import com.mobiles.mkshop.pojos.LoginDetails;
-import com.mobiles.mkshop.R;
 
 import java.lang.reflect.Type;
 
@@ -53,6 +54,8 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
     GoogleApiClient googleApiClient;
     LocationRequest locationRequest;
     LoginDetails loginDetailsList;
+    MaterialDialog materialDialog;
+
 
     public static Attendance newInstance() {
         Attendance fragment = new Attendance();
@@ -80,6 +83,11 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
         }.getType();
         loginDetailsList = new Gson().fromJson(json, type);
 
+        materialDialog = new MaterialDialog.Builder(getActivity())
+                .progress(true, 0)
+                .cancelable(false)
+                .build();
+
 
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +98,9 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
 
                     start.setLatitude(gps.getLatitude());
                     start.setLongitude(gps.getLongitude());
+               com.mobiles.mkshop.pojos.Location location=     loginDetailsList.getLocation();
+                    loginDetailsList.getLocation().getLatitude();
+                    loginDetailsList.getLocation().getLongitude();
                     end.setLatitude(Double.parseDouble(loginDetailsList.getLocation().getLatitude()));
                     end.setLongitude(Double.parseDouble(loginDetailsList.getLocation().getLongitude()));
                     double distance = start.distanceTo(end);
@@ -200,6 +211,10 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
 
 
     protected void startLocationUpdates() {
+
+
+        materialDialog.show();
+
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient,
                 locationRequest,
@@ -207,7 +222,9 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
         ).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(Status status) {
-                MkShop.toast(getActivity(), "mark your attendance now");
+
+                materialDialog.dismiss();
+
             }
         });
 

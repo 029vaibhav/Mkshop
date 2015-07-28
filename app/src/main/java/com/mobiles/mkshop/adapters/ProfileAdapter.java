@@ -11,11 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.Profile;
 import com.mobiles.mkshop.pojos.UserType;
-import com.mobiles.mkshop.R;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,11 +36,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
     String username;
 
 
-
     public ProfileAdapter(String username, Context context, List<Profile> list) {
         this.list = list;
         this.context = context;
-        this.username=username;
+        this.username = username;
 
     }
 
@@ -56,52 +55,57 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
     public void onBindViewHolder(final VersionViewHolder versionViewHolder, int i) {
 
 
-        if (!list.get(i).getTitle().equalsIgnoreCase("photo")){
+        if (!list.get(i).getTitle().equalsIgnoreCase("photo")) {
             versionViewHolder.title.setText(list.get(i).getTitle());
-        versionViewHolder.subTitle.setText(list.get(i).getvalue());
-        if (!MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name()) && versionViewHolder.title.getText().toString().equalsIgnoreCase("role"))
-            versionViewHolder.imageView.setEnabled(false);
-        else
-            versionViewHolder.imageView.setEnabled(true);
+            versionViewHolder.subTitle.setText(list.get(i).getvalue());
+            if (!MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name()) && versionViewHolder.title.getText().toString().equalsIgnoreCase("role"))
+                versionViewHolder.imageView.setEnabled(false);
+            else
+                versionViewHolder.imageView.setEnabled(true);
 
 
-        versionViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MaterialDialog.Builder(context)
-                        .title("edit " + versionViewHolder.title.getText())
-                        .input(versionViewHolder.title.getText(), versionViewHolder.subTitle.getText(), new MaterialDialog.InputCallback() {
-                            @Override
-                            public void onInput(MaterialDialog dialog, final CharSequence input) {
+            versionViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new MaterialDialog.Builder(context)
+                            .title("edit " + versionViewHolder.title.getText())
+                            .input(versionViewHolder.title.getText(), versionViewHolder.subTitle.getText(), new MaterialDialog.InputCallback() {
+                                @Override
+                                public void onInput(MaterialDialog dialog, final CharSequence input) {
 
-                                Map map = new HashMap();
-                                map.put(versionViewHolder.title.getText(), input.toString());
-                                Client.INSTANCE.updateProfile(MkShop.AUTH, username, map, new Callback<String>() {
-                                    @Override
-                                    public void success(String s, Response response) {
+                                    Map map = new HashMap();
+                                    map.put(versionViewHolder.title.getText(), input.toString());
+                                    Client.INSTANCE.updateProfile(MkShop.AUTH, username, map, new Callback<String>() {
+                                        @Override
+                                        public void success(String s, Response response) {
 
-                                        MkShop.toast(context, s);
-                                        if (s != null && s.equalsIgnoreCase("profile updated"))
-                                            versionViewHolder.subTitle.setText(input.toString());
+                                            MkShop.toast(context, s);
+                                            if (s != null && s.equalsIgnoreCase("profile updated"))
+                                                versionViewHolder.subTitle.setText(input.toString());
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void failure(RetrofitError error) {
+                                        @Override
+                                        public void failure(RetrofitError error) {
 
-                                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                            MkShop.toast(context, "please check your internet connection");
-
-
-                                    }
-                                });
-                            }
-                        }).show();
-            }
-        });
+                                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                                MkShop.toast(context, "please check your internet connection");
 
 
-    } }
+                                        }
+                                    });
+                                }
+                            }).show();
+                }
+            });
+
+
+        } else {
+            versionViewHolder.title.setVisibility(View.GONE);
+            versionViewHolder.subTitle.setVisibility(View.GONE);
+            versionViewHolder.imageView.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public int getItemCount() {
