@@ -65,6 +65,7 @@ public class PartsRequestFragment extends Fragment {
         materialDialog = new MaterialDialog.Builder(getActivity())
                 .progress(false, 0)
                 .content("please wait")
+                .cancelable(false)
                 .build();
 
         listView = (ListView) viewGroup.findViewById(R.id.repairlist);
@@ -92,7 +93,6 @@ public class PartsRequestFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2,
                                       int arg3) {
-                partRequestAdapter.Filter(arg0.toString());
                 // TODO Auto-generated method stub
             }
         });
@@ -140,6 +140,7 @@ public class PartsRequestFragment extends Fragment {
             Client.INSTANCE.getPartList(MkShop.AUTH, new Callback<List<PartsRequests>>() {
                 @Override
                 public void success(List<PartsRequests> partsRequestses, Response response) {
+                    if(materialDialog !=null &&materialDialog.isShowing())
                     materialDialog.dismiss();
                     partsRequestsList = partsRequestses;
                     Myenum.INSTANCE.setPartsRequestsList(partsRequestsList);
@@ -150,6 +151,7 @@ public class PartsRequestFragment extends Fragment {
 
                 @Override
                 public void failure(RetrofitError error) {
+                    if(materialDialog !=null &&materialDialog.isShowing())
                     materialDialog.dismiss();
 
                     if (error.getKind().equals(RetrofitError.Kind.NETWORK)) {

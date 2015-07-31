@@ -102,6 +102,7 @@ public class UserListFragment extends Fragment {
                 @Override
                 public void success(List<UserListAttendance> userListAttendances, Response response) {
 
+                    if(dialog!=null && dialog.isShowing())
                     dialog.dismiss();
                     userListItemAdpater = new UserListItemAdpater(UserListFragment.this, userListAttendances);
                     recyclerView.setAdapter(userListItemAdpater);

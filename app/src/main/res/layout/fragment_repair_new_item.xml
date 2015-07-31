@@ -26,7 +26,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="Brand"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <AutoCompleteTextView
                 android:drawableRight="@drawable/ic_action_transparent"
@@ -40,7 +40,7 @@
                 android:background="@drawable/border_text"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 fontPath="fonts/rr.ttf"
@@ -52,7 +52,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="Model"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <AutoCompleteTextView
                 android:drawableRight="@drawable/ic_action_transparent"
@@ -66,7 +66,7 @@
                 android:background="@drawable/border_text"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
 
             <TextView
@@ -79,7 +79,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="Status"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/status"
@@ -92,7 +92,7 @@
                 android:drawableRight="@drawable/ic_action_status"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 fontPath="fonts/rr.ttf"
@@ -104,7 +104,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="Job no"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <EditText
 
@@ -121,7 +121,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
 
             <TextView
@@ -134,7 +134,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="Problem"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/problemedit"
@@ -151,7 +151,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:singleLine="false"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
 
             <TextView
@@ -164,7 +164,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="Price"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
 
             <EditText
@@ -175,7 +175,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/ic_action_rupees"
+                android:drawableRight="@drawable/ic_action_rupees"
                 android:drawablePadding="10dp"
                 android:ems="10"
                 android:background="@drawable/border_text"
@@ -184,10 +184,11 @@
                 android:inputType="number"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
 
             <TextView
+                android:id="@+id/dateTitle"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -196,8 +197,8 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Brand"
-                android:textSize="15sp"
+                android:text="Expected Delivery date"
+                android:textSize="14sp"
                 android:visibility="invisible" />
 
             <TextView
@@ -208,11 +209,10 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/border_text"
-                android:drawableLeft="@drawable/ic_action_smallcalendar"
+                android:drawableRight="@drawable/ic_action_smallcalendar"
                 android:gravity="center"
-                android:hint="Delivery Date"
                 android:padding="10dp"
-                android:textSize="20dp"
+                android:textSize="18sp"
                 android:visibility="gone" />
 
 

@@ -1,10 +1,14 @@
 package com.mobiles.mkshop.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 /**
  * Created by vaibhav on 23/7/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Product {
 
     String infrared,brand, modelNo, sim, screenSize, displayType, os, iMemory, eMemory, fCamera, bCamera, bluetooth, wlan,nfc,radio, price, battery;
@@ -36,11 +40,11 @@ public class Product {
         this.brand = brand;
     }
 
-    public String getModel() {
+    public String getModelNo() {
         return modelNo;
     }
 
-    public void setModel(String model) {
+    public void setModelNo(String model) {
         this.modelNo = model;
     }
 
@@ -68,11 +72,11 @@ public class Product {
         this.displayType = displayType;
     }
 
-    public String getPlatform() {
+    public String getOs() {
         return os;
     }
 
-    public void setPlatform(String platform) {
+    public void setOs(String platform) {
         this.os = platform;
     }
 
@@ -116,11 +120,11 @@ public class Product {
         this.bluetooth = bluetooth;
     }
 
-    public String getWifi() {
+    public String getWlan() {
         return wlan;
     }
 
-    public void setWifi(String wifi) {
+    public void setWlan(String wifi) {
         this.wlan = wifi;
     }
 

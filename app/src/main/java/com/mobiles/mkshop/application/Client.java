@@ -2,6 +2,8 @@ package com.mobiles.mkshop.application;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.mobiles.mkshop.pojos.AttendanceDates;
 import com.mobiles.mkshop.pojos.Leader;
 import com.mobiles.mkshop.pojos.Location;
@@ -21,6 +23,7 @@ import java.util.Map;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.Response;
+import retrofit.converter.JacksonConverter;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
@@ -149,11 +152,15 @@ public enum Client {
     Client() {
 
 //
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JodaModule());
 
+        JacksonConverter jacksonConverter = new JacksonConverter(objectMapper);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 //  .setEndpoint("http://52.74.153.158:8080")
                 .setEndpoint("http://mobiweb.co.in:80")
+                .setConverter(jacksonConverter)
                 .setLog(new RestAdapter.Log() {
                     @Override
                     public void log(String message) {

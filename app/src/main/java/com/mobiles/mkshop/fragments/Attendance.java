@@ -31,7 +31,6 @@ import com.google.gson.reflect.TypeToken;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.gps.GPSTracker;
 import com.mobiles.mkshop.pojos.LoginDetails;
 
 import java.lang.reflect.Type;
@@ -49,12 +48,13 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
 
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     public static String TAG = "Attendance";
-    GPSTracker gps;
+
     TextView attendance;
     GoogleApiClient googleApiClient;
     LocationRequest locationRequest;
     LoginDetails loginDetailsList;
     MaterialDialog materialDialog;
+    Location startLocation;
 
 
     public static Attendance newInstance() {
@@ -73,9 +73,9 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         MkShop.SCRREN = "Attendance";
-        gps = new GPSTracker(getActivity());
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_attendance, container, false);
         attendance = (TextView) viewGroup.findViewById(R.id.attendancetext);
+
 
         sharedPreferences = getActivity().getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("DETAIL", null);
@@ -92,44 +92,10 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (gps.canGetLocation()) {
-
-                    Location start = new Location("A"), end = new Location("B");
-
-                    start.setLatitude(gps.getLatitude());
-                    start.setLongitude(gps.getLongitude());
-                    if (loginDetailsList.getLocation() == null) {
-                        MkShop.toast(getActivity(), "Ask your admin to provide your location");
-                        return;
-                    }
 
 
-                    end.setLatitude(Double.parseDouble(loginDetailsList.getLocation().getLatitude()));
-                    end.setLongitude(Double.parseDouble(loginDetailsList.getLocation().getLongitude()));
-                    double distance = start.distanceTo(end);
-                    if (distance <= Integer.parseInt(loginDetailsList.getLocation().getRadius())) {
-                        Client.INSTANCE.markAttendance(MkShop.AUTH, MkShop.Username, new Callback<String>() {
-                            @Override
-                            public void success(String s, Response response) {
-                                MkShop.toast(getActivity(), s);
-                            }
+                showSettingsAlert();
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                    MkShop.toast(getActivity(), "please check your internet connection");
-                                else MkShop.toast(getActivity(), error.getMessage());
-
-                            }
-                        });
-                    } else {
-                        MkShop.toast(getActivity(), "your are not in the coverage area");
-                    }
-
-
-                } else {
-                    showSettingsAlert();
-                }
             }
         });
 
@@ -225,11 +191,64 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
         ).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(Status status) {
-
-                materialDialog.dismiss();
+                markAttendance();
 
             }
         });
+
+    }
+
+    private void markAttendance() {
+
+        Location start = new Location("A");
+
+
+        if (loginDetailsList.getLocation() == null) {
+            MkShop.toast(getActivity(), "Ask your admin to provide your location");
+            if (materialDialog != null && materialDialog.isShowing())
+                materialDialog.dismiss();
+            return;
+        }
+
+        if (startLocation == null) {
+            if (materialDialog != null && materialDialog.isShowing())
+                materialDialog.dismiss();
+            MkShop.toast(getActivity(), "Please try after 10 secs while we fetch your location");
+            return;
+        }
+
+        Location end = new Location("B");
+        end.setLatitude(Double.parseDouble(loginDetailsList.getLocation().getLatitude()));
+        end.setLongitude(Double.parseDouble(loginDetailsList.getLocation().getLongitude()));
+        double distance = startLocation.distanceTo(end);
+
+
+        Log.e("locationm", "gps" + startLocation.getLatitude() + "gps-lon" + startLocation.getLongitude() + "dis" + distance);
+        if (distance <= 50+(Integer.parseInt(loginDetailsList.getLocation().getRadius()))) {
+            Client.INSTANCE.markAttendance(MkShop.AUTH, MkShop.Username, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                    MkShop.toast(getActivity(), s);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                        MkShop.toast(getActivity(), "please check your internet connection");
+                    else MkShop.toast(getActivity(), error.getMessage());
+
+                }
+            });
+        } else {
+            if (materialDialog != null && materialDialog.isShowing())
+                materialDialog.dismiss();
+            MkShop.toast(getActivity(), "your are not in the coverage area");
+        }
+
 
     }
 
@@ -255,6 +274,12 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
 
     @Override
     public void onLocationChanged(Location location) {
+
+
+        startLocation = location;
+
+//
+
 
     }
 

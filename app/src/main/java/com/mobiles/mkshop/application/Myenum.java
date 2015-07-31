@@ -180,7 +180,7 @@ public enum Myenum {
     Predicate<Sales> predicateMobileList = new Predicate<Sales>() {
         @Override
         public boolean apply(Sales input) {
-            return input.getProductType().equalsIgnoreCase(ProductType.Mobile.name());
+            return input.getType().equalsIgnoreCase(ProductType.Mobile.name());
         }
 
     };
@@ -188,7 +188,7 @@ public enum Myenum {
     Predicate<Sales> predicateAccList = new Predicate<Sales>() {
         @Override
         public boolean apply(Sales input) {
-            return input.getProductType().equalsIgnoreCase(ProductType.Accessory.name());
+            return input.getType().equalsIgnoreCase(ProductType.Accessory.name());
         }
 
     };

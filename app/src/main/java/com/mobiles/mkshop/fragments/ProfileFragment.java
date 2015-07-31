@@ -173,6 +173,7 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
                     Client.INSTANCE.uploadImage(MkShop.AUTH, username, typedFile, "", new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
+                            if(materialDialog !=null &&materialDialog.isShowing())
                             materialDialog.dismiss();
                             header.setImageURI(Uri.parse(new File(image
                                     .getFileThumbnail()).toString()));

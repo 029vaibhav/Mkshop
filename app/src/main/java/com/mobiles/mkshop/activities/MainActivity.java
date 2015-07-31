@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar mToolbar;
     Bitmap bitmapAvtar = null;
     LoginDetails loginDetailsList;
+    long back_pressed;
 
 
     @Override
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity
                 case 4:
                     //View Product
 
-                        fragment = new ViewProductFragment();
+                    fragment = new ViewProductFragment();
 
                     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
@@ -242,11 +243,33 @@ public class MainActivity extends AppCompatActivity
             }
             getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         } else {
-            super.onBackPressed();
+            if (back_pressed + 2000 > System.currentTimeMillis())
+                super.onBackPressed();
+            else
+                Toast.makeText(getBaseContext(), "Press once again to exit!",
+                        Toast.LENGTH_SHORT).show();
+            back_pressed = System.currentTimeMillis();
 
         }
     }
 
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+
+        if (menu.size() == 3) {
+            if (sharedPreferences.getBoolean("NOTI", false)) {
+                menu.getItem(2).setTitle("Disable notification");
+            } else {
+                menu.getItem(2).setTitle("Enable notification");
+
+            }
+            MainActivity.this.invalidateOptionsMenu();
+
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -254,6 +277,7 @@ public class MainActivity extends AppCompatActivity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
+
             getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
@@ -296,7 +320,7 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
-            return true;
+
         } else if (id == R.id.profile) {
 
             Fragment fragment = getFragmentManager().findFragmentByTag(ProfileFragment.TAG);
@@ -306,9 +330,41 @@ public class MainActivity extends AppCompatActivity
             getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
 
-            return true;
         } else if (id == R.id.notification) {
-            notification();
+            Boolean noti = sharedPreferences.getBoolean("NOTI", false);
+            if (noti) {
+                sharedPreferences.edit().putBoolean("NOTI", !noti).apply();
+                aController = (Controller) getApplicationContext();
+
+
+                mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+
+                        // Register on our server
+                        // On server creates a new user
+                        aController.unregister(MainActivity.this, sharedPreferences.getString("reg", ""));
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        mRegisterTask = null;
+                        sharedPreferences.edit().putString("reg", null).apply();
+                    }
+
+                };
+                // execute AsyncTask
+                mRegisterTask.execute(null, null, null);
+
+
+            } else {
+                sharedPreferences.edit().putBoolean("NOTI", !noti).apply();
+                notification();
+
+            }
+
         }
 
 
@@ -352,6 +408,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     protected void onPostExecute(Void result) {
                         mRegisterTask = null;
+                        sharedPreferences.edit().putString("reg", regId).apply();
                     }
 
                 };
@@ -381,12 +438,14 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     protected void onPostExecute(Void result) {
                         mRegisterTask = null;
+                        sharedPreferences.edit().putString("reg", regId).apply();
                     }
 
                 };
 
                 // execute AsyncTask
                 mRegisterTask.execute(null, null, null);
+
             }
         }
 

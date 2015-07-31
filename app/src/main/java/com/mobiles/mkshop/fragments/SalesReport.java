@@ -241,9 +241,10 @@ public class SalesReport extends Fragment {
             @Override
             public void success(final List<Sales> sales, Response response) {
 
-
+                if(materialDialog !=null &&materialDialog.isShowing())
                 materialDialog.dismiss();
                 Myenum.INSTANCE.setSalesList(sales);
+                if(materialDialog !=null &&materialDialog.isShowing())
                 materialDialog.dismiss();
                 adapter = new TabsPagerAdapter(myContext.getSupportFragmentManager());
                 viewPager.setAdapter(adapter);
@@ -264,7 +265,7 @@ public class SalesReport extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-
+                if(materialDialog !=null &&materialDialog.isShowing())
                 materialDialog.dismiss();
                 MkShop.toast(getActivity(), error.getMessage().toString());
 

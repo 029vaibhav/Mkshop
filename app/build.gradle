@@ -73,6 +73,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.sothree.slidinguppanel:library:3.1.0'
     compile 'com.kbeanie:image-chooser-library:1.4.4@aar'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.0'
+    compile 'com.squareup.retrofit:converter-jackson:1.9.0'
     compile project(':library')
     compile files('libs/gcm.jar')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.0@aar') {

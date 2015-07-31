@@ -33,5 +33,4 @@ public class MkShop extends Controller {
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
     }
 
-
 }

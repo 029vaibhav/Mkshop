@@ -1,8 +1,12 @@
 package com.mobiles.mkshop.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by vaibhav on 4/7/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class UserListAttendance {
     String username;
 

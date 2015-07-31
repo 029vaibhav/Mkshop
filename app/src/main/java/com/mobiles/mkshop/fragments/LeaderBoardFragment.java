@@ -245,8 +245,10 @@ public class LeaderBoardFragment extends Fragment {
                 @Override
                 public void success(List<Leader> leaders, Response response) {
 
+                    if(materialDialog !=null &&materialDialog.isShowing())
                     materialDialog.dismiss();
                     Myenum.INSTANCE.setLeaderList(leaders);
+                    if(materialDialog !=null &&materialDialog.isShowing())
                     materialDialog.dismiss();
                     adapter = new TabsPagerAdapterLeader(myContext.getSupportFragmentManager());
                     viewPager.setAdapter(adapter);
@@ -258,6 +260,7 @@ public class LeaderBoardFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
+                    if(materialDialog !=null &&materialDialog.isShowing())
                     materialDialog.dismiss();
                     if(error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(getActivity(),"Please check your internet connection");

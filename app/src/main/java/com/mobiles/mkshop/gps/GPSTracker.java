@@ -56,12 +56,10 @@ public class GPSTracker extends Service implements LocationListener
 					.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
 			// getting network status
-			isNetworkEnabled = locationManager
-					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
 			if (!isGPSEnabled) {
 				// no network provider is enabled
-				
+				this.canGetLocation = false;
 //				 Intent intent=new Intent("android.location.GPS_ENABLED_CHANGE");
 //					intent.putExtra("enabled", true);
 //					sendBroadcast(intent);

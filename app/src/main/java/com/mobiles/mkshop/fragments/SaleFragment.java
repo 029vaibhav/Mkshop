@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.ProductType;
 import com.mobiles.mkshop.pojos.Sales;
-import com.mobiles.mkshop.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,8 +45,8 @@ public class SaleFragment extends Fragment {
 
     MaterialDialog materialDialog;
     private RadioGroup radiogroup;
-    private TextView brand, accessoryType, modelNo;
-    EditText quantity, price, other;
+    private TextView brand, accessoryType, modelNo, imeitextview;
+    EditText quantity, price, other, customerName, imei, mobile;
     Button submit;
     List<Sales> salesList, modelSalesList, productTypeList;
     List<String> brandList, modelList, accessoryTypeList;
@@ -97,6 +98,10 @@ public class SaleFragment extends Fragment {
         price = (EditText) v.findViewById(R.id.priceEdit);
         other = (EditText) v.findViewById(R.id.otheredit);
         submit = (Button) v.findViewById(R.id.submit);
+        imeitextview = (TextView) v.findViewById(R.id.imeitextview);
+        customerName = (EditText) v.findViewById(R.id.customerName);
+        mobile = (EditText) v.findViewById(R.id.mobile);
+        imei = (EditText) v.findViewById(R.id.imei);
 
 
         if (getArguments() != null) {
@@ -115,15 +120,23 @@ public class SaleFragment extends Fragment {
         Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
             @Override
             public void success(List<Sales> sales, Response response) {
-
+                if(materialDialog !=null &&materialDialog.isShowing())
                 materialDialog.dismiss();
                 salesList = sales;
-                productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
-                    @Override
-                    public boolean apply(Sales input) {
-                        return (input.getProductType().equalsIgnoreCase(stringProductType));
-                    }
-                }));
+
+                try {
+                    productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
+                        @Override
+                        public boolean apply(Sales input) {
+                            return (input.getType().equalsIgnoreCase(stringProductType));
+                        }
+                    }));
+                }
+                catch (Exception e)
+                {
+                    Log.e("Err",e.getMessage());
+                }
+
 
                 Set<String> brand = new HashSet();
                 for (int i = 0; i < productTypeList.size(); i++) {
@@ -221,7 +234,7 @@ public class SaleFragment extends Fragment {
                         List<Sales> newArrayList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<Sales>() {
                             @Override
                             public boolean apply(Sales input) {
-                                return (input.getProductType().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
+                                return (input.getType().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
                             }
                         }));
 
@@ -298,6 +311,15 @@ public class SaleFragment extends Fragment {
                 } else if (price.getText().length() <= 0) {
                     toast(getActivity(), "please enter price");
 
+                } else if (customerName.getText().length() <= 0) {
+                    toast(getActivity(), "please enter customer name");
+
+                } else if (mobile.getText().length() != 10) {
+                    toast(getActivity(), "mobile no should be 10 digit");
+
+                } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && imei.getText().length() == 0) {
+                    toast(getActivity(), "please enter imei");
+
                 } else {
                     if (stringModel.equalsIgnoreCase("other")) {
                         stringModel = other.getText().toString();
@@ -331,6 +353,9 @@ public class SaleFragment extends Fragment {
                         stringModel = null;
                         stringAccessory = null;
                         stringBrand = null;
+                        imeitextview.setVisibility(View.VISIBLE);
+                        imei.setVisibility(View.VISIBLE);
+
 
                         modelSalesList.clear();
                         productTypeList.clear();
@@ -340,7 +365,7 @@ public class SaleFragment extends Fragment {
                         productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
                             @Override
                             public boolean apply(Sales input) {
-                                return (input.getProductType().equalsIgnoreCase(stringProductType));
+                                return (input.getType().equalsIgnoreCase(stringProductType));
                             }
                         }));
 
@@ -365,6 +390,8 @@ public class SaleFragment extends Fragment {
                         stringModel = null;
                         stringAccessory = null;
                         stringBrand = null;
+                        imeitextview.setVisibility(View.GONE);
+                        imei.setVisibility(View.GONE);
 
 
                         modelSalesList.clear();
@@ -375,7 +402,7 @@ public class SaleFragment extends Fragment {
                         productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
                             @Override
                             public boolean apply(Sales input) {
-                                return (input.getProductType().equalsIgnoreCase(stringProductType));
+                                return (input.getType().equalsIgnoreCase(stringProductType));
                             }
                         }));
 
@@ -416,7 +443,7 @@ public class SaleFragment extends Fragment {
 
 
             Sales sales = new Sales();
-            sales.setProductType(stringProductType);
+            sales.setType(stringProductType);
             sales.setBrand(stringBrand);
             sales.setModel(stringModel);
             if (stringAccessory == null)
@@ -426,6 +453,13 @@ public class SaleFragment extends Fragment {
             sales.setQuantity("1");
             sales.setPrice(price.getText().toString());
             sales.setUsername(MkShop.Username);
+            sales.setCustomerName(customerName.getText().toString());
+            sales.setMobile(mobile.getText().toString());
+            if (imei.getText().length() == 0)
+                sales.setImei("");
+            else
+                sales.setImei(imei.getText().toString());
+
 
             Client.INSTANCE.sales(MkShop.AUTH, sales, new Callback<String>() {
                 @Override

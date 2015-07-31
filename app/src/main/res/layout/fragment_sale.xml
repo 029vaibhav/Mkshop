@@ -66,7 +66,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:textSize="15sp"/>
+                android:textSize="14sp"/>
 
 
             <TextView
@@ -83,7 +83,7 @@
                 android:gravity="center"
                 android:hint="Accesory"
                 android:padding="10dp"
-                android:textSize="20dp"
+                android:textSize="18sp"
                 android:visibility="gone" />
 
 
@@ -100,7 +100,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:textSize="15sp"/>
+                android:textSize="14sp"/>
 
                 <TextView
                     android:layout_marginBottom="10dp"
@@ -120,7 +120,7 @@
                     android:inputType="number"
                     android:padding="10dp"
                     android:singleLine="true"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
 
             <!--<TextView-->
@@ -137,7 +137,7 @@
             <!--android:gravity="center"-->
             <!--android:padding="10dp"-->
             <!--android:hint="Brand"-->
-            <!--android:textSize="20dp" />-->
+            <!--android:textSize="18sp" />-->
 
             <TextView
                 android:text="Model"
@@ -152,7 +152,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:textSize="15sp"/>
+                android:textSize="14sp"/>
 
 
             <TextView
@@ -168,7 +168,7 @@
                 android:drawableRight="@drawable/right_arrow"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/otheredit"
@@ -185,7 +185,7 @@
                 android:hint="Model no"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textSize="20dp"
+                android:textSize="18sp"
                 android:visibility="gone" />
 
 
@@ -202,7 +202,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:textSize="15sp"/>
+                android:textSize="14sp"/>
 
 
                 <EditText
@@ -222,13 +222,14 @@
                     android:inputType="number"
                     android:padding="10dp"
                     android:singleLine="true"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
+
 
 
             <TextView
-                android:text="Price"
+                android:text="IMEI no"
 
-                android:id="@+id/text_input_layout"
+                android:id="@+id/imeitextview"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -238,7 +239,43 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:textSize="15sp"/>
+                android:textSize="14sp"/>
+
+
+            <EditText
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/imeitextview"
+                android:drawableRight="@drawable/ic_action_rupees"
+                android:id="@+id/imei"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:text="Price"
+
+                android:id="@+id/text_input_layout"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/imei"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="14sp"/>
 
 
                 <EditText
@@ -246,7 +283,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_below="@+id/text_input_layout"
-                    android:drawableLeft="@drawable/ic_action_rupees"
+                    android:drawableRight="@drawable/ic_action_rupees"
                     android:id="@+id/priceEdit"
                     fontPath="fonts/rr.ttf"
                     android:layout_width="match_parent"
@@ -258,17 +295,88 @@
                     android:inputType="number"
                     android:padding="10dp"
                     android:singleLine="true"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
+
+
+
+            <TextView
+                android:text="Customer name"
+                android:id="@+id/customerNameTextview"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/priceEdit"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="14sp"/>
+
+
+            <EditText
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/customerNameTextview"
+                android:drawableRight="@drawable/ic_action_customer"
+                android:id="@+id/customerName"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:text="Mobile no"
+                android:id="@+id/mobileTextview"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/customerName"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textSize="14sp"/>
+
+
+            <EditText
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/mobileTextview"
+                android:drawableRight="@drawable/ic_action_call"
+                android:id="@+id/mobile"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp" />
 
 
 
             <Button
+
                 android:id="@+id/submit"
                 style="?android:buttonBarButtonStyle"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/priceEdit"
+                android:layout_below="@+id/mobile"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_selector"

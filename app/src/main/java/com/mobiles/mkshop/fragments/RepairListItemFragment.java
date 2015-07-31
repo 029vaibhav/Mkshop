@@ -13,11 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.RepairPojo;
-import com.mobiles.mkshop.R;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -208,7 +208,7 @@ public class RepairListItemFragment extends Fragment {
         protected Void doInBackground(Void... params) {
 
 
-            Client.INSTANCE.sendService(MkShop.AUTH,service, new Callback<String>() {
+            Client.INSTANCE.sendService(MkShop.AUTH, service, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {
                     MkShop.toast(getActivity(), s);

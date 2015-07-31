@@ -75,11 +75,6 @@ public class ServiceReport extends Fragment {
                 .build();
 
 
-
-
-
-
-
          viewPager = (ViewPager) viewGroup.findViewById(R.id.pager_report);
         fromDate = (TextView) viewGroup.findViewById(R.id.fromDate);
         toDate = (TextView) viewGroup.findViewById(R.id.toDate);
@@ -161,7 +156,7 @@ public class ServiceReport extends Fragment {
 
 
                 Myenum.INSTANCE.setServiceList(serviceList);
-
+                if(materialDialog !=null &&materialDialog.isShowing())
                 materialDialog.dismiss();
                 adapter = new TabsPagerAdapterService(myContext.getSupportFragmentManager());
                 viewPager.setAdapter(adapter);
@@ -173,7 +168,7 @@ public class ServiceReport extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-
+                if(materialDialog !=null &&materialDialog.isShowing())
                 materialDialog.dismiss();
                 MkShop.toast(getActivity(), error.getMessage());
 

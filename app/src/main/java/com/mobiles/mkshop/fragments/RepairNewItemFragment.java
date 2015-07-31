@@ -50,7 +50,7 @@ public class RepairNewItemFragment extends Fragment {
     //  private RadioGroup radiogroup;
     private TextView date, status;
     AutoCompleteTextView brand, modelNo;
-
+TextView dateTitle;
     List<Sales> salesList, modelSalesList;
     List<String> brandList;
 
@@ -97,6 +97,7 @@ public class RepairNewItemFragment extends Fragment {
         jobNo = (EditText) v.findViewById(R.id.jobnoedit);
         problem = (EditText) v.findViewById(R.id.problemedit);
         submit = (Button) v.findViewById(R.id.submit);
+        dateTitle = (TextView) v.findViewById(R.id.dateTitle);
 
 
         dialog.show();
@@ -204,8 +205,10 @@ public class RepairNewItemFragment extends Fragment {
                                     stringStatus = text.toString();
                                     if (!stringStatus.equalsIgnoreCase("Pending") || !stringStatus.equalsIgnoreCase("Delivered") || !stringStatus.equalsIgnoreCase("Returned")) {
                                         date.setVisibility(View.VISIBLE);
+                                        dateTitle.setVisibility(View.VISIBLE);
                                     } else {
                                         date.setVisibility(View.GONE);
+                                        dateTitle.setVisibility(View.GONE);
                                     }
 
                                     if (stringStatus.equalsIgnoreCase("Returned")) {

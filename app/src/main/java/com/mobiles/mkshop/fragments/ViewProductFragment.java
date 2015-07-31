@@ -85,7 +85,7 @@ public class ViewProductFragment extends Fragment {
                 salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<Sales>() {
                     @Override
                     public boolean apply(Sales input) {
-                        return (input.getProductType().equalsIgnoreCase(ProductType.Mobile.name()));
+                        return (input.getType().equalsIgnoreCase(ProductType.Mobile.name()));
                     }
                 }));
 

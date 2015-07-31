@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Sales {
 
     long id;
-    String type,brand,modelNo,quantity,price,accessoryType, username,path;
+    String type,brand,modelNo,quantity,price,accessoryType, username,path,customerName,mobile,imei;
 
     public long getId() {
         return id;
@@ -20,7 +20,31 @@ public class Sales {
         this.id = id;
     }
 
-    public String getProductType() {
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
+    public String getType() {
         return type;
     }
 
@@ -40,7 +64,7 @@ public class Sales {
         this.username = username;
     }
 
-    public void setProductType(String productType) {
+    public void setType(String productType) {
         this.type = productType;
     }
 

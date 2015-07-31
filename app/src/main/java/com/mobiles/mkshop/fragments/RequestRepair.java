@@ -67,6 +67,7 @@ public class RequestRepair extends Fragment {
         materialDialog = new MaterialDialog.Builder(getActivity())
                 .progress(false, 0)
                 .content("please wait")
+                .cancelable(false)
                 .build();
 
         listView = (ListView) view.findViewById(R.id.repairlist);
@@ -147,6 +148,7 @@ public class RequestRepair extends Fragment {
             Client.INSTANCE.getServiceList(MkShop.AUTH,new Callback<List<RepairPojo>>() {
                 @Override
                 public void success(List<RepairPojo> repairPojos, Response response) {
+                    if(materialDialog !=null &&materialDialog.isShowing())
                     materialDialog.dismiss();
                     repairList = repairPojos;
                     Myenum.INSTANCE.setServiceList(repairList);
@@ -157,6 +159,7 @@ public class RequestRepair extends Fragment {
 
                 @Override
                 public void failure(RetrofitError error) {
+                    if(materialDialog !=null &&materialDialog.isShowing())
                     materialDialog.dismiss();
                     MkShop.toast(getActivity(), "something went wrong please try again");
 

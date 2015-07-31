@@ -9,11 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.Location;
-import com.mobiles.mkshop.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class GeopointsFragment extends Fragment {
     public static String TAG = "GeopointsFragment";
 
     ListView listView;
+    MaterialDialog materialDialog;
+
 
     public static GeopointsFragment newInstance() {
         GeopointsFragment fragment = new GeopointsFragment();
@@ -48,10 +51,20 @@ public class GeopointsFragment extends Fragment {
 
         listView = (ListView) viewGroup.findViewById(R.id.locationList);
 
-        Client.INSTANCE.getAllLocation(MkShop.AUTH,new Callback<List<Location>>() {
+
+        materialDialog = new MaterialDialog.Builder(getActivity())
+                .progress(true, 0)
+                .cancelable(false)
+                .build();
+
+        materialDialog.show();
+
+        Client.INSTANCE.getAllLocation(MkShop.AUTH, new Callback<List<Location>>() {
             @Override
             public void success(final List<Location> locations, Response response) {
 
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 List<String> items = new ArrayList<String>();
                 for (int i = 0; i < locations.size(); i++) {
                     items.add(locations.get(i).getRole());
@@ -78,6 +91,11 @@ public class GeopointsFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
+                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                    MkShop.toast(getActivity(), "please check your internet connection");
+                else MkShop.toast(getActivity(), error.getMessage());
 
             }
         });

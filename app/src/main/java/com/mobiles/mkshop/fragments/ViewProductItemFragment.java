@@ -89,16 +89,16 @@ public class ViewProductItemFragment extends Fragment {
                 viewPager.setAdapter(adapter);
 
                 brand.setText(product.getBrand());
-                model.setText(product.getModel());
+                model.setText(product.getModelNo());
                 sim.setText(product.getSim());
                 screenSize.setText(product.getScreenSize());
                 displayType.setText(product.getDisplayType());
-                platform.setText(product.getPlatform());
+                platform.setText(product.getOs());
                 iMemory.setText(product.getiMemory());
                 eMemory.setText(product.geteMemory());
                 fCamera.setText(product.getfCamera());
                 rCamera.setText(product.getbCamera());
-                //  bluetooth.setText(product.getBluetooth()+"/"+product.getWifi()+"/"+product.getNfc()+"/"+product.getInfrared()+"/"+product.getRadio());
+              //  bluetooth.setText(product.getBluetooth()+"/"+product.getWlan()+"/"+product.getNfc()+"/"+product.getInfrared()+"/"+product.getRadio());
                 price.setText(product.getPrice());
                 battery.setText(product.getBattery());
 
@@ -116,7 +116,7 @@ public class ViewProductItemFragment extends Fragment {
             public void onClick(View v) {
 
 
-                SaleFragment fragment = SaleFragment.newInstance(p.getBrand(),p.getModel());
+                SaleFragment fragment = SaleFragment.newInstance(p.getBrand(),p.getModelNo());
 
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             }
