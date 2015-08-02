@@ -1,0 +1,306 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.mobiles.mkshop.fragments.SaleFragment">
+
+
+    <TextView
+        android:id="@+id/fortitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Please fill the sales form" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fortitle">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/brandtitle"
+
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/accessoryType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Brand"
+                android:textSize="14sp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/brandtext"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brandtitle"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_action_transparent"
+                android:ems="10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/brandtext"-->
+            <!--fontPath="fonts/rr.ttf"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/accessoryType"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:background="@drawable/border_text"-->
+            <!--android:drawableRight="@drawable/right_arrow"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:hint="Brand"-->
+            <!--android:textSize="18sp" />-->
+
+            <TextView
+                android:id="@+id/modeltitle"
+
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/brandtext"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Model"
+                android:textSize="14sp" />
+
+
+            <AutoCompleteTextView
+                android:id="@+id/modeltext"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/modeltitle"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_transparent"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/otheredit"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/modeltext"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawableRight="@drawable/ic_action_name"
+                android:gravity="center"
+                android:hint="Model no"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/priceEdit_text_input_layout"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/otheredit"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Quantity"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+
+            <EditText
+                android:id="@+id/quantityEdit"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/priceEdit_text_input_layout"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_action_transparent"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/basePriceTextView"
+
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/quantityEdit"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Base Price"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/basePrice"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/basePriceTextView"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_action_rupees"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/incentivetext"
+
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/basePrice"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Incentive Amount"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/incentiveAmount"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/incentivetext"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_action_rupees"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/quantitytextView"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/incentiveAmount"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Min Quantity "
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:text="1"
+                android:id="@+id/quantity"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/quantitytextView"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_action_quantity"
+                android:ems="10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+
+            <TextView
+
+                android:id="@+id/validity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/quantity"
+                android:layout_margin="10dp"
+                android:background="@drawable/border_text"
+                android:drawableLeft="@drawable/ic_action_calendar2"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Validity" />
+
+
+            <Button
+
+                android:id="@+id/submit"
+                style="?android:buttonBarButtonStyle"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/validity"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_selector"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:shadowRadius="0"
+                android:text="submit" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+</RelativeLayout>

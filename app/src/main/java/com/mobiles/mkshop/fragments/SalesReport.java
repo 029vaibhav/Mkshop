@@ -2,9 +2,9 @@ package com.mobiles.mkshop.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.SalesReportItemAdapter;
 import com.mobiles.mkshop.adapters.TabsPagerAdapter;
 import com.mobiles.mkshop.application.Client;
@@ -23,7 +24,6 @@ import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.ProductType;
 import com.mobiles.mkshop.pojos.Sales;
-import com.mobiles.mkshop.R;
 
 import org.joda.time.DateTime;
 
@@ -72,8 +72,6 @@ public class SalesReport extends Fragment {
         MkShop.SCRREN = "SalesReport";
 
 
-
-
         materialDialog = new MaterialDialog.Builder(getActivity())
                 .progress(true, 0)
                 .cancelable(false)
@@ -113,21 +111,26 @@ public class SalesReport extends Fragment {
 
 
                     sales1 = Myenum.INSTANCE.getSalesList(ProductType.Mobile);
-                    for (int i = 0; i < sales1.size(); i++) {
-                        tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
-                        tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getPrice());
+                    if (sales1 != null) {
+                        for (int i = 0; i < sales1.size(); i++) {
+                            tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
+                            tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getPrice());
+                        }
+                        totalRevenue.setText("" + tempRevenue);
+                        totalQuantity.setText("" + tempQuantity);
                     }
-                    totalRevenue.setText("" + tempRevenue);
-                    totalQuantity.setText("" + tempQuantity);
 
                 } else if (position == 1) {
                     sales1 = Myenum.INSTANCE.getSalesList(ProductType.Accessory);
-                    for (int i = 0; i < sales1.size(); i++) {
-                        tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
-                        tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getPrice());
+
+                    if (sales1 != null) {
+                        for (int i = 0; i < sales1.size(); i++) {
+                            tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
+                            tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getPrice());
+                        }
+                        totalRevenue.setText("" + tempRevenue);
+                        totalQuantity.setText("" + tempQuantity);
                     }
-                    totalRevenue.setText("" + tempRevenue);
-                    totalQuantity.setText("" + tempQuantity);
                 }
 
 
@@ -236,16 +239,15 @@ public class SalesReport extends Fragment {
         materialDialog.show();
 
 
-
-        Client.INSTANCE.getSalesReport(MkShop.AUTH,sFromdate, sToDate, new Callback<List<Sales>>() {
+        Client.INSTANCE.getSalesReport(MkShop.AUTH, sFromdate, sToDate, new Callback<List<Sales>>() {
             @Override
             public void success(final List<Sales> sales, Response response) {
 
-                if(materialDialog !=null &&materialDialog.isShowing())
-                materialDialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 Myenum.INSTANCE.setSalesList(sales);
-                if(materialDialog !=null &&materialDialog.isShowing())
-                materialDialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 adapter = new TabsPagerAdapter(myContext.getSupportFragmentManager());
                 viewPager.setAdapter(adapter);
 
@@ -265,13 +267,12 @@ public class SalesReport extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                if(materialDialog !=null &&materialDialog.isShowing())
-                materialDialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 MkShop.toast(getActivity(), error.getMessage().toString());
 
             }
         });
-
 
 
     }

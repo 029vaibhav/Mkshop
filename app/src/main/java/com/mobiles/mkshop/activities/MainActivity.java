@@ -1,6 +1,6 @@
 package com.mobiles.mkshop.activities;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +27,7 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.Attendance;
 import com.mobiles.mkshop.fragments.GeopointsFragment;
+import com.mobiles.mkshop.fragments.Incentive;
 import com.mobiles.mkshop.fragments.LeaderBoardFragment;
 import com.mobiles.mkshop.fragments.OffersFragment;
 import com.mobiles.mkshop.fragments.PartsRequestFragment;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
 
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.fragment_drawer);
+                getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
@@ -109,34 +110,34 @@ public class MainActivity extends AppCompatActivity
             switch (position) {
                 case 0:
                     //Attendance
-                    fragment = getFragmentManager().findFragmentByTag(Attendance.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(Attendance.TAG);
                     if (fragment == null) {
                         fragment = new Attendance();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 1: //sale
-                    fragment = getFragmentManager().findFragmentByTag(SaleFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(SaleFragment.TAG);
                     if (fragment == null) {
                         fragment = new SaleFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 2:
                     //request part
-                    fragment = getFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
                     if (fragment == null) {
                         fragment = new PartsRequestFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 3:
                     //service
-                    fragment = getFragmentManager().findFragmentByTag(RequestRepair.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(RequestRepair.TAG);
                     if (fragment == null) {
                         fragment = new RequestRepair();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
 
                 case 4:
@@ -144,15 +145,15 @@ public class MainActivity extends AppCompatActivity
 
                     fragment = new ViewProductFragment();
 
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 5:
                     //offers
-                    fragment = getFragmentManager().findFragmentByTag(OffersFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(OffersFragment.TAG);
                     if (fragment == null) {
                         fragment = new OffersFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
 
             }
@@ -165,61 +166,69 @@ public class MainActivity extends AppCompatActivity
 //                    if (fragment == null) {
 //                        fragment = new SalesReport();
 //                    }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 1: //service Report
                     fragment = new ServiceReport();
 //                    if (fragment == null) {
 //                        fragment = new ServiceReport();
 //                    }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 2:
                     //request part
-                    fragment = getFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
                     if (fragment == null) {
                         fragment = new PartsRequestFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 3:
                     //User data
-                    fragment = getFragmentManager().findFragmentByTag(UserListFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(UserListFragment.TAG);
                     if (fragment == null) {
                         fragment = new UserListFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 4:
                     //LeaderBoard
-                    fragment = getFragmentManager().findFragmentByTag(LeaderBoardFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(LeaderBoardFragment.TAG);
                     if (fragment == null) {
                         fragment = new LeaderBoardFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
 
                 case 7:
                     //set location
-                    fragment = getFragmentManager().findFragmentByTag(GeopointsFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(GeopointsFragment.TAG);
                     if (fragment == null) {
                         fragment = new GeopointsFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 5:
-                    fragment = getFragmentManager().findFragmentByTag(RevenueCompatorFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(RevenueCompatorFragment.TAG);
                     if (fragment == null) {
                         fragment = new RevenueCompatorFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case 6:
-                    fragment = getFragmentManager().findFragmentByTag(SendNotificationFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(SendNotificationFragment.TAG);
                     if (fragment == null) {
                         fragment = new SendNotificationFragment();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 8:
+                    //set incentive
+                    fragment = getSupportFragmentManager().findFragmentByTag(Incentive.TAG);
+                    if (fragment == null) {
+                        fragment = new Incentive();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
             }
         }
@@ -231,17 +240,17 @@ public class MainActivity extends AppCompatActivity
         if (mNavigationDrawerFragment.isDrawerOpen())
             mNavigationDrawerFragment.closeDrawer();
         else if (MkShop.SCRREN.equalsIgnoreCase("RepairListItemFragment")) {
-            Fragment fragment = getFragmentManager().findFragmentByTag(RequestRepair.TAG);
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(RequestRepair.TAG);
             if (fragment == null) {
                 fragment = new RequestRepair();
             }
-            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         } else if (MkShop.SCRREN.equalsIgnoreCase("PartsRequestListItemFragment")) {
-            Fragment fragment = getFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
             if (fragment == null) {
                 fragment = new PartsRequestFragment();
             }
-            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         } else {
             if (back_pressed + 2000 > System.currentTimeMillis())
                 super.onBackPressed();
@@ -323,11 +332,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.profile) {
 
-            Fragment fragment = getFragmentManager().findFragmentByTag(ProfileFragment.TAG);
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
             if (fragment == null) {
                 fragment = ProfileFragment.newInstance(MkShop.Username);
             }
-            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
 
         } else if (id == R.id.notification) {

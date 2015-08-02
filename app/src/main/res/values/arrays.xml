@@ -29,4 +29,10 @@
 
     </string-array>
 
+    <string-array name="delete">
+        <item name="delete">Delete</item>
+
+
+    </string-array>
+
 </resources>

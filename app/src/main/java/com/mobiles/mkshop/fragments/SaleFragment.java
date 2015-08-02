@@ -1,7 +1,7 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.Dialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -114,7 +114,7 @@ public class SaleFragment extends Fragment {
         accessoryTypeList = new ArrayList<>();
         modelSalesList = new ArrayList<>();
         modelList = new ArrayList<>();
-        ;
+
 
         materialDialog.show();
         Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {

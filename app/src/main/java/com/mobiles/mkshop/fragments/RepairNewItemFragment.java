@@ -1,7 +1,7 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -130,7 +130,7 @@ TextView dateTitle;
                 if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                     MkShop.toast(getActivity(), "please check your internect connection");
                 else
-                    MkShop.toast(getActivity(), "list is not available please try again");
+                    MkShop.toast(getActivity(), error.getMessage());
 
             }
         });

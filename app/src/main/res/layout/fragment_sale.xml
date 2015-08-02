@@ -117,7 +117,6 @@
                     android:editable="false"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -247,7 +246,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_below="@+id/imeitextview"
-                android:drawableRight="@drawable/ic_action_rupees"
+                android:drawableRight="@drawable/md_transparent"
                 android:id="@+id/imei"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"

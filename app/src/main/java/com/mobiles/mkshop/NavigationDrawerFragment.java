@@ -1,7 +1,6 @@
 package com.mobiles.mkshop;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -17,6 +16,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -143,6 +143,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
             items.add(new NavigationItem("Revenue Comparator", getResources().getDrawable(R.drawable.ic_action_analysis)));
             items.add(new NavigationItem("Send Notification", getResources().getDrawable(R.drawable.ic_action_noti)));
             items.add(new NavigationItem("Location", getResources().getDrawable(R.drawable.ic_action_gps)));
+            items.add(new NavigationItem("Incentive", getResources().getDrawable(R.drawable.ic_action_gps)));
 
             //  items.add(new NavigationItem("Todays Offers", getResources().getDrawable(R.drawable.prize)));
 

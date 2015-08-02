@@ -1,6 +1,5 @@
 package com.mobiles.mkshop.adapters;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
@@ -36,7 +35,7 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public android.support.v4.app.Fragment getItem(int position) {
 
 
         SalesReportList myFragment = SalesReportList.newInstance(position);

@@ -1,16 +1,16 @@
 package com.mobiles.mkshop.adapters;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.fragments.CalendarFragment;
 import com.mobiles.mkshop.fragments.ProfileFragment;
 import com.mobiles.mkshop.pojos.UserListAttendance;
-import com.mobiles.mkshop.R;
 
 import java.util.List;
 

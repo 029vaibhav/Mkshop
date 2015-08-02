@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Sales {
 
     long id;
-    String type,brand,modelNo,quantity,price,accessoryType, username,path,customerName,mobile,imei;
+    String type, brand, modelNo, quantity, price, accessoryType, username, path, customerName, mobile, imei, name,created;
 
     public long getId() {
         return id;
@@ -32,12 +32,32 @@ public class Sales {
         return mobile;
     }
 
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
     public String getImei() {
         return imei;
+    }
+
+    public void setModelNo(String modelNo) {
+        this.modelNo = modelNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setImei(String imei) {
@@ -85,7 +105,6 @@ public class Sales {
     }
 
 
-
     public String getQuantity() {
         return quantity;
     }
@@ -111,6 +130,12 @@ public class Sales {
         this.price = price;
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        Sales sales = (Sales) o;
+        if (this.getUsername().equalsIgnoreCase(sales.getUsername()))
+            return true;
+        return false;
+    }
 
 }

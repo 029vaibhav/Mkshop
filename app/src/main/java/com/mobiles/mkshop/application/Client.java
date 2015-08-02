@@ -5,6 +5,8 @@ import android.util.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.mobiles.mkshop.pojos.AttendanceDates;
+import com.mobiles.mkshop.pojos.ExpenseEntity;
+import com.mobiles.mkshop.pojos.IncentiveEntity;
 import com.mobiles.mkshop.pojos.Leader;
 import com.mobiles.mkshop.pojos.Location;
 import com.mobiles.mkshop.pojos.LoginDetails;
@@ -145,7 +147,18 @@ public enum Client {
         @POST("/mk/webservice/logout.php")
         void logout(@Query("username") String username, Callback<String> callback);
 
+        @POST("/mk/webservice/incentivemessage.php")
+        void createIncentive(@Header("AUTH") String auth, @Body IncentiveEntity incentiveEntity, Callback<String> callback);
 
+        @POST("/mk/webservice/allincentive.php")
+        void getIncentiveList(@Header("AUTH") String auth, Callback<List<IncentiveEntity>> incentiveEntityCallback);
+
+
+        @POST("/mk/webservice/incentivegetsales.php")
+        void getIncentiveUserList(@Header("AUTH") String auth, @Query("id") String id, Callback<List<Sales>> callback);
+
+        @POST("/mk/webservice/expenseinsert.php")
+        void payUserIncentive(@Header("AUTH") String auth, @Body ExpenseEntity expenseEntity, Callback<String> callback);
     }
 
 
@@ -158,8 +171,8 @@ public enum Client {
         JacksonConverter jacksonConverter = new JacksonConverter(objectMapper);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                //  .setEndpoint("http://52.74.153.158:8080")
-                .setEndpoint("http://mobiweb.co.in:80")
+                .setEndpoint("http://192.168.1.10:80")
+//                .setEndpoint("http://mobiweb.co.in:80")
                 .setConverter(jacksonConverter)
                 .setLog(new RestAdapter.Log() {
                     @Override
@@ -294,6 +307,23 @@ public enum Client {
 
     public void logout(@Query("username") String username, Callback<String> callback) {
         mobileService.logout(username, callback);
+    }
+
+    public void createIncentive(String auth, IncentiveEntity incentiveEntity, Callback<String> stringCallback) {
+        mobileService.createIncentive(auth, incentiveEntity, stringCallback);
+    }
+
+    public void getIncentiveList(String auth, Callback<List<IncentiveEntity>> incentiveEntityCallback) {
+        mobileService.getIncentiveList(auth, incentiveEntityCallback);
+    }
+
+    public void getIncentiveUserList(String auth, String id, Callback<List<Sales>> callback) {
+        mobileService.getIncentiveUserList(auth, id, callback);
+    }
+
+    public void payUserIncentive(String auth, ExpenseEntity expenseEntity, Callback<String> callback) {
+        mobileService.payUserIncentive(auth, expenseEntity, callback);
+
     }
 
 
