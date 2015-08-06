@@ -95,6 +95,7 @@ public class RevenueCompatorFragment extends Fragment {
 
                                                 for (int i = 0; i < response1.size(); i++) {
                                                     tempQuantity = tempQuantity + Integer.parseInt(response1.get(i).getQuantity());
+                                                    if(response1.get(i).getPrice()!=null)
                                                     tempRevenue = tempRevenue + Integer.parseInt(response1.get(i).getPrice());
                                                 }
                                                 totalRevenue.setText("" + tempRevenue);

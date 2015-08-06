@@ -69,48 +69,6 @@ public class LeaderBoardFragment extends Fragment {
         // Inflate the layout for this fragment
         MkShop.SCRREN = "LeaderBoardFragment";
 
-
-//        List<Leader> salesList = new ArrayList<Leader>();
-//        Leader sales = new Leader();
-//        sales.setName("vaibhav");
-//        sales.setRole("sm");
-//        sales.setQuantity("20");
-//        sales.setPrice("1200");
-//        salesList.add(sales);
-//        sales = new Leader();
-//        sales.setName("vaibhav");
-//        sales.setRole("sm");
-//        sales.setQuantity("20");
-//        sales.setPrice("2000");
-//        salesList.add(sales);
-//        sales = new Leader();
-//        sales.setName("vaibhav");
-//        sales.setRole("sm");
-//        sales.setQuantity("30");
-//        sales.setPrice("12000");
-//        salesList.add(sales);
-//        sales = new Leader();
-//        sales.setName("vaibhav");
-//        sales.setRole("sc");
-//        sales.setQuantity("10");
-//        sales.setPrice("1200");
-//        salesList.add(sales);
-//        sales = new Leader();
-//        sales.setName("vaibhav");
-//        sales.setRole("sm");
-//        sales.setQuantity("10");
-//        sales.setPrice("12000");
-//        salesList.add(sales);
-//        sales = new Leader();
-//        sales.setName("vaibhav");
-//        sales.setRole("sc");
-//        sales.setQuantity("50");
-//        sales.setPrice("100");
-//        salesList.add(sales);
-//
-//
-//        Myenum.INSTANCE.setLeaderList(salesList);
-
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_leader_board, container, false);
         viewPager = (ViewPager) viewGroup.findViewById(R.id.pager_leader);
         TextView quantity = (TextView) viewGroup.findViewById(R.id.quantity);
@@ -245,13 +203,13 @@ public class LeaderBoardFragment extends Fragment {
                 @Override
                 public void success(List<Leader> leaders, Response response) {
 
-                    if(materialDialog !=null &&materialDialog.isShowing())
-                    materialDialog.dismiss();
+
                     Myenum.INSTANCE.setLeaderList(leaders);
                     if(materialDialog !=null &&materialDialog.isShowing())
                     materialDialog.dismiss();
                     adapter = new TabsPagerAdapterLeader(myContext.getSupportFragmentManager());
                     viewPager.setAdapter(adapter);
+                    Myenum.INSTANCE.setToAndFromDate(sFromdate,sToDate);
 
 
 

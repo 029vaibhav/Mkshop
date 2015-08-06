@@ -1,6 +1,5 @@
 package com.mobiles.mkshop.activities;
 
-import android.support.v4.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +26,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.Attendance;
+import com.mobiles.mkshop.fragments.ExpenseManagerFragment;
 import com.mobiles.mkshop.fragments.GeopointsFragment;
 import com.mobiles.mkshop.fragments.Incentive;
 import com.mobiles.mkshop.fragments.LeaderBoardFragment;
@@ -200,7 +201,7 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
 
-                case 7:
+                case 9:
                     //set location
                     fragment = getSupportFragmentManager().findFragmentByTag(GeopointsFragment.TAG);
                     if (fragment == null) {
@@ -230,6 +231,14 @@ public class MainActivity extends AppCompatActivity
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
+                case 7:
+                    fragment = getSupportFragmentManager().findFragmentByTag(ExpenseManagerFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new ExpenseManagerFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+
             }
         }
     }

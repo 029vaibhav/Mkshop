@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ExpenseEntity {
 
     int id;
-    String brand,model,username,paymentType,paid,paymentDate,paidDate,amount;
+    String brand, modelNo, username, paymentType, paymentDate, amount, accessory, accessoryType, quantity, name;
 
     public int getId() {
         return id;
@@ -28,20 +28,52 @@ public class ExpenseEntity {
         return amount;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getAccessory() {
+        return accessory;
+    }
+
+    public void setAccessory(String accessory) {
+        this.accessory = accessory;
+    }
+
+    public String getAccessoryType() {
+        return accessoryType;
+    }
+
+    public void setAccessoryType(String accessoryType) {
+        this.accessoryType = accessoryType;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     public void setBrand(String brand) {
         this.brand = brand;
     }
 
-    public String getModel() {
-        return model;
+    public String getModelNo() {
+        return modelNo;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setModelNo(String model) {
+        this.modelNo = model;
     }
 
     public String getUsername() {
@@ -60,13 +92,6 @@ public class ExpenseEntity {
         this.paymentType = paymentType;
     }
 
-    public String getPaid() {
-        return paid;
-    }
-
-    public void setPaid(String paid) {
-        this.paid = paid;
-    }
 
     public String getPaymentDate() {
         return paymentDate;
@@ -76,11 +101,5 @@ public class ExpenseEntity {
         this.paymentDate = paymentDate;
     }
 
-    public String getPaidDate() {
-        return paidDate;
-    }
 
-    public void setPaidDate(String paidDate) {
-        this.paidDate = paidDate;
-    }
 }

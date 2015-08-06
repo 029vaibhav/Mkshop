@@ -33,7 +33,7 @@ public class Decorators implements CalendarCellDecorator {
 
         if (dateArrayList.contains(reportDate)) {
             Log.e("dates-matched",date.toString());
-            cellView.setBackgroundColor(Color.blue(2));
+            cellView.setBackgroundColor(Color.parseColor("#501abc9c"));
         }
         else {
             cellView.setBackgroundColor(Color.WHITE);

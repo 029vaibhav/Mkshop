@@ -3,7 +3,6 @@ package com.mobiles.mkshop.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,17 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.application.Client;
+import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.fragments.Incentive;
 import com.mobiles.mkshop.fragments.IncentiveUserListFragment;
 import com.mobiles.mkshop.pojos.IncentiveEntity;
 
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by vaibhav on 26/7/15.
@@ -67,18 +73,34 @@ public class IncentiveAdapter extends RecyclerView.Adapter<IncentiveAdapter.View
             public boolean onLongClick(View v) {
 
                 new MaterialDialog.Builder(context.getActivity())
-                        .content("extend or delete")
                         .items(R.array.delete)
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            }
-                        })
-                        .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                        .input("yyyy-mm-dd", "", new MaterialDialog.InputCallback() {
-                            @Override
-                            public void onInput(MaterialDialog dialog, CharSequence input) {
-                                // Do something
+
+                                Client.INSTANCE.deleteIncentiveMessage(MkShop.AUTH, incentiveEntity.getId(), "delete", new Callback<String>() {
+                                    @Override
+                                    public void success(String s, Response response) {
+
+                                        MkShop.toast(context.getActivity(), s);
+                                        Fragment fragment = new Incentive();
+
+                                        context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
+
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+
+                                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                            MkShop.toast(context.getActivity(), "please check your internet connection");
+                                        else
+                                            MkShop.toast(context.getActivity(), error.getMessage());
+
+
+                                    }
+                                });
                             }
                         }).show();
                 return false;

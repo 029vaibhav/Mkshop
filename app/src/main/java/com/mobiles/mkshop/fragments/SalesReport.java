@@ -190,16 +190,17 @@ public class SalesReport extends Fragment {
                         @Override
                         public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
 
+                            if (datePicker.isShown()) {
+                                String date = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
 
-                            String date = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
 
+                                toDate.setText(date);
+                                DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
 
-                            toDate.setText(date);
-                            DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
+                                sToDate = dt.toString("yyyy-MM-dd");
 
-                            sToDate = dt.toString("yyyy-MM-dd");
-
-                            executeQuery();
+                                executeQuery();
+                            }
 
 
                         }
@@ -281,64 +282,5 @@ public class SalesReport extends Fragment {
         return number <= 9 ? "0" + number : String.valueOf(number);
     }
 
-//    public class Getdata extends AsyncTask<Void, Void, Void> {
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute(aVoid);
-//
-//            materialDialog.dismiss();
-//            adapter = new TabsPagerAdapter(myContext.getSupportFragmentManager());
-//            viewPager.setAdapter(adapter);
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//
-//            materialDialog.show();
-//
-//
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... params) {
-//            {
-//
-//
-//
-//                try {
-//                    List<Sales> sales= Client.INSTANCE.getSalesReport1(sFromdate, sToDate);
-//
-//                    Myenum.INSTANCE.setSalesList(sales);
-//
-//
-//
-//                    tempQuantity = 0;
-//                    tempRevenue = 0;
-//
-//                    List<Sales> sales1 = Myenum.INSTANCE.getSalesList(ProductType.MOBILE);
-//                    for (int i = 0; i < sales1.size(); i++) {
-//                        tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
-//                        tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getPrice());
-//                    }
-//                    totalRevenue.setText("" + tempRevenue);
-//                    totalQuantity.setText("" + tempQuantity);
-//
-//
-//                }
-//                catch (RetrofitError error)
-//                {
-//
-//                    materialDialog.dismiss();
-//                    MkShop.toast(getActivity(), error.getMessage());
-//
-//                }
-//
-//            }
-//
-//            return null;
-//
-//        }
-//    }
 
 }

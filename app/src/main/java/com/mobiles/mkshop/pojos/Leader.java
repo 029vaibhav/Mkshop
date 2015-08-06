@@ -23,7 +23,16 @@ public class Leader {
         this.role = role;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setName(String name) {
+
         this.name = name;
 
     }
@@ -52,6 +61,6 @@ public class Leader {
         this.price = price;
     }
 
-    String name,quantity,price,role;
+    String name,quantity,price,role, username;
     int id;
 }

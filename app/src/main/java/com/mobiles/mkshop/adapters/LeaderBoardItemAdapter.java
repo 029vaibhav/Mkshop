@@ -8,13 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.application.Client;
+import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.Leader;
+import com.mobiles.mkshop.pojos.Sales;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by vaibhav on 2/7/15.
@@ -53,11 +61,9 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
     @Override
     public int getItemCount() {
-        if(leaderList!=null)return leaderList.size();
+        if (leaderList != null) return leaderList.size();
         else return 0;
     }
-
-
 
 
     public void sortquantiy(boolean sort) {
@@ -114,8 +120,7 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
     }
 
 
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView name;
         public TextView revenue;
@@ -128,6 +133,43 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
             name = (TextView) itemView.findViewById(R.id.name);
             revenue = (TextView) itemView.findViewById(R.id.revenue);
             qty = (TextView) itemView.findViewById(R.id.quantity);
+
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            String[] toFrom = Myenum.INSTANCE.getToAndFromDate();
+
+            Client.INSTANCE.getUserSales(MkShop.AUTH, toFrom[0], toFrom[1], leaderList.get(getAdapterPosition()).getUsername(), new Callback<List<Sales>>() {
+                @Override
+                public void success(List<Sales> sales, Response response) {
+
+                    String[] strings = new String[sales.size()];
+                    for (int i = 0; i < sales.size(); i++) {
+                        strings[i] = (sales.get(i).getCreated() + "     " + sales.get(i).getBrand() + " " + sales.get(i).getModelNo());
+                    }
+
+
+                    new MaterialDialog.Builder(context.getActivity())
+                            .title("sales list")
+                            .items(strings)
+                            .itemsCallback(new MaterialDialog.ListCallback() {
+                                @Override
+                                public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                }
+                            })
+                            .show();
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
         }
     }
 }

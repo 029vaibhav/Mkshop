@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
-import com.mobiles.mkshop.activities.MainActivity;
+import com.mobiles.mkshop.activities.NotificationDetailActivity;
 import com.mobiles.mkshop.gcm.Config;
 import com.mobiles.mkshop.gcm.Controller;
+
+import java.util.Random;
 
 /**
  * Created by vaibhav on 26/7/15.
@@ -125,17 +127,20 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         String title = context.getString(R.string.app_name);
 
-        Intent notificationIntent = new Intent(context, MainActivity.class);
-        // set intent so it does not start a new activity
+        Intent notificationIntent = new Intent(context, NotificationDetailActivity.class);
+        notificationIntent.putExtra("message", message);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        Intent intentx = new Intent(context, MainActivity.class);
-        intentx.putExtra("notification", "nofication");
-
+//        Intent intentx = new Intent(context, MainActivity.class);
+//        intentx.putExtra("message", message);
+//        intentx.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+//                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Random rand = new Random();
+        int randomNum = rand.nextInt((1000 - 1) + 1) + 1;
 
         PendingIntent intent =
-                PendingIntent.getActivity(context, 0, intentx, 0);
+                PendingIntent.getActivity(context, randomNum, notificationIntent, 0);
         notification.setLatestEventInfo(context, title, message, intent);
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
@@ -145,8 +150,11 @@ public class GCMIntentService extends GCMBaseIntentService {
         //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
 
         // Vibrate if vibrate is enabled
+
+
+
         notification.defaults |= Notification.DEFAULT_VIBRATE;
-        notificationManager.notify(0, notification);
+        notificationManager.notify(randomNum, notification);
 
     }
 

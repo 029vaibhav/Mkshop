@@ -6,7 +6,8 @@ package com.mobiles.mkshop.pojos;
 public enum PaymentType {
 
     Salary("Salary"),
-    Incentive("Incentive");
+    Incentive("Incentive"),
+    Product("Product");
 
 
 

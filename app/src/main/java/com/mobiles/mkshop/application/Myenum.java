@@ -3,8 +3,10 @@ package com.mobiles.mkshop.application;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.mobiles.mkshop.pojos.ExpenseEntity;
 import com.mobiles.mkshop.pojos.Leader;
 import com.mobiles.mkshop.pojos.PartsRequests;
+import com.mobiles.mkshop.pojos.PaymentType;
 import com.mobiles.mkshop.pojos.ProductType;
 import com.mobiles.mkshop.pojos.RepairPojo;
 import com.mobiles.mkshop.pojos.Sales;
@@ -20,12 +22,21 @@ public enum Myenum {
 
     INSTANCE;
 
+
+    String sFromdate;
+    String sToDate;
+
     RepairPojo repairPojo;
     PartsRequests requestRepair;
 
     List<Sales> salesList;
     List<Sales> mobileSales;
     List<Sales> accessorySales;
+
+    List<ExpenseEntity> expenseList;
+    List<ExpenseEntity> productExpenseList;
+    List<ExpenseEntity> salaryExpenseList;
+    List<ExpenseEntity> incentiveExpenseList;
 
     List<Leader> leaderList;
     List<Leader> salesLeaderList;
@@ -80,6 +91,43 @@ public enum Myenum {
         this.mobileSales = Lists.newArrayList(Iterables.filter(salesList, predicateMobileList));
         this.accessorySales = Lists.newArrayList(Iterables.filter(salesList, predicateAccList));
 
+    }
+
+    public List<ExpenseEntity> getExpenseList(PaymentType type) {
+
+        if (PaymentType.Incentive == type) {
+            return incentiveExpenseList;
+        } else if (PaymentType.Salary == type) {
+            return salaryExpenseList;
+        } else if (PaymentType.Product == type) {
+            return productExpenseList;
+        }
+
+        return null;
+    }
+
+
+    public void setExpenseList(List<ExpenseEntity> expenseList) {
+
+        this.expenseList = expenseList;
+        productExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateProductExpenseList));
+        salaryExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateSalaryExpenseList));
+        incentiveExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateIncentiveExpenseList));
+
+
+    }
+
+    public void setToAndFromDate(String sFromdate, String sToDate) {
+
+        this.sFromdate = sFromdate;
+        this.sToDate = sToDate;
+    }
+
+    public String[] getToAndFromDate() {
+        String[] strings = new String[2];
+        strings[0] = sFromdate;
+        strings[1] = sToDate;
+        return strings;
     }
 
 
@@ -251,6 +299,8 @@ public enum Myenum {
         }
 
     };
+
+
     Predicate<PartsRequests> predicateDeliveredPartsRequestsList = new Predicate<PartsRequests>() {
         @Override
         public boolean apply(PartsRequests input) {
@@ -258,5 +308,28 @@ public enum Myenum {
         }
 
     };
+
+    Predicate<ExpenseEntity> predicateSalaryExpenseList = new Predicate<ExpenseEntity>() {
+        @Override
+        public boolean apply(ExpenseEntity input) {
+            return input.getPaymentType().equalsIgnoreCase(PaymentType.Salary.name());
+        }
+
+    };
+    Predicate<ExpenseEntity> predicateIncentiveExpenseList = new Predicate<ExpenseEntity>() {
+        @Override
+        public boolean apply(ExpenseEntity input) {
+            return input.getPaymentType().equalsIgnoreCase(PaymentType.Incentive.name());
+        }
+
+    };
+    Predicate<ExpenseEntity> predicateProductExpenseList = new Predicate<ExpenseEntity>() {
+        @Override
+        public boolean apply(ExpenseEntity input) {
+            return input.getPaymentType().equalsIgnoreCase(PaymentType.Product.name());
+        }
+
+    };
+
 
 }

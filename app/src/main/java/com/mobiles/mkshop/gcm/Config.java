@@ -8,7 +8,7 @@ public interface Config {
 
 
     // CONSTANTS
-    static final String YOUR_SERVER_URL =  "http://mobiweb.co.in/mk/webservice/noti/gcmserver/register.php";
+    static final String YOUR_SERVER_URL =  "http://192.168.1.104:80/mk/webservice/noti/gcmserver/register.php";
     // YOUR_SERVER_URL : Server url where you have placed your server files
     // Google project id
     static final String GOOGLE_SENDER_ID = "530000338474";  // Place here your Google project id

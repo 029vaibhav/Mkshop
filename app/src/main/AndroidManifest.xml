@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mobiles.mkshop">
+    package="com.mobiles.mkshop" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,13 +23,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +45,7 @@
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
 
                 <!-- Receives the actual messages. -->
@@ -61,10 +61,16 @@
 
         <activity
             android:name=".activities.GetLoginDetailsActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="d04b524792a03c95687503a3970d9b3fe8313871" />
+
+        <activity
+            android:name=".activities.NotificationDetailActivity"
+            android:label="@string/title_activity_notification_detail" >
+        </activity>
     </application>
 
 </manifest>

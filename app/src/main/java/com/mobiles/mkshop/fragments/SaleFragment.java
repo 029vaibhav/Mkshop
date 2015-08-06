@@ -426,6 +426,7 @@ public class SaleFragment extends Fragment {
     private class SendData extends AsyncTask<Void, Void, Void> {
 
         MaterialDialog dialog;
+        Sales sales;
 
         @Override
         protected void onPreExecute() {
@@ -435,14 +436,10 @@ public class SaleFragment extends Fragment {
                     .content("please wait")
                     .progress(true, 0)
                     .show();
-        }
 
 
-        @Override
-        protected Void doInBackground(Void... params) {
 
-
-            Sales sales = new Sales();
+            sales = new Sales();
             sales.setType(stringProductType);
             sales.setBrand(stringBrand);
             sales.setModel(stringModel);
@@ -459,6 +456,13 @@ public class SaleFragment extends Fragment {
                 sales.setImei("");
             else
                 sales.setImei(imei.getText().toString());
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+
 
 
             Client.INSTANCE.sales(MkShop.AUTH, sales, new Callback<String>() {

@@ -98,10 +98,9 @@ public class IncentiveSalesUserListFragment extends Fragment {
 
                     ExpenseEntity expenseEntity = new ExpenseEntity();
                     expenseEntity.setBrand(salesList.get(0).getBrand());
-                    expenseEntity.setModel(salesList.get(0).getModelNo());
+                    expenseEntity.setModelNo(salesList.get(0).getModelNo());
                     expenseEntity.setPaymentType(PaymentType.Incentive.name());
                     expenseEntity.setUsername(salesList.get(0).getUsername());
-                    expenseEntity.setPaid("No");
                     expenseEntity.setAmount(amount.getText().toString());
 
 

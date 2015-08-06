@@ -2,10 +2,10 @@ package com.mobiles.mkshop.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -15,12 +15,12 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.TabsPagerAdapterService;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.RepairPojo;
-import com.mobiles.mkshop.R;
 
 import org.joda.time.DateTime;
 
@@ -42,7 +42,7 @@ public class ServiceReport extends Fragment {
     String sFromdate, sToDate;
     MaterialDialog materialDialog;
 
-     ViewPager viewPager ;
+    ViewPager viewPager;
     TabsPagerAdapterService adapter;
 
     public static ServiceReport newInstance() {
@@ -75,7 +75,7 @@ public class ServiceReport extends Fragment {
                 .build();
 
 
-         viewPager = (ViewPager) viewGroup.findViewById(R.id.pager_report);
+        viewPager = (ViewPager) viewGroup.findViewById(R.id.pager_report);
         fromDate = (TextView) viewGroup.findViewById(R.id.fromDate);
         toDate = (TextView) viewGroup.findViewById(R.id.toDate);
 
@@ -98,16 +98,17 @@ public class ServiceReport extends Fragment {
                         @Override
                         public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
 
+                            if (datePicker.isShown()) {
+                                String date = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
 
-                            String date = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
 
+                                toDate.setText(date);
+                                DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
 
-                            toDate.setText(date);
-                            DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
+                                sToDate = dt.toString("yyyy-MM-dd");
 
-                            sToDate = dt.toString("yyyy-MM-dd");
-
-                            executequery();
+                                executequery();
+                            }
 
 
                         }
@@ -139,8 +140,6 @@ public class ServiceReport extends Fragment {
         });
 
 
-
-
         return viewGroup;
 
     }
@@ -150,26 +149,24 @@ public class ServiceReport extends Fragment {
 
         materialDialog.show();
 
-        Client.INSTANCE.getServiceReport(MkShop.AUTH,sFromdate, sToDate, new Callback<List<RepairPojo>>() {
+        Client.INSTANCE.getServiceReport(MkShop.AUTH, sFromdate, sToDate, new Callback<List<RepairPojo>>() {
             @Override
             public void success(final List<RepairPojo> serviceList, Response response) {
 
 
                 Myenum.INSTANCE.setServiceList(serviceList);
-                if(materialDialog !=null &&materialDialog.isShowing())
-                materialDialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 adapter = new TabsPagerAdapterService(myContext.getSupportFragmentManager());
                 viewPager.setAdapter(adapter);
-
-
 
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if(materialDialog !=null &&materialDialog.isShowing())
-                materialDialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 MkShop.toast(getActivity(), error.getMessage());
 
 

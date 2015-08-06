@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mobiles.mkshop.pojos.PriceCompartorService;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.pojos.PriceCompartorService;
 
 import java.util.List;
 
@@ -50,7 +50,10 @@ public class RevenueCompartorAdapter extends RecyclerView.Adapter<RevenueCompart
             holder.model.setText(priceCompartorService.getAccessoryType());
         else
             holder.model.setVisibility(View.GONE);
-        holder.revenue.setText(priceCompartorService.getPrice());
+        if (priceCompartorService.getPrice() != null)
+            holder.revenue.setText(priceCompartorService.getPrice());
+        else
+            holder.revenue.setText("0");
 
 
     }

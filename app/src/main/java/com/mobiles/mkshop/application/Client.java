@@ -159,6 +159,16 @@ public enum Client {
 
         @POST("/mk/webservice/expenseinsert.php")
         void payUserIncentive(@Header("AUTH") String auth, @Body ExpenseEntity expenseEntity, Callback<String> callback);
+
+
+        @GET("/mk/webservice/expensereport.php")
+        void getExpenseReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<ExpenseEntity>> salesCallback);
+
+        @POST("/mk/webservice/incentivegetsales.php")
+        void deleteIncentiveMessage(@Header("AUTH") String auth, @Query("id") int id, @Query("op") String delete, Callback<String> callback);
+
+        @GET("/mk/webservice/leaderboardsaleslist.php")
+        void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1,@Query("username") String username ,Callback<List<Sales>> callback);
     }
 
 
@@ -171,7 +181,7 @@ public enum Client {
         JacksonConverter jacksonConverter = new JacksonConverter(objectMapper);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://192.168.1.10:80")
+                .setEndpoint("http://192.168.1.102:80")
 //                .setEndpoint("http://mobiweb.co.in:80")
                 .setConverter(jacksonConverter)
                 .setLog(new RestAdapter.Log() {
@@ -324,6 +334,22 @@ public enum Client {
     public void payUserIncentive(String auth, ExpenseEntity expenseEntity, Callback<String> callback) {
         mobileService.payUserIncentive(auth, expenseEntity, callback);
 
+    }
+
+
+    public void getExpenseReport(String auth, String from, String to, Callback<List<ExpenseEntity>> salesCallback) {
+        mobileService.getExpenseReport(auth, from, to, salesCallback);
+
+    }
+
+    public void deleteIncentiveMessage(String auth, int id, String message, Callback<String> callback) {
+
+        mobileService.deleteIncentiveMessage(auth, id, message, callback);
+    }
+
+
+    public void getUserSales(String auth, String s, String s1, String username, Callback<List<Sales>> callback) {
+        mobileService.getUserSales(auth, s, s1,username, callback);
     }
 
 
