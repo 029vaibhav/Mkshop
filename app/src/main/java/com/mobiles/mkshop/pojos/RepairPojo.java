@@ -90,11 +90,11 @@ public class RepairPojo {
         this.jobNo = jobNo;
     }
 
-    public String getModelNo() {
+    public String getModel() {
         return model;
     }
 
-    public void setModelNo(String modelNo) {
+    public void setModel(String modelNo) {
         this.model = modelNo;
     }
 

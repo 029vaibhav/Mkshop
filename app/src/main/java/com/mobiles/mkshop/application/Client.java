@@ -103,15 +103,15 @@ public enum Client {
         void getUserAttendance(@Header("AUTH") String auth, @Query("username") String username, Callback<List<AttendanceDates>> response);
 
 
-        @GET("/mk/webservice/leaderboard.php")
+        @GET("/mk/webservice/leaderBoard.php")
         void getLeaderBoard(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<Leader>> callback);
 
 
-        @GET("/mk/webservice/servicereport.php")
+        @GET("/mk/webservice/serviceReport.php")
         void getServiceReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<RepairPojo>> callback);
 
 
-        @GET("/mk/webservice/report.php")
+        @GET("/mk/webservice/Report.php")
         void getpricecompator(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, @Query("category") String category, Callback<List<PriceCompartorService>> callback);
 
 
@@ -147,7 +147,7 @@ public enum Client {
         @POST("/mk/webservice/logout.php")
         void logout(@Query("username") String username, Callback<String> callback);
 
-        @POST("/mk/webservice/incentivemessage.php")
+        @POST("/mk/webservice/incentiveMessage.php")
         void createIncentive(@Header("AUTH") String auth, @Body IncentiveEntity incentiveEntity, Callback<String> callback);
 
         @POST("/mk/webservice/allincentive.php")
@@ -161,7 +161,7 @@ public enum Client {
         void payUserIncentive(@Header("AUTH") String auth, @Body ExpenseEntity expenseEntity, Callback<String> callback);
 
 
-        @GET("/mk/webservice/expensereport.php")
+        @GET("/mk/webservice/expenseReport.php")
         void getExpenseReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<ExpenseEntity>> salesCallback);
 
         @POST("/mk/webservice/incentivegetsales.php")
@@ -181,8 +181,8 @@ public enum Client {
         JacksonConverter jacksonConverter = new JacksonConverter(objectMapper);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://192.168.1.102:80")
-//                .setEndpoint("http://mobiweb.co.in:80")
+//                .setEndpoint("http://192.168.1.102:80")
+                .setEndpoint("http://mkmobileshop.in:80")
                 .setConverter(jacksonConverter)
                 .setLog(new RestAdapter.Log() {
                     @Override

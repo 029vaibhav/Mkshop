@@ -115,7 +115,7 @@ public class UserListFragment extends Fragment {
                     if(error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(getActivity(),"please check your internet connection");
                     else
-                        MkShop.toast(getActivity(),"something went wrong");
+                        MkShop.toast(getActivity(),error.getMessage());
 
                 }
             });

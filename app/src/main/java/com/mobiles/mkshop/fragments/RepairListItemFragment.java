@@ -74,7 +74,7 @@ public class RepairListItemFragment extends Fragment {
 
         problem.setText(service.getProblem());
         brand.setText(service.getBrand());
-        modelNo.setText(service.getModelNo());
+        modelNo.setText(service.getModel());
         final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         dateTime = formatter.parseDateTime(service.getDeliveryDate());
         date.setText(dateTime.toString("dd-MM"));

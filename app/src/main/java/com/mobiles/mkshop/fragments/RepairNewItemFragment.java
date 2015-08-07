@@ -253,7 +253,7 @@ TextView dateTitle;
 
                     service = new RepairPojo();
                     service.setBrand(brand.getText().toString());
-                    service.setModelNo(modelNo.getText().toString());
+                    service.setModel(modelNo.getText().toString());
                     service.setStatus(stringStatus);
                     service.setPrice("" + price.getText().toString());
                     service.setJobNo("" + jobNo.getText().toString());

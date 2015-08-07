@@ -201,14 +201,7 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
 
-                case 9:
-                    //set location
-                    fragment = getSupportFragmentManager().findFragmentByTag(GeopointsFragment.TAG);
-                    if (fragment == null) {
-                        fragment = new GeopointsFragment();
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                    break;
+
                 case 5:
                     fragment = getSupportFragmentManager().findFragmentByTag(RevenueCompatorFragment.TAG);
                     if (fragment == null) {
@@ -223,7 +216,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
-                case 8:
+                case 7:
                     //set incentive
                     fragment = getSupportFragmentManager().findFragmentByTag(Incentive.TAG);
                     if (fragment == null) {
@@ -231,10 +224,18 @@ public class MainActivity extends AppCompatActivity
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
-                case 7:
+                case 8:
                     fragment = getSupportFragmentManager().findFragmentByTag(ExpenseManagerFragment.TAG);
                     if (fragment == null) {
                         fragment = new ExpenseManagerFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 9:
+                    //set location
+                    fragment = getSupportFragmentManager().findFragmentByTag(GeopointsFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new GeopointsFragment();
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;

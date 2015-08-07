@@ -69,7 +69,7 @@ public class ServiceCenterAdapter extends BaseAdapter {
 
         RepairPojo repairPojo = repairList.get(position);
 
-        viewHolder.modelNo.setText(repairPojo.getBrand() + " " + repairPojo.getModelNo());
+        viewHolder.modelNo.setText(repairPojo.getBrand() + " " + repairPojo.getModel());
         viewHolder.date.setText(repairPojo.getCreated());
         viewHolder.status.setText(repairPojo.getStatus());
         viewHolder.jobNo.setText(repairPojo.getJobNo());
@@ -86,7 +86,7 @@ public class ServiceCenterAdapter extends BaseAdapter {
                     new Predicate<RepairPojo>() {
                         @Override
                         public boolean apply(RepairPojo input) {
-                            return (input.getBrand().contains(s) || input.getModelNo().contains(s) || input.getJobNo().contains(s)
+                            return (input.getBrand().contains(s) || input.getModel().contains(s) || input.getJobNo().contains(s)
                                     || input.getCreated().contains(s) || input.getStatus().toLowerCase().contains(s));
                         }
                     });
