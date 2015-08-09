@@ -111,7 +111,9 @@ public class UserListFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
-                    dialog.dismiss();
+                    if(dialog !=null &&dialog.isShowing())
+                        dialog.dismiss();
+
                     if(error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(getActivity(),"please check your internet connection");
                     else

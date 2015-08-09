@@ -217,7 +217,7 @@ public class NewIncentiveFragment extends Fragment {
                     Client.INSTANCE.createIncentive(MkShop.AUTH, incentiveEntity, new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
-
+                            if (materialDialog != null && materialDialog.isShowing())
                             materialDialog.dismiss();
                             MkShop.toast(getActivity(), s);
 
@@ -231,7 +231,7 @@ public class NewIncentiveFragment extends Fragment {
 
                         @Override
                         public void failure(RetrofitError error) {
-
+                            if (materialDialog != null && materialDialog.isShowing())
                             materialDialog.dismiss();
 
                             if (error.getKind().equals(RetrofitError.Kind.NETWORK))

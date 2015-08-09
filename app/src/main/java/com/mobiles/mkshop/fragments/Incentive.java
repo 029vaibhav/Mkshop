@@ -75,8 +75,8 @@ public class Incentive extends Fragment {
             @Override
             public void success(List<IncentiveEntity> incentiveEntity, Response response) {
 
-
-                materialDialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 IncentiveAdapter incentiveAdapter = new IncentiveAdapter(Incentive.this, incentiveEntity);
                 recyclerView.setAdapter(incentiveAdapter);
 
@@ -85,11 +85,11 @@ public class Incentive extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-
+                if (materialDialog != null && materialDialog.isShowing())
                 materialDialog.dismiss();
-                if(error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(),"please check your internet connection");
-                else MkShop.toast(getActivity(),error.getMessage());
+                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                    MkShop.toast(getActivity(), "please check your internet connection");
+                else MkShop.toast(getActivity(), error.getMessage());
 
             }
         });

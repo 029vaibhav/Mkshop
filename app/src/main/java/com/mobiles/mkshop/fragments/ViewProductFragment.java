@@ -1,7 +1,7 @@
 package com.mobiles.mkshop.fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -158,7 +158,11 @@ public class ViewProductFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                dialog.dismiss();
+
+                if (dialog != null && dialog.isShowing())
+                    dialog.dismiss();
+
+
                 if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                     MkShop.toast(getActivity(), "please check your internet connection");
                 else MkShop.toast(getActivity(), error.getMessage());

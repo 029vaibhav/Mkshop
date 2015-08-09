@@ -1,8 +1,8 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,16 +111,22 @@ public class SendNotificationFragment extends Fragment {
                     notification.setEndDate(validityDate);
 
                     notification.setMessage(message.getText().toString());
-                    Client.INSTANCE.sendNotification(MkShop.AUTH,notification, new Callback<String>() {
+                    Client.INSTANCE.sendNotification(MkShop.AUTH, notification, new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
-                            dialog.dismiss();
+
+                            if (dialog != null && dialog.isShowing())
+                                dialog.dismiss();
+
+
                             MkShop.toast(getActivity(), s);
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            dialog.dismiss();
+                            if (dialog != null && dialog.isShowing())
+                                dialog.dismiss();
+
                             if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                                 MkShop.toast(getActivity(), "please check your internet connection");
 

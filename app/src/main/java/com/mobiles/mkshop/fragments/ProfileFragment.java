@@ -173,8 +173,8 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
                     Client.INSTANCE.uploadImage(MkShop.AUTH, username, typedFile, "", new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
-                            if(materialDialog !=null &&materialDialog.isShowing())
-                            materialDialog.dismiss();
+                            if (materialDialog != null && materialDialog.isShowing())
+                                materialDialog.dismiss();
                             header.setImageURI(Uri.parse(new File(image
                                     .getFileThumbnail()).toString()));
                             MkShop.toast(getActivity(), "uploaded successfully");
@@ -183,6 +183,9 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
                         @Override
                         public void failure(RetrofitError error) {
+
+                            if (materialDialog != null && materialDialog.isShowing())
+                                materialDialog.dismiss();
 
                             if (error != null) {
                                 if (error.getKind().equals(RetrofitError.Kind.NETWORK))
@@ -238,16 +241,6 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
         }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            dialog = new MaterialDialog.Builder(getActivity())
-                    .content("please wait")
-                    .progress(true, 0)
-                    .show();
-        }
-
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -257,7 +250,9 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
                 public void success(Response response, Response response2) {
                     String json = (new String(((TypedByteArray) response.getBody()).getBytes()));
 
-                    dialog.dismiss();
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+
                     json = json.replace(",", "},{").replace(":", ",").replace("{\"", "{\"title\":\"").replace("\",\"", "\",\"value\":\"");
 
                     Log.e("json", json);
@@ -269,17 +264,17 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
                     String photo = "";
                     for (int i = 0; i < yourList.size(); i++) {
-                        if (yourList.get(i).getTitle().equalsIgnoreCase("photo")){
+                        if (yourList.get(i).getTitle().equalsIgnoreCase("photo")) {
 
                             photo = yourList.get(i).getvalue();
-                            Log.e("photo",photo);
+                            Log.e("photo", photo);
                             break;
                         }
 
                     }
 
                     if (photo.length() > 2)
-                        Picasso.with(getActivity()).load(photo.replace("\\", "").replace(",",":")).into(header);
+                        Picasso.with(getActivity()).load(photo.replace("\\", "").replace(",", ":")).into(header);
                     else header.setImageBitmap(bitmap);
 //
                     simpleRecyclerAdapter = new ProfileAdapter(username, getActivity(), yourList);
@@ -289,6 +284,9 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
                 @Override
                 public void failure(RetrofitError error) {
+
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
 
                     if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(getActivity(), "please check your internet connection");

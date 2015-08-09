@@ -425,17 +425,14 @@ public class SaleFragment extends Fragment {
 
     private class SendData extends AsyncTask<Void, Void, Void> {
 
-        MaterialDialog dialog;
+
         Sales sales;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            dialog = new MaterialDialog.Builder(getActivity())
-                    .content("please wait")
-                    .progress(true, 0)
-                    .show();
+            materialDialog.show();
 
 
 
@@ -470,7 +467,10 @@ public class SaleFragment extends Fragment {
                 public void success(String response, Response response2) {
 
                     MkShop.toast(getActivity(), response);
-                    dialog.dismiss();
+                    if(materialDialog !=null &&materialDialog.isShowing())
+                        materialDialog.dismiss();
+
+
 
 
                 }
@@ -478,7 +478,10 @@ public class SaleFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
-                    dialog.dismiss();
+                    if(materialDialog !=null &&materialDialog.isShowing())
+                        materialDialog.dismiss();
+
+
                     if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(getActivity(), "check your internet connection");
                     else

@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.ProductType;
 import com.mobiles.mkshop.pojos.Sales;
-import com.mobiles.mkshop.R;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,58 +67,65 @@ public class SalesReportItemAdapter extends RecyclerView.Adapter<SalesReportItem
     }
 
 
-
     public void sortquantiy(boolean sort) {
 
+
         salesList = Myenum.INSTANCE.getSalesList(productType);
-        Collections.sort(salesList, new Comparator<Sales>() {
-            @Override
-            public int compare(Sales lhs, Sales rhs) {
 
-                int a = Integer.parseInt(lhs.getQuantity());
-                int b = Integer.parseInt(rhs.getQuantity());
-                return a - b;
+        if (salesList != null) {
+            Collections.sort(salesList, new Comparator<Sales>() {
+                @Override
+                public int compare(Sales lhs, Sales rhs) {
+
+                    int a = Integer.parseInt(lhs.getQuantity());
+                    int b = Integer.parseInt(rhs.getQuantity());
+                    return a - b;
+                }
+            });
+
+            if (sort) {
+                salesList = salesList;
+
+            } else {
+
+
+                Collections.reverse(salesList);
+
             }
-        });
-
-        if (sort) {
-            salesList = salesList;
-
-        } else {
-
-
-            Collections.reverse(salesList);
+            notifyDataSetChanged();
 
         }
-        notifyDataSetChanged();
-
     }
 
 
     public void sortprice(boolean sort) {
 
+
         salesList = Myenum.INSTANCE.getSalesList(productType);
-        Collections.sort(salesList, new Comparator<Sales>() {
-            @Override
-            public int compare(Sales lhs, Sales rhs) {
 
-                int a = Integer.parseInt(lhs.getPrice());
-                int b = Integer.parseInt(rhs.getPrice());
-                return a - b;
+        if (salesList != null) {
+            Collections.sort(salesList, new Comparator<Sales>() {
+                @Override
+                public int compare(Sales lhs, Sales rhs) {
+
+                    int a = Integer.parseInt(lhs.getPrice());
+                    int b = Integer.parseInt(rhs.getPrice());
+                    return a - b;
+                }
+            });
+
+            if (sort) {
+                salesList = salesList;
+
+            } else {
+
+
+                Collections.reverse(salesList);
+
             }
-        });
-
-        if (sort) {
-            salesList = salesList;
-
-        } else {
-
-
-            Collections.reverse(salesList);
+            notifyDataSetChanged();
 
         }
-        notifyDataSetChanged();
-
     }
 
 

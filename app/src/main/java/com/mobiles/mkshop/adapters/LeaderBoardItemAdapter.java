@@ -69,6 +69,8 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
     public void sortquantiy(boolean sort) {
 
         leaderList = Myenum.INSTANCE.getLeaderList(department);
+
+        if(leaderList!=null){
         Collections.sort(leaderList, new Comparator<Leader>() {
             @Override
             public int compare(Leader lhs, Leader rhs) {
@@ -90,33 +92,35 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
         }
         notifyDataSetChanged();
 
-    }
+    }}
 
 
     public void sortprice(boolean sort) {
 
         leaderList = Myenum.INSTANCE.getLeaderList(department);
-        Collections.sort(leaderList, new Comparator<Leader>() {
-            @Override
-            public int compare(Leader lhs, Leader rhs) {
 
-                int a = Integer.parseInt(lhs.getPrice());
-                int b = Integer.parseInt(rhs.getPrice());
-                return a - b;
+        if(leaderList!=null) {
+            Collections.sort(leaderList, new Comparator<Leader>() {
+                @Override
+                public int compare(Leader lhs, Leader rhs) {
+
+                    int a = Integer.parseInt(lhs.getPrice());
+                    int b = Integer.parseInt(rhs.getPrice());
+                    return a - b;
+                }
+            });
+
+            if (sort) {
+                leaderList = leaderList;
+
+            } else {
+
+
+                Collections.reverse(leaderList);
+
             }
-        });
-
-        if (sort) {
-            leaderList = leaderList;
-
-        } else {
-
-
-            Collections.reverse(leaderList);
-
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
-
     }
 
 
@@ -167,6 +171,11 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
                 @Override
                 public void failure(RetrofitError error) {
+
+                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                        MkShop.toast(context.getActivity(), "please check your internet connection");
+                    else MkShop.toast(context.getActivity(), error.getMessage());
+
 
                 }
             });

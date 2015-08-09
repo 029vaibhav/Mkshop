@@ -112,28 +112,35 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                         @Override
                         public void onInput(MaterialDialog dialog, final CharSequence input) {
 
-                            ExpenseEntity expenseEntity = new ExpenseEntity();
-                            expenseEntity.setPaymentType(PaymentType.Salary.name());
-                            expenseEntity.setUsername(userListAttendances.get(getAdapterPosition()).getUsername());
-                            expenseEntity.setAmount(input.toString());
+                            if (input.toString().length() != 0) {
 
-                            Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {
-                                @Override
-                                public void success(String s, Response response) {
+                                ExpenseEntity expenseEntity = new ExpenseEntity();
+                                expenseEntity.setPaymentType(PaymentType.Salary.name());
+                                expenseEntity.setUsername(userListAttendances.get(getAdapterPosition()).getUsername());
+                                expenseEntity.setAmount(input.toString());
 
-                                    MkShop.toast(context.getActivity(), s);
+                                Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {
+                                    @Override
+                                    public void success(String s, Response response) {
 
-                                }
+                                        MkShop.toast(context.getActivity(), s);
 
-                                @Override
-                                public void failure(RetrofitError error) {
+                                    }
 
-                                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                        MkShop.toast(context.getActivity(), "please check your internet connection");
+                                    @Override
+                                    public void failure(RetrofitError error) {
+
+                                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                            MkShop.toast(context.getActivity(), "please check your internet connection");
+                                        else
+                                            MkShop.toast(context.getActivity(), error.getMessage());
 
 
-                                }
-                            });
+                                    }
+                                });
+                            } else {
+                                MkShop.toast(context.getActivity(),"please enter some amount");
+                            }
                         }
                     }).show();
             return false;

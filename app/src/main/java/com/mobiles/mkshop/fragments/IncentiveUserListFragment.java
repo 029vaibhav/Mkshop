@@ -81,7 +81,7 @@ public class IncentiveUserListFragment extends Fragment {
         Client.INSTANCE.getIncentiveUserList(MkShop.AUTH, id, new Callback<List<Sales>>() {
                     @Override
                     public void success(List<Sales> sales, Response response) {
-
+                        if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
 
                         ListMultimap<String, Sales> multimap = Multimaps.index(sales, new Function<Sales, String>() {
@@ -101,7 +101,7 @@ public class IncentiveUserListFragment extends Fragment {
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
 
                         if (error.getKind().equals(RetrofitError.Kind.NETWORK))

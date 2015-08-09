@@ -1,9 +1,9 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
-import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,11 +50,11 @@ public class RepairNewItemFragment extends Fragment {
     //  private RadioGroup radiogroup;
     private TextView date, status;
     AutoCompleteTextView brand, modelNo;
-TextView dateTitle;
+    TextView dateTitle;
     List<Sales> salesList, modelSalesList;
     List<String> brandList;
 
-    MaterialDialog dialog;
+    MaterialDialog materialDialog;
 
 
     public RepairNewItemFragment() {
@@ -82,7 +82,7 @@ TextView dateTitle;
         salesList = new ArrayList<>();
 
 
-        dialog = new MaterialDialog.Builder(getActivity())
+        materialDialog = new MaterialDialog.Builder(getActivity())
                 .content("please wait")
                 .progress(true, 0)
                 .build();
@@ -100,12 +100,14 @@ TextView dateTitle;
         dateTitle = (TextView) v.findViewById(R.id.dateTitle);
 
 
-        dialog.show();
+        materialDialog.show();
         Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
             @Override
             public void success(List<Sales> sales, Response response) {
 
-                dialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
+
 
                 salesList = sales;
                 brandList.clear();
@@ -125,7 +127,9 @@ TextView dateTitle;
 
             @Override
             public void failure(RetrofitError error) {
-                dialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
+
 
                 if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                     MkShop.toast(getActivity(), "please check your internect connection");
@@ -301,17 +305,13 @@ TextView dateTitle;
 
     private class SendData extends AsyncTask<Void, Void, Void> {
 
-        MaterialDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            dialog = new MaterialDialog.Builder(getActivity())
-                    .content("please wait")
-                    .progress(true, 0)
-                    .build();
-            dialog.show();
+
+            materialDialog.show();
         }
 
         @Override
@@ -328,13 +328,21 @@ TextView dateTitle;
                         @Override
                         public void success(String s, Response response) {
                             MkShop.toast(getActivity(), s);
-                            dialog.dismiss();
+                            if (materialDialog != null && materialDialog.isShowing())
+                                materialDialog.dismiss();
+
+                            materialDialog.dismiss();
                             Fragment fragment = new RequestRepair();
                             getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
+                            if (materialDialog != null && materialDialog.isShowing())
+                                materialDialog.dismiss();
+                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                MkShop.toast(getActivity(), "please check your internet connection");
+                            else MkShop.toast(getActivity(), error.getMessage());
 
                         }
                     }

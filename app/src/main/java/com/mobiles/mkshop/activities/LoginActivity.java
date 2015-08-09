@@ -66,6 +66,7 @@ public class LoginActivity extends Activity {
                         public void success(String response, Response response2) {
 
 
+                            if(materialDialog!=null && materialDialog.isShowing())
                             materialDialog.dismiss();
                             MkShop.AUTH = response;
                             sharedPreferences.edit().putString("AUTH", MkShop.AUTH).apply();
@@ -80,6 +81,8 @@ public class LoginActivity extends Activity {
 
                         @Override
                         public void failure(RetrofitError error) {
+
+                            if(materialDialog!=null && materialDialog.isShowing())
                             materialDialog.dismiss();
                             MkShop.toast(LoginActivity.this, error.getMessage());
                             Log.e("error", error.getMessage());

@@ -220,6 +220,11 @@ public class RepairListItemFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
+                    if(error.getKind().equals(RetrofitError.Kind.NETWORK))
+                        MkShop.toast(getActivity(),"please check your internet connection");
+                        else
+                    MkShop.toast(getActivity(),error.getMessage());
+
                 }
             });
             return null;

@@ -142,6 +142,7 @@ public class NewProfileFragment extends Fragment {
                 @Override
                 public void success(String s, Response response) {
 
+                    if (dialog != null && dialog.isShowing())
                     dialog.dismiss();
                     MkShop.toast(getActivity(), s);
                     Fragment  fragment = new UserListFragment();
@@ -152,7 +153,7 @@ public class NewProfileFragment extends Fragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-
+                    if (dialog != null && dialog.isShowing())
                     dialog.dismiss();
                     if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(getActivity(), "please check your internet connection");

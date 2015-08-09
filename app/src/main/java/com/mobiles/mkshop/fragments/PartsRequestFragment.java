@@ -1,8 +1,8 @@
 package com.mobiles.mkshop.fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,12 +14,12 @@ import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.PartRequestAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.PartsRequests;
-import com.mobiles.mkshop.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,8 +140,8 @@ public class PartsRequestFragment extends Fragment {
             Client.INSTANCE.getPartList(MkShop.AUTH, new Callback<List<PartsRequests>>() {
                 @Override
                 public void success(List<PartsRequests> partsRequestses, Response response) {
-                    if(materialDialog !=null &&materialDialog.isShowing())
-                    materialDialog.dismiss();
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
                     partsRequestsList = partsRequestses;
                     Myenum.INSTANCE.setPartsRequestsList(partsRequestsList);
                     partRequestAdapter = new PartRequestAdapter(getActivity(), partsRequestsList);
@@ -151,8 +151,8 @@ public class PartsRequestFragment extends Fragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(materialDialog !=null &&materialDialog.isShowing())
-                    materialDialog.dismiss();
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
 
                     if (error.getKind().equals(RetrofitError.Kind.NETWORK)) {
                         MkShop.toast(getActivity(), "Please check your internet connection");
