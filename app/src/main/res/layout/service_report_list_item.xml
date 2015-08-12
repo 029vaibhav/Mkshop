@@ -34,7 +34,6 @@
     <LinearLayout
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +43,7 @@
         <TextView
             fontPath="fonts/rr.ttf"
             android:id="@+id/Brand"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:drawableLeft="@drawable/mobile"
@@ -53,7 +52,6 @@
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:marqueeRepeatLimit="marquee_forever"
-            android:paddingRight="10dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="Brand"
@@ -62,11 +60,12 @@
         <TextView
             fontPath="fonts/rr.ttf"
             android:id="@+id/place"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center_vertical"
             android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="service"
             android:textSize="15sp" />
 
@@ -74,13 +73,12 @@
         <TextView
             fontPath="fonts/rr.ttf"
             android:id="@+id/revenue"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_below="@+id/Brand"
             android:layout_weight="3"
             android:drawableLeft="@drawable/rupees"
             android:gravity="right|center_vertical|end"
-            android:paddingRight="10dp"
             android:text="model"
             android:textSize="15sp" />
     </LinearLayout>

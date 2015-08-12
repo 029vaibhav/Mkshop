@@ -247,13 +247,7 @@ public class RepairNewItemFragment extends Fragment {
                 } else if (price.getText().length() <= 0) {
                     MkShop.toast(getActivity(), "please enter price");
 
-                } else if (stringModel.equalsIgnoreCase("other") && other.getText().length() <= 0) {
-                    MkShop.toast(getActivity(), "please enter model");
-
                 } else {
-                    if (stringModel.equalsIgnoreCase("other")) {
-                        stringModel = other.getText().toString();
-                    }
 
                     service = new RepairPojo();
                     service.setBrand(brand.getText().toString());
@@ -264,9 +258,9 @@ public class RepairNewItemFragment extends Fragment {
                     service.setDeliveryDate(Stringdate);
 
                     if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name()) || MkShop.Role.equalsIgnoreCase(UserType.SALESMAN.name())) {
-                        service.setPlace("shop");
+                        service.setPlace("SP");
                     } else if (MkShop.Role.equalsIgnoreCase(UserType.TECHNICIAN.name())) {
-                        service.setPlace("service");
+                        service.setPlace("SC");
                     }
                     service.setProblem(problem.getText().toString());
                     service.setUsername(MkShop.Username);
