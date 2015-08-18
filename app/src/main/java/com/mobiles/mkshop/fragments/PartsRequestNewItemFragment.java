@@ -1,7 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,6 +35,7 @@ public class PartsRequestNewItemFragment extends Fragment {
     Button submit;
     String Stringdate, stringStatus;
     int index;
+    MaterialDialog dialog;
 
 
     public static PartsRequestNewItemFragment newInstance() {
@@ -68,6 +68,11 @@ public class PartsRequestNewItemFragment extends Fragment {
         mobileNo = (EditText) v.findViewById(R.id.mobile);
         part = (EditText) v.findViewById(R.id.partsrequired);
         submit = (Button) v.findViewById(R.id.submit);
+
+
+        dialog = new MaterialDialog.Builder(getActivity())
+                .content("please wait")
+                .progress(true, 0).build();
 
         date.setOnClickListener(new View.OnClickListener() {
 
@@ -152,11 +157,13 @@ public class PartsRequestNewItemFragment extends Fragment {
                     if (date.getText().toString().length() > 0 && !date.getText().toString().equalsIgnoreCase("date"))
                         partsRequests.setDeliveryDate(Stringdate);
 
-
+                    dialog.show();
                     Client.INSTANCE.sendPartRequest(MkShop.AUTH, partsRequests, new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
 
+                            if (dialog != null && dialog.isShowing())
+                                dialog.dismiss();
                             Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
                             Fragment fragment = new PartsRequestFragment();
                             getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
@@ -165,7 +172,13 @@ public class PartsRequestNewItemFragment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
 
-                            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            if (dialog != null && dialog.isShowing())
+                                dialog.dismiss();
+
+                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                MkShop.toast(getActivity(), "please check your internet connection");
+                            else
+                                MkShop.toast(getActivity(), error.getMessage());
 
                         }
                     });
@@ -179,33 +192,6 @@ public class PartsRequestNewItemFragment extends Fragment {
         return v;
     }
 
-    private class SendData extends AsyncTask<Void, Void, Void> {
-
-        MaterialDialog dialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            dialog = new MaterialDialog.Builder(getActivity())
-                    .content("please wait")
-                    .progress(true, 0)
-                    .show();
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            dialog.dismiss();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-
-            return null;
-        }
-    }
 
     private int setindex(String status) {
 

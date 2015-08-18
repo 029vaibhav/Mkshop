@@ -1,6 +1,7 @@
 package com.mobiles.mkshop.adapters;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -87,6 +88,7 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
         public TextView name;
         public TextView mobile;
         public TextView attendance;
+        CardView cardView;
 
 
         public ViewHolder(View itemView) {
@@ -96,8 +98,9 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
             name = (TextView) itemView.findViewById(R.id.name);
             mobile = (TextView) itemView.findViewById(R.id.mobile);
             attendance = (TextView) itemView.findViewById(R.id.attendace);
+            cardView = (CardView) itemView.findViewById(R.id.cardlist_item);
 
-            itemView.setOnLongClickListener(this);
+            cardView.setOnLongClickListener(this);
 
 
         }
