@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="2dp">
+
+
+        <TextView
+            android:id="@+id/fromDate"
+            fontPath="fonts/rr.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:drawableLeft="@drawable/ic_action_smallcalendar"
+            android:gravity="center"
+            android:padding="1dp"
+            android:text="From" />
+
+        <TextView
+            android:id="@+id/toDate"
+            fontPath="fonts/rr.ttf"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:drawableLeft="@drawable/ic_action_smallcalendar"
+            android:gravity="center"
+            android:padding="1dp"
+            android:text="To" />
+
+    </LinearLayout>
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed" />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pager"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linear2"></android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="2dp"
+            android:background="@color/orange"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="12dp"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/total"
+
+                fontPath="fonts/rr.ttf"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Total"
+                android:textColor="@color/myDrawerBackground"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/totalQuantity"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:shadowRadius="0"
+                android:text="0"
+                android:textColor="@color/myDrawerBackground"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/totalRevenue"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/myDrawerBackground"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>
