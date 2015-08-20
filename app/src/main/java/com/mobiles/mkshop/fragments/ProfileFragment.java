@@ -109,7 +109,7 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
 
         bitmap = BitmapFactory.decodeResource(getResources(),
-                R.mipmap.ic_launcher);
+                R.mipmap.ic_mkshop);
 
 
         header.setOnClickListener(new View.OnClickListener() {

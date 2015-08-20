@@ -1,7 +1,6 @@
 package com.mobiles.mkshop.gcm;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,8 +12,8 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gcm.GCMRegistrar;
 import com.mobiles.mkshop.R;
+import com.orm.SugarApp;
 
-import io.fabric.sdk.android.Fabric;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -25,10 +24,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
+import io.fabric.sdk.android.Fabric;
+
 /**
  * Created by vaibhav on 26/7/15.
  */
-public class Controller extends Application {
+public class Controller extends SugarApp {
 
     private  final int MAX_ATTEMPTS = 5;
     private  final int BACKOFF_MILLI_SECONDS = 2000;

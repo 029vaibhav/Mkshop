@@ -14,7 +14,10 @@ import com.google.gson.Gson;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.pojos.BrandModelList;
 import com.mobiles.mkshop.pojos.LoginDetails;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -58,12 +61,39 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
             public void success(LoginDetails loginDetails, Response response) {
 
 
-                if(materialDialog !=null &&materialDialog.isShowing())
-                materialDialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 String json = new Gson().toJson(loginDetails);
 
                 MkShop.Role = loginDetails.getRole();
                 MkShop.Username = loginDetails.getUsername();
+
+                List<BrandModelList> brandModelLists = loginDetails.getProductList();
+
+                for (int i = 0; i < brandModelLists.size(); i++) {
+                    List<BrandModelList> localParkingEvent = BrandModelList.find(BrandModelList.class, "server_id = ?", "" + brandModelLists.get(i).getId());
+                    if (localParkingEvent == null) {
+                        BrandModelList brandModelList = new BrandModelList();
+                        brandModelList.setBrand(brandModelLists.get(i).getBrand());
+                        brandModelList.setModelNo(brandModelLists.get(i).getModelNo());
+                        brandModelList.setType(brandModelLists.get(i).getType());
+                        brandModelList.setAccessoryType(brandModelLists.get(i).getAccessoryType());
+                        brandModelList.setServerId(brandModelLists.get(i).getId());
+                        brandModelList.save();
+                    } else {
+                        if (localParkingEvent.size()>0 && !localParkingEvent.get(0).equals(brandModelLists.get(i))) {
+                            BrandModelList brandModelList = localParkingEvent.get(0);
+                            brandModelList.setBrand(brandModelLists.get(i).getBrand());
+                            brandModelList.setModelNo(brandModelLists.get(i).getModelNo());
+                            brandModelList.setType(brandModelLists.get(i).getType());
+                            brandModelList.setAccessoryType(brandModelLists.get(i).getAccessoryType());
+                            brandModelList.setServerId(brandModelLists.get(i).getId());
+                            brandModelList.save();
+                        }
+                    }
+
+                }
+
 
                 sharedPreferences.edit().putString("DETAIL", json).apply();
                 Intent intent = new Intent(GetLoginDetailsActivity.this, MainActivity.class);
@@ -74,8 +104,8 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
 
-                if(materialDialog !=null &&materialDialog.isShowing())
-                materialDialog.dismiss();
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
                 if (error.getKind().equals(RetrofitError.Kind.NETWORK)) {
                     MkShop.toast(GetLoginDetailsActivity.this, "please check your internet connection");
                     textView.setText("Network Error");

@@ -2,6 +2,8 @@ package com.mobiles.mkshop.pojos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 /**
  * Created by vaibhav on 24/7/15.
  */
@@ -11,6 +13,15 @@ public class LoginDetails {
 
     String name,photo,username,role;
     Location location;
+    List<BrandModelList> productList;
+
+    public List<BrandModelList> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<BrandModelList> productList) {
+        this.productList = productList;
+    }
 
     public String getName() {
         return name;
@@ -51,4 +62,7 @@ public class LoginDetails {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+
+
 }
