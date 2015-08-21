@@ -23,6 +23,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.pojos.BrandModelList;
 import com.mobiles.mkshop.pojos.ProductType;
 import com.mobiles.mkshop.pojos.Sales;
 
@@ -48,7 +49,8 @@ public class SaleFragment extends Fragment {
     private TextView brand, accessoryType, modelNo, imeitextview;
     EditText quantity, price, other, customerName, imei, mobile;
     Button submit;
-    List<Sales> salesList, modelSalesList, productTypeList;
+    List<BrandModelList> salesListx, modelSalesList, productTypeList;
+    List<BrandModelList> salesList;
     List<String> brandList, modelList, accessoryTypeList;
 
 
@@ -116,18 +118,12 @@ public class SaleFragment extends Fragment {
         modelList = new ArrayList<>();
 
 
-        materialDialog.show();
-        Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
-            @Override
-            public void success(List<Sales> sales, Response response) {
-                if(materialDialog !=null &&materialDialog.isShowing())
-                materialDialog.dismiss();
-                salesList = sales;
+                salesList = BrandModelList.listAll(BrandModelList.class);
 
                 try {
-                    productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
+                    productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
                         @Override
-                        public boolean apply(Sales input) {
+                        public boolean apply(BrandModelList input) {
                             return (input.getType().equalsIgnoreCase(stringProductType));
                         }
                     }));
@@ -138,20 +134,13 @@ public class SaleFragment extends Fragment {
                 }
 
 
-                Set<String> brand = new HashSet();
+                Set<String> brands = new HashSet();
                 for (int i = 0; i < productTypeList.size(); i++) {
-                    brand.add(productTypeList.get(i).getBrand());
+                    brands.add(productTypeList.get(i).getBrand());
                 }
-                brandList.addAll(brand);
+                brandList.addAll(brands);
 
 
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
 
         brand.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,9 +167,9 @@ public class SaleFragment extends Fragment {
                         stringBrand = brandList.get(position);
                         view.dismiss();
                         brand.setText(stringBrand);
-                        modelSalesList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<Sales>() {
+                        modelSalesList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<BrandModelList>() {
                             @Override
-                            public boolean apply(Sales input) {
+                            public boolean apply(BrandModelList input) {
 
                                 if (stringAccessory == null)
                                     return (input.getBrand().equalsIgnoreCase(stringBrand));
@@ -231,9 +220,9 @@ public class SaleFragment extends Fragment {
                         view.dismiss();
                         accessoryType.setText(stringAccessory);
 
-                        List<Sales> newArrayList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<Sales>() {
+                        List<BrandModelList> newArrayList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<BrandModelList>() {
                             @Override
-                            public boolean apply(Sales input) {
+                            public boolean apply(BrandModelList input) {
                                 return (input.getType().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
                             }
                         }));
@@ -362,9 +351,9 @@ public class SaleFragment extends Fragment {
                         modelList.clear();
                         accessoryTypeList.clear();
                         brandList.clear();
-                        productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
+                        productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
                             @Override
-                            public boolean apply(Sales input) {
+                            public boolean apply(BrandModelList input) {
                                 return (input.getType().equalsIgnoreCase(stringProductType));
                             }
                         }));
@@ -399,9 +388,9 @@ public class SaleFragment extends Fragment {
                         modelList.clear();
                         accessoryTypeList.clear();
                         brandList.clear();
-                        productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
+                        productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
                             @Override
-                            public boolean apply(Sales input) {
+                            public boolean apply(BrandModelList input) {
                                 return (input.getType().equalsIgnoreCase(stringProductType));
                             }
                         }));

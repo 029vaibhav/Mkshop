@@ -321,7 +321,7 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
                         break;
                     case Activity.RESULT_CANCELED:
                         Log.i("RESULT_CANCELED", "User chose not to make required location settings changes.");
-                        MkShop.toast(getActivity(), "please turn on the gps to mark your attendance");
+                        MkShop.toast(getActivity(), "please turn on the gps to fetch location");
 
                         break;
                 }

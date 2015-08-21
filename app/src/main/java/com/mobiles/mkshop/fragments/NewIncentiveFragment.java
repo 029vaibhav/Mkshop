@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.pojos.BrandModelList;
 import com.mobiles.mkshop.pojos.IncentiveEntity;
 import com.mobiles.mkshop.pojos.ProductType;
 import com.mobiles.mkshop.pojos.Sales;
@@ -45,8 +46,8 @@ public class NewIncentiveFragment extends Fragment {
     EditText basePrice, quantity, incentive;
     Button submit;
     TextView validity;
-    List<Sales> salesList;
-    List<Sales> modelList;
+    List<BrandModelList> salesList;
+    List<BrandModelList> modelList;
     MaterialDialog materialDialog;
     String validityDate;
 
@@ -79,17 +80,17 @@ public class NewIncentiveFragment extends Fragment {
                 .cancelable(false)
                 .build();
 
-        materialDialog.show();
-        Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
-            @Override
-            public void success(List<Sales> sales, Response response) {
+
 
                 salesList.clear();
                 materialDialog.dismiss();
 
-                salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<Sales>() {
+                List<BrandModelList> sales = BrandModelList.listAll(BrandModelList.class);
+
+
+                salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<BrandModelList>() {
                     @Override
-                    public boolean apply(Sales input) {
+                    public boolean apply(BrandModelList input) {
                         return (input.getType().equalsIgnoreCase(ProductType.Mobile.name()));
                     }
                 }));
@@ -107,19 +108,7 @@ public class NewIncentiveFragment extends Fragment {
                 brand.setAdapter(mobilelist);
 
 
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "please check your internect connection");
-                else
-                    MkShop.toast(getActivity(), error.getMessage());
-
-
-            }
-        });
 
 
         model.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -130,9 +119,9 @@ public class NewIncentiveFragment extends Fragment {
                         MkShop.toast(getActivity(), "please select brand first");
                     else {
 
-                        modelList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
+                        modelList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
                             @Override
-                            public boolean apply(Sales input) {
+                            public boolean apply(BrandModelList input) {
                                 return (input.getBrand().equalsIgnoreCase(brand.getText().toString()));
                             }
                         }));

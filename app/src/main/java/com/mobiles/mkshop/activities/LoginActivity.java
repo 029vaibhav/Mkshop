@@ -66,8 +66,8 @@ public class LoginActivity extends Activity {
                         public void success(String response, Response response2) {
 
 
-                            if(materialDialog!=null && materialDialog.isShowing())
-                            materialDialog.dismiss();
+                            if (materialDialog != null && materialDialog.isShowing())
+                                materialDialog.dismiss();
                             MkShop.AUTH = response;
                             sharedPreferences.edit().putString("AUTH", MkShop.AUTH).apply();
                             MkShop.Username = username.getText().toString();
@@ -82,10 +82,13 @@ public class LoginActivity extends Activity {
                         @Override
                         public void failure(RetrofitError error) {
 
-                            if(materialDialog!=null && materialDialog.isShowing())
-                            materialDialog.dismiss();
-                            MkShop.toast(LoginActivity.this, error.getMessage());
-                            Log.e("error", error.getMessage());
+                            if (materialDialog != null && materialDialog.isShowing())
+                                materialDialog.dismiss();
+                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                MkShop.toast(LoginActivity.this, "please check your internet connection");
+
+                            else
+                                MkShop.toast(LoginActivity.this, error.getMessage());
 
                         }
                     });

@@ -131,11 +131,9 @@ public class RequestRepair extends Fragment {
     private class ListInitializer extends AsyncTask<Void, Void, Void> {
 
 
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
 
 
             materialDialog.show();
@@ -145,11 +143,11 @@ public class RequestRepair extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Client.INSTANCE.getServiceList(MkShop.AUTH,new Callback<List<RepairPojo>>() {
+            Client.INSTANCE.getServiceList(MkShop.AUTH, new Callback<List<RepairPojo>>() {
                 @Override
                 public void success(List<RepairPojo> repairPojos, Response response) {
-                    if(materialDialog !=null &&materialDialog.isShowing())
-                    materialDialog.dismiss();
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
                     repairList = repairPojos;
                     Myenum.INSTANCE.setServiceList(repairList);
                     serviceCenterAdapter = new ServiceCenterAdapter(getActivity(), repairList);
@@ -159,9 +157,12 @@ public class RequestRepair extends Fragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(materialDialog !=null &&materialDialog.isShowing())
-                    materialDialog.dismiss();
-                    MkShop.toast(getActivity(), "something went wrong please try again");
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                        MkShop.toast(getActivity(), "please check your internet connection");
+                    else
+                        MkShop.toast(getActivity(), error.getMessage());
 
                 }
             });

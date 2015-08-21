@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
@@ -82,7 +83,8 @@ public class IncentiveAdapter extends RecyclerView.Adapter<IncentiveAdapter.View
                                     @Override
                                     public void success(String s, Response response) {
 
-                                        MkShop.toast(context.getActivity(), s);
+                                       // MkShop.toast(context.getActivity(), s);
+                                        Toast.makeText(context.getActivity(),s,Toast.LENGTH_SHORT).show();
                                         Fragment fragment = new Incentive();
 
                                         context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();

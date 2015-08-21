@@ -61,8 +61,6 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
             public void success(LoginDetails loginDetails, Response response) {
 
 
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
                 String json = new Gson().toJson(loginDetails);
 
                 MkShop.Role = loginDetails.getRole();
@@ -72,7 +70,7 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
 
                 for (int i = 0; i < brandModelLists.size(); i++) {
                     List<BrandModelList> localParkingEvent = BrandModelList.find(BrandModelList.class, "server_id = ?", "" + brandModelLists.get(i).getId());
-                    if (localParkingEvent == null) {
+                    if (localParkingEvent == null || localParkingEvent.size() == 0) {
                         BrandModelList brandModelList = new BrandModelList();
                         brandModelList.setBrand(brandModelLists.get(i).getBrand());
                         brandModelList.setModelNo(brandModelLists.get(i).getModelNo());
@@ -80,20 +78,11 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
                         brandModelList.setAccessoryType(brandModelLists.get(i).getAccessoryType());
                         brandModelList.setServerId(brandModelLists.get(i).getId());
                         brandModelList.save();
-                    } else {
-                        if (localParkingEvent.size()>0 && !localParkingEvent.get(0).equals(brandModelLists.get(i))) {
-                            BrandModelList brandModelList = localParkingEvent.get(0);
-                            brandModelList.setBrand(brandModelLists.get(i).getBrand());
-                            brandModelList.setModelNo(brandModelLists.get(i).getModelNo());
-                            brandModelList.setType(brandModelLists.get(i).getType());
-                            brandModelList.setAccessoryType(brandModelLists.get(i).getAccessoryType());
-                            brandModelList.setServerId(brandModelLists.get(i).getId());
-                            brandModelList.save();
-                        }
                     }
 
                 }
-
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
 
                 sharedPreferences.edit().putString("DETAIL", json).apply();
                 Intent intent = new Intent(GetLoginDetailsActivity.this, MainActivity.class);

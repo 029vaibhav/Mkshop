@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.pojos.BrandModelList;
 import com.mobiles.mkshop.pojos.RepairPojo;
 import com.mobiles.mkshop.pojos.Sales;
 import com.mobiles.mkshop.pojos.UserType;
@@ -51,7 +52,7 @@ public class RepairNewItemFragment extends Fragment {
     private TextView date, status;
     AutoCompleteTextView brand, modelNo;
     TextView dateTitle;
-    List<Sales> salesList, modelSalesList;
+    List<BrandModelList> salesList, modelSalesList;
     List<String> brandList;
 
     MaterialDialog materialDialog;
@@ -100,44 +101,21 @@ public class RepairNewItemFragment extends Fragment {
         dateTitle = (TextView) v.findViewById(R.id.dateTitle);
 
 
-        materialDialog.show();
-        Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
-            @Override
-            public void success(List<Sales> sales, Response response) {
-
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
-
-
-                salesList = sales;
-                brandList.clear();
-                Set<String> brandStrings = new HashSet();
-                for (int i = 0; i < sales.size(); i++) {
-                    brandStrings.add(sales.get(i).getBrand());
-                }
-                brandList.addAll(brandStrings);
+        salesList = BrandModelList.listAll(BrandModelList.class);
+        List<BrandModelList> sales = BrandModelList.listAll(BrandModelList.class);
+        ;
+        brandList.clear();
+        Set<String> brandStrings = new HashSet();
+        for (int i = 0; i < sales.size(); i++) {
+            brandStrings.add(sales.get(i).getBrand());
+        }
+        brandList.addAll(brandStrings);
 
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (getActivity(), android.R.layout.select_dialog_item, brandList);
-                brand.setThreshold(1);
-                brand.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
-
-
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "please check your internect connection");
-                else
-                    MkShop.toast(getActivity(), error.getMessage());
-
-            }
-        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (getActivity(), android.R.layout.select_dialog_item, brandList);
+        brand.setThreshold(1);
+        brand.setAdapter(adapter);
 
 
         modelNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -148,9 +126,9 @@ public class RepairNewItemFragment extends Fragment {
                         MkShop.toast(getActivity(), "please select brand first");
                     else {
                         brandList.clear();
-                        modelSalesList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
+                        modelSalesList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
                             @Override
-                            public boolean apply(Sales input) {
+                            public boolean apply(BrandModelList input) {
                                 return (input.getBrand().equalsIgnoreCase(brand.getText().toString()));
                             }
                         }));
