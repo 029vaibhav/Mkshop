@@ -275,11 +275,7 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
     @Override
     public void onLocationChanged(Location location) {
 
-
         startLocation = location;
-
-//
-
 
     }
 

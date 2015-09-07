@@ -57,21 +57,21 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                 + "-" + userListAttendances.get(position).getMonth());
 
 
-        holder.name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProfileFragment fragment = ProfileFragment.newInstance(userListAttendances.get(position).getUsername());
-                context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-            }
-        });
-
-        holder.attendance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CalendarFragment fragment = CalendarFragment.newInstance(userListAttendances.get(position).getUsername());
-                context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-            }
-        });
+//        holder.name.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ProfileFragment fragment = ProfileFragment.newInstance(userListAttendances.get(position).getUsername());
+//                context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+//            }
+//        });
+//
+//        holder.attendance.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CalendarFragment fragment = CalendarFragment.newInstance(userListAttendances.get(position).getUsername());
+//                context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+//            }
+//        });
 
     }
 
@@ -83,7 +83,7 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView name;
         public TextView mobile;
@@ -100,53 +100,129 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
             attendance = (TextView) itemView.findViewById(R.id.attendace);
             cardView = (CardView) itemView.findViewById(R.id.cardlist_item);
 
-            cardView.setOnLongClickListener(this);
+            cardView.setOnClickListener(this);
 
 
         }
 
 
         @Override
-        public boolean onLongClick(View v) {
+        public void onClick(View v) {
+
+
             new MaterialDialog.Builder(context.getActivity())
-                    .title("Pay salary")
-                    .inputType(InputType.TYPE_CLASS_NUMBER)
-                    .input("", "", new MaterialDialog.InputCallback() {
+                    .items(R.array.userActions)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
                         @Override
-                        public void onInput(MaterialDialog dialog, final CharSequence input) {
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
-                            if (input.toString().length() != 0) {
+                            switch (which) {
+                                case 0:
+                                    if (dialog != null && dialog.isShowing())
+                                        dialog.dismiss();
+                                    ProfileFragment fragment = ProfileFragment.newInstance(userListAttendances.get(getAdapterPosition()).getUsername());
+                                    context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                                    break;
+                                case 1:
+                                    if (dialog != null && dialog.isShowing())
+                                        dialog.dismiss();
+                                    CalendarFragment calendarFragment = CalendarFragment.newInstance(userListAttendances.get(getAdapterPosition()).getUsername());
+                                    context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).commit();
+                                    break;
+                                case 2:
+                                    if (dialog != null && dialog.isShowing())
+                                        dialog.dismiss();
+                                    new MaterialDialog.Builder(context.getActivity())
+                                            .title("Pay salary")
+                                            .inputType(InputType.TYPE_CLASS_NUMBER)
+                                            .input("", "", new MaterialDialog.InputCallback() {
+                                                @Override
+                                                public void onInput(MaterialDialog dialog, final CharSequence input) {
 
-                                ExpenseEntity expenseEntity = new ExpenseEntity();
-                                expenseEntity.setPaymentType(PaymentType.Salary.name());
-                                expenseEntity.setUsername(userListAttendances.get(getAdapterPosition()).getUsername());
-                                expenseEntity.setAmount(input.toString());
+                                                    if (input.toString().length() != 0) {
 
-                                Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {
-                                    @Override
-                                    public void success(String s, Response response) {
+                                                        ExpenseEntity expenseEntity = new ExpenseEntity();
+                                                        expenseEntity.setPaymentType(PaymentType.Salary.name());
+                                                        expenseEntity.setUsername(userListAttendances.get(getAdapterPosition()).getUsername());
+                                                        expenseEntity.setAmount(input.toString());
 
-                                        MkShop.toast(context.getActivity(), s);
+                                                        Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {
+                                                            @Override
+                                                            public void success(String s, Response response) {
 
-                                    }
+                                                                MkShop.toast(context.getActivity(), s);
 
-                                    @Override
-                                    public void failure(RetrofitError error) {
+                                                            }
 
-                                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                            MkShop.toast(context.getActivity(), "please check your internet connection");
-                                        else
-                                            MkShop.toast(context.getActivity(), error.getMessage());
+                                                            @Override
+                                                            public void failure(RetrofitError error) {
+
+                                                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                                                    MkShop.toast(context.getActivity(), "please check your internet connection");
+                                                                else
+                                                                    MkShop.toast(context.getActivity(), error.getMessage());
 
 
-                                    }
-                                });
-                            } else {
-                                MkShop.toast(context.getActivity(),"please enter some amount");
+                                                            }
+                                                        });
+                                                    } else {
+                                                        MkShop.toast(context.getActivity(), "please enter some amount");
+                                                    }
+                                                }
+                                            }).show();
+
+
+                                    break;
+                                case 3:
+                                    if (dialog != null && dialog.isShowing())
+                                        dialog.dismiss();
+                                    break;
                             }
+
+
                         }
-                    }).show();
-            return false;
+                    })
+                    .show();
+
+
+//            new MaterialDialog.Builder(context.getActivity())
+//                    .title("Pay salary")
+//                    .inputType(InputType.TYPE_CLASS_NUMBER)
+//                    .input("", "", new MaterialDialog.InputCallback() {
+//                        @Override
+//                        public void onInput(MaterialDialog dialog, final CharSequence input) {
+//
+//                            if (input.toString().length() != 0) {
+//
+//                                ExpenseEntity expenseEntity = new ExpenseEntity();
+//                                expenseEntity.setPaymentType(PaymentType.Salary.name());
+//                                expenseEntity.setUsername(userListAttendances.get(getAdapterPosition()).getUsername());
+//                                expenseEntity.setAmount(input.toString());
+//
+//                                Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {
+//                                    @Override
+//                                    public void success(String s, Response response) {
+//
+//                                        MkShop.toast(context.getActivity(), s);
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void failure(RetrofitError error) {
+//
+//                                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+//                                            MkShop.toast(context.getActivity(), "please check your internet connection");
+//                                        else
+//                                            MkShop.toast(context.getActivity(), error.getMessage());
+//
+//
+//                                    }
+//                                });
+//                            } else {
+//                                MkShop.toast(context.getActivity(), "please enter some amount");
+//                            }
+//                        }
+//                    }).show();
         }
     }
 }
