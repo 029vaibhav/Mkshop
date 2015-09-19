@@ -5,11 +5,15 @@ import com.orm.SugarRecord;
 /**
  * Created by arvind on 21/8/15.
  */
-public class BrandModelList extends SugarRecord<BrandModelList>{
+public class BrandModelList extends SugarRecord<BrandModelList> {
 
 
-    String brand,modelNo,accessoryType,type;
+    String brand, modelNo, accessoryType, type;
     long serverId;
+
+    public BrandModelList() {
+
+    }
 
     public String getBrand() {
         return brand;
@@ -23,10 +27,6 @@ public class BrandModelList extends SugarRecord<BrandModelList>{
         return modelNo;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
 
     public void setModelNo(String modelNo) {
         this.modelNo = modelNo;

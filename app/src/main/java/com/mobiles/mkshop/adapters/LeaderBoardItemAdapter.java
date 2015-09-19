@@ -2,6 +2,7 @@ package com.mobiles.mkshop.adapters;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,11 +33,19 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
     Fragment context;
     String department;
     List<Leader> leaderList;
+    MaterialDialog materialDialog;
 
     public LeaderBoardItemAdapter(Fragment salesReportList, String department) {
         context = salesReportList;
         this.department = department;
         leaderList = Myenum.INSTANCE.getLeaderList(department);
+
+
+        materialDialog = new MaterialDialog.Builder(context.getActivity())
+                .progress(true, 0)
+                .cancelable(false)
+                .build();
+
 
     }
 
@@ -52,7 +61,7 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Leader leader = leaderList.get(position);
-        holder.name.setText(leader.getName());
+        holder.name.setText(leader.getName().toUpperCase());
         holder.qty.setText(leader.getQuantity());
         holder.revenue.setText(leader.getPrice());
 
@@ -70,36 +79,37 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
         leaderList = Myenum.INSTANCE.getLeaderList(department);
 
-        if(leaderList!=null){
-        Collections.sort(leaderList, new Comparator<Leader>() {
-            @Override
-            public int compare(Leader lhs, Leader rhs) {
+        if (leaderList != null) {
+            Collections.sort(leaderList, new Comparator<Leader>() {
+                @Override
+                public int compare(Leader lhs, Leader rhs) {
 
-                int a = Integer.parseInt(lhs.getQuantity());
-                int b = Integer.parseInt(rhs.getQuantity());
-                return a - b;
+                    int a = Integer.parseInt(lhs.getQuantity());
+                    int b = Integer.parseInt(rhs.getQuantity());
+                    return a - b;
+                }
+            });
+
+            if (sort) {
+                leaderList = leaderList;
+
+            } else {
+
+
+                Collections.reverse(leaderList);
+
             }
-        });
-
-        if (sort) {
-            leaderList = leaderList;
-
-        } else {
-
-
-            Collections.reverse(leaderList);
+            notifyDataSetChanged();
 
         }
-        notifyDataSetChanged();
-
-    }}
+    }
 
 
     public void sortprice(boolean sort) {
 
         leaderList = Myenum.INSTANCE.getLeaderList(department);
 
-        if(leaderList!=null) {
+        if (leaderList != null) {
             Collections.sort(leaderList, new Comparator<Leader>() {
                 @Override
                 public int compare(Leader lhs, Leader rhs) {
@@ -145,17 +155,21 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
         @Override
         public void onClick(View v) {
 
+            materialDialog.show();
+
             String[] toFrom = Myenum.INSTANCE.getToAndFromDate();
 
             Client.INSTANCE.getUserSales(MkShop.AUTH, toFrom[0], toFrom[1], leaderList.get(getAdapterPosition()).getUsername(), new Callback<List<Sales>>() {
                 @Override
                 public void success(List<Sales> sales, Response response) {
 
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+
                     String[] strings = new String[sales.size()];
                     for (int i = 0; i < sales.size(); i++) {
-                        strings[i] = (sales.get(i).getCreated() + "     " + sales.get(i).getBrand() + " " + sales.get(i).getModelNo());
+                        strings[i] = (sales.get(i).getCreated() + "     " + sales.get(i).getBrand() + " " + sales.get(i).getModel());
                     }
-
 
                     new MaterialDialog.Builder(context.getActivity())
                             .title("sales list")
@@ -171,6 +185,9 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
                 @Override
                 public void failure(RetrofitError error) {
+
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
 
                     if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(context.getActivity(), "please check your internet connection");

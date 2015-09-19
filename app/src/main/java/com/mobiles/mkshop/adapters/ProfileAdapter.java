@@ -73,27 +73,32 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
                                 @Override
                                 public void onInput(MaterialDialog dialog, final CharSequence input) {
 
-                                    Map map = new HashMap();
-                                    map.put(versionViewHolder.title.getText(), input.toString());
-                                    Client.INSTANCE.updateProfile(MkShop.AUTH, username, map, new Callback<String>() {
-                                        @Override
-                                        public void success(String s, Response response) {
 
-                                            MkShop.toast(context, s);
-                                            if (s != null && s.equalsIgnoreCase("profile updated"))
-                                                versionViewHolder.subTitle.setText(input.toString());
+                                    if (input.length() != 0) {
+                                        Map map = new HashMap();
+                                        map.put(versionViewHolder.title.getText(), input.toString());
+                                        Client.INSTANCE.updateProfile(MkShop.AUTH, username, map, new Callback<String>() {
+                                            @Override
+                                            public void success(String s, Response response) {
 
-                                        }
+                                                MkShop.toast(context, s);
+                                                if (s != null && s.equalsIgnoreCase("profile updated"))
+                                                    versionViewHolder.subTitle.setText(input.toString());
 
-                                        @Override
-                                        public void failure(RetrofitError error) {
+                                            }
 
-                                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                                MkShop.toast(context, "please check your internet connection");
+                                            @Override
+                                            public void failure(RetrofitError error) {
+
+                                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                                    MkShop.toast(context, "please check your internet connection");
 
 
-                                        }
-                                    });
+                                            }
+                                        });
+                                    } else {
+                                        MkShop.toast(context, "please enter some text");
+                                    }
                                 }
                             }).show();
                 }

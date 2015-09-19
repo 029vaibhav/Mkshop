@@ -1,11 +1,10 @@
 package com.mobiles.mkshop.pojos;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by vaibhav on 29/6/15.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class PartsRequests {
 

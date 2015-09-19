@@ -2,6 +2,7 @@ package com.mobiles.mkshop.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.PartRequestAdapter;
 import com.mobiles.mkshop.application.Client;
@@ -70,7 +70,7 @@ public class PartsRequestFragment extends Fragment {
 
         listView = (ListView) viewGroup.findViewById(R.id.repairlist);
         FloatingActionButton fab = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
-        fab.attachToListView(listView);
+//        fab.attachToListView(listView);
 
         new ListInitializer().execute();
 
@@ -105,7 +105,7 @@ public class PartsRequestFragment extends Fragment {
 
                 Myenum.INSTANCE.setRequestRepair(partsRequestsList.get(position));
                 Fragment fragment = new PartsRequestListItemFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });
 
@@ -113,7 +113,7 @@ public class PartsRequestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new PartsRequestNewItemFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });
 

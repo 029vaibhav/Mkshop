@@ -249,26 +249,18 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         if (mNavigationDrawerFragment.isDrawerOpen())
             mNavigationDrawerFragment.closeDrawer();
-        else if (MkShop.SCRREN.equalsIgnoreCase("RepairListItemFragment")) {
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag(RequestRepair.TAG);
-            if (fragment == null) {
-                fragment = new RequestRepair();
-            }
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-        } else if (MkShop.SCRREN.equalsIgnoreCase("PartsRequestListItemFragment")) {
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
-            if (fragment == null) {
-                fragment = new PartsRequestFragment();
-            }
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-        } else {
-            if (back_pressed + 2000 > System.currentTimeMillis())
-                super.onBackPressed();
-            else
-                Toast.makeText(getBaseContext(), "Press once again to exit!",
-                        Toast.LENGTH_SHORT).show();
-            back_pressed = System.currentTimeMillis();
+     else {
 
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                super.onBackPressed();
+            } else {
+                if (back_pressed + 2000 > System.currentTimeMillis())
+                    super.onBackPressed();
+                else
+                    Toast.makeText(getBaseContext(), "Press once again to exit!",
+                            Toast.LENGTH_SHORT).show();
+                back_pressed = System.currentTimeMillis();
+            }
         }
     }
 

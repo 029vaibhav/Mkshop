@@ -1,16 +1,15 @@
 package com.mobiles.mkshop.pojos;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by vaibhav on 30/6/15.
  */
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class Sales {
 
     long id;
-    String type, brand, modelNo, quantity, price, accessoryType, username, path, customerName, mobile, imei, name,created;
+    String type, brand, modelNo, quantity, price, accessoryType, username, path, customerName, mobile, imei, name,created,model;
 
     public long getId() {
         return id;
@@ -22,6 +21,10 @@ public class Sales {
 
     public String getCustomerName() {
         return customerName;
+    }
+
+    public String getModel() {
+        return model;
     }
 
     public void setCustomerName(String customerName) {

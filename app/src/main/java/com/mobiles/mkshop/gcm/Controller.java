@@ -31,9 +31,9 @@ import io.fabric.sdk.android.Fabric;
  */
 public class Controller extends SugarApp {
 
-    private  final int MAX_ATTEMPTS = 5;
-    private  final int BACKOFF_MILLI_SECONDS = 2000;
-    private  final Random random = new Random();
+    private final int MAX_ATTEMPTS = 5;
+    private final int BACKOFF_MILLI_SECONDS = 2000;
+    private final Random random = new Random();
 
     @Override
     public void onCreate() {
@@ -51,7 +51,6 @@ public class Controller extends SugarApp {
         params.put("regId", regId);
         params.put("username", name);
         params.put("email", email);
-
 
 
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
@@ -113,6 +112,7 @@ public class Controller extends SugarApp {
         //Send Broadcast to Show message on screen
         displayMessageOnScreen(context, message);
     }
+
     // Unregister this account/device pair within the server.
     public void unregister(final Context context, final String regId) {
 
@@ -205,20 +205,17 @@ public class Controller extends SugarApp {
     }
 
 
-
     // Checking for all possible internet providers
-    public boolean isConnectingToInternet(){
+    public boolean isConnectingToInternet() {
 
         ConnectivityManager connectivity =
                 (ConnectivityManager) getSystemService(
                         Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null)
-        {
+        if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null)
                 for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
 
@@ -249,7 +246,7 @@ public class Controller extends SugarApp {
         // Set Dialog Message
         alertDialog.setMessage(message);
 
-        if(status != null)
+        if (status != null)
             // Set alert dialog icon
             alertDialog.setIcon((status) ? R.drawable.success : R.drawable.fail);
 
@@ -266,7 +263,7 @@ public class Controller extends SugarApp {
 
     private PowerManager.WakeLock wakeLock;
 
-    public  void acquireWakeLock(Context context) {
+    public void acquireWakeLock(Context context) {
         if (wakeLock != null) wakeLock.release();
 
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -278,7 +275,15 @@ public class Controller extends SugarApp {
         wakeLock.acquire();
     }
 
-    public  void releaseWakeLock() {
-        if (wakeLock != null) wakeLock.release(); wakeLock = null;
+    public void releaseWakeLock() {
+        if (wakeLock != null) wakeLock.release();
+        wakeLock = null;
     }
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(base);
+//        MultiDex.install(this);
+//    }
+
+
 }

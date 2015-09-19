@@ -2,8 +2,6 @@ package com.mobiles.mkshop.application;
 
 import android.util.Log;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.mobiles.mkshop.pojos.AttendanceDates;
 import com.mobiles.mkshop.pojos.ExpenseEntity;
 import com.mobiles.mkshop.pojos.IncentiveEntity;
@@ -25,7 +23,6 @@ import java.util.Map;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.Response;
-import retrofit.converter.JacksonConverter;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
@@ -144,13 +141,13 @@ public enum Client {
         @POST("/mk/webservice/attendance.php")
         void markAttendance(@Header("AUTH") String auth, @Query("username") String username, Callback<String> callback);
 
-        @POST("/mk/webservice/logout.php")
+        @GET("/mk/webservice/logout.php")
         void logout(@Query("username") String username, Callback<String> callback);
 
         @POST("/mk/webservice/incentiveMessage.php")
         void createIncentive(@Header("AUTH") String auth, @Body IncentiveEntity incentiveEntity, Callback<String> callback);
 
-        @POST("/mk/webservice/allincentive.php")
+        @GET("/mk/webservice/allincentive.php")
         void getIncentiveList(@Header("AUTH") String auth, Callback<List<IncentiveEntity>> incentiveEntityCallback);
 
 
@@ -168,22 +165,21 @@ public enum Client {
         void deleteIncentiveMessage(@Header("AUTH") String auth, @Query("id") int id, @Query("op") String delete, Callback<String> callback);
 
         @GET("/mk/webservice/leaderboardsaleslist.php")
-        void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1,@Query("username") String username ,Callback<List<Sales>> callback);
+        void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1, @Query("username") String username, Callback<List<Sales>> callback);
     }
 
 
     Client() {
 
-//
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JodaModule());
+////
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new JodaModule());
 
-        JacksonConverter jacksonConverter = new JacksonConverter(objectMapper);
+//        JacksonConverter jacksonConverter = new JacksonConverter(new ObjectMapper());
 
         RestAdapter restAdapter = new RestAdapter.Builder()
 //                .setEndpoint("http://192.168.1.102:80")
                 .setEndpoint("http://mkmobileshop.in:80")
-                .setConverter(jacksonConverter)
                 .setLog(new RestAdapter.Log() {
                     @Override
                     public void log(String message) {
@@ -349,7 +345,7 @@ public enum Client {
 
 
     public void getUserSales(String auth, String s, String s1, String username, Callback<List<Sales>> callback) {
-        mobileService.getUserSales(auth, s, s1,username, callback);
+        mobileService.getUserSales(auth, s, s1, username, callback);
     }
 
 

@@ -117,19 +117,19 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                         public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
                             switch (which) {
-                                case 0:
+                                case 0: //view profile
                                     if (dialog != null && dialog.isShowing())
                                         dialog.dismiss();
                                     ProfileFragment fragment = ProfileFragment.newInstance(userListAttendances.get(getAdapterPosition()).getUsername());
-                                    context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                                    context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
                                     break;
-                                case 1:
+                                case 1: // view attendance
                                     if (dialog != null && dialog.isShowing())
                                         dialog.dismiss();
                                     CalendarFragment calendarFragment = CalendarFragment.newInstance(userListAttendances.get(getAdapterPosition()).getUsername());
-                                    context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).commit();
+                                    context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).addToBackStack(null).commit();
                                     break;
-                                case 2:
+                                case 2: // pay salary
                                     if (dialog != null && dialog.isShowing())
                                         dialog.dismiss();
                                     new MaterialDialog.Builder(context.getActivity())
@@ -173,7 +173,7 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
 
 
                                     break;
-                                case 3:
+                                case 3: // delete user
                                     if (dialog != null && dialog.isShowing())
                                         dialog.dismiss();
                                     break;

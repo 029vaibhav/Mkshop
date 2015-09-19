@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +13,7 @@
         android:layout_below="@+id/editsearch"
         android:divider="@null"></ListView>
 
-    <com.melnykov.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="556dp"
         android:layout_height="56dp"
@@ -21,9 +21,6 @@
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:src="@drawable/ic_action_plus"
-        fab:fab_colorNormal="@color/myPrimaryColor"
-        fab:fab_colorPressed="@color/myPrimaryDarkColor"
-        fab:fab_shadow="true"
-        fab:fab_type="normal" />
+        />
 
 </RelativeLayout>

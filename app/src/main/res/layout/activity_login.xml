@@ -10,10 +10,10 @@
 
 
     <ScrollView
-        android:padding="10dp"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,8 +21,8 @@
             android:orientation="vertical">
 
             <EditText
-                fontPath="fonts/rr.ttf"
                 android:id="@+id/username"
+                fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -36,8 +36,8 @@
                 android:textSize="20dp" />
 
             <EditText
-                fontPath="fonts/rr.ttf"
                 android:id="@+id/password"
+                fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -47,16 +47,17 @@
                 android:background="@drawable/border_text"
                 android:gravity="center"
                 android:hint="Password"
+                android:inputType="textPassword"
                 android:padding="10dp"
                 android:textSize="20dp" />
 
             <Button
-                fontPath="fonts/rr.ttf"
-                android:layout_gravity="center"
                 android:id="@+id/submit"
                 style="?android:buttonBarButtonStyle"
+                fontPath="fonts/rr.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/button_selector"
                 android:gravity="center"
                 android:paddingBottom="10dp"

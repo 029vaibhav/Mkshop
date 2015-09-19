@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
 import com.mobiles.mkshop.adapters.ServiceCenterAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -74,7 +74,7 @@ public class RequestRepair extends Fragment {
         search = (EditText) view.findViewById(R.id.editsearch);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.attachToListView(listView);
+//        fab.attachToListView(listView);
 
 
         new ListInitializer().execute();
@@ -88,7 +88,7 @@ public class RequestRepair extends Fragment {
                 Myenum.INSTANCE.setRepairPojo(repairList.get(position));
 
                 Fragment fragment = new RepairListItemFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });
 
@@ -98,7 +98,7 @@ public class RequestRepair extends Fragment {
             public void onClick(View view) {
 
                 Fragment fragment = new RepairNewItemFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
 
 
             }

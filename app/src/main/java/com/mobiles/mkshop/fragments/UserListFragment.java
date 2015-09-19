@@ -2,6 +2,7 @@ package com.mobiles.mkshop.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.UserListItemAdpater;
 import com.mobiles.mkshop.application.Client;
@@ -53,20 +53,19 @@ public class UserListFragment extends Fragment {
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_user_list, container, false);
 
 
-
-         recyclerView = (RecyclerView) viewGroup.findViewById(R.id.repairlist);
+        recyclerView = (RecyclerView) viewGroup.findViewById(R.id.repairlist);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         FloatingActionButton fab = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
-        fab.attachToRecyclerView(recyclerView);
+        // fab.attachToRecyclerView(recyclerView);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new NewProfileFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });
 
@@ -79,7 +78,7 @@ public class UserListFragment extends Fragment {
 
     }
 
-    private class GetUserLsit extends AsyncTask<Void,Void,Void> {
+    private class GetUserLsit extends AsyncTask<Void, Void, Void> {
 
         MaterialDialog dialog;
 
@@ -94,16 +93,15 @@ public class UserListFragment extends Fragment {
         }
 
 
-
         @Override
         protected Void doInBackground(Void... params) {
 
-            Client.INSTANCE.getUserList(MkShop.AUTH,new Callback<List<UserListAttendance>>() {
+            Client.INSTANCE.getUserList(MkShop.AUTH, new Callback<List<UserListAttendance>>() {
                 @Override
                 public void success(List<UserListAttendance> userListAttendances, Response response) {
 
-                    if(dialog!=null && dialog.isShowing())
-                    dialog.dismiss();
+                    if (dialog != null && dialog.isShowing())
+                        dialog.dismiss();
                     userListItemAdpater = new UserListItemAdpater(UserListFragment.this, userListAttendances);
                     recyclerView.setAdapter(userListItemAdpater);
                 }
@@ -111,13 +109,13 @@ public class UserListFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
-                    if(dialog !=null &&dialog.isShowing())
+                    if (dialog != null && dialog.isShowing())
                         dialog.dismiss();
 
-                    if(error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(),"please check your internet connection");
+                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                        MkShop.toast(getActivity(), "please check your internet connection");
                     else
-                        MkShop.toast(getActivity(),error.getMessage());
+                        MkShop.toast(getActivity(), error.getMessage());
 
                 }
             });

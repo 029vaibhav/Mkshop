@@ -72,7 +72,7 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
                     List<BrandModelList> localParkingEvent = BrandModelList.find(BrandModelList.class, "server_id = ?", "" + brandModelLists.get(i).getId());
                     if (localParkingEvent == null || localParkingEvent.size() == 0) {
                         BrandModelList brandModelList = new BrandModelList();
-                        brandModelList.setBrand(brandModelLists.get(i).getBrand());
+                        brandModelList.setBrand(brandModelLists.get(i).getBrand().trim());
                         brandModelList.setModelNo(brandModelLists.get(i).getModelNo());
                         brandModelList.setType(brandModelLists.get(i).getType());
                         brandModelList.setAccessoryType(brandModelLists.get(i).getAccessoryType());

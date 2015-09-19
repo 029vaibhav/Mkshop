@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -120,14 +119,14 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
             }
         });
 
-        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(Palette palette) {
-
-                mutedColor = palette.getMutedColor(R.attr.colorPrimary);
-                collapsingToolbar.setContentScrimColor(mutedColor);
-            }
-        });
+//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+//            @Override
+//            public void onGenerated(Palette palette) {
+//
+//                mutedColor = palette.getMutedColor(R.attr.colorPrimary);
+//                collapsingToolbar.setContentScrimColor(mutedColor);
+//            }
+//        });
 
         recyclerView = (RecyclerView) viewGroup.findViewById(R.id.scrollableview);
 

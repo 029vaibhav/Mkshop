@@ -118,28 +118,25 @@ public class SaleFragment extends Fragment {
         modelList = new ArrayList<>();
 
 
-                salesList = BrandModelList.listAll(BrandModelList.class);
+        salesList = BrandModelList.listAll(BrandModelList.class);
 
-                try {
-                    productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
-                        @Override
-                        public boolean apply(BrandModelList input) {
-                            return (input.getType().equalsIgnoreCase(stringProductType));
-                        }
-                    }));
+        try {
+            productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+                @Override
+                public boolean apply(BrandModelList input) {
+                    return (input.getType().equalsIgnoreCase(stringProductType));
                 }
-                catch (Exception e)
-                {
-                    Log.e("Err",e.getMessage());
-                }
+            }));
+        } catch (Exception e) {
+            Log.e("Err", e.getMessage());
+        }
 
 
-                Set<String> brands = new HashSet();
-                for (int i = 0; i < productTypeList.size(); i++) {
-                    brands.add(productTypeList.get(i).getBrand());
-                }
-                brandList.addAll(brands);
-
+        Set<String> brands = new HashSet();
+        for (int i = 0; i < productTypeList.size(); i++) {
+            brands.add(productTypeList.get(i).getBrand());
+        }
+        brandList.addAll(brands);
 
 
         brand.setOnClickListener(new View.OnClickListener() {
@@ -424,7 +421,6 @@ public class SaleFragment extends Fragment {
             materialDialog.show();
 
 
-
             sales = new Sales();
             sales.setType(stringProductType);
             sales.setBrand(stringBrand);
@@ -449,17 +445,15 @@ public class SaleFragment extends Fragment {
         protected Void doInBackground(Void... params) {
 
 
-
-
             Client.INSTANCE.sales(MkShop.AUTH, sales, new Callback<String>() {
                 @Override
                 public void success(String response, Response response2) {
 
                     MkShop.toast(getActivity(), response);
-                    if(materialDialog !=null &&materialDialog.isShowing())
+                    if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
 
-
+                    submit.setEnabled(false);
 
 
                 }
@@ -467,7 +461,7 @@ public class SaleFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
-                    if(materialDialog !=null &&materialDialog.isShowing())
+                    if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
 
 
@@ -475,6 +469,8 @@ public class SaleFragment extends Fragment {
                         MkShop.toast(getActivity(), "check your internet connection");
                     else
                         MkShop.toast(getActivity(), error.getMessage());
+
+                    submit.setEnabled(true);
 
                 }
             });

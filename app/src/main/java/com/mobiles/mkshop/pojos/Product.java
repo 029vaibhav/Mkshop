@@ -1,13 +1,12 @@
 package com.mobiles.mkshop.pojos;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 /**
  * Created by vaibhav on 23/7/15.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Product {
 

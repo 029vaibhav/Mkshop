@@ -37,19 +37,18 @@ public class OffersFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ViewGroup viewGroup=(ViewGroup) inflater.inflate(R.layout.fragment_offers, container, false);
-        recyclerView= (RecyclerView) viewGroup.findViewById(R.id.notificationList);
+        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_offers, container, false);
+        recyclerView = (RecyclerView) viewGroup.findViewById(R.id.notificationList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        Client.INSTANCE.getNotificationDetail(MkShop.AUTH,MkShop.Role, new Callback<List<Notification>>() {
+        Client.INSTANCE.getNotificationDetail(MkShop.AUTH, MkShop.Role, new Callback<List<Notification>>() {
             @Override
             public void success(List<Notification> notifications, Response response) {
 
@@ -62,20 +61,18 @@ public class OffersFragment extends Fragment {
             @Override
             public void failure(RetrofitError error) {
 
-                if(error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(),"check your internet connection");
+                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                    MkShop.toast(getActivity(), "check your internet connection");
+                else
+                    MkShop.toast(getActivity(), error.getMessage());
 
             }
         });
 
 
-
         return viewGroup;
 
     }
-
-
-
 
 
 }

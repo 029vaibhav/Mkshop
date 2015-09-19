@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -102,7 +102,7 @@ public class GeopointsFragment extends Fragment {
 
 
         FloatingActionButton fab = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
-        fab.attachToListView(listView);
+//        fab.attachToListView(listView);
 
 
         fab.setOnClickListener(new View.OnClickListener() {

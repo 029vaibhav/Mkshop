@@ -2,6 +2,7 @@ package com.mobiles.mkshop.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
+
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.IncentiveAdapter;
 import com.mobiles.mkshop.application.Client;
@@ -54,13 +55,13 @@ public class Incentive extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         FloatingActionButton fab = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
-        fab.attachToRecyclerView(recyclerView);
+        //   fab.attachToRecyclerView(recyclerView);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new NewIncentiveFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });
 
@@ -86,7 +87,7 @@ public class Incentive extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 if (materialDialog != null && materialDialog.isShowing())
-                materialDialog.dismiss();
+                    materialDialog.dismiss();
                 if (error.getKind().equals(RetrofitError.Kind.NETWORK))
                     MkShop.toast(getActivity(), "please check your internet connection");
                 else MkShop.toast(getActivity(), error.getMessage());

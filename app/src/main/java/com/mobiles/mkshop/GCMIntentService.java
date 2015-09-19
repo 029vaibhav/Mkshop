@@ -20,7 +20,9 @@ import java.util.Random;
 public class GCMIntentService extends GCMBaseIntentService {
 
     private static final String TAG = "GCMIntentService";
-
+    public static Notification notification;
+    public static NotificationManager notificationManager;
+    public static int notification_id = 1;
     private Controller aController = null;
 
     public GCMIntentService() {
@@ -70,7 +72,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         aController.displayMessageOnScreen(context, message);
         // notifies user
-        generateNotification(context, message);
+        postNotification(context, message);
     }
 
     /**
@@ -86,7 +88,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         String message = getString(R.string.gcm_deleted, total);
         aController.displayMessageOnScreen(context, message);
         // notifies user
-        generateNotification(context, message);
+        postNotification(context, message);
     }
 
     /**
@@ -118,44 +120,75 @@ public class GCMIntentService extends GCMBaseIntentService {
     /**
      * Create a notification to inform the user that server has sent a message.
      */
-    private static void generateNotification(Context context, String message) {
-        int icon = R.mipmap.ic_mkshop;
-        long when = System.currentTimeMillis();
-        NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(icon, message, when);
+//    private static staticvoid generateNotification(Context context, String message) {
+//        int icon = R.mipmap.ic_mkshop;
+//        long when = System.currentTimeMillis();
+//        NotificationManager notificationManager = (NotificationManager)
+//                context.getSystemService(Context.NOTIFICATION_SERVICE);
+//        Notification notification = new Notification(icon, message, when);
+//
+//        String title = context.getString(R.string.app_name);
+//
+//        Intent notificationIntent = new Intent(context, NotificationDetailActivity.class);
+//        notificationIntent.putExtra("message", message);
+//        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+//                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//
+////        Intent intentx = new Intent(context, MainActivity.class);
+////        intentx.putExtra("message", message);
+////        intentx.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+////                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        Random rand = new Random();
+//        int randomNum = rand.nextInt((1000 - 1) + 1) + 1;
+//
+//        PendingIntent intent =
+//                PendingIntent.getActivity(context, randomNum, notificationIntent, 0);
+//        notification.setLatestEventInfo(context, title, message, intent);
+//        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//
+//        // Play default notification sound
+//        notification.defaults |= Notification.DEFAULT_SOUND;
+//
+//        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
+//
+//        // Vibrate if vibrate is enabled
+//
+//
+//
+//        notification.defaults |= Notification.DEFAULT_VIBRATE;
+//        notificationManager.notify(randomNum, notification);
+//
+//    }
+    public static void postNotification(Context context, String message) {
 
-        String title = context.getString(R.string.app_name);
+        Random rand = new Random();
+        notification_id = rand.nextInt((1000 - 1) + 1) + 1;
 
         Intent notificationIntent = new Intent(context, NotificationDetailActivity.class);
         notificationIntent.putExtra("message", message);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, notification_id, notificationIntent, 0);
 
-//        Intent intentx = new Intent(context, MainActivity.class);
-//        intentx.putExtra("message", message);
-//        intentx.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-//                Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        Random rand = new Random();
-        int randomNum = rand.nextInt((1000 - 1) + 1) + 1;
+        int icon = R.mipmap.ic_mkshop;
 
-        PendingIntent intent =
-                PendingIntent.getActivity(context, randomNum, notificationIntent, 0);
-        notification.setLatestEventInfo(context, title, message, intent);
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
-        // Play default notification sound
-        notification.defaults |= Notification.DEFAULT_SOUND;
+        // call the default notification
+        notification = new Notification.Builder(context)
 
-        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
-
-        // Vibrate if vibrate is enabled
-
+                .setContentTitle("New Sale")
+                .setContentText(message)
+                .setSmallIcon(icon)
+                .setContentIntent(contentIntent)
+                .addAction(android.R.drawable.ic_menu_view, "View details", contentIntent)
+                .setAutoCancel(true)
+//                .setPriority(Notification.PRIORITY_HIGH)
+//                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                .build();
+        notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
 
         notification.defaults |= Notification.DEFAULT_VIBRATE;
-        notificationManager.notify(randomNum, notification);
-
+        notificationManager.notify(notification_id, notification);
     }
 
 }
