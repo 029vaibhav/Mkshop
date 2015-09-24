@@ -112,7 +112,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int titleTextColor=0x7f010003;
+        public static int titleTextColor2=0x7f010003;
     }
     public static final class color {
         public static int calendar_active_month_bg=0x7f050000;
@@ -170,7 +170,7 @@ containing a value of this type.
            <tr><td><code>{@link #CalendarPickerView_displayHeader com.squareup.timessquare:displayHeader}</code></td><td></td></tr>
            <tr><td><code>{@link #CalendarPickerView_dividerColor com.squareup.timessquare:dividerColor}</code></td><td></td></tr>
            <tr><td><code>{@link #CalendarPickerView_headerTextColor com.squareup.timessquare:headerTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #CalendarPickerView_titleTextColor com.squareup.timessquare:titleTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #CalendarPickerView_titleTextColor2 com.squareup.timessquare:titleTextColor2}</code></td><td></td></tr>
            </table>
            @see #CalendarPickerView_android_background
            @see #CalendarPickerView_dayBackground
@@ -178,7 +178,7 @@ containing a value of this type.
            @see #CalendarPickerView_displayHeader
            @see #CalendarPickerView_dividerColor
            @see #CalendarPickerView_headerTextColor
-           @see #CalendarPickerView_titleTextColor
+           @see #CalendarPickerView_titleTextColor2
          */
         public static final int[] CalendarPickerView = {
             0x010100d4, 0x7f010000, 0x7f010001, 0x7f010002,
@@ -260,7 +260,7 @@ containing a value of this type.
         */
         public static int CalendarPickerView_headerTextColor = 6;
         /**
-          <p>This symbol is the offset where the {@link com.squareup.timessquare.R.attr#titleTextColor}
+          <p>This symbol is the offset where the {@link com.squareup.timessquare.R.attr#titleTextColor2}
           attribute's value can be found in the {@link #CalendarPickerView} array.
 
 
@@ -271,9 +271,9 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.squareup.timessquare:titleTextColor
+          @attr name com.squareup.timessquare:titleTextColor2
         */
-        public static int CalendarPickerView_titleTextColor = 4;
+        public static int CalendarPickerView_titleTextColor2 = 4;
         /** Attributes that can be used with a calendar_cell.
            <p>Includes the following attributes:</p>
            <table>

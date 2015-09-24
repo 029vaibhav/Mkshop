@@ -20,7 +20,7 @@ public final class R {
 		public static final int state_range_middle = 0x7f01000a;
 		public static final int state_selectable = 0x7f010006;
 		public static final int state_today = 0x7f010008;
-		public static final int titleTextColor = 0x7f010003;
+		public static final int titleTextColor2 = 0x7f010003;
 	}
 	public static final class color {
 		public static final int calendar_active_month_bg = 0x7f050000;
@@ -73,7 +73,7 @@ public final class R {
 		public static final int CalendarPickerView_displayHeader = 5;
 		public static final int CalendarPickerView_dividerColor = 1;
 		public static final int CalendarPickerView_headerTextColor = 6;
-		public static final int CalendarPickerView_titleTextColor = 4;
+		public static final int CalendarPickerView_titleTextColor2 = 4;
 		public static final int[] calendar_cell = { 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c };
 		public static final int calendar_cell_state_current_month = 1;
 		public static final int calendar_cell_state_highlighted = 6;
