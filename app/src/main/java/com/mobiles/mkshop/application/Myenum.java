@@ -67,10 +67,12 @@ public enum Myenum {
     }
 
     public void setLeaderList(List<Leader> leaderList) {
-        this.leaderList = leaderList;
-        this.salesLeaderList = Lists.newArrayList(Iterables.filter(leaderList, predicateSalesLeaderList));
-        this.serviceLeaderList = Lists.newArrayList(Iterables.filter(leaderList, predicateServiceLeaderList));
 
+        if(leaderList!=null) {
+            this.leaderList = leaderList;
+            this.salesLeaderList = Lists.newArrayList(Iterables.filter(leaderList, predicateSalesLeaderList));
+            this.serviceLeaderList = Lists.newArrayList(Iterables.filter(leaderList, predicateServiceLeaderList));
+        }
     }
 
 
@@ -109,12 +111,13 @@ public enum Myenum {
 
     public void setExpenseList(List<ExpenseEntity> expenseList) {
 
-        this.expenseList = expenseList;
-        productExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateProductExpenseList));
-        salaryExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateSalaryExpenseList));
-        incentiveExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateIncentiveExpenseList));
+        if (expenseList != null) {
+            this.expenseList = expenseList;
+            productExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateProductExpenseList));
+            salaryExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateSalaryExpenseList));
+            incentiveExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateIncentiveExpenseList));
 
-
+        }
     }
 
     public void setToAndFromDate(String sFromdate, String sToDate) {
@@ -133,23 +136,26 @@ public enum Myenum {
 
     public void setServiceList(List<RepairPojo> serviceList) {
 
-        this.serviceList = serviceList;
-        this.pendingServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicatePendingServiceList));
-        this.pnaServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicatePnaServiceList));
-        this.doneServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateDoneServiceList));
-        this.returnServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateReturnServiceList));
-        this.deliveredServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateDeliveredServiceList));
-        this.proccessingServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateProccessingServiceList));
 
+        if (serviceList != null) {
+            this.serviceList = serviceList;
+            this.pendingServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicatePendingServiceList));
+            this.pnaServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicatePnaServiceList));
+            this.doneServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateDoneServiceList));
+            this.returnServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateReturnServiceList));
+            this.deliveredServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateDeliveredServiceList));
+            this.proccessingServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateProccessingServiceList));
+        }
     }
 
     public void setPartsRequestsList(List<PartsRequests> partsRequestsList) {
 
-        this.partsRequestsList = partsRequestsList;
-        this.pendingPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicatePendingPartsRequestsList));
-        this.recievedPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicateRecievedPartsRequestsList));
-        this.deliveredPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicateDeliveredPartsRequestsList));
-
+        if (partsRequestsList != null) {
+            this.partsRequestsList = partsRequestsList;
+            this.pendingPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicatePendingPartsRequestsList));
+            this.recievedPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicateRecievedPartsRequestsList));
+            this.deliveredPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicateDeliveredPartsRequestsList));
+        }
     }
 
 
@@ -211,7 +217,7 @@ public enum Myenum {
     Predicate<Leader> predicateSalesLeaderList = new Predicate<Leader>() {
         @Override
         public boolean apply(Leader input) {
-            return input.getRole().equalsIgnoreCase(UserType.SALESMAN.name());
+            return (input.getRole().equalsIgnoreCase(UserType.SALESMAN.name()));
         }
 
     };

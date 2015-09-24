@@ -32,9 +32,13 @@
                 app:layout_collapseMode="parallax" />
 
 
+
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/scrollableview"

@@ -43,6 +43,7 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:textColor="@android:color/black"
                 android:id="@+id/detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

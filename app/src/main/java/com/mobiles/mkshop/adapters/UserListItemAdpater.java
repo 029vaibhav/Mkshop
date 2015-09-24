@@ -15,6 +15,7 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.CalendarFragment;
 import com.mobiles.mkshop.fragments.ProfileFragment;
+import com.mobiles.mkshop.fragments.UserListFragment;
 import com.mobiles.mkshop.pojos.ExpenseEntity;
 import com.mobiles.mkshop.pojos.PaymentType;
 import com.mobiles.mkshop.pojos.UserListAttendance;
@@ -114,7 +115,7 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                     .items(R.array.userActions)
                     .itemsCallback(new MaterialDialog.ListCallback() {
                         @Override
-                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
 
                             switch (which) {
                                 case 0: //view profile
@@ -174,8 +175,34 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
 
                                     break;
                                 case 3: // delete user
-                                    if (dialog != null && dialog.isShowing())
-                                        dialog.dismiss();
+
+                                    Client.INSTANCE.deleteUser(MkShop.AUTH, userListAttendances.get(getAdapterPosition()).getUsername(), new Callback<String>() {
+                                        @Override
+                                        public void success(String s, Response response) {
+
+                                            MkShop.toast(context.getActivity(), s);
+
+                                            if (dialog != null && dialog.isShowing())
+                                                dialog.dismiss();
+
+                                            UserListFragment fragment = UserListFragment.newInstance();
+                                            context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+
+
+                                            if (dialog != null && dialog.isShowing())
+                                                dialog.dismiss();
+                                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                                                MkShop.toast(context.getActivity(), "Please check your internet connection");
+                                            else
+                                                MkShop.toast(context.getActivity(), error.getMessage());
+                                        }
+                                    });
+
                                     break;
                             }
 

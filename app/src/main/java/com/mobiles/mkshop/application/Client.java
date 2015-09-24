@@ -83,7 +83,7 @@ public enum Client {
         @GET("/mk/webservice/profile.php")
         void getProfile(@Header("AUTH") String auth, @Query("username") String username, Callback<Response> response);
 
-        @POST("/mk/webservice/profile.php")
+        @GET("/mk/webservice/profile.php")
         void updateProfile(@Header("AUTH") String auth, @Query("username") String username, @QueryMap Map<String, String> options, Callback<String> response);
 
 
@@ -151,7 +151,7 @@ public enum Client {
         void getIncentiveList(@Header("AUTH") String auth, Callback<List<IncentiveEntity>> incentiveEntityCallback);
 
 
-        @POST("/mk/webservice/incentivegetsales.php")
+        @GET("/mk/webservice/incentivegetsales.php")
         void getIncentiveUserList(@Header("AUTH") String auth, @Query("id") String id, Callback<List<Sales>> callback);
 
         @POST("/mk/webservice/expenseinsert.php")
@@ -161,11 +161,19 @@ public enum Client {
         @GET("/mk/webservice/expenseReport.php")
         void getExpenseReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<ExpenseEntity>> salesCallback);
 
-        @POST("/mk/webservice/incentivegetsales.php")
+        @GET("/mk/webservice/incentivegetsales.php")
         void deleteIncentiveMessage(@Header("AUTH") String auth, @Query("id") int id, @Query("op") String delete, Callback<String> callback);
 
         @GET("/mk/webservice/leaderboardsaleslist.php")
         void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1, @Query("username") String username, Callback<List<Sales>> callback);
+
+        @GET("/mk/webservice/deleteuser.php")
+        void deleteUser(@Header("AUTH") String auth,@Query("username") String username, Callback<String> callback);
+
+        @GET("/mk/webservice/noti/gcmserver/register.php")
+        void registerGcm(@Header("AUTH") String auth,@Query("username") String username, @Query("regId") String regId, Callback<String> callback);
+
+
     }
 
 
@@ -311,7 +319,7 @@ public enum Client {
 
     }
 
-    public void logout(@Query("username") String username, Callback<String> callback) {
+    public void logout(String username, Callback<String> callback) {
         mobileService.logout(username, callback);
     }
 
@@ -346,6 +354,14 @@ public enum Client {
 
     public void getUserSales(String auth, String s, String s1, String username, Callback<List<Sales>> callback) {
         mobileService.getUserSales(auth, s, s1, username, callback);
+    }
+
+    public void deleteUser(String auth,String username, Callback<String> callback) {
+        mobileService.deleteUser(auth,username, callback);
+    }
+
+    public void registerGcm(String auth,String username, String regId, Callback<String> stringCallback) {
+        mobileService.registerGcm(auth,username, regId, stringCallback);
     }
 
 

@@ -56,13 +56,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
 
 
         if (!list.get(i).getTitle().equalsIgnoreCase("photo")) {
-            versionViewHolder.title.setText(list.get(i).getTitle());
+            versionViewHolder.title.setText(list.get(i).getTitle().toUpperCase());
             versionViewHolder.subTitle.setText(list.get(i).getvalue());
             if (!MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name()) && versionViewHolder.title.getText().toString().equalsIgnoreCase("role"))
-                versionViewHolder.imageView.setEnabled(false);
+                versionViewHolder.imageView.setVisibility(View.INVISIBLE);
+            else if (versionViewHolder.title.getText().toString().equalsIgnoreCase("username"))
+                versionViewHolder.imageView.setVisibility(View.INVISIBLE);
             else
-                versionViewHolder.imageView.setEnabled(true);
-
+                versionViewHolder.imageView.setVisibility(View.VISIBLE);
 
             versionViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

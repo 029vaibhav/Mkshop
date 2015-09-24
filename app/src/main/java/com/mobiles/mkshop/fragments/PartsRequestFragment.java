@@ -81,6 +81,7 @@ public class PartsRequestFragment extends Fragment {
             public void afterTextChanged(Editable arg0) {
                 // TODO Auto-generated method stub
                 String text = search.getText().toString().toLowerCase(Locale.getDefault());
+                if(text!=null)
                 partRequestAdapter.Filter(text);
             }
 

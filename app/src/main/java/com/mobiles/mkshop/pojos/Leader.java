@@ -8,7 +8,8 @@ package com.mobiles.mkshop.pojos;
 
 public class Leader {
 
-
+    String name,quantity,price,role, username;
+    int id;
 
     public String getName() {
         return name;
@@ -60,6 +61,5 @@ public class Leader {
         this.price = price;
     }
 
-    String name,quantity,price,role, username;
-    int id;
+
 }

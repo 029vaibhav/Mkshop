@@ -29,7 +29,7 @@ public class NewProfileFragment extends Fragment {
     EditText name, mobile, email, username, password, qualification, address;
     TextView submit;
     AutoCompleteTextView role;
-    String[] roleOption = {"Admin", "Salesman", "Technician", "Receptionist"};
+    String[] roleOption = {"Admin", "Salesman", "Technician", "Receptionist","Promoter"};
     NewUser newUser;
 
 
