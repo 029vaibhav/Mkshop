@@ -138,7 +138,7 @@ public enum Client {
         @GET("/mk/webservice/login.php")
         void getLoginData(@Header("AUTH") String auth, @Query("username") String username, Callback<LoginDetails> callback);
 
-        @POST("/mk/webservice/attendance.php")
+        @GET("/mk/webservice/attendance.php")
         void markAttendance(@Header("AUTH") String auth, @Query("username") String username, Callback<String> callback);
 
         @GET("/mk/webservice/logout.php")

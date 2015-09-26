@@ -90,6 +90,12 @@ public class RegistrationIntentService extends IntentService {
             @Override
             public void failure(RetrofitError error) {
 
+
+                if(error.getKind().equals(RetrofitError.Kind.NETWORK))
+                MkShop.toast(RegistrationIntentService.this,"Please check your internet connection");
+                else
+                    MkShop.toast(RegistrationIntentService.this,error.getMessage());
+
             }
         });
     }

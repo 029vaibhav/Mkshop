@@ -374,7 +374,6 @@ public class MainActivity extends AppCompatActivity
 
                 Intent intent = new Intent(this, RegistrationIntentService.class);
                 startService(intent);
-                // notification();
 
             }
 
@@ -384,122 +383,9 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-//    private void notification() {
-//        aController = (Controller) getApplicationContext();
-//        GCMRegistrar.checkDevice(this);
-//        GCMRegistrar.checkManifest(this);
-//        registerReceiver(mHandleMessageReceiver, new IntentFilter(
-//                Config.DISPLAY_MESSAGE_ACTION));
-//
-//        final String regId = GCMRegistrar.getRegistrationId(MainActivity.this);
-//
-//        Log.e("retg", regId);
-//        if (regId.equals("")) {
-//
-//            // Register with GCM
-//            GCMRegistrar.register(this, Config.GOOGLE_SENDER_ID);
-//
-//        } else {
-//
-//            // Device is already registered on GCM Server
-//            if (GCMRegistrar.isRegisteredOnServer(this)) {
-//
-//                // Skips registration.
-//                Toast.makeText(getApplicationContext(), "Already enabled notification", Toast.LENGTH_LONG).show();
-//                mRegisterTask = new AsyncTask<Void, Void, Void>() {
-//
-//                    @Override
-//                    protected Void doInBackground(Void... params) {
-//
-//                        // Register on our server
-//                        // On server creates a new user
-//                        aController.register(MainActivity.this, loginDetailsList.getUsername(), "vaibns@gma.com", regId);
-//
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    protected void onPostExecute(Void result) {
-//                        mRegisterTask = null;
-//                        sharedPreferences.edit().putString("reg", regId).apply();
-//                    }
-//
-//                };
-//
-//                // execute AsyncTask
-//                mRegisterTask.execute(null, null, null);
-//
-//            } else {
-//
-//                // Try to register again, but not in the UI thread.
-//                // It's also necessary to cancel the thread onDestroy(),
-//                // hence the use of AsyncTask instead of a raw thread.
-//
-//                final Context context = MainActivity.this;
-//                mRegisterTask = new AsyncTask<Void, Void, Void>() {
-//
-//                    @Override
-//                    protected Void doInBackground(Void... params) {
-//
-//                        // Register on our server
-//                        // On server creates a new user
-//                        aController.register(MainActivity.this, loginDetailsList.getUsername(), "vaibns@gma.com", regId);
-//
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    protected void onPostExecute(Void result) {
-//                        mRegisterTask = null;
-//                        sharedPreferences.edit().putString("reg", regId).apply();
-//                    }
-//
-//                };
-//
-//                // execute AsyncTask
-//                mRegisterTask.execute(null, null, null);
-//
-//            }
-//        }
-//
-//    }
-
-//    private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//
-//            String newMessage = intent.getExtras().getString(Config.EXTRA_MESSAGE);
-//
-//            // Waking up mobile if it is sleeping
-//            aController.acquireWakeLock(getApplicationContext());
-//
-//            // Display message on the screen
-//
-//
-//            Toast.makeText(getApplicationContext(), "Got Message: " + newMessage, Toast.LENGTH_LONG).show();
-//
-//            // Releasing wake lock
-//            aController.releaseWakeLock();
-//        }
-//    };
 
     @Override
     protected void onDestroy() {
-        // Cancel AsyncTask
-//        if (mRegisterTask != null) {
-//            mRegisterTask.cancel(true);
-//        }
-//        try {
-//            // Unregister Broadcast Receiver
-//            unregisterReceiver(mHandleMessageReceiver);
-//
-//            //Clear internal resources.
-//            GCMRegistrar.onDestroy(this);
-//
-//        } catch (Exception e) {
-//            Log.e("UnRegister", "> " + e.getMessage());
-//        }
         super.onDestroy();
     }
 

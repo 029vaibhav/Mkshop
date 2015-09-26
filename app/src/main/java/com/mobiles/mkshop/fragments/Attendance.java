@@ -55,6 +55,8 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
     LoginDetails loginDetailsList;
     MaterialDialog materialDialog;
     Location startLocation;
+    boolean isTempSet = false;
+    Location tempLocation;
 
 
     public static Attendance newInstance() {
@@ -89,6 +91,13 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
                 .build();
 
 
+        googleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks((this))
+                .addOnConnectionFailedListener(this).build();
+        googleApiClient.connect();
+
+
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,12 +120,6 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
         // Sets the fastest rate for active location updates. This interval is exact, and your
         // application will never receive updates faster than this value.
 
-
-        googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks((this))
-                .addOnConnectionFailedListener(this).build();
-        googleApiClient.connect();
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -200,8 +203,6 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
 
     private void markAttendance() {
 
-        Location start = new Location("A");
-
 
         if (loginDetailsList.getLocation() == null) {
             MkShop.toast(getActivity(), "Ask your admin to provide your location");
@@ -217,6 +218,7 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
             return;
         }
 
+
         Location end = new Location("B");
         end.setLatitude(Double.parseDouble(loginDetailsList.getLocation().getLatitude()));
         end.setLongitude(Double.parseDouble(loginDetailsList.getLocation().getLongitude()));
@@ -224,7 +226,7 @@ public class Attendance extends Fragment implements com.google.android.gms.locat
 
 
         Log.e("locationm", "gps" + startLocation.getLatitude() + "gps-lon" + startLocation.getLongitude() + "dis" + distance);
-        if (distance <= 50+(Integer.parseInt(loginDetailsList.getLocation().getRadius()))) {
+        if (distance <= 100 + (Integer.parseInt(loginDetailsList.getLocation().getRadius()))) {
             Client.INSTANCE.markAttendance(MkShop.AUTH, MkShop.Username, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {
