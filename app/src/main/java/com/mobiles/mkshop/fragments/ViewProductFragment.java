@@ -92,7 +92,7 @@ public class ViewProductFragment extends Fragment {
                 List<String> brandStrings = new ArrayList<String>();
                 Set<String> brand = new HashSet();
                 for (int i = 0; i < sales.size(); i++) {
-                    brand.add(sales.get(i).getBrand());
+                    brand.add(sales.get(i).getBrand().trim());
                 }
                 brandStrings.addAll(brand);
 
@@ -143,7 +143,8 @@ public class ViewProductFragment extends Fragment {
 
                                 @Override
                                 public void afterTextChanged(Editable s) {
-                                    listItemAdapter.getFilter().filter(s);
+                                    if (s != null)
+                                        listItemAdapter.filter(s);
 
                                 }
                             });

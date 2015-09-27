@@ -45,6 +45,8 @@
     </ScrollView>
 
     <AutoCompleteTextView
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:visibility="gone"
         android:layout_alignParentTop="true"
         android:id="@+id/search"

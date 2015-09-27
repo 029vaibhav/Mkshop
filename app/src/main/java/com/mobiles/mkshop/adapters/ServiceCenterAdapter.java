@@ -95,7 +95,7 @@ public class ServiceCenterAdapter extends BaseAdapter {
 
         } else {
 
-            repairList =    Myenum.INSTANCE.getServiceList(null);
+            repairList = Myenum.INSTANCE.getServiceList(null);
 
         }
         notifyDataSetInvalidated();

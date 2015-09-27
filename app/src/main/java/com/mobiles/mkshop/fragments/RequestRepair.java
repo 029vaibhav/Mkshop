@@ -118,7 +118,8 @@ public class RequestRepair extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                serviceCenterAdapter.filter(s);
+                if (s != null)
+                    serviceCenterAdapter.filter(s);
 
             }
         });
