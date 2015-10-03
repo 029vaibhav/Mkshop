@@ -47,13 +47,10 @@ import retrofit.mime.TypedFile;
 public class ProfileFragment extends Fragment implements ImageChooserListener {
 
 
-    SharedPreferences sharedPreferences;
     public static String TAG = "ProfileFragment";
-    private FragmentActivity myContext;
     String username;
     private String mediaPath;
     ImageView header;
-    private int chooserType;
     private ImageChooserManager imageChooserManager;
     MaterialDialog materialDialog;
 
@@ -81,13 +78,6 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
         super.onCreate(savedInstanceState);
         username = getArguments() != null ? getArguments().getString("username") : "";
 
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-
-        myContext = (FragmentActivity) activity;
-        super.onAttach(activity);
     }
 
 
@@ -119,14 +109,6 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
             }
         });
 
-//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-//            @Override
-//            public void onGenerated(Palette palette) {
-//
-//                mutedColor = palette.getMutedColor(R.attr.colorPrimary);
-//                collapsingToolbar.setContentScrimColor(mutedColor);
-//            }
-//        });
 
         recyclerView = (RecyclerView) viewGroup.findViewById(R.id.scrollableview);
 
@@ -142,7 +124,6 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
     }
 
     private void chooseImage() {
-        chooserType = ChooserType.REQUEST_PICK_PICTURE;
         imageChooserManager = new ImageChooserManager(this,
                 ChooserType.REQUEST_PICK_PICTURE, true);
         imageChooserManager.setImageChooserListener(this);

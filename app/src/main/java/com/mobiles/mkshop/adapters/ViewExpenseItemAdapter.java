@@ -48,23 +48,8 @@ public class ViewExpenseItemAdapter extends RecyclerView.Adapter<ViewExpenseItem
         ExpenseEntity sales = salesList.get(position);
 
         holder.paymentDate.setText(sales.getPaymentDate());
-        if (paymentType == PaymentType.Product) {
-
-
-            holder.brand.setText(sales.getModelNo());
-            holder.model.setText(sales.getBrand());
-            holder.quantity.setText(sales.getQuantity());
-            holder.revenue.setText(costsymbol + " " + sales.getAmount());
-            if (sales.getAccessoryType() != null && sales.getAccessoryType() != "") {
-                holder.accessoryType.setVisibility(View.VISIBLE);
-                holder.accessoryType.setText(sales.getAccessoryType());
-            }
-        } else {
-            holder.brand.setText(sales.getName());
-            holder.model.setVisibility(View.GONE);
-            holder.quantity.setText("");
-            holder.revenue.setText(costsymbol + " " + sales.getAmount());
-        }
+        holder.brand.setText(sales.getName());
+        holder.revenue.setText(costsymbol + " " + sales.getAmount());
 
 
     }
@@ -83,10 +68,7 @@ public class ViewExpenseItemAdapter extends RecyclerView.Adapter<ViewExpenseItem
 
         CardView cardItemLayout;
         public TextView brand;
-        public TextView model;
-        public TextView quantity;
         public TextView revenue;
-        public TextView accessoryType;
         public TextView paymentDate;
 
         public ViewHolder(View itemView) {
@@ -95,10 +77,7 @@ public class ViewExpenseItemAdapter extends RecyclerView.Adapter<ViewExpenseItem
             cardItemLayout = (CardView) itemView.findViewById(R.id.cardlist_item);
 
             brand = (TextView) itemView.findViewById(R.id.Brand);
-            model = (TextView) itemView.findViewById(R.id.model);
-            quantity = (TextView) itemView.findViewById(R.id.quantity);
             revenue = (TextView) itemView.findViewById(R.id.revenue);
-            accessoryType = (TextView) itemView.findViewById(R.id.accessoryType);
             paymentDate = (TextView) itemView.findViewById(R.id.date);
 
 

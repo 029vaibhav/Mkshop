@@ -34,7 +34,7 @@ public enum Myenum {
     List<Sales> accessorySales;
 
     List<ExpenseEntity> expenseList;
-    List<ExpenseEntity> productExpenseList;
+//    List<ExpenseEntity> productExpenseList;
     List<ExpenseEntity> salaryExpenseList;
     List<ExpenseEntity> incentiveExpenseList;
 
@@ -101,8 +101,6 @@ public enum Myenum {
             return incentiveExpenseList;
         } else if (PaymentType.Salary == type) {
             return salaryExpenseList;
-        } else if (PaymentType.Product == type) {
-            return productExpenseList;
         }
 
         return null;
@@ -113,7 +111,7 @@ public enum Myenum {
 
         if (expenseList != null) {
             this.expenseList = expenseList;
-            productExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateProductExpenseList));
+//            productExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateProductExpenseList));
             salaryExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateSalaryExpenseList));
             incentiveExpenseList = Lists.newArrayList(Iterables.filter(expenseList, predicateIncentiveExpenseList));
 
@@ -329,13 +327,13 @@ public enum Myenum {
         }
 
     };
-    Predicate<ExpenseEntity> predicateProductExpenseList = new Predicate<ExpenseEntity>() {
-        @Override
-        public boolean apply(ExpenseEntity input) {
-            return input.getPaymentType().equalsIgnoreCase(PaymentType.Product.name());
-        }
-
-    };
+//    Predicate<ExpenseEntity> predicateProductExpenseList = new Predicate<ExpenseEntity>() {
+//        @Override
+//        public boolean apply(ExpenseEntity input) {
+//            return input.getPaymentType().equalsIgnoreCase(PaymentType.Product.name());
+//        }
+//
+//    };
 
 
 }

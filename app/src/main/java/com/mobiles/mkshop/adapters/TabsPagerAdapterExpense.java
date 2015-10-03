@@ -25,12 +25,9 @@ public class TabsPagerAdapterExpense extends FragmentStatePagerAdapter {
         String title = null;
         switch (position) {
             case 0:
-                title = "Products";
-                break;
-            case 1:
                 title = "Salary";
                 break;
-            case 2:
+            case 1:
                 title = "Incentive";
                 break;
 
@@ -61,6 +58,6 @@ public class TabsPagerAdapterExpense extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }

@@ -29,6 +29,20 @@
     </string-array>
 
 
+    <string-array name="image_option">
+        <item name="camera">Camera</item>
+        <item name="gallery">Gallery</item>
+
+    </string-array>
+
+
+    <string-array name="bill_action">
+        <item name="camera">View Bill History</item>
+        <item name="gallery">Pay Bill</item>
+
+    </string-array>
+
+
     <string-array name="revenueComparator">
         <item name="brandStore">Brand (Mobile)</item>
         <item name="salesService">Product Type</item>

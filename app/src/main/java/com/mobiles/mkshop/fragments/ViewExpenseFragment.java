@@ -223,11 +223,11 @@ public class ViewExpenseFragment extends Fragment {
                 tempQuantity = 0;
                 tempRevenue = 0;
 
-                List<ExpenseEntity> sales1 = Myenum.INSTANCE.getExpenseList(PaymentType.Product);
-                for (int i = 0; i < sales1.size(); i++) {
-                    tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
-                    tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getAmount());
-                }
+//                List<ExpenseEntity> sales1 = Myenum.INSTANCE.getExpenseList(PaymentType.Product);
+//                for (int i = 0; i < sales1.size(); i++) {
+//                    tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
+//                    tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getAmount());
+//                }
                 totalRevenue.setText("" + tempRevenue);
                 totalQuantity.setText("" + tempQuantity);
 

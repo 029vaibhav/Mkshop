@@ -1,91 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="com.mobiles.mkshop.fragments.RequestRepair">
 
-    tools:context="com.mobiles.mkshop.fragments.SaleFragment">
-
-
-    <TextView
-        android:id="@+id/fortitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Please fill the sales form" />
 
     <ScrollView
+        android:id="@+id/sv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/fortitle">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <RadioGroup
-                android:id="@+id/radiogroup"
+
+            <ImageView
+                android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <RadioButton
-                    android:id="@+id/radiomobile"
-                    fontPath="fonts/rr.ttf"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:text="Mobile" />
-
-                <RadioButton
-                    android:id="@+id/radioAccessory"
-                    fontPath="fonts/rr.ttf"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Accessory" />
-            </RadioGroup>
-
-
-            <TextView
-                android:id="@+id/accessorytitle"
-
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/radiogroup"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:dividerPadding="8dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="Brand"
-                android:textSize="14sp"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:id="@+id/accessoryType"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/accessorytitle"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawableRight="@drawable/right_arrow"
-                android:gravity="center"
-                android:hint="Accesory"
-                android:padding="10dp"
-                android:textSize="18sp"
-                android:visibility="gone" />
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_mkshop" />
 
 
             <TextView
@@ -93,18 +30,18 @@
 
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/accessoryType"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/header"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Brand"
+                android:text="Dealer name"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/brandtext"
+            <EditText
+                android:id="@+id/dealer_edit"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,8 +51,6 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
                 android:drawablePadding="10dp"
-                android:drawableRight="@drawable/right_arrow"
-                android:editable="false"
                 android:ems="10"
                 android:gravity="center"
                 android:padding="10dp"
@@ -123,41 +58,23 @@
                 android:textSize="18sp" />
 
 
-            <!--<TextView-->
-            <!--android:id="@+id/brandtext"-->
-            <!--fontPath="fonts/rr.ttf"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/accessoryType"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:background="@drawable/border_text"-->
-            <!--android:drawableRight="@drawable/right_arrow"-->
-            <!--android:gravity="center"-->
-            <!--android:padding="10dp"-->
-            <!--android:hint="Brand"-->
-            <!--android:textSize="18sp" />-->
-
             <TextView
                 android:id="@+id/modeltitle"
 
-                fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/brandtext"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dealer_edit"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Model"
+                android:text="Total amount"
                 android:textSize="14sp" />
 
 
-            <TextView
-                android:id="@+id/modeltext"
-                fontPath="fonts/rr.ttf"
+            <EditText
+                android:id="@+id/total_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/modeltitle"
@@ -165,8 +82,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
-                android:drawableRight="@drawable/right_arrow"
                 android:gravity="center"
+                android:inputType="number"
                 android:padding="10dp"
                 android:textSize="18sp" />
 
@@ -175,7 +92,7 @@
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/modeltext"
+                android:layout_below="@+id/total_edit"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -190,10 +107,10 @@
 
 
             <TextView
-                android:id="@+id/priceEdit_text_input_layout"
+                android:id="@+id/note_text_input_layout"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/otheredit"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -201,7 +118,8 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="Quantity"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
 
 
             <EditText
@@ -209,12 +127,49 @@
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/priceEdit_text_input_layout"
+                android:layout_below="@+id/note_text_input_layout"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_action_transparent"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/amt_paying_nowtextview"
+
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/quantityEdit"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:dividerPadding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="Amount paying now"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/amt_paying_now"
+                fontPath="fonts/rr.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amt_paying_nowtextview"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/md_transparent"
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="number"
@@ -228,19 +183,19 @@
 
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/imei"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amt_paying_now"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Price"
+                android:text="Notes"
                 android:textSize="14sp" />
 
 
             <EditText
-                android:id="@+id/priceEdit"
+                android:id="@+id/note"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -250,36 +205,33 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
                 android:drawablePadding="10dp"
-                android:drawableRight="@drawable/ic_action_rupees"
                 android:ems="10"
                 android:gravity="center"
-                android:inputType="number"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textSize="18sp" />
 
-
             <Button
                 android:id="@+id/submit"
                 style="?android:buttonBarButtonStyle"
-                fontPath="fonts/rr.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/mobile"
+                android:layout_below="@+id/note"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:background="@drawable/button_selector"
+                android:background="@drawable/button_background"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:paddingTop="10dp"
-                android:shadowRadius="0"
                 android:text="submit" />
 
-        </LinearLayout>
+
+        </RelativeLayout>
 
 
     </ScrollView>
+
+
 </RelativeLayout>

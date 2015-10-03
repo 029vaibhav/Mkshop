@@ -13,6 +13,7 @@ import com.mobiles.mkshop.pojos.Notification;
 import com.mobiles.mkshop.pojos.PartsRequests;
 import com.mobiles.mkshop.pojos.PriceCompartorService;
 import com.mobiles.mkshop.pojos.Product;
+import com.mobiles.mkshop.pojos.ProductExpense;
 import com.mobiles.mkshop.pojos.RepairPojo;
 import com.mobiles.mkshop.pojos.Sales;
 import com.mobiles.mkshop.pojos.UserListAttendance;
@@ -154,6 +155,7 @@ public enum Client {
         @GET("/mk/webservice/incentivegetsales.php")
         void getIncentiveUserList(@Header("AUTH") String auth, @Query("id") String id, Callback<List<Sales>> callback);
 
+        @Headers("Content-Type: application/json")
         @POST("/mk/webservice/expenseinsert.php")
         void payUserIncentive(@Header("AUTH") String auth, @Body ExpenseEntity expenseEntity, Callback<String> callback);
 
@@ -168,10 +170,17 @@ public enum Client {
         void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1, @Query("username") String username, Callback<List<Sales>> callback);
 
         @GET("/mk/webservice/deleteuser.php")
-        void deleteUser(@Header("AUTH") String auth,@Query("username") String username, Callback<String> callback);
+        void deleteUser(@Header("AUTH") String auth, @Query("username") String username, Callback<String> callback);
 
         @GET("/mk/webservice/noti/gcmserver/register.php")
-        void registerGcm(@Header("AUTH") String auth,@Query("username") String username, @Query("regId") String regId, Callback<String> callback);
+        void registerGcm(@Header("AUTH") String auth, @Query("username") String username, @Query("regId") String regId, Callback<String> callback);
+
+
+        @POST("/mk/webservice/vandor.php")
+        void productPurchase(@Header("AUTH") String auth, @Body ProductExpense productExpense, Callback<String> cb);
+
+        @GET("/mk/webservice/vandor.php")
+        void getPurchasedProduct(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<ProductExpense>> callback);
 
 
     }
@@ -191,7 +200,7 @@ public enum Client {
                 .setLog(new RestAdapter.Log() {
                     @Override
                     public void log(String message) {
-                        Log.i("getMyParking", message);
+                        Log.i("mkshop", message);
                     }
                 })
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -356,12 +365,21 @@ public enum Client {
         mobileService.getUserSales(auth, s, s1, username, callback);
     }
 
-    public void deleteUser(String auth,String username, Callback<String> callback) {
-        mobileService.deleteUser(auth,username, callback);
+    public void deleteUser(String auth, String username, Callback<String> callback) {
+        mobileService.deleteUser(auth, username, callback);
     }
 
-    public void registerGcm(String auth,String username, String regId, Callback<String> stringCallback) {
-        mobileService.registerGcm(auth,username, regId, stringCallback);
+    public void registerGcm(String auth, String username, String regId, Callback<String> stringCallback) {
+        mobileService.registerGcm(auth, username, regId, stringCallback);
+    }
+
+
+    public void productPurchase(String auth, ProductExpense productExpense, Callback<String> cb) {
+        mobileService.productPurchase(auth, productExpense, cb);
+    }
+
+    public void getPurchasedProduct(String auth, String from, String to, Callback<List<ProductExpense>> cb) {
+        mobileService.getPurchasedProduct(auth, from, to, cb);
     }
 
 

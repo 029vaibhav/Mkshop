@@ -26,10 +26,8 @@ public class ViewExpenseReportList extends Fragment {
         pt = getArguments() != null ? getArguments().getInt("num") : 1;
 
         if (pt == 0) {
-            paymentType = PaymentType.Product;
-        } else if (pt == 1) {
             paymentType = PaymentType.Salary;
-        } else if (pt == 2) {
+        } else if (pt == 1) {
             paymentType = PaymentType.Incentive;
         }
 
