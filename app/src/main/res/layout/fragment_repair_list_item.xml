@@ -38,7 +38,6 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
                 android:gravity="center"
                 android:hint="Brand"
                 android:padding="10dp"

@@ -1,12 +1,15 @@
 package com.mobiles.mkshop.adapters;
 
 
+import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -34,11 +37,27 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
     String department;
     List<Leader> leaderList;
     MaterialDialog materialDialog;
+    Dialog dialog;
+    View view;
+    ImageView imageView, backButton;
+    RecyclerView recyclerView;
 
     public LeaderBoardItemAdapter(Fragment salesReportList, String department) {
         context = salesReportList;
         this.department = department;
         leaderList = Myenum.INSTANCE.getLeaderList(department);
+
+
+        dialog = new Dialog(context.getActivity(), R.style.AppTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.leaderboard_dialog_list);
+
+
+        imageView = (ImageView) dialog.findViewById(R.id.bill_image);
+        backButton = (ImageView) dialog.findViewById(R.id.back_button);
+        recyclerView = (RecyclerView) dialog.findViewById(R.id.recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context.getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
 
 
         materialDialog = new MaterialDialog.Builder(context.getActivity())
@@ -63,7 +82,7 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
         Leader leader = leaderList.get(position);
         holder.name.setText(leader.getName().toUpperCase());
         holder.qty.setText(leader.getQuantity());
-        holder.revenue.setText(leader.getPrice());
+        holder.revenue.setText(context.getString(R.string.rs) + " " + leader.getPrice());
 
     }
 
@@ -159,27 +178,26 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
             String[] toFrom = Myenum.INSTANCE.getToAndFromDate();
 
-            Client.INSTANCE.getUserSales(MkShop.AUTH, toFrom[0], toFrom[1], leaderList.get(getAdapterPosition()).getUsername(), new Callback<List<Sales>>() {
+            Client.INSTANCE.getUserSales(MkShop.AUTH, toFrom[0], toFrom[1], leaderList.get(getAdapterPosition()).getUsername(),department, new Callback<List<Sales>>() {
                 @Override
                 public void success(List<Sales> sales, Response response) {
 
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
 
-                    String[] strings = new String[sales.size()];
-                    for (int i = 0; i < sales.size(); i++) {
-                        strings[i] = (sales.get(i).getCreated() + "     " + sales.get(i).getBrand() + " " + sales.get(i).getModel());
-                    }
 
-                    new MaterialDialog.Builder(context.getActivity())
-                            .title("sales list")
-                            .items(strings)
-                            .itemsCallback(new MaterialDialog.ListCallback() {
-                                @Override
-                                public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                }
-                            })
-                            .show();
+
+
+                    LeaderBoardDialogAdapter viewBillDialogAdapter = new LeaderBoardDialogAdapter(context,sales);
+                    recyclerView.setAdapter(viewBillDialogAdapter);
+                    backButton.setOnClickListener(new View.OnClickListener() {
+                                                      @Override
+                                                      public void onClick(View v) {
+                                                          dialog.dismiss();
+                                                      }
+                                                  }
+                    );
+                    dialog.show();
 
                 }
 

@@ -1,6 +1,7 @@
 package com.mobiles.mkshop.adapters;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,14 +32,12 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
     }
 
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_report_list_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
-
 
 
     @Override
@@ -48,21 +47,20 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
         holder.brand.setText(repairPojo.getModel());
         holder.model.setText(repairPojo.getBrand());
         holder.place.setText(repairPojo.getPlace());
-        holder.revenue.setText(repairPojo.getPrice());
+        holder.revenue.setText(context.getActivity().getString(R.string.rs) + " " + repairPojo.getPrice());
+        holder.revenue.setTextColor(ContextCompat.getColor(context.getActivity(), R.color.flatGreen));
         holder.problem.setText(repairPojo.getProblem());
-     //   holder.date.setText(repairPojo.getModifiedDate());
+        //   holder.date.setText(repairPojo.getModifiedDate());
 
     }
 
 
     @Override
     public int getItemCount() {
-        if (serviceList!=null)
-        return serviceList.size();
+        if (serviceList != null)
+            return serviceList.size();
         else return 0;
     }
-
-
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -72,17 +70,17 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
         public TextView place;
         public TextView revenue;
         public TextView problem;
-     //   public TextView date;
+        //   public TextView date;
 
 
         public ViewHolder(View row) {
             super(row);
             brand = (TextView) row.findViewById(R.id.Brand);
-           model = (TextView) row.findViewById(R.id.model);
-           place = (TextView) row.findViewById(R.id.place);
-           revenue = (TextView) row.findViewById(R.id.revenue);
+            model = (TextView) row.findViewById(R.id.model);
+            place = (TextView) row.findViewById(R.id.place);
+            revenue = (TextView) row.findViewById(R.id.revenue);
             problem = (TextView) row.findViewById(R.id.problem);
-        //   date = (TextView) row.findViewById(R.id.date);
+            //   date = (TextView) row.findViewById(R.id.date);
 
         }
     }

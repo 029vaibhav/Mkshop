@@ -1,11 +1,9 @@
 package com.mobiles.mkshop.application;
 
-import android.app.Fragment;
 import android.content.Context;
-import android.support.design.widget.Snackbar;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.gcm.Controller;
 
 /**
@@ -22,6 +20,23 @@ public class MkShop extends Controller {
     public static String REGISTRATION_COMPLETE = "registrationComplete";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+    private static MkShop instance;
+
+    public static Context getContext() {
+        return instance;
+        // or return instance.getApplicationContext();
+    }
+
+    public static String getUsername() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("USERNAME", null);
+    }
+
+    public static String getAUTH() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("AUTH", null);
+    }
+
 
     @Override
     public void onCreate() {
@@ -30,11 +45,21 @@ public class MkShop extends Controller {
     }
 
     public static void toast(Context context, String error) {
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+
+        try {
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+
+        }
 
 
     }
 
+    public static int GetImage(String ImageName) {
+
+        return getContext().getResources().getIdentifier(ImageName, "drawable", getContext().getPackageName());
+//        return ContextCompat.getDrawable(getContext(), getContext().getResources().getIdentifier(ImageName, "drawable", getContext().getPackageName()));
+    }
 
 
 }

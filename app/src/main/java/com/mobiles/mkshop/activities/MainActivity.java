@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -64,14 +65,23 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        MkShop.AUTH = sharedPreferences.getString("AUTH", null);
+        MkShop.Username = sharedPreferences.getString("USERNAME", null);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
 
-        sharedPreferences = getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
 
+        sharedPreferences = getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("DETAIL", null);
         Type type = new TypeToken<LoginDetails>() {
         }.getType();

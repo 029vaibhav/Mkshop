@@ -167,7 +167,7 @@ public enum Client {
         void deleteIncentiveMessage(@Header("AUTH") String auth, @Query("id") int id, @Query("op") String delete, Callback<String> callback);
 
         @GET("/mk/webservice/leaderboardsaleslist.php")
-        void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1, @Query("username") String username, Callback<List<Sales>> callback);
+        void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1, @Query("username") String username, @Query("department") String department, Callback<List<Sales>> callback);
 
         @GET("/mk/webservice/deleteuser.php")
         void deleteUser(@Header("AUTH") String auth, @Query("username") String username, Callback<String> callback);
@@ -187,6 +187,7 @@ public enum Client {
 
 
     Client() {
+
 
 ////
 //        ObjectMapper objectMapper = new ObjectMapper();
@@ -361,8 +362,8 @@ public enum Client {
     }
 
 
-    public void getUserSales(String auth, String s, String s1, String username, Callback<List<Sales>> callback) {
-        mobileService.getUserSales(auth, s, s1, username, callback);
+    public void getUserSales(String auth, String s, String s1, String username, String departemnt, Callback<List<Sales>> callback) {
+        mobileService.getUserSales(auth, s, s1, username, departemnt, callback);
     }
 
     public void deleteUser(String auth, String username, Callback<String> callback) {

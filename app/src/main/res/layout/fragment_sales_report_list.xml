@@ -9,10 +9,7 @@
         android:id="@+id/saleslistview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#50F0F7FF"
-       />
-
-
+        android:background="#50F0F7FF" />
 
 
 </FrameLayout>

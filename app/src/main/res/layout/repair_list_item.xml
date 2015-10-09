@@ -29,18 +29,15 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_toLeftOf="@+id/repairjobno"
                 android:id="@+id/repairmodel"
                 fontPath="fonts/rr.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:drawableLeft="@drawable/mobile"
+                android:layout_toLeftOf="@+id/repairjobno"
                 android:ellipsize="marquee"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="10dp"
+                android:gravity="left|start"
+                android:padding='5dp'
                 android:text="model"
                 android:textSize="20sp" />
 
@@ -51,9 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/repairmodel"
-                android:drawableLeft="@drawable/ic_action_smallcalendar2"
                 android:gravity="center"
-                android:paddingLeft="5dp"
+                android:padding='5dp'
                 android:text="date"
                 android:textSize="15sp" />
 
@@ -64,11 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:drawableLeft="@drawable/ic_action_receipt"
                 android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
+                android:padding='5dp'
                 android:text="job no"
                 android:textSize="20sp" />
 
@@ -81,7 +74,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/repairjobno"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="pending"
                 android:textSize="15sp" />
         </RelativeLayout>

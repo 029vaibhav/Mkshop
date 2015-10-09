@@ -201,7 +201,7 @@ public class RepairListItemFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            dialog.dismiss();
+
         }
 
         @Override
@@ -211,6 +211,11 @@ public class RepairListItemFragment extends Fragment {
             Client.INSTANCE.sendService(MkShop.AUTH, service, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {
+
+
+                    if(dialog!=null && dialog.isShowing())
+                        dialog.dismiss();
+
                     MkShop.toast(getActivity(), s);
                     Fragment fragment = new RequestRepair();
 
@@ -220,6 +225,8 @@ public class RepairListItemFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
+                    if(dialog!=null && dialog.isShowing())
+                        dialog.dismiss();
                     if(error.getKind().equals(RetrofitError.Kind.NETWORK))
                         MkShop.toast(getActivity(),"please check your internet connection");
                         else

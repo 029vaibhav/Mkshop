@@ -11,6 +11,10 @@ import android.widget.TextView;
 import com.mobiles.mkshop.pojos.PartsRequests;
 import com.mobiles.mkshop.R;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -23,6 +27,8 @@ public class PartRequestAdapter extends BaseAdapter {
     Context context;
     List<PartsRequests> repairList;
     ArrayList<PartsRequests> partsRequestsArrayList;
+    DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+    DateTime dt ;
 
     public PartRequestAdapter(Context context, List<PartsRequests> repairList) {
         this.context = context;
@@ -73,7 +79,8 @@ public class PartRequestAdapter extends BaseAdapter {
         PartsRequests requestRepair = repairList.get(position);
 
         viewHolder.customerName.setText(requestRepair.getCustomerName());
-        viewHolder.date.setText(requestRepair.getCreatedDate());
+        dt = formatter.parseDateTime(requestRepair.getCreatedDate());
+        viewHolder.date.setText(dt.toString("dd-MM"));
         viewHolder.status.setText(requestRepair.getStatus());
         viewHolder.partName.setText(requestRepair.getPart());
 

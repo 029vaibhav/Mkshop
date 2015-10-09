@@ -2,6 +2,8 @@ package com.mobiles.mkshop.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +73,12 @@ public class ServiceCenterAdapter extends BaseAdapter {
 
         viewHolder.modelNo.setText(repairPojo.getBrand() + " " + repairPojo.getModel());
         viewHolder.date.setText(repairPojo.getCreated());
+
+        if (repairPojo.getStatus().equalsIgnoreCase("done")) {
+            viewHolder.status.setTextColor(ContextCompat.getColor(context, R.color.flatGreen));
+        }
         viewHolder.status.setText(repairPojo.getStatus());
+
         viewHolder.jobNo.setText(repairPojo.getJobNo());
 
 

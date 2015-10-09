@@ -20,22 +20,7 @@ public class Controller extends SugarApp {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
 
 
 }

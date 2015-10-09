@@ -40,9 +40,6 @@ public class RequestRepair extends Fragment {
     ListView listView;
     ServiceCenterAdapter serviceCenterAdapter;
 
-    String stringBrand = null, stringModel = null, Stringdate;
-    boolean customerstatus = false;
-
 
     public static RequestRepair newInstance() {
         RequestRepair fragment = new RequestRepair();
