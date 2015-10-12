@@ -42,7 +42,7 @@
             <ImageView
                 android:id="@+id/bill_image"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/image_of_bill"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp" />
 

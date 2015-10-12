@@ -55,4 +55,28 @@ public class BrandModelList extends SugarRecord<BrandModelList> {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BrandModelList that = (BrandModelList) o;
+
+        if (!getBrand().equals(that.getBrand())) return false;
+        if (!getModelNo().equals(that.getModelNo())) return false;
+        if (getAccessoryType() != null ? !getAccessoryType().equals(that.getAccessoryType()) : that.getAccessoryType() != null)
+            return false;
+        return getType().equals(that.getType());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getBrand().hashCode();
+        result = 31 * result + getModelNo().hashCode();
+        result = 31 * result + (getAccessoryType() != null ? getAccessoryType().hashCode() : 0);
+        result = 31 * result + getType().hashCode();
+        return result;
+    }
 }

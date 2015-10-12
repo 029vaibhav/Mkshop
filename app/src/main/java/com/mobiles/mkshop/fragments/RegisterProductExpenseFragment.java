@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
@@ -28,11 +27,9 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.ProductExpense;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -136,16 +133,21 @@ public class RegisterProductExpenseFragment extends Fragment implements ImageCho
                     expenseEntity.setAmount(nowPaying.getText().toString());
                     expenseEntity.setImage(image);
 
-
+                    materialDialog.show();
                     Client.INSTANCE.productPurchase(MkShop.AUTH, expenseEntity, new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
 
+                            if (materialDialog != null && materialDialog.isShowing())
+                                materialDialog.dismiss();
                             MkShop.toast(getActivity(), s);
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
+
+                            if (materialDialog != null && materialDialog.isShowing())
+                                materialDialog.dismiss();
                             MkShop.toast(getActivity(), error.getMessage());
                         }
                     });

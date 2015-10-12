@@ -182,6 +182,9 @@ public enum Client {
         @GET("/mk/webservice/vandor.php")
         void getPurchasedProduct(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<ProductExpense>> callback);
 
+        @GET("/mk/webservice/duepayment.php")
+        void duePayment(@Header("AUTH") String auth, @Query("dealerId") String dealerId, @Query("amount") String amount, Callback<String> stringCallback);
+
 
     }
 
@@ -381,6 +384,10 @@ public enum Client {
 
     public void getPurchasedProduct(String auth, String from, String to, Callback<List<ProductExpense>> cb) {
         mobileService.getPurchasedProduct(auth, from, to, cb);
+    }
+
+    public void duePayment(String auth, String dealerId, String amount, Callback<String> stringCallback) {
+        mobileService.duePayment(auth, dealerId, amount, stringCallback);
     }
 
 

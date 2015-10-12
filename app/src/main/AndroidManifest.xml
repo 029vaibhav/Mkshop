@@ -18,23 +18,26 @@
 
     <!-- This app has permission to register and receive data message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".gcm.Controller"
         android:allowBackup="true"
         android:icon="@mipmap/ic_mkshop"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.MainActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.LoginActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -43,18 +46,20 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.mobiles.mkshop" />
             </intent-filter>
         </receiver>
         <!-- [END gcm_receiver] -->
 
+
         <!-- [START gcm_listener] -->
         <service
-            android:name="com.mobiles.mkshop.gcm.MyGcmListenerService"
-            android:exported="false" >
+            android:name=".gcm.MyGcmListenerService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
@@ -62,24 +67,21 @@
         <!-- [END gcm_listener] -->
         <!-- [START instanceId_listener] -->
         <service
-            android:name="com.mobiles.mkshop.gcm.MyInstanceIDListenerService"
+            android:name=".gcm.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <!-- [END instanceId_listener] -->
         <service
-            android:name="com.mobiles.mkshop.gcm.RegistrationIntentService"
-            android:exported="false">
-        </service>
-
+            android:name=".gcm.RegistrationIntentService"
+            android:exported="false"></service>
 
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.GetLoginDetailsActivity"
-            android:label="@string/app_name" />
-
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="DATABASE"
@@ -93,18 +95,19 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.mobiles.mkshop.pojos" />
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="d04b524792a03c95687503a3970d9b3fe8313871" />
-        <meta-data tools:replace="android:value" android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"
+            tools:replace="android:value" />
 
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.NotificationDetailActivity"
-            android:label="@string/title_activity_notification_detail" >
-        </activity>
+            android:label="@string/title_activity_notification_detail"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

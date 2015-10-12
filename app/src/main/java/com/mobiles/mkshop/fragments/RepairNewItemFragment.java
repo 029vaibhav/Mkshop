@@ -50,9 +50,10 @@ public class RepairNewItemFragment extends Fragment {
     DatePickerDialog datePickerDialog;
     EditText jobNo;
     //  private RadioGroup radiogroup;
-    private TextView date, status;
+    private TextView  status;
+//    TextView date
     AutoCompleteTextView brand, modelNo;
-    TextView dateTitle;
+//    TextView dateTitle;
     List<BrandModelList> salesList, modelSalesList;
     List<String> brandList;
 
@@ -94,19 +95,18 @@ public class RepairNewItemFragment extends Fragment {
 
         brand = (AutoCompleteTextView) v.findViewById(R.id.brandtext);
         status = (TextView) v.findViewById(R.id.status);
-        date = (TextView) v.findViewById(R.id.datetext);
+//        date = (TextView) v.findViewById(R.id.datetext);
         modelNo = (AutoCompleteTextView) v.findViewById(R.id.modeltext);
         price = (EditText) v.findViewById(R.id.priceEdit);
         other = (EditText) v.findViewById(R.id.otheredit);
         jobNo = (EditText) v.findViewById(R.id.jobnoedit);
         problem = (EditText) v.findViewById(R.id.problemedit);
         submit = (Button) v.findViewById(R.id.submit);
-        dateTitle = (TextView) v.findViewById(R.id.dateTitle);
+//        dateTitle = (TextView) v.findViewById(R.id.dateTitle);
 
 
         salesList = BrandModelList.listAll(BrandModelList.class);
         List<BrandModelList> sales = BrandModelList.listAll(BrandModelList.class);
-        ;
         brandList.clear();
         Set<String> brandStrings = new HashSet();
         for (int i = 0; i < sales.size(); i++) {
@@ -155,26 +155,26 @@ public class RepairNewItemFragment extends Fragment {
             }
         });
 
-        date.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View v) {
-
-                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        Stringdate = "" + dayOfMonth + "-" + monthOfYear + "-" + year;
-                        date.setText("" + dayOfMonth + "/" + monthOfYear);
-                        datePickerDialog.dismiss();
-                        Stringdate = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-
-                    }
-                }, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
-                datePickerDialog.show();
-            }
-        });
+//        date.setOnClickListener(new View.OnClickListener() {
+//
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//
+//                        Stringdate = "" + dayOfMonth + "-" + monthOfYear + "-" + year;
+//                        date.setText("" + dayOfMonth + "/" + monthOfYear);
+//                        datePickerDialog.dismiss();
+//                        Stringdate = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+//
+//                    }
+//                }, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
+//                datePickerDialog.show();
+//            }
+//        });
 
 
         status.setOnClickListener(new View.OnClickListener() {
@@ -188,13 +188,13 @@ public class RepairNewItemFragment extends Fragment {
 
                                 if (text != null) {
                                     stringStatus = text.toString();
-                                    if (!stringStatus.equalsIgnoreCase("Pending") || !stringStatus.equalsIgnoreCase("Delivered") || !stringStatus.equalsIgnoreCase("Returned")) {
-                                        date.setVisibility(View.VISIBLE);
-                                        dateTitle.setVisibility(View.VISIBLE);
-                                    } else {
-                                        date.setVisibility(View.GONE);
-                                        dateTitle.setVisibility(View.GONE);
-                                    }
+//                                    if (!stringStatus.equalsIgnoreCase("Pending") || !stringStatus.equalsIgnoreCase("Delivered") || !stringStatus.equalsIgnoreCase("Returned")) {
+//                                        date.setVisibility(View.VISIBLE);
+//                                        dateTitle.setVisibility(View.VISIBLE);
+//                                    } else {
+//                                        date.setVisibility(View.GONE);
+//                                        dateTitle.setVisibility(View.GONE);
+//                                    }
 
                                     if (stringStatus.equalsIgnoreCase("Returned")) {
                                         price.setVisibility(View.GONE);
@@ -222,10 +222,15 @@ public class RepairNewItemFragment extends Fragment {
                 } else if (modelNo.getText().toString().length() == 0) {
                     MkShop.toast(getActivity(), "please select model");
 
-                } else if (!stringStatus.equalsIgnoreCase("Pending") && date.getText().length() <= 0 || date.getText().toString().equalsIgnoreCase("date")) {
-                    MkShop.toast(getActivity(), "please select date");
+                }
+//
+//                else if (!stringStatus.equalsIgnoreCase("Pending") && date.getText().length() <= 0 || date.getText().toString().equalsIgnoreCase("date")) {
+//                    MkShop.toast(getActivity(), "please select date");
+//
+//                }
+//
 
-                } else if (price.getText().length() <= 0) {
+                else if (price.getText().length() <= 0) {
                     MkShop.toast(getActivity(), "please enter price");
 
                 } else {
@@ -236,7 +241,7 @@ public class RepairNewItemFragment extends Fragment {
                     service.setStatus(stringStatus);
                     service.setPrice("" + price.getText().toString());
                     service.setJobNo("" + jobNo.getText().toString());
-                    service.setDeliveryDate(Stringdate);
+                    service.setDeliveryDate("");
 
                     if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name()) || MkShop.Role.equalsIgnoreCase(UserType.SALESMAN.name())) {
                         service.setPlace("SP");

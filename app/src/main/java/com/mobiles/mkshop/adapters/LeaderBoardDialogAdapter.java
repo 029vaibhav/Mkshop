@@ -44,9 +44,9 @@ public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDi
 
         holder.brand.setText(sale.getModel());
         holder.model.setText(sale.getBrand());
-        holder.date.setText(sale.getCreated());
+        holder.date.setText(sale.getCreated().substring(0, 10));
         holder.revenue.setText(context.getString(R.string.rs) + "" + sale.getPrice());
-        if (sale.getAccessoryType() != null || sale.getAccessoryType().length() > 0)
+        if (sale.getAccessoryType() != null && sale.getAccessoryType().length() > 0)
             holder.accessoryType.setText(sale.getAccessoryType());
         else
             holder.accessoryType.setVisibility(View.GONE);
@@ -61,7 +61,6 @@ public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDi
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cardItemLayout;
         public TextView brand;
         public TextView model;
         public TextView accessoryType;

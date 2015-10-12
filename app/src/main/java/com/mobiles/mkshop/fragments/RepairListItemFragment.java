@@ -32,8 +32,10 @@ public class RepairListItemFragment extends Fragment {
 
 
     public static String TAG = "serviceItem";
-    private TextView brand, modelNo, date, status;
+    private TextView brand, modelNo, status;
     EditText price, other, jobNo, problem;
+
+//    TextView date
     Button submit;
     String stringStatus;
     int index;
@@ -63,7 +65,7 @@ public class RepairListItemFragment extends Fragment {
 
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_repair_list_item, container, false);
         brand = (TextView) v.findViewById(R.id.brandtext);
-        date = (TextView) v.findViewById(R.id.datetext);
+      //  date = (TextView) v.findViewById(R.id.datetext);
         status = (TextView) v.findViewById(R.id.status);
         modelNo = (TextView) v.findViewById(R.id.modeltext);
         price = (EditText) v.findViewById(R.id.priceEdit);
@@ -71,13 +73,12 @@ public class RepairListItemFragment extends Fragment {
         jobNo = (EditText) v.findViewById(R.id.jobnoedit);
         problem = (EditText) v.findViewById(R.id.problemedit);
         submit = (Button) v.findViewById(R.id.submit);
-
         problem.setText(service.getProblem());
-        brand.setText(service.getBrand());
+        brand.setText(service.getBrand().replace("\\n",""));
         modelNo.setText(service.getModel());
         final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-        dateTime = formatter.parseDateTime(service.getDeliveryDate());
-        date.setText(dateTime.toString("dd-MM"));
+       // dateTime = formatter.parseDateTime(service.getDeliveryDate());
+      //  date.setText(dateTime.toString("dd-MM"));
         price.setText("" + service.getPrice());
         jobNo.setText(service.getJobNo());
 
@@ -87,6 +88,7 @@ public class RepairListItemFragment extends Fragment {
         setindex(service.getStatus());
 
 
+/*
         date.setOnClickListener(new View.OnClickListener() {
 
             DatePickerDialog datePickerDialog;
@@ -108,6 +110,7 @@ public class RepairListItemFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
+*/
 
 
         status.setOnClickListener(new View.OnClickListener() {
@@ -119,12 +122,12 @@ public class RepairListItemFragment extends Fragment {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                                 stringStatus = text.toString();
-                                if (stringStatus.equalsIgnoreCase("Pending") || stringStatus.equalsIgnoreCase("Delivered") || stringStatus.equalsIgnoreCase("Returned")) {
+                             /*   if (stringStatus.equalsIgnoreCase("Pending") || stringStatus.equalsIgnoreCase("Delivered") || stringStatus.equalsIgnoreCase("Returned")) {
 
                                     date.setVisibility(View.GONE);
                                 } else {
                                     date.setVisibility(View.VISIBLE);
-                                }
+                                }*/
 
 
                                 if (stringStatus.equalsIgnoreCase("Returned")) {
@@ -152,7 +155,10 @@ public class RepairListItemFragment extends Fragment {
                 service.setPrice(price.getText().toString());
                 service.setStatus(stringStatus);
                 service.setProblem(problem.getText().toString());
-                service.setDeliveryDate(dateTime.toString("yyyy-MM-dd"));
+
+                service.setDeliveryDate("");
+
+//                service.setDeliveryDate(dateTime.toString("yyyy-MM-dd"));
                 service.setUsername(MkShop.Username);
                 new SendData().execute();
             }

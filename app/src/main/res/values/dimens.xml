@@ -19,4 +19,6 @@
     <dimen name="cardview_toolbar_spacer">16dp</dimen>
 
     <dimen name="toolbar_double_height">112dp</dimen>
+    <dimen name="image_of_bill">300dp</dimen>
+
 </resources>

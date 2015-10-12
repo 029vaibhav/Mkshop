@@ -1,9 +1,9 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.Dialog;
-import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,11 +46,10 @@ public class SaleFragment extends Fragment {
 
     MaterialDialog materialDialog;
     private RadioGroup radiogroup;
-    private TextView brand, accessoryType, modelNo, imeitextview;
+    private TextView brand, accessoryType, modelNo, imeitextview, starCustomerName, starMobileNo, startImei;
     EditText quantity, price, other, customerName, imei, mobile;
     Button submit;
-    List<BrandModelList> salesListx, modelSalesList, productTypeList;
-    List<BrandModelList> salesList;
+    List<BrandModelList> modelSalesList, productTypeList, salesList;
     List<String> brandList, modelList, accessoryTypeList;
 
 
@@ -104,6 +103,9 @@ public class SaleFragment extends Fragment {
         customerName = (EditText) v.findViewById(R.id.customerName);
         mobile = (EditText) v.findViewById(R.id.mobile);
         imei = (EditText) v.findViewById(R.id.imei);
+        starCustomerName = (TextView) v.findViewById(R.id.star_customer_name);
+        starMobileNo = (TextView) v.findViewById(R.id.star_mobile_no);
+        startImei = (TextView) v.findViewById(R.id.star_imei);
 
 
         if (getArguments() != null) {
@@ -297,10 +299,10 @@ public class SaleFragment extends Fragment {
                 } else if (price.getText().length() <= 0) {
                     toast(getActivity(), "please enter price");
 
-                } else if (customerName.getText().length() <= 0) {
+                } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && customerName.getText().length() <= 0) {
                     toast(getActivity(), "please enter customer name");
 
-                } else if (mobile.getText().length() != 10) {
+                } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && mobile.getText().length() != 10) {
                     toast(getActivity(), "mobile no should be 10 digit");
 
                 } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && imei.getText().length() == 0) {
@@ -341,6 +343,9 @@ public class SaleFragment extends Fragment {
                         stringBrand = null;
                         imeitextview.setVisibility(View.VISIBLE);
                         imei.setVisibility(View.VISIBLE);
+                        starCustomerName.setVisibility(View.VISIBLE);
+                        starMobileNo.setVisibility(View.VISIBLE);
+                        startImei.setVisibility(View.VISIBLE);
 
 
                         modelSalesList.clear();
@@ -378,6 +383,9 @@ public class SaleFragment extends Fragment {
                         stringBrand = null;
                         imeitextview.setVisibility(View.GONE);
                         imei.setVisibility(View.GONE);
+                        starCustomerName.setVisibility(View.GONE);
+                        starMobileNo.setVisibility(View.GONE);
+                        startImei.setVisibility(View.GONE);
 
 
                         modelSalesList.clear();

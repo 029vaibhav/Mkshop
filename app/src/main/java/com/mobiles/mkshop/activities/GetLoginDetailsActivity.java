@@ -79,6 +79,16 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
                         brandModelList.setServerId(brandModelLists.get(i).getId());
                         brandModelList.save();
                     }
+                    else if(!localParkingEvent.get(0).equals(brandModelLists.get(i)))
+                    {
+                        BrandModelList brandModelList = localParkingEvent.get(0);
+                        brandModelList.setBrand(brandModelLists.get(i).getBrand().trim());
+                        brandModelList.setModelNo(brandModelLists.get(i).getModelNo());
+                        brandModelList.setType(brandModelLists.get(i).getType());
+                        brandModelList.setAccessoryType(brandModelLists.get(i).getAccessoryType());
+                        brandModelList.setServerId(brandModelLists.get(i).getId());
+                        brandModelList.save();
+                    }
 
                 }
                 if (materialDialog != null && materialDialog.isShowing())
