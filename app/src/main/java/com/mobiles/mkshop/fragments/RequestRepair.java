@@ -18,7 +18,7 @@ import com.mobiles.mkshop.adapters.ServiceCenterAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.RepairPojo;
+import com.mobiles.mkshop.pojos.ServiceCenterEntity;
 import com.mobiles.mkshop.R;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class RequestRepair extends Fragment {
 
     public static String TAG = "service";
 
-    List<RepairPojo> repairList;
+    List<ServiceCenterEntity> repairList;
     MaterialDialog materialDialog;
     EditText search;
 
@@ -49,7 +49,7 @@ public class RequestRepair extends Fragment {
 
     public RequestRepair() {
         // Required empty public constructor
-        repairList = new ArrayList<RepairPojo>();
+        repairList = new ArrayList<ServiceCenterEntity>();
     }
 
 
@@ -82,7 +82,7 @@ public class RequestRepair extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                Myenum.INSTANCE.setRepairPojo(repairList.get(position));
+                Myenum.INSTANCE.setServiceCenterEntity(repairList.get(position));
 
                 Fragment fragment = new RepairListItemFragment();
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
@@ -141,12 +141,12 @@ public class RequestRepair extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Client.INSTANCE.getServiceList(MkShop.AUTH, new Callback<List<RepairPojo>>() {
+            Client.INSTANCE.getServiceList(MkShop.AUTH, new Callback<List<ServiceCenterEntity>>() {
                 @Override
-                public void success(List<RepairPojo> repairPojos, Response response) {
+                public void success(List<ServiceCenterEntity> serviceCenterEntiities, Response response) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-                    repairList = repairPojos;
+                    repairList = serviceCenterEntiities;
                     Myenum.INSTANCE.setServiceList(repairList);
                     serviceCenterAdapter = new ServiceCenterAdapter(getActivity(), repairList);
                     listView.setAdapter(serviceCenterAdapter);

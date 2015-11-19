@@ -39,6 +39,7 @@ import com.mobiles.mkshop.fragments.SalesReport;
 import com.mobiles.mkshop.fragments.SendNotificationFragment;
 import com.mobiles.mkshop.fragments.ServiceReport;
 import com.mobiles.mkshop.fragments.UserListFragment;
+import com.mobiles.mkshop.fragments.UserSalesService;
 import com.mobiles.mkshop.fragments.ViewProductFragment;
 import com.mobiles.mkshop.gcm.Controller;
 import com.mobiles.mkshop.gcm.RegistrationIntentService;
@@ -73,6 +74,16 @@ public class MainActivity extends AppCompatActivity
 
         MkShop.AUTH = sharedPreferences.getString("AUTH", null);
         MkShop.Username = sharedPreferences.getString("USERNAME", null);
+
+        String json = sharedPreferences.getString("DETAIL", null);
+        Type type = new TypeToken<LoginDetails>() {
+        }.getType();
+        loginDetailsList = new Gson().fromJson(json, type);
+
+
+        MkShop.Role = loginDetailsList.getRole();
+
+
     }
 
     @Override
@@ -85,13 +96,10 @@ public class MainActivity extends AppCompatActivity
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = pInfo.versionName;
-            mToolbar.setTitle("Mk shop "+version);
+            mToolbar.setTitle("Mk shop " + version);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-
-
 
 
         setSupportActionBar(mToolbar);
@@ -128,7 +136,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
 
 
-        if (!MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name())) {
+        if (MkShop.Role.equalsIgnoreCase(UserType.TECHNICIAN.name())) {
 
             switch (position) {
                 case 0:
@@ -139,14 +147,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
-                case 1: //sale
-                    fragment = getSupportFragmentManager().findFragmentByTag(SaleFragment.TAG);
-                    if (fragment == null) {
-                        fragment = new SaleFragment();
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                    break;
-                case 2:
+                case 1:
                     //request part
                     fragment = getSupportFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
                     if (fragment == null) {
@@ -154,7 +155,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
-                case 3:
+                case 2:
                     //service
                     fragment = getSupportFragmentManager().findFragmentByTag(RequestRepair.TAG);
                     if (fragment == null) {
@@ -163,18 +164,19 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
 
-                case 4:
-                    //View Product
-
-                    fragment = new ViewProductFragment();
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                    break;
-                case 5:
+                case 3:
                     //offers
                     fragment = getSupportFragmentManager().findFragmentByTag(OffersFragment.TAG);
                     if (fragment == null) {
                         fragment = new OffersFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 4:
+                    //My sales
+                    fragment = getSupportFragmentManager().findFragmentByTag(UserSalesService.TAG);
+                    if (fragment == null) {
+                        fragment = new UserSalesService();
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
@@ -262,6 +264,118 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
 
+            }
+        } else if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name())) {
+            switch (position) {
+                case 0:
+                    //Attendance
+                    fragment = getSupportFragmentManager().findFragmentByTag(Attendance.TAG);
+                    if (fragment == null) {
+                        fragment = new Attendance();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 1:
+                    //LeaderBoard
+                    fragment = getSupportFragmentManager().findFragmentByTag(LeaderBoardFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new LeaderBoardFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 2:
+                    //service
+                    fragment = getSupportFragmentManager().findFragmentByTag(RequestRepair.TAG);
+                    if (fragment == null) {
+                        fragment = new RequestRepair();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 3:
+                    //request part
+                    fragment = getSupportFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new PartsRequestFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 4:
+                    //View Product
+
+                    fragment = new ViewProductFragment();
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 5:
+                    //offers
+                    fragment = getSupportFragmentManager().findFragmentByTag(OffersFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new OffersFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+
+            }
+
+        } else {
+
+            Log.e("account", MkShop.Role);
+            switch (position) {
+                case 0:
+                    //Attendance
+                    fragment = getSupportFragmentManager().findFragmentByTag(Attendance.TAG);
+                    if (fragment == null) {
+                        fragment = new Attendance();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 1: //sale
+                    fragment = getSupportFragmentManager().findFragmentByTag(SaleFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new SaleFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 2:
+                    //request part
+                    fragment = getSupportFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new PartsRequestFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 3:
+                    //service
+                    fragment = getSupportFragmentManager().findFragmentByTag(RequestRepair.TAG);
+                    if (fragment == null) {
+                        fragment = new RequestRepair();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+
+                case 4:
+                    //View Product
+
+                    fragment = new ViewProductFragment();
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 5:
+                    //offers
+                    fragment = getSupportFragmentManager().findFragmentByTag(OffersFragment.TAG);
+                    if (fragment == null) {
+                        fragment = new OffersFragment();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case 6:
+                    //My sales
+                    fragment = getSupportFragmentManager().findFragmentByTag(UserSalesService.TAG);
+                    if (fragment == null) {
+                        fragment = new UserSalesService();
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
             }
         }
     }
@@ -368,32 +482,6 @@ public class MainActivity extends AppCompatActivity
             Boolean noti = sharedPreferences.getBoolean("NOTI", false);
             if (noti) {
                 sharedPreferences.edit().putBoolean("NOTI", !noti).apply();
-//
-//
-//                aController = (Controller) getApplicationContext();
-//
-//
-//                mRegisterTask = new AsyncTask<Void, Void, Void>() {
-//
-//                    @Override
-//                    protected Void doInBackground(Void... params) {
-//
-//                        // Register on our server
-//                        // On server creates a new user
-//                        aController.unregister(MainActivity.this, sharedPreferences.getString("reg", ""));
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    protected void onPostExecute(Void result) {
-//                        mRegisterTask = null;
-//                        sharedPreferences.edit().putString("reg", null).apply();
-//                    }
-//
-//                };
-//                // execute AsyncTask
-//                mRegisterTask.execute(null, null, null);
-
 
             } else {
                 sharedPreferences.edit().putBoolean("NOTI", !noti).apply();

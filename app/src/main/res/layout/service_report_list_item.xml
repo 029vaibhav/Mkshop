@@ -46,7 +46,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:textColor="@android:color/holo_red_dark"
                         android:id="@+id/model"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -54,10 +53,10 @@
                         android:gravity="center_vertical"
                         android:padding="5dp"
                         android:text="model"
+                        android:textColor="@android:color/holo_red_dark"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:textColor="@android:color/holo_red_dark"
                         android:id="@+id/Brand"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -66,6 +65,7 @@
                         android:padding="5dp"
                         android:singleLine="true"
                         android:text="Brand"
+                        android:textColor="@android:color/holo_red_dark"
                         android:textSize="18sp" />
 
 
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/problem"
+                    android:layout_below="@+id/resolution"
                     android:gravity="center_vertical"
                     android:text="service"
                     android:textSize="15sp" />
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/problem"
+                    android:layout_below="@+id/resolution"
                     android:text="model"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -100,7 +100,6 @@
 
                 <TextView
                     android:id="@+id/problem"
-                    fontPath="fonts/rr.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll1"
@@ -109,6 +108,20 @@
                     android:gravity="right|center_vertical"
                     android:text="model"
                     android:textSize="15sp" />
+
+
+                <TextView
+                    android:id="@+id/resolution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/problem"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:gravity="right|center_vertical"
+                    android:text="model"
+                    android:textColor="@color/myAccentColor"
+                    android:textSize="15sp" />
+
             </RelativeLayout>
 
         </RelativeLayout>

@@ -8,7 +8,7 @@ import com.mobiles.mkshop.pojos.Leader;
 import com.mobiles.mkshop.pojos.PartsRequests;
 import com.mobiles.mkshop.pojos.PaymentType;
 import com.mobiles.mkshop.pojos.ProductType;
-import com.mobiles.mkshop.pojos.RepairPojo;
+import com.mobiles.mkshop.pojos.ServiceCenterEntity;
 import com.mobiles.mkshop.pojos.Sales;
 import com.mobiles.mkshop.pojos.Status;
 import com.mobiles.mkshop.pojos.UserType;
@@ -26,7 +26,7 @@ public enum Myenum {
     String sFromdate;
     String sToDate;
 
-    RepairPojo repairPojo;
+    ServiceCenterEntity serviceCenterEntity;
     PartsRequests requestRepair;
 
     List<Sales> salesList;
@@ -42,13 +42,15 @@ public enum Myenum {
     List<Leader> salesLeaderList;
     List<Leader> serviceLeaderList;
 
-    List<RepairPojo> serviceList;
-    List<RepairPojo> pendingServiceList;
-    List<RepairPojo> pnaServiceList;
-    List<RepairPojo> doneServiceList;
-    List<RepairPojo> returnServiceList;
-    List<RepairPojo> deliveredServiceList;
-    List<RepairPojo> proccessingServiceList;
+    List<ServiceCenterEntity> serviceList;
+    List<ServiceCenterEntity> pendingServiceList;
+    List<ServiceCenterEntity> pnaServiceList;
+    List<ServiceCenterEntity> doneServiceList;
+    List<ServiceCenterEntity> returnServiceList;
+    List<ServiceCenterEntity> deliveredServiceList;
+    List<ServiceCenterEntity> proccessingServiceList;
+    List<ServiceCenterEntity> returnedServiceList;
+
 
     List<PartsRequests> partsRequestsList;
     List<PartsRequests> pendingPartsRequestsList;
@@ -132,7 +134,7 @@ public enum Myenum {
     }
 
 
-    public void setServiceList(List<RepairPojo> serviceList) {
+    public void setServiceList(List<ServiceCenterEntity> serviceList) {
 
 
         if (serviceList != null) {
@@ -143,6 +145,8 @@ public enum Myenum {
             this.returnServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateReturnServiceList));
             this.deliveredServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateDeliveredServiceList));
             this.proccessingServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateProccessingServiceList));
+            this.returnedServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateReturnedServiceList));
+
         }
     }
 
@@ -157,7 +161,7 @@ public enum Myenum {
     }
 
 
-    public List<RepairPojo> getServiceList(Status status) {
+    public List<ServiceCenterEntity> getServiceList(Status status) {
 
         if (status == Status.RETURN) {
             return returnServiceList;
@@ -203,12 +207,12 @@ public enum Myenum {
         this.requestRepair = requestRepair;
     }
 
-    public RepairPojo getRepairPojo() {
-        return repairPojo;
+    public ServiceCenterEntity getServiceCenterEntity() {
+        return serviceCenterEntity;
     }
 
-    public void setRepairPojo(RepairPojo repairPojo) {
-        this.repairPojo = repairPojo;
+    public void setServiceCenterEntity(ServiceCenterEntity serviceCenterEntity) {
+        this.serviceCenterEntity = serviceCenterEntity;
     }
 
 
@@ -245,44 +249,54 @@ public enum Myenum {
 
     };
 
-    Predicate<RepairPojo> predicatePendingServiceList = new Predicate<RepairPojo>() {
+    Predicate<ServiceCenterEntity> predicatePendingServiceList = new Predicate<ServiceCenterEntity>() {
         @Override
-        public boolean apply(RepairPojo input) {
+        public boolean apply(ServiceCenterEntity input) {
             return input.getStatus().equalsIgnoreCase(Status.PENDING.name());
         }
 
     };
-    Predicate<RepairPojo> predicateProccessingServiceList = new Predicate<RepairPojo>() {
+    Predicate<ServiceCenterEntity> predicateProccessingServiceList = new Predicate<ServiceCenterEntity>() {
         @Override
-        public boolean apply(RepairPojo input) {
+        public boolean apply(ServiceCenterEntity input) {
             return input.getStatus().equalsIgnoreCase(Status.PROCESSING.name());
         }
 
     };
-    Predicate<RepairPojo> predicatePnaServiceList = new Predicate<RepairPojo>() {
+
+    Predicate<ServiceCenterEntity> predicateReturnedServiceList = new Predicate<ServiceCenterEntity>() {
         @Override
-        public boolean apply(RepairPojo input) {
+        public boolean apply(ServiceCenterEntity input) {
+            return input.getStatus().equalsIgnoreCase(Status.RETURNED.name());
+        }
+
+    };
+
+
+    Predicate<ServiceCenterEntity> predicatePnaServiceList = new Predicate<ServiceCenterEntity>() {
+        @Override
+        public boolean apply(ServiceCenterEntity input) {
             return input.getStatus().equalsIgnoreCase(Status.PNA.name());
         }
 
     };
-    Predicate<RepairPojo> predicateDoneServiceList = new Predicate<RepairPojo>() {
+    Predicate<ServiceCenterEntity> predicateDoneServiceList = new Predicate<ServiceCenterEntity>() {
         @Override
-        public boolean apply(RepairPojo input) {
+        public boolean apply(ServiceCenterEntity input) {
             return input.getStatus().equalsIgnoreCase(Status.DONE.name());
         }
 
     };
-    Predicate<RepairPojo> predicateDeliveredServiceList = new Predicate<RepairPojo>() {
+    Predicate<ServiceCenterEntity> predicateDeliveredServiceList = new Predicate<ServiceCenterEntity>() {
         @Override
-        public boolean apply(RepairPojo input) {
+        public boolean apply(ServiceCenterEntity input) {
             return input.getStatus().equalsIgnoreCase(Status.DELIVERED.name());
         }
 
     };
-    Predicate<RepairPojo> predicateReturnServiceList = new Predicate<RepairPojo>() {
+    Predicate<ServiceCenterEntity> predicateReturnServiceList = new Predicate<ServiceCenterEntity>() {
         @Override
-        public boolean apply(RepairPojo input) {
+        public boolean apply(ServiceCenterEntity input) {
             return input.getStatus().equalsIgnoreCase(Status.RETURN.name());
         }
 

@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="2dp">
+
+
+        <TextView
+            android:id="@+id/fromDate"
+            fontPath="fonts/rr.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:drawableLeft="@drawable/ic_action_smallcalendar"
+            android:gravity="center"
+            android:padding="1dp"
+            android:text="From" />
+
+        <TextView
+            android:id="@+id/toDate"
+            fontPath="fonts/rr.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:drawableLeft="@drawable/ic_action_smallcalendar"
+            android:gravity="center"
+            android:padding="1dp"
+            android:text="To" />
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#50F0F7FF" />
+
+
+</LinearLayout>

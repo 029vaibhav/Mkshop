@@ -157,7 +157,7 @@ public class ViewBillAdapter extends RecyclerView.Adapter<ViewBillAdapter.ViewHo
                                                     if (input.length() != 0 && Integer.parseInt(input.toString()) <= productExpenseList.get(getAdapterPosition()).getDueAmount()) {
 
                                                         progressMaterialDialog.show();
-                                                        Client.INSTANCE.duePayment(MkShop.AUTH, productExpenseList.get(getAdapterPosition()).getId(), input.toString(), new Callback<String>() {
+                                                        Client.INSTANCE.duePayment(MkShop.AUTH, productExpenseList.get(getAdapterPosition()).getServerId(), input.toString(), new Callback<String>() {
                                                             @Override
                                                             public void success(String s, Response response) {
 
@@ -188,6 +188,11 @@ public class ViewBillAdapter extends RecyclerView.Adapter<ViewBillAdapter.ViewHo
                                             }).show();
 
                                     break;
+
+                                case 2:
+
+                                    break;
+
                             }
 
 

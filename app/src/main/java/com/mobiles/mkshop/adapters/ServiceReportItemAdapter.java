@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.RepairPojo;
-import com.mobiles.mkshop.pojos.Status;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.application.Myenum;
+import com.mobiles.mkshop.pojos.ServiceCenterEntity;
+import com.mobiles.mkshop.pojos.Status;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
 
     Fragment context;
     Status status;
-    List<RepairPojo> serviceList;
+    List<ServiceCenterEntity> serviceList;
 
     public ServiceReportItemAdapter(Fragment salesReportList, Status status) {
         context = salesReportList;
@@ -43,14 +43,19 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        RepairPojo repairPojo = serviceList.get(position);
-        holder.brand.setText(repairPojo.getModel());
-        holder.model.setText(repairPojo.getBrand());
-        holder.place.setText(repairPojo.getPlace());
-        holder.revenue.setText(context.getActivity().getString(R.string.rs) + " " + repairPojo.getPrice());
+        ServiceCenterEntity serviceCenterEntity = serviceList.get(position);
+        holder.brand.setText(serviceCenterEntity.getModel());
+        holder.model.setText(serviceCenterEntity.getBrand());
+        holder.place.setText(serviceCenterEntity.getPlace());
+        holder.revenue.setText(context.getActivity().getString(R.string.rs) + " " + serviceCenterEntity.getPrice());
         holder.revenue.setTextColor(ContextCompat.getColor(context.getActivity(), R.color.flatGreen));
-        holder.problem.setText(repairPojo.getProblem());
-        //   holder.date.setText(repairPojo.getModifiedDate());
+        holder.problem.setText(serviceCenterEntity.getProblem());
+        if (!serviceCenterEntity.getResolution().equals("")) {
+            holder.resolution.setText(serviceCenterEntity.getResolution());
+            holder.resolution.setVisibility(View.VISIBLE);
+
+        }
+
 
     }
 
@@ -70,7 +75,7 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
         public TextView place;
         public TextView revenue;
         public TextView problem;
-        //   public TextView date;
+        public TextView resolution;
 
 
         public ViewHolder(View row) {
@@ -80,7 +85,8 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
             place = (TextView) row.findViewById(R.id.place);
             revenue = (TextView) row.findViewById(R.id.revenue);
             problem = (TextView) row.findViewById(R.id.problem);
-            //   date = (TextView) row.findViewById(R.id.date);
+            resolution = (TextView) row.findViewById(R.id.resolution);
+            resolution.setVisibility(View.GONE);
 
         }
     }

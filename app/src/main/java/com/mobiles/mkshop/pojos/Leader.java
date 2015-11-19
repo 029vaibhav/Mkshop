@@ -1,6 +1,8 @@
 package com.mobiles.mkshop.pojos;
 
 
+import java.util.List;
+
 /**
  * Created by vaibhav on 4/7/15.
  */
@@ -8,9 +10,15 @@ package com.mobiles.mkshop.pojos;
 
 public class Leader {
 
-    String name,quantity,price,role, username;
-    int id;
+    String name;
+    String quantity;
+    String price;
+    String role;
+    String username;
 
+    List<ProductDetails>productDetail;
+
+    int id;
     public String getName() {
         return name;
     }
@@ -45,6 +53,7 @@ public class Leader {
         this.quantity = quantity;
     }
 
+
     public String getPrice() {
         return price;
     }
@@ -55,6 +64,14 @@ public class Leader {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<ProductDetails> getProductDetail() {
+        return productDetail;
+    }
+
+    public void setProductDetail(List<ProductDetails> productDetail) {
+        this.productDetail = productDetail;
     }
 
     public void setPrice(String price) {

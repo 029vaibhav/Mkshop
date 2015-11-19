@@ -20,7 +20,7 @@ import com.mobiles.mkshop.adapters.TabsPagerAdapterService;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.RepairPojo;
+import com.mobiles.mkshop.pojos.ServiceCenterEntity;
 
 import org.joda.time.DateTime;
 
@@ -39,11 +39,12 @@ public class ServiceReport extends Fragment {
     private FragmentActivity myContext;
     public static String TAG = "ServiceReport";
     TextView toDate, fromDate;
-    String sFromdate, sToDate;
+    String sFromDate, sToDate;
     MaterialDialog materialDialog;
 
     ViewPager viewPager;
     TabsPagerAdapterService adapter;
+    TabLayout tabLayout;
 
     public static ServiceReport newInstance() {
         ServiceReport fragment = new ServiceReport();
@@ -82,7 +83,7 @@ public class ServiceReport extends Fragment {
 
         adapter = new TabsPagerAdapterService(myContext.getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-        TabLayout tabLayout = (TabLayout) viewGroup.findViewById(R.id.sliding_tabs_report);
+        tabLayout = (TabLayout) viewGroup.findViewById(R.id.sliding_tabs_report);
         tabLayout.setupWithViewPager(viewPager);
 
 
@@ -99,7 +100,7 @@ public class ServiceReport extends Fragment {
                         public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
 
                             if (datePicker.isShown()) {
-                                String date = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
+                                String date = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
 
 
                                 toDate.setText(date);
@@ -127,12 +128,12 @@ public class ServiceReport extends Fragment {
                     public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
 
 
-                        String date = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
+                        String date = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
 
 
                         fromDate.setText(date);
                         DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
-                        sFromdate = dt.toString("yyyy-MM-dd");
+                        sFromDate = dt.toString("yyyy-MM-dd");
                     }
                 }, DateTime.now().getYear(), DateTime.now().getMonthOfYear(), DateTime.now().getDayOfMonth());
                 datePickerDialog.show();
@@ -149,15 +150,15 @@ public class ServiceReport extends Fragment {
 
         materialDialog.show();
 
-        Client.INSTANCE.getServiceReport(MkShop.AUTH, sFromdate, sToDate, new Callback<List<RepairPojo>>() {
+        Client.INSTANCE.getServiceReport(MkShop.AUTH, sFromDate, sToDate, new Callback<List<ServiceCenterEntity>>() {
             @Override
-            public void success(final List<RepairPojo> serviceList, Response response) {
+            public void success(final List<ServiceCenterEntity> serviceList, Response response) {
 
 
                 Myenum.INSTANCE.setServiceList(serviceList);
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                adapter = new TabsPagerAdapterService(myContext.getSupportFragmentManager());
+                tabLayout.setTabsFromPagerAdapter(adapter);
                 viewPager.setAdapter(adapter);
 
 
@@ -176,7 +177,5 @@ public class ServiceReport extends Fragment {
 
     }
 
-    public String checkDigit(int number) {
-        return number <= 9 ? "0" + number : String.valueOf(number);
-    }
+
 }

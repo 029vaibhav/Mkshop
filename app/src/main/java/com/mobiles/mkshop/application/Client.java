@@ -6,6 +6,7 @@ import com.mobiles.mkshop.pojos.AttendanceDates;
 import com.mobiles.mkshop.pojos.ExpenseEntity;
 import com.mobiles.mkshop.pojos.IncentiveEntity;
 import com.mobiles.mkshop.pojos.Leader;
+import com.mobiles.mkshop.pojos.LeaderBoardDetails;
 import com.mobiles.mkshop.pojos.Location;
 import com.mobiles.mkshop.pojos.LoginDetails;
 import com.mobiles.mkshop.pojos.NewUser;
@@ -14,7 +15,7 @@ import com.mobiles.mkshop.pojos.PartsRequests;
 import com.mobiles.mkshop.pojos.PriceCompartorService;
 import com.mobiles.mkshop.pojos.Product;
 import com.mobiles.mkshop.pojos.ProductExpense;
-import com.mobiles.mkshop.pojos.RepairPojo;
+import com.mobiles.mkshop.pojos.ServiceCenterEntity;
 import com.mobiles.mkshop.pojos.Sales;
 import com.mobiles.mkshop.pojos.UserListAttendance;
 
@@ -60,7 +61,7 @@ public enum Client {
 
         @Headers("Content-Type: application/json")
         @POST("/mk/webservice/service.php")
-        void sendService(@Header("AUTH") String auth, @Body RepairPojo service, Callback<String> response);
+        void sendService(@Header("AUTH") String auth, @Body ServiceCenterEntity service, Callback<String> response);
 
 
         @GET("/mk/webservice/salesreport.php")
@@ -70,7 +71,7 @@ public enum Client {
         List<Sales> getSalesReport1(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to);
 
         @GET("/mk/webservice/serviceList.php")
-        void getServiceList(@Header("AUTH") String auth, Callback<List<RepairPojo>> callback);
+        void getServiceList(@Header("AUTH") String auth, Callback<List<ServiceCenterEntity>> callback);
 
         @GET("/mk/webservice/partList.php")
         void getPartList(@Header("AUTH") String auth, Callback<List<PartsRequests>> callback);
@@ -106,7 +107,7 @@ public enum Client {
 
 
         @GET("/mk/webservice/serviceReport.php")
-        void getServiceReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<RepairPojo>> callback);
+        void getServiceReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<ServiceCenterEntity>> callback);
 
 
         @GET("/mk/webservice/Report.php")
@@ -167,7 +168,7 @@ public enum Client {
         void deleteIncentiveMessage(@Header("AUTH") String auth, @Query("id") int id, @Query("op") String delete, Callback<String> callback);
 
         @GET("/mk/webservice/leaderboardsaleslist.php")
-        void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1, @Query("username") String username, @Query("department") String department, Callback<List<Sales>> callback);
+        void getUserSales(@Header("AUTH") String auth, @Query("to") String s, @Query("from") String s1, @Query("username") String username, @Query("department") String department, Callback<List<LeaderBoardDetails>> callback);
 
         @GET("/mk/webservice/deleteuser.php")
         void deleteUser(@Header("AUTH") String auth, @Query("username") String username, Callback<String> callback);
@@ -240,12 +241,12 @@ public enum Client {
     }
 
 
-    public void sendService(String auth, RepairPojo service, Callback<String> callback) {
+    public void sendService(String auth, ServiceCenterEntity service, Callback<String> callback) {
         mobileService.sendService(auth, service, callback);
 
     }
 
-    public void getServiceList(String auth, Callback<List<RepairPojo>> callback) {
+    public void getServiceList(String auth, Callback<List<ServiceCenterEntity>> callback) {
         mobileService.getServiceList(auth, callback);
 
     }
@@ -289,7 +290,7 @@ public enum Client {
         mobileService.getpricecompator(auth, from, to, category, response);
     }
 
-    public void getServiceReport(String auth, String from, String to, Callback<List<RepairPojo>> response) {
+    public void getServiceReport(String auth, String from, String to, Callback<List<ServiceCenterEntity>> response) {
         mobileService.getServiceReport(auth, from, to, response);
     }
 
@@ -365,7 +366,7 @@ public enum Client {
     }
 
 
-    public void getUserSales(String auth, String s, String s1, String username, String departemnt, Callback<List<Sales>> callback) {
+    public void getUserSales(String auth, String s, String s1, String username, String departemnt, Callback<List<LeaderBoardDetails>> callback) {
         mobileService.getUserSales(auth, s, s1, username, departemnt, callback);
     }
 

@@ -117,17 +117,20 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                         @Override
                         public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
 
+
+                            final String username = userListAttendances.get(getAdapterPosition()).getUsername();
+
                             switch (which) {
                                 case 0: //view profile
                                     if (dialog != null && dialog.isShowing())
                                         dialog.dismiss();
-                                    ProfileFragment fragment = ProfileFragment.newInstance(userListAttendances.get(getAdapterPosition()).getUsername());
+                                    ProfileFragment fragment = ProfileFragment.newInstance(username);
                                     context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
                                     break;
                                 case 1: // view attendance
                                     if (dialog != null && dialog.isShowing())
                                         dialog.dismiss();
-                                    CalendarFragment calendarFragment = CalendarFragment.newInstance(userListAttendances.get(getAdapterPosition()).getUsername());
+                                    CalendarFragment calendarFragment = CalendarFragment.newInstance(username);
                                     context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).addToBackStack(null).commit();
                                     break;
                                 case 2: // pay salary
@@ -144,7 +147,7 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
 
                                                         ExpenseEntity expenseEntity = new ExpenseEntity();
                                                         expenseEntity.setPaymentType(PaymentType.Salary.name());
-                                                        expenseEntity.setUsername(userListAttendances.get(getAdapterPosition()).getUsername());
+                                                        expenseEntity.setUsername(username);
                                                         expenseEntity.setAmount(input.toString());
 
                                                         Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {

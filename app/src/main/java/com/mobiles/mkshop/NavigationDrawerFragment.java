@@ -124,30 +124,44 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
 
-        if (!MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name())) {
+        if (MkShop.Role.equalsIgnoreCase(UserType.TECHNICIAN.name())) {
 
             items.add(new NavigationItem("Attendance", getResources().getDrawable(R.drawable.ic_action_calendar)));
-            items.add(new NavigationItem("Do Sale", getResources().getDrawable(R.drawable.mobile)));
             items.add(new NavigationItem("Request Part", getResources().getDrawable(R.drawable.parts)));
             items.add(new NavigationItem("Service center", getResources().getDrawable(R.drawable.repair)));
-            items.add(new NavigationItem("View Product", getResources().getDrawable(R.drawable.question)));
-            items.add(new NavigationItem("Offers", getResources().getDrawable(R.drawable.prize)));
-        } else {
+            items.add(new NavigationItem("Offers/Message", getResources().getDrawable(R.drawable.prize)));
+            items.add(new NavigationItem("My Services", getResources().getDrawable(R.drawable.prize)));
+        } else if (MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name())) {
 
             items.add(new NavigationItem("Sales Report", getResources().getDrawable(R.drawable.mobile)));
             items.add(new NavigationItem("Service Report", getResources().getDrawable(R.drawable.repair)));
             items.add(new NavigationItem("Part Requested", getResources().getDrawable(R.drawable.parts)));
             items.add(new NavigationItem("User Data", getResources().getDrawable(R.drawable.ic_action_person)));
-            items.add(new NavigationItem("Learboard", getResources().getDrawable(R.drawable.ic_action_leaderboard
+            items.add(new NavigationItem("Leader Board", getResources().getDrawable(R.drawable.ic_action_leaderboard
             )));
             items.add(new NavigationItem("Revenue Comparator", getResources().getDrawable(R.drawable.ic_action_analysis)));
             items.add(new NavigationItem("Send Notification", getResources().getDrawable(R.drawable.ic_action_noti)));
             items.add(new NavigationItem("Incentive", getResources().getDrawable(R.drawable.prize)));
             items.add(new NavigationItem("Expense Manager", getResources().getDrawable(R.drawable.ic_action_rupees)));
             items.add(new NavigationItem("Location", getResources().getDrawable(R.drawable.ic_action_gps)));
+        } else if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name())) {
+            items.add(new NavigationItem("Attendance", getResources().getDrawable(R.drawable.ic_action_calendar)));
+            items.add(new NavigationItem("Leader Board", getResources().getDrawable(R.drawable.ic_action_leaderboard
+            )));
+            items.add(new NavigationItem("Service center", getResources().getDrawable(R.drawable.repair)));
+            items.add(new NavigationItem("Request Part", getResources().getDrawable(R.drawable.parts)));
+            items.add(new NavigationItem("View Product", getResources().getDrawable(R.drawable.question)));
+            items.add(new NavigationItem("Offers/Message", getResources().getDrawable(R.drawable.prize)));
 
 
-            //  items.add(new NavigationItem("Todays Offers", getResources().getDrawable(R.drawable.prize)));
+        } else {
+            items.add(new NavigationItem("Attendance", getResources().getDrawable(R.drawable.ic_action_calendar)));
+            items.add(new NavigationItem("Do Sale", getResources().getDrawable(R.drawable.mobile)));
+            items.add(new NavigationItem("Request Part", getResources().getDrawable(R.drawable.parts)));
+            items.add(new NavigationItem("Service center", getResources().getDrawable(R.drawable.repair)));
+            items.add(new NavigationItem("View Product", getResources().getDrawable(R.drawable.question)));
+            items.add(new NavigationItem("Offers/Message", getResources().getDrawable(R.drawable.prize)));
+            items.add(new NavigationItem("My Sales", getResources().getDrawable(R.drawable.prize)));
 
         }
 

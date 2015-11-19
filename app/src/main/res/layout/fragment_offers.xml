@@ -1,14 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mobiles.mkshop.fragments.OffersFragment">
 
+
+    <EditText
+        android:id="@+id/editsearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:drawableRight="@drawable/ic_action_search"
+        android:hint="search"
+        android:singleLine="true" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/notificationList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#50F0F7FF"
-        />
+        android:layout_below="@+id/editsearch"
+        android:background="#50F0F7FF" />
 
-</FrameLayout>
+</RelativeLayout>

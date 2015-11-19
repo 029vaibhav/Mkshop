@@ -10,23 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
-import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.fragments.ViewProductItemFragment;
-import com.mobiles.mkshop.pojos.RepairPojo;
 import com.mobiles.mkshop.pojos.Sales;
 import com.mobiles.mkshop.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -136,56 +132,56 @@ public class ViewProductadapter extends RecyclerView.Adapter<ViewProductadapter.
     }
 
 
-    private class FilterList extends Filter {
-
-        private ViewProductadapter adapter;
-        private final List<Sales> originalLists;
-        private List<Sales> filteredList;
-
-
-        private FilterList(ViewProductadapter adapter, List<Sales> salesList) {
-            super();
-            this.adapter = adapter;
-            this.originalLists = salesList;
-            this.filteredList = new ArrayList<>();
-
-        }
-
-        @Override
-        protected FilterResults performFiltering(final CharSequence s) {
-            filteredList.clear();
-            final FilterResults results = new FilterResults();
-            if (s.length() > 0) {
-                Collection<Sales> salesCollection = Collections2.filter(salesList,
-                        new Predicate<Sales>() {
-                            @Override
-                            public boolean apply(Sales input) {
-                                return (input.getModelNo().toLowerCase().matches(s.toString()));
-                            }
-                        });
-
-                filteredList = Lists.newArrayList(salesCollection);
-
-
-            } else {
-
-                filteredList.addAll(originalLists);
-
-            }
-            Log.e("size", "" + filteredList);
-            results.values = filteredList;
-            results.count = filteredList.size();
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            adapter.filteredsalesListList.clear();
-            adapter.filteredsalesListList.addAll((ArrayList<Sales>) results.values);
-            adapter.notifyDataSetChanged();
-        }
-    }
+//    private class FilterList extends Filter {
+//
+//        private ViewProductadapter adapter;
+//        private final List<Sales> originalLists;
+//        private List<Sales> filteredList;
+//
+//
+//        private FilterList(ViewProductadapter adapter, List<Sales> salesList) {
+//            super();
+//            this.adapter = adapter;
+//            this.originalLists = salesList;
+//            this.filteredList = new ArrayList<>();
+//
+//        }
+//
+//        @Override
+//        protected FilterResults performFiltering(final CharSequence s) {
+//            filteredList.clear();
+//            final FilterResults results = new FilterResults();
+//            if (s.length() > 0) {
+//                Collection<Sales> salesCollection = Collections2.filter(salesList,
+//                        new Predicate<Sales>() {
+//                            @Override
+//                            public boolean apply(Sales input) {
+//                                return (input.getModelNo().toLowerCase().matches(s.toString()));
+//                            }
+//                        });
+//
+//                filteredList = Lists.newArrayList(salesCollection);
+//
+//
+//            } else {
+//
+//                filteredList.addAll(originalLists);
+//
+//            }
+//            Log.e("size", "" + filteredList);
+//            results.values = filteredList;
+//            results.count = filteredList.size();
+//
+//            return results;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//            adapter.filteredsalesListList.clear();
+//            adapter.filteredsalesListList.addAll((ArrayList<Sales>) results.values);
+//            adapter.notifyDataSetChanged();
+//        }
+//    }
 }
 
 

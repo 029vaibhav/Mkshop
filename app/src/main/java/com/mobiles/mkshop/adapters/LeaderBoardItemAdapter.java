@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -18,7 +19,7 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.Leader;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.LeaderBoardDetails;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -81,8 +82,36 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
         Leader leader = leaderList.get(position);
         holder.name.setText(leader.getName().toUpperCase());
+
+        if (leader.getProductDetail() != null) {
+
+            try {
+                holder.nameMobile.setText(leader.getProductDetail().get(0).getProductType());
+                holder.qtyMobile.setText(leader.getProductDetail().get(0).getQuantity());
+                holder.revenueMobile.setText(context.getString(R.string.rs) + " " + leader.getProductDetail().get(0).getPrice());
+                holder.linearLayout1.setVisibility(View.VISIBLE);
+
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                holder.nameAccessory.setText(leader.getProductDetail().get(1).getProductType());
+                holder.qtyAccessory.setText(leader.getProductDetail().get(1).getQuantity());
+                holder.revenueAccessory.setText(context.getString(R.string.rs) + " " + leader.getProductDetail().get(1).getPrice());
+
+                holder.linearLayout2.setVisibility(View.VISIBLE);
+
+            } catch (Exception e) {
+
+            }
+
+
+        }
         holder.qty.setText(leader.getQuantity());
         holder.revenue.setText(context.getString(R.string.rs) + " " + leader.getPrice());
+
 
     }
 
@@ -155,17 +184,29 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView name;
-        public TextView revenue;
-        public TextView qty;
+        public TextView name, nameMobile, nameAccessory;
+        public TextView revenue, revenueMobile, revenueAccessory;
+        public TextView qty, qtyMobile, qtyAccessory;
+        public LinearLayout linearLayout1, linearLayout2;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.name);
+            nameMobile = (TextView) itemView.findViewById(R.id.nameMobile);
+            nameAccessory = (TextView) itemView.findViewById(R.id.nameAccessory);
+
+
             revenue = (TextView) itemView.findViewById(R.id.revenue);
+            revenueMobile = (TextView) itemView.findViewById(R.id.revenueMobile);
+            revenueAccessory = (TextView) itemView.findViewById(R.id.revenueAccessory);
             qty = (TextView) itemView.findViewById(R.id.quantity);
+            qtyMobile = (TextView) itemView.findViewById(R.id.quantityMobile);
+            qtyAccessory = (TextView) itemView.findViewById(R.id.quantityAccessory);
+
+            linearLayout1 = (LinearLayout) itemView.findViewById(R.id.linear2);
+            linearLayout2 = (LinearLayout) itemView.findViewById(R.id.linear3);
 
 
             itemView.setOnClickListener(this);
@@ -178,18 +219,15 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
             String[] toFrom = Myenum.INSTANCE.getToAndFromDate();
 
-            Client.INSTANCE.getUserSales(MkShop.AUTH, toFrom[0], toFrom[1], leaderList.get(getAdapterPosition()).getUsername(),department, new Callback<List<Sales>>() {
+            Client.INSTANCE.getUserSales(MkShop.AUTH, toFrom[0], toFrom[1], leaderList.get(getAdapterPosition()).getUsername(), department, new Callback<List<LeaderBoardDetails>>() {
                 @Override
-                public void success(List<Sales> sales, Response response) {
+                public void success(List<LeaderBoardDetails> sales, Response response) {
 
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
 
-
-
-
-                    LeaderBoardDialogAdapter viewBillDialogAdapter = new LeaderBoardDialogAdapter(context,sales);
-                    recyclerView.setAdapter(viewBillDialogAdapter);
+                    LeaderBoardDialogAdapter leaderBoardDialogAdapter = new LeaderBoardDialogAdapter(context, sales);
+                    recyclerView.setAdapter(leaderBoardDialogAdapter);
                     backButton.setOnClickListener(new View.OnClickListener() {
                                                       @Override
                                                       public void onClick(View v) {

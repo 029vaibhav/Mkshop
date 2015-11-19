@@ -140,7 +140,7 @@ public class RevenueCompatorFragment extends Fragment {
                         public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
 
 
-                            String date = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
+                            String date = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
 
 
                             toDate.setText(date);
@@ -165,7 +165,7 @@ public class RevenueCompatorFragment extends Fragment {
                     public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
 
 
-                        String date = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
+                        String date = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
 
 
                         fromDate.setText(date);
@@ -180,10 +180,6 @@ public class RevenueCompatorFragment extends Fragment {
 
         return viewGroup;
 
-    }
-
-    public String checkDigit(int number) {
-        return number <= 9 ? "0" + number : String.valueOf(number);
     }
 
 

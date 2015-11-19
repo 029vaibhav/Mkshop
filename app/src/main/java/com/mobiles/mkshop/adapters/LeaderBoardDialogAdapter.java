@@ -1,7 +1,6 @@
 package com.mobiles.mkshop.adapters;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.LeaderBoardDetails;
 
 import java.util.List;
 
@@ -19,9 +18,9 @@ import java.util.List;
 public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDialogAdapter.ViewHolder> {
 
     Fragment context;
-    List<Sales> sales;
+    List<LeaderBoardDetails> sales;
 
-    public LeaderBoardDialogAdapter(Fragment context, List<Sales> sales) {
+    public LeaderBoardDialogAdapter(Fragment context, List<LeaderBoardDetails> sales) {
 
         this.context = context;
         this.sales = sales;
@@ -40,16 +39,22 @@ public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Sales sale = sales.get(position);
+        LeaderBoardDetails leaderBoardDetails = sales.get(position);
 
-        holder.brand.setText(sale.getModel());
-        holder.model.setText(sale.getBrand());
-        holder.date.setText(sale.getCreated().substring(0, 10));
-        holder.revenue.setText(context.getString(R.string.rs) + "" + sale.getPrice());
-        if (sale.getAccessoryType() != null && sale.getAccessoryType().length() > 0)
-            holder.accessoryType.setText(sale.getAccessoryType());
-        else
+        holder.brand.setText(leaderBoardDetails.getModel().toUpperCase());
+        holder.model.setText(leaderBoardDetails.getBrand().toUpperCase());
+        holder.date.setText(leaderBoardDetails.getCreated().substring(0, 10));
+        holder.revenue.setText(context.getString(R.string.rs) + "" + leaderBoardDetails.getPrice());
+        if (leaderBoardDetails.getAccessoryType() != null)
+            holder.accessoryType.setText(leaderBoardDetails.getAccessoryType());
+        else if (leaderBoardDetails.getProblem() != null) {
+            holder.accessoryType.setText(leaderBoardDetails.getProblem().replace("\n", "").toUpperCase());
+        } else
             holder.accessoryType.setVisibility(View.GONE);
+
+        if (leaderBoardDetails.getResolution() != null) {
+            holder.resolution.setText(leaderBoardDetails.getResolution().replace("\n", "").toUpperCase());
+        } else holder.resolution.setVisibility(View.GONE);
 
 
     }
@@ -66,6 +71,8 @@ public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDi
         public TextView accessoryType;
         public TextView revenue;
         public TextView date;
+        public TextView resolution;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,6 +83,7 @@ public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDi
             accessoryType = (TextView) itemView.findViewById(R.id.accessoryType);
             revenue = (TextView) itemView.findViewById(R.id.revenue);
             date = (TextView) itemView.findViewById(R.id.date);
+            resolution = (TextView) itemView.findViewById(R.id.resolution);
 
 
         }

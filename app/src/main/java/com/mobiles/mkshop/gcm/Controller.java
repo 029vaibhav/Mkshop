@@ -1,6 +1,7 @@
 package com.mobiles.mkshop.gcm;
 
 import com.crashlytics.android.Crashlytics;
+import com.mobiles.mkshop.application.FontsOverride;
 import com.orm.SugarApp;
 
 import java.util.Random;
@@ -20,6 +21,9 @@ public class Controller extends SugarApp {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "museo.ttf");
+
     }
 
 

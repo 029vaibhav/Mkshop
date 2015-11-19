@@ -37,8 +37,9 @@
 
 
     <string-array name="bill_action">
-        <item name="camera">View Bill History</item>
-        <item name="gallery">Pay Bill</item>
+        <item name="view_bill">View Bill History</item>
+        <item name="pay_bill">Pay Bill</item>
+
 
     </string-array>
 

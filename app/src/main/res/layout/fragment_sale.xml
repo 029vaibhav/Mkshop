@@ -7,21 +7,20 @@
 
 
     <TextView
-        android:gravity="center"
-        android:textColor="@color/md_material_blue_600"
         android:id="@+id/fortitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:padding="10dp"
-        android:text="PLEASE FILL THE SALES FORM" />
+        android:text="PLEASE FILL THE SALES FORM"
+        android:textColor="@color/md_material_blue_600" />
 
 
-    <android.support.v7.widget.CardView
-        android:layout_below="@+id/fortitle"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardlist_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/fortitle"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -30,454 +29,473 @@
         android:orientation="vertical"
         card_view:cardElevation="@dimen/cardview_default_elevation">
 
-    <ScrollView
+        <ScrollView
 
-        android:scrollbars="none"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/fortitle">
-
-        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RadioGroup
-                android:id="@+id/radiogroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <RadioButton
-                    android:id="@+id/radiomobile"
-                    fontPath="fonts/rr.ttf"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:text="Mobile" />
-
-                <RadioButton
-                    android:id="@+id/radioAccessory"
-                    fontPath="fonts/rr.ttf"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Accessory" />
-            </RadioGroup>
-
-
-            <TextView
-                android:id="@+id/accessorytitle"
-
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/radiogroup"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:dividerPadding="8dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="Brand"
-                android:textSize="14sp"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:id="@+id/accessoryType"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/accessorytitle"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawableRight="@drawable/right_arrow"
-                android:gravity="center"
-                android:hint="Accessory"
-                android:padding="10dp"
-                android:textSize="18sp"
-                android:visibility="gone" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/fortitle"
+            android:scrollbars="none">
 
             <RelativeLayout
-                android:id="@+id/relativebrand"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/accessoryType">
+                android:layout_height="match_parent">
+
+                <RadioGroup
+                    android:id="@+id/radiogroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <RadioButton
+                        android:id="@+id/radiomobile"
+                        fontPath="fonts/rr.ttf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="Mobile" />
+
+                    <RadioButton
+                        android:id="@+id/radioAccessory"
+                        fontPath="fonts/rr.ttf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Accessory" />
+                </RadioGroup>
+
 
                 <TextView
-                    android:id="@+id/brandtitle"
+                    android:id="@+id/accessorytitle"
 
                     fontPath="fonts/rr.ttf"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_below="@+id/radiogroup"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
                     android:text="Brand"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/brandtitle"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_dark" />
-
-
-            </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/brandtext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativebrand"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/right_arrow"
-                android:editable="false"
-                android:gravity="center"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp" />
-
-            <RelativeLayout
-                android:id="@+id/relativemodel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/brandtext">
-
-                <TextView
-                    android:id="@+id/modeltitle"
-
+                    android:id="@+id/accessoryType"
                     fontPath="fonts/rr.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/accessorytitle"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawableRight="@drawable/right_arrow"
+                    android:gravity="center"
+                    android:hint="Accessory"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/relativebrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/accessoryType">
+
+                    <TextView
+                        android:id="@+id/brandtitle"
+
+                        fontPath="fonts/rr.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:dividerPadding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Brand"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/brandtitle"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_dark" />
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/brandtext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativebrand"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_arrow"
+                    android:editable="false"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+
+                <RelativeLayout
+                    android:id="@+id/relativemodel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/brandtext">
+
+                    <TextView
+                        android:id="@+id/modeltitle"
+
+                        fontPath="fonts/rr.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:dividerPadding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Model"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/modeltitle"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_dark" />
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/modeltext"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativemodel"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawableRight="@drawable/right_arrow"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/otheredit"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/modeltext"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawableRight="@drawable/ic_action_name"
+                    android:gravity="center"
+                    android:hint="Model no"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/priceEdit_text_input_layout"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/otheredit"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
-                    android:text="Model"
-                    android:textSize="14sp" />
+                    android:text="Quantity"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/modeltitle"
+
+                <EditText
+                    android:id="@+id/quantityEdit"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/priceEdit_text_input_layout"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/ic_action_transparent"
+                    android:ems="10"
                     android:gravity="center"
-                    android:padding="5dp"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_dark" />
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeImei"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/quantityEdit">
+
+                    <TextView
+                        android:id="@+id/imeitextview"
+                        fontPath="fonts/rr.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:dividerPadding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="IMEI no"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/star_imei"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/imeitextview"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_dark" />
 
 
-            </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeImei2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeImei">
+
+                    <EditText
+                        android:id="@+id/imei"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/border_text"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textSize="18sp" />
 
 
-            <TextView
-                android:id="@+id/modeltext"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativemodel"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawableRight="@drawable/right_arrow"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/otheredit"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/modeltext"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawableRight="@drawable/ic_action_name"
-                android:gravity="center"
-                android:hint="Model no"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp"
-                android:visibility="gone" />
+                    <TextView
+                        android:padding="12dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:id="@+id/scan_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/scanner_event" />
 
 
-            <TextView
-                android:id="@+id/priceEdit_text_input_layout"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/otheredit"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:dividerPadding="8dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="Quantity"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeprice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeImei2">
+
+                    <TextView
+                        android:id="@+id/text_input_layout"
+                        fontPath="fonts/rr.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:dividerPadding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Price"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/text_input_layout"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_dark" />
 
 
-            <EditText
-                android:id="@+id/quantityEdit"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/priceEdit_text_input_layout"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/ic_action_transparent"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="number"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp"
-                android:visibility="gone" />
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/relativeImei"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/quantityEdit">
 
-                <TextView
-                    android:id="@+id/imeitextview"
+                <EditText
+                    android:id="@+id/priceEdit"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeprice"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/ic_action_rupees"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+
+                <RelativeLayout
+                    android:id="@+id/relativecustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/priceEdit">
+
+                    <TextView
+                        android:id="@+id/customerNameTextview"
+                        fontPath="fonts/rr.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:dividerPadding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Customer name"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/star_customer_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/customerNameTextview"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_dark" />
+
+
+                </RelativeLayout>
+
+
+                <EditText
+                    android:id="@+id/customerName"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativecustomer"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/ic_action_customer"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+
+                <RelativeLayout
+                    android:id="@+id/relativemobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/customerName">
+
+                    <TextView
+                        android:id="@+id/mobileTextview"
+                        fontPath="fonts/rr.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:dividerPadding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Mobile no"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/star_mobile_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/mobileTextview"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_dark" />
+
+
+                </RelativeLayout>
+
+
+                <EditText
+                    android:id="@+id/mobile"
+                    fontPath="fonts/rr.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativemobile"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_text"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/ic_action_call"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+
+
+                <Button
+
+                    android:id="@+id/submit"
+                    style="?android:buttonBarButtonStyle"
                     fontPath="fonts/rr.ttf"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:dividerPadding="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="IMEI no"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/star_imei"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/imeitextview"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mobile"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/button_selector"
                     android:gravity="center"
-                    android:padding="5dp"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_dark" />
-
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="10dp"
+                    android:shadowRadius="0"
+                    android:text="submit" />
 
             </RelativeLayout>
 
 
-            <EditText
-                android:id="@+id/imei"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeImei"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/md_transparent"
-                android:gravity="center"
-                android:inputType="number"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp" />
-
-            <RelativeLayout
-                android:id="@+id/relativeprice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imei">
-
-                <TextView
-                    android:id="@+id/text_input_layout"
-                    fontPath="fonts/rr.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:dividerPadding="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="Price"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/text_input_layout"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_dark" />
-
-
-            </RelativeLayout>
-
-
-            <EditText
-                android:id="@+id/priceEdit"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeprice"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/ic_action_rupees"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="number"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp" />
-
-            <RelativeLayout
-                android:id="@+id/relativecustomer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/priceEdit">
-
-                <TextView
-                    android:id="@+id/customerNameTextview"
-                    fontPath="fonts/rr.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:dividerPadding="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="Customer name"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/star_customer_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/customerNameTextview"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_dark" />
-
-
-            </RelativeLayout>
-
-
-            <EditText
-                android:id="@+id/customerName"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativecustomer"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/ic_action_customer"
-                android:ems="10"
-                android:gravity="center"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp" />
-
-            <RelativeLayout
-                android:id="@+id/relativemobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/customerName">
-
-                <TextView
-                    android:id="@+id/mobileTextview"
-                    fontPath="fonts/rr.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:dividerPadding="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="Mobile no"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/star_mobile_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/mobileTextview"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_dark" />
-
-
-            </RelativeLayout>
-
-
-            <EditText
-                android:id="@+id/mobile"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativemobile"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/ic_action_call"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="number"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp" />
-
-
-            <Button
-
-                android:id="@+id/submit"
-                style="?android:buttonBarButtonStyle"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/mobile"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_selector"
-                android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingTop="10dp"
-                android:shadowRadius="0"
-                android:text="submit" />
-
-        </RelativeLayout>
-
-
-    </ScrollView></android.support.v7.widget.CardView>
+        </ScrollView>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

@@ -3,14 +3,19 @@ package com.mobiles.mkshop.adapters;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.pojos.Notification;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,12 +26,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     Context context;
     List<Notification> notifications;
+    List<Notification> dummyNotifications;
 
 
     public NotificationAdapter(Context context, List<Notification> notifications) {
 
         this.context = context;
         this.notifications = notifications;
+        this.dummyNotifications = notifications;
 
     }
 
@@ -56,6 +63,30 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             return 0;
         }
         return notifications.size();
+    }
+
+    public void filter(final Editable s) {
+
+
+        if (s.length() > 0) {
+            Collection<Notification> salesCollection = Collections2.filter(notifications,
+                    new Predicate<Notification>() {
+                        @Override
+                        public boolean apply(Notification input) {
+                            return (input.getMessage().toLowerCase().contains(s.toString()));
+                        }
+                    });
+
+            notifications = Lists.newArrayList(salesCollection);
+
+
+        } else {
+
+            notifications = dummyNotifications;
+
+        }
+        notifyDataSetChanged();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

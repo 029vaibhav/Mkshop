@@ -2,7 +2,6 @@ package com.mobiles.mkshop.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -15,7 +14,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.RepairPojo;
+import com.mobiles.mkshop.pojos.ServiceCenterEntity;
 import com.mobiles.mkshop.R;
 
 import java.util.Collection;
@@ -27,9 +26,9 @@ import java.util.List;
 public class ServiceCenterAdapter extends BaseAdapter {
 
     Context context;
-    List<RepairPojo> repairList;
+    List<ServiceCenterEntity> repairList;
 
-    public ServiceCenterAdapter(Context context, List<RepairPojo> repairList) {
+    public ServiceCenterAdapter(Context context, List<ServiceCenterEntity> repairList) {
         this.context = context;
         this.repairList = repairList;
 
@@ -69,17 +68,17 @@ public class ServiceCenterAdapter extends BaseAdapter {
             viewHolder = (ViewHolderItem) convertView.getTag();
         }
 
-        RepairPojo repairPojo = repairList.get(position);
+        ServiceCenterEntity serviceCenterEntity = repairList.get(position);
 
-        viewHolder.modelNo.setText(repairPojo.getBrand() + " " + repairPojo.getModel());
-        viewHolder.date.setText(repairPojo.getCreated());
+        viewHolder.modelNo.setText(serviceCenterEntity.getBrand() + " " + serviceCenterEntity.getModel());
+        viewHolder.date.setText(serviceCenterEntity.getCreated());
 
-        if (repairPojo.getStatus().equalsIgnoreCase("done")) {
+        if (serviceCenterEntity.getStatus().equalsIgnoreCase("done")) {
             viewHolder.status.setTextColor(ContextCompat.getColor(context, R.color.flatGreen));
         }
-        viewHolder.status.setText(repairPojo.getStatus());
+        viewHolder.status.setText(serviceCenterEntity.getStatus());
 
-        viewHolder.jobNo.setText(repairPojo.getJobNo());
+        viewHolder.jobNo.setText(serviceCenterEntity.getJobNo());
 
 
         return convertView;
@@ -89,15 +88,15 @@ public class ServiceCenterAdapter extends BaseAdapter {
 
 
         if (s.length() > 0) {
-            Collection<RepairPojo> repairPojoList = Collections2.filter(Myenum.INSTANCE.getServiceList(null),
-                    new Predicate<RepairPojo>() {
+            Collection<ServiceCenterEntity> serviceCenterEntityList = Collections2.filter(Myenum.INSTANCE.getServiceList(null),
+                    new Predicate<ServiceCenterEntity>() {
                         @Override
-                        public boolean apply(RepairPojo input) {
-                            return (input.getBrand().contains(s) || input.getModel().contains(s) || input.getJobNo().contains(s)
-                                    || input.getCreated().contains(s) || input.getStatus().toLowerCase().contains(s));
+                        public boolean apply(ServiceCenterEntity input) {
+                            return (input.getBrand().toLowerCase().contains(s) || input.getModel().toLowerCase().contains(s) || input.getJobNo().toLowerCase().contains(s)
+                                    || input.getCreated().toLowerCase().contains(s) || input.getStatus().toLowerCase().contains(s));
                         }
                     });
-            repairList = Lists.newArrayList(repairPojoList);
+            repairList = Lists.newArrayList(serviceCenterEntityList);
 
 
         } else {

@@ -15,27 +15,27 @@
 
 
         <TextView
-            fontPath="fonts/rr.ttf"
-            android:drawableLeft="@drawable/ic_action_smallcalendar"
             android:id="@+id/fromDate"
+            fontPath="fonts/rr.ttf"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/button_selector"
+            android:drawableLeft="@drawable/ic_action_smallcalendar"
             android:gravity="center"
             android:padding="1dp"
             android:text="From" />
 
         <TextView
-            android:drawableLeft="@drawable/ic_action_smallcalendar"
-            fontPath="fonts/rr.ttf"
             android:id="@+id/toDate"
+            fontPath="fonts/rr.ttf"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_selector"
+            android:drawableLeft="@drawable/ic_action_smallcalendar"
             android:gravity="center"
             android:padding="1dp"
             android:text="To" />
@@ -59,8 +59,8 @@
         android:weightSum="10">
 
         <TextView
-            fontPath="fonts/rr.ttf"
             android:id="@+id/Brand"
+            fontPath="fonts/rr.ttf"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
@@ -71,8 +71,8 @@
             android:textSize="20sp" />
 
         <TextView
-            fontPath="fonts/rr.ttf"
             android:id="@+id/quantity"
+            fontPath="fonts/rr.ttf"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -85,8 +85,8 @@
 
 
         <TextView
-            fontPath="fonts/rr.ttf"
             android:id="@+id/revenue"
+            fontPath="fonts/rr.ttf"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_below="@+id/Brand"

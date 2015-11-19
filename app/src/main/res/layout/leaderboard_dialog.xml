@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/accessoryType"
+                    android:layout_below="@+id/resolution"
                     android:gravity="center_vertical"
                     android:text="date"
                     android:textSize="15sp" />
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/accessoryType"
+                    android:layout_below="@+id/resolution"
                     android:text="model"
                     android:textColor="@color/flatGreen"
                     android:textSize="15sp"
@@ -104,6 +104,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:gravity="right|center_vertical"
+                    android:text="model"
+                    android:textSize="15sp" />
+
+
+                <TextView
+                    android:textColor="@color/myAccentColor"
+                    android:id="@+id/resolution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/accessoryType"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="2dp"
                     android:gravity="right|center_vertical"

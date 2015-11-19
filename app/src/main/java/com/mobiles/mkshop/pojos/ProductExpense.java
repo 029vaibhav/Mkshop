@@ -1,21 +1,30 @@
 package com.mobiles.mkshop.pojos;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
-import retrofit.mime.TypedFile;
+import java.util.List;
 
 /**
  * Created by vaibhav on 2/10/15.
  */
 public class ProductExpense {
 
-    private String id;
+
+    public ProductExpense() {
+
+    }
+
+    private String serverId;
 
     int dueAmount;
 
     private String amount;
 
     private String created;
+
+    private String modifiedDate;
+
 
     private List<ProductExpenseSingleEntry> productExpenseSingleEntries;
 
@@ -52,12 +61,12 @@ public class ProductExpense {
         this.productExpenseSingleEntries = productExpenseSingleEntries;
     }
 
-    public String getId() {
-        return id;
+    public String getServerId() {
+        return serverId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setServerId(String id) {
+        this.serverId = id;
     }
 
     public String getCreated() {
@@ -106,5 +115,29 @@ public class ProductExpense {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductExpense that = (ProductExpense) o;
+
+        return getServerId().equals(that.getServerId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getServerId().hashCode();
     }
 }

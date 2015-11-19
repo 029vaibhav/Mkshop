@@ -1,13 +1,23 @@
 package com.mobiles.mkshop.pojos;
 
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
+
 /**
  * Created by vaibhav on 3/10/15.
  */
-public class ProductExpenseSingleEntry {
+public class ProductExpenseSingleEntry  {
+
+
+
+    public ProductExpenseSingleEntry()
+    {
+
+    }
 
     private String amount;
 
-    private String id;
+    private String serverId;
 
     private String dealerId;
 
@@ -23,14 +33,14 @@ public class ProductExpenseSingleEntry {
         this.amount = amount;
     }
 
-    public String getId ()
+    public String getServerId ()
     {
-        return id;
+        return serverId;
     }
 
-    public void setId (String id)
+    public void setServerId(String serverId)
     {
-        this.id = id;
+        this.serverId = serverId;
     }
 
     public String getDealerId ()
@@ -53,5 +63,19 @@ public class ProductExpenseSingleEntry {
         this.created = created;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        ProductExpenseSingleEntry that = (ProductExpenseSingleEntry) o;
+
+        return getServerId().equals(that.getServerId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getServerId().hashCode();
+    }
 }

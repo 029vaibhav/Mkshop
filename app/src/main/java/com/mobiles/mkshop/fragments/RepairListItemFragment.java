@@ -1,14 +1,12 @@
 package com.mobiles.mkshop.fragments;
 
-import android.app.DatePickerDialog;
-import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,11 +15,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.RepairPojo;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import com.mobiles.mkshop.pojos.ServiceCenterEntity;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -33,15 +27,12 @@ public class RepairListItemFragment extends Fragment {
 
     public static String TAG = "serviceItem";
     private TextView brand, modelNo, status;
-    EditText price, other, jobNo, problem;
-
-//    TextView date
+    EditText price, other, jobNo, problem, resolution;
     Button submit;
     String stringStatus;
     int index;
     int id;
-    RepairPojo service;
-    DateTime dateTime;
+    ServiceCenterEntity service;
 
 
     public static RepairListItemFragment newInstance() {
@@ -61,56 +52,25 @@ public class RepairListItemFragment extends Fragment {
 
         MkShop.SCRREN = "RepairListItemFragment";
 
-        service = Myenum.INSTANCE.getRepairPojo();
+        service = Myenum.INSTANCE.getServiceCenterEntity();
 
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_repair_list_item, container, false);
-        brand = (TextView) v.findViewById(R.id.brandtext);
-      //  date = (TextView) v.findViewById(R.id.datetext);
-        status = (TextView) v.findViewById(R.id.status);
-        modelNo = (TextView) v.findViewById(R.id.modeltext);
-        price = (EditText) v.findViewById(R.id.priceEdit);
-        other = (EditText) v.findViewById(R.id.otheredit);
-        jobNo = (EditText) v.findViewById(R.id.jobnoedit);
-        problem = (EditText) v.findViewById(R.id.problemedit);
-        submit = (Button) v.findViewById(R.id.submit);
+        initView(v);
+
+
         problem.setText(service.getProblem());
-        brand.setText(service.getBrand().replace("\\n",""));
+        brand.setText(service.getBrand().replace("\\n", ""));
         modelNo.setText(service.getModel());
-        final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-       // dateTime = formatter.parseDateTime(service.getDeliveryDate());
-      //  date.setText(dateTime.toString("dd-MM"));
         price.setText("" + service.getPrice());
         jobNo.setText(service.getJobNo());
-
         jobNo.setEnabled(false);
+
+        if (service.getResolution() != null && !service.getResolution().equalsIgnoreCase("null"))
+            resolution.setText(service.getResolution());
+
         status.setText(service.getStatus());
         stringStatus = service.getStatus();
-        setindex(service.getStatus());
-
-
-/*
-        date.setOnClickListener(new View.OnClickListener() {
-
-            DatePickerDialog datePickerDialog;
-
-            @Override
-            public void onClick(View v) {
-
-                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        String Stringdate = "" + dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                        dateTime = new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0);
-                        date.setText("" + dayOfMonth + "-" + monthOfYear);
-                        datePickerDialog.dismiss();
-
-                    }
-                }, DateTime.now().getYear(), DateTime.now().getMonthOfYear() + 1, DateTime.now().getDayOfMonth());
-                datePickerDialog.show();
-            }
-        });
-*/
+        setIndex(service.getStatus());
 
 
         status.setOnClickListener(new View.OnClickListener() {
@@ -122,13 +82,6 @@ public class RepairListItemFragment extends Fragment {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                                 stringStatus = text.toString();
-                             /*   if (stringStatus.equalsIgnoreCase("Pending") || stringStatus.equalsIgnoreCase("Delivered") || stringStatus.equalsIgnoreCase("Returned")) {
-
-                                    date.setVisibility(View.GONE);
-                                } else {
-                                    date.setVisibility(View.VISIBLE);
-                                }*/
-
 
                                 if (stringStatus.equalsIgnoreCase("Returned")) {
                                     price.setVisibility(View.GONE);
@@ -137,7 +90,7 @@ public class RepairListItemFragment extends Fragment {
                                     price.setVisibility(View.VISIBLE);
                                 }
                                 status.setText(stringStatus);
-                                setindex(stringStatus);
+                                setIndex(stringStatus);
                                 return true;
                             }
                         })
@@ -155,11 +108,12 @@ public class RepairListItemFragment extends Fragment {
                 service.setPrice(price.getText().toString());
                 service.setStatus(stringStatus);
                 service.setProblem(problem.getText().toString());
-
                 service.setDeliveryDate("");
-
-//                service.setDeliveryDate(dateTime.toString("yyyy-MM-dd"));
                 service.setUsername(MkShop.Username);
+                if (resolution.getText().length() > 0)
+                    service.setResolution(resolution.getText().toString());
+                else service.setResolution("");
+
                 new SendData().execute();
             }
         });
@@ -168,7 +122,20 @@ public class RepairListItemFragment extends Fragment {
         return v;
     }
 
-    private int setindex(String status) {
+    private void initView(ViewGroup v) {
+        brand = (TextView) v.findViewById(R.id.brandtext);
+        status = (TextView) v.findViewById(R.id.status);
+        modelNo = (TextView) v.findViewById(R.id.modeltext);
+        price = (EditText) v.findViewById(R.id.priceEdit);
+        other = (EditText) v.findViewById(R.id.otheredit);
+        jobNo = (EditText) v.findViewById(R.id.jobnoedit);
+        problem = (EditText) v.findViewById(R.id.problemedit);
+        submit = (Button) v.findViewById(R.id.submit);
+        resolution = (EditText) v.findViewById(R.id.resolutionEdit);
+
+    }
+
+    private int setIndex(String status) {
         if (status.equalsIgnoreCase("Pending")) {
             index = 0;
         } else if (status.equalsIgnoreCase("Processing")) {
@@ -219,7 +186,7 @@ public class RepairListItemFragment extends Fragment {
                 public void success(String s, Response response) {
 
 
-                    if(dialog!=null && dialog.isShowing())
+                    if (dialog != null && dialog.isShowing())
                         dialog.dismiss();
 
                     MkShop.toast(getActivity(), s);
@@ -231,12 +198,12 @@ public class RepairListItemFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
 
-                    if(dialog!=null && dialog.isShowing())
+                    if (dialog != null && dialog.isShowing())
                         dialog.dismiss();
-                    if(error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(),"please check your internet connection");
-                        else
-                    MkShop.toast(getActivity(),error.getMessage());
+                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                        MkShop.toast(getActivity(), "please check your internet connection");
+                    else
+                        MkShop.toast(getActivity(), error.getMessage());
 
                 }
             });

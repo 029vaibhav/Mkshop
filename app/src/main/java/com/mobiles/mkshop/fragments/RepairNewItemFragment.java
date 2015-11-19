@@ -4,14 +4,12 @@ import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,11 +21,8 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.BrandModelList;
-import com.mobiles.mkshop.pojos.RepairPojo;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.ServiceCenterEntity;
 import com.mobiles.mkshop.pojos.UserType;
-
-import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,7 +41,7 @@ public class RepairNewItemFragment extends Fragment {
     Button submit;
     String Stringdate = "", stringModel, stringBrand, stringStatus;
     int index;
-    RepairPojo service;
+    ServiceCenterEntity service;
     DatePickerDialog datePickerDialog;
     EditText jobNo;
     //  private RadioGroup radiogroup;
@@ -235,12 +230,12 @@ public class RepairNewItemFragment extends Fragment {
 
                 } else {
 
-                    service = new RepairPojo();
-                    service.setBrand(brand.getText().toString());
-                    service.setModel(modelNo.getText().toString());
+                    service = new ServiceCenterEntity();
+                    service.setBrand(brand.getText().toString().trim());
+                    service.setModel(modelNo.getText().toString().trim());
                     service.setStatus(stringStatus);
-                    service.setPrice("" + price.getText().toString());
-                    service.setJobNo("" + jobNo.getText().toString());
+                    service.setPrice("" + price.getText().toString().trim());
+                    service.setJobNo("" + jobNo.getText().toString().trim());
                     service.setDeliveryDate("");
 
                     if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name()) || MkShop.Role.equalsIgnoreCase(UserType.SALESMAN.name())) {

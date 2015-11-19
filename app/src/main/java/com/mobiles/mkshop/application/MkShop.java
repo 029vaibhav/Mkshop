@@ -6,6 +6,9 @@ import android.widget.Toast;
 
 import com.mobiles.mkshop.gcm.Controller;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by vaibhav on 27/6/15.
  */
@@ -19,6 +22,8 @@ public class MkShop extends Controller {
     public static String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static String REGISTRATION_COMPLETE = "registrationComplete";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static final String LAST_MODIFIED_DATE = "date";
+
 
     private static MkShop instance;
 
@@ -55,10 +60,15 @@ public class MkShop extends Controller {
 
     }
 
+
     public static int GetImage(String ImageName) {
 
         return getContext().getResources().getIdentifier(ImageName, "drawable", getContext().getPackageName());
 //        return ContextCompat.getDrawable(getContext(), getContext().getResources().getIdentifier(ImageName, "drawable", getContext().getPackageName()));
+    }
+
+    public static String checkDigit(int number) {
+        return number <= 9 ? "0" + number : String.valueOf(number);
     }
 
 

@@ -23,6 +23,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.interfaces.ScannerCallback;
 import com.mobiles.mkshop.pojos.BrandModelList;
 import com.mobiles.mkshop.pojos.ProductType;
 import com.mobiles.mkshop.pojos.Sales;
@@ -39,7 +40,7 @@ import retrofit.client.Response;
 import static com.mobiles.mkshop.application.MkShop.toast;
 
 
-public class SaleFragment extends Fragment {
+public class SaleFragment extends Fragment implements ScannerCallback, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     // TODO: Rename parameter arguments, choose names that match
 
     public static String TAG = "Sales";
@@ -51,9 +52,11 @@ public class SaleFragment extends Fragment {
     Button submit;
     List<BrandModelList> modelSalesList, productTypeList, salesList;
     List<String> brandList, modelList, accessoryTypeList;
-
-
+    Dialog brandModelDialog;
+    Scanner picker;
     String stringBrand = null, stringProductType = ProductType.Mobile.name(), stringAccessory = null, stringModel = null;
+    TextView dialogTitle, scanImage;
+    ListView dialogListView;
 
 
     public static SaleFragment newInstance(String brand, String model) {
@@ -86,6 +89,58 @@ public class SaleFragment extends Fragment {
         // Inflate the layout for this fragment
         MkShop.SCRREN = "SaleFragment";
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_sale, container, false);
+        initViews(v);
+
+
+        if (getArguments() != null) {
+            brand.setText(stringBrand);
+            modelNo.setText(stringModel);
+        }
+
+
+        listInit();
+
+        brand.setOnClickListener(this);
+        accessoryType.setOnClickListener(this);
+        modelNo.setOnClickListener(this);
+        submit.setOnClickListener(this);
+        radiogroup.setOnCheckedChangeListener(this);
+        scanImage.setOnClickListener(this);
+
+        return v;
+    }
+
+    private void listInit() {
+
+        brandList = new ArrayList<>();
+        productTypeList = new ArrayList<>();
+        accessoryTypeList = new ArrayList<>();
+        modelSalesList = new ArrayList<>();
+        modelList = new ArrayList<>();
+        salesList = BrandModelList.listAll(BrandModelList.class);
+
+
+        try {
+            productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+                @Override
+                public boolean apply(BrandModelList input) {
+                    return (input.getType().equalsIgnoreCase(stringProductType));
+                }
+            }));
+        } catch (Exception e) {
+            Log.e("Err", e.getMessage());
+        }
+
+
+        Set<String> brands = new HashSet();
+        for (int i = 0; i < productTypeList.size(); i++) {
+            brands.add(productTypeList.get(i).getBrand());
+        }
+        brandList.addAll(brands);
+
+    }
+
+    private void initViews(ViewGroup v) {
 
         materialDialog = new MaterialDialog.Builder(getActivity())
                 .progress(true, 0)
@@ -106,314 +161,290 @@ public class SaleFragment extends Fragment {
         starCustomerName = (TextView) v.findViewById(R.id.star_customer_name);
         starMobileNo = (TextView) v.findViewById(R.id.star_mobile_no);
         startImei = (TextView) v.findViewById(R.id.star_imei);
+        scanImage = (TextView) v.findViewById(R.id.scan_image);
+        picker = new Scanner();
+        picker.setCallBack(SaleFragment.this);
+
+        brandModelDialog = new Dialog(getActivity(), android.R.style.Theme_Holo_Light_NoActionBar);
+        brandModelDialog.setContentView(R.layout.dialog_layout);
+        dialogTitle = (TextView) brandModelDialog.findViewById(R.id.dialogtitle);
+        dialogListView = (ListView) brandModelDialog.findViewById(R.id.dialoglist);
 
 
-        if (getArguments() != null) {
-            brand.setText(stringBrand);
-            modelNo.setText(stringModel);
+    }
+
+    @Override
+    public void setIMEI(String imeiNumber) {
+
+        if (imeiNumber != null)
+            imei.setText(imeiNumber);
+        picker.dismiss();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
+        int id = v.getId();
+
+
+        switch (id) {
+            case R.id.brandtext:
+
+                brandClickListener();
+
+                break;
+
+            case R.id.modeltext:
+
+                modelClickListener();
+
+                break;
+
+            case R.id.accessoryType:
+
+                accessoryClickListener();
+                break;
+
+            case R.id.submit:
+                submitClickListener();
+                break;
+
+            case R.id.scan_image:
+                picker.show(getFragmentManager(), "imei scanner");
+
+                break;
         }
 
-        brandList = new ArrayList<>();
-        productTypeList = new ArrayList<>();
-        accessoryTypeList = new ArrayList<>();
-        modelSalesList = new ArrayList<>();
-        modelList = new ArrayList<>();
+
+    }
+
+    private void submitClickListener() {
 
 
-        salesList = BrandModelList.listAll(BrandModelList.class);
+        if (stringProductType.equalsIgnoreCase(ProductType.Accessory.name()) && stringAccessory == null) {
+            toast(getActivity(), "please select accessory type");
 
-        try {
-            productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+        } else if (stringBrand == null) {
+            toast(getActivity(), "please select brand");
+
+        } else if (modelNo.getText().length() == 0 || modelNo.getText().toString().equalsIgnoreCase("other") && other.getText().toString().length() == 0) {
+            toast(getActivity(), "please select model");
+
+        } else if (price.getText().length() <= 0) {
+            toast(getActivity(), "please enter price");
+
+        } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && customerName.getText().length() <= 0) {
+            toast(getActivity(), "please enter customer name");
+
+        } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && mobile.getText().length() != 10) {
+            toast(getActivity(), "mobile no should be 10 digit");
+
+        } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && imei.getText().length() == 0) {
+            toast(getActivity(), "please enter imei");
+
+        } else {
+            if (stringModel.equalsIgnoreCase("other")) {
+                stringModel = other.getText().toString();
+            }
+
+
+            new SendData().execute();
+
+
+        }
+    }
+
+    private void accessoryClickListener() {
+
+
+        dialogTitle.setText("Accessory ");
+        CustomAdapter customAdapter = new CustomAdapter(getActivity(), accessoryTypeList);
+        dialogListView.setAdapter(customAdapter);
+        dialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view2, int position, long id) {
+                stringAccessory = accessoryTypeList.get(position);
+                brandModelDialog.dismiss();
+                accessoryType.setText(stringAccessory);
+
+                List<BrandModelList> newArrayList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<BrandModelList>() {
+                    @Override
+                    public boolean apply(BrandModelList input) {
+                        return (input.getType().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
+                    }
+                }));
+
+
+                Set<String> brand = new HashSet();
+                for (int i = 0; i < newArrayList.size(); i++) {
+                    brand.add(newArrayList.get(i).getBrand());
+                }
+                brandList.addAll(brand);
+
+
+            }
+        });
+
+        brandModelDialog.show();
+    }
+
+    private void modelClickListener() {
+        if (stringBrand == null) {
+            toast(getActivity(), "please select brand");
+        } else {
+
+
+            dialogTitle.setText("Model no");
+            CustomAdapter customAdapter = new CustomAdapter(getActivity(), modelList);
+            dialogListView.setAdapter(customAdapter);
+            dialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public boolean apply(BrandModelList input) {
-                    return (input.getType().equalsIgnoreCase(stringProductType));
-                }
-            }));
-        } catch (Exception e) {
-            Log.e("Err", e.getMessage());
-        }
-
-
-        Set<String> brands = new HashSet();
-        for (int i = 0; i < productTypeList.size(); i++) {
-            brands.add(productTypeList.get(i).getBrand());
-        }
-        brandList.addAll(brands);
-
-
-        brand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                final List<String> brandList = new ArrayList();
-//                brandList.add("sony");
-//                brandList.add("micromax");
-//                brandList.add("lenovo");
-//                brandList.add("htc");
-
-
-                final Dialog view = new Dialog(getActivity(), android.R.style.Theme_Holo_Light_NoActionBar);
-                view.setContentView(R.layout.dialog_layout);
-
-                TextView title = (TextView) view.findViewById(R.id.dialogtitle);
-                title.setText("Brand");
-                ListView listView = (ListView) view.findViewById(R.id.dialoglist);
-                CustomAdapter customAdapter = new CustomAdapter(getActivity(), brandList);
-                listView.setAdapter(customAdapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view2, int position, long id) {
-                        stringBrand = brandList.get(position);
-                        view.dismiss();
-                        brand.setText(stringBrand);
-                        modelSalesList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<BrandModelList>() {
-                            @Override
-                            public boolean apply(BrandModelList input) {
-
-                                if (stringAccessory == null)
-                                    return (input.getBrand().equalsIgnoreCase(stringBrand));
-                                else
-                                    return (input.getBrand().equalsIgnoreCase(stringBrand) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
-
-
-                            }
-                        }));
-
-                        modelList = new ArrayList<String>();
-                        for (int i = 0; i < modelSalesList.size(); i++) {
-                            modelList.add(modelSalesList.get(i).getModelNo());
-                        }
-                        modelList.add("other");
-
-                    }
-                });
-
-                view.show();
-            }
-        });
-
-
-        accessoryType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//
-//                final List<String> accessoriesList = new ArrayList();
-//
-//                accessoriesList.add("Earphone");
-//                accessoriesList.add("cover");
-//                accessoriesList.add("screenguard");
-//                accessoriesList.add("battery");
-
-                final Dialog view = new Dialog(getActivity(), android.R.style.Theme_Holo_Light_NoActionBar);
-                view.setContentView(R.layout.dialog_layout);
-
-                TextView title = (TextView) view.findViewById(R.id.dialogtitle);
-                title.setText("Accessory ");
-                ListView listView = (ListView) view.findViewById(R.id.dialoglist);
-                CustomAdapter customAdapter = new CustomAdapter(getActivity(), accessoryTypeList);
-                listView.setAdapter(customAdapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view2, int position, long id) {
-                        stringAccessory = accessoryTypeList.get(position);
-                        view.dismiss();
-                        accessoryType.setText(stringAccessory);
-
-                        List<BrandModelList> newArrayList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<BrandModelList>() {
-                            @Override
-                            public boolean apply(BrandModelList input) {
-                                return (input.getType().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
-                            }
-                        }));
-
-
-                        Set<String> brand = new HashSet();
-                        for (int i = 0; i < newArrayList.size(); i++) {
-                            brand.add(newArrayList.get(i).getBrand());
-                        }
-                        brandList.addAll(brand);
-
-
-                    }
-                });
-
-                view.show();
-            }
-        });
-
-        modelNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (stringBrand == null) {
-                    toast(getActivity(), "please select brand");
-                } else {
-//                    final List<String> modellist = new ArrayList();
-//                    modellist.add("Galaxy y");
-//                    modellist.add("galaxy s");
-//                    modellist.add("galaxy s2");
-//                    modellist.add("galaxy s3");
-//                    modellist.add("other");
-
-                    final Dialog view = new Dialog(getActivity(), android.R.style.Theme_Holo_Light_NoActionBar);
-                    view.setContentView(R.layout.dialog_layout);
-
-                    TextView title = (TextView) view.findViewById(R.id.dialogtitle);
-                    title.setText("Model no");
-                    ListView listView = (ListView) view.findViewById(R.id.dialoglist);
-                    CustomAdapter customAdapter = new CustomAdapter(getActivity(), modelList);
-                    listView.setAdapter(customAdapter);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view2, int position, long id) {
-                            stringModel = modelList.get(position);
-                            view.dismiss();
-                            if (stringModel.equalsIgnoreCase("other")) {
-                                other.setVisibility(View.VISIBLE);
-                            } else {
-                                other.setVisibility(View.GONE);
-                                other.getText().clear();
-                            }
-
-
-                            modelNo.setText(stringModel);
-                        }
-                    });
-
-                    view.show();
-                }
-            }
-        });
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (stringProductType.equalsIgnoreCase(ProductType.Accessory.name()) && stringAccessory == null) {
-                    toast(getActivity(), "please select accessory type");
-
-                } else if (stringBrand == null) {
-                    toast(getActivity(), "please select brand");
-
-                } else if (modelNo.getText().length() == 0 || modelNo.getText().toString().equalsIgnoreCase("other") && other.getText().toString().length() == 0) {
-                    toast(getActivity(), "please select model");
-
-                } else if (price.getText().length() <= 0) {
-                    toast(getActivity(), "please enter price");
-
-                } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && customerName.getText().length() <= 0) {
-                    toast(getActivity(), "please enter customer name");
-
-                } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && mobile.getText().length() != 10) {
-                    toast(getActivity(), "mobile no should be 10 digit");
-
-                } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && imei.getText().length() == 0) {
-                    toast(getActivity(), "please enter imei");
-
-                } else {
+                public void onItemClick(AdapterView<?> parent, View view2, int position, long id) {
+                    stringModel = modelList.get(position);
+                    brandModelDialog.dismiss();
                     if (stringModel.equalsIgnoreCase("other")) {
-                        stringModel = other.getText().toString();
+                        other.setVisibility(View.VISIBLE);
+                    } else {
+                        other.setVisibility(View.GONE);
+                        other.getText().clear();
                     }
 
 
-                    new SendData().execute();
-
-
+                    modelNo.setText(stringModel);
                 }
-            }
-        });
+            });
+
+            brandModelDialog.show();
+        }
+    }
+
+    private void brandClickListener() {
 
 
-        radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        dialogTitle.setText("Brand");
+        CustomAdapter customAdapter = new CustomAdapter(getActivity(), brandList);
+        dialogListView.setAdapter(customAdapter);
+        dialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onItemClick(AdapterView<?> parent, View view2, int position, long id) {
+                stringBrand = brandList.get(position);
+                brandModelDialog.dismiss();
+                brand.setText(stringBrand);
+                modelSalesList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<BrandModelList>() {
+                    @Override
+                    public boolean apply(BrandModelList input) {
+
+                        if (stringAccessory == null)
+                            return (input.getBrand().equalsIgnoreCase(stringBrand));
+                        else
+                            return (input.getBrand().equalsIgnoreCase(stringBrand) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
 
 
-                switch (checkedId) {
-                    case R.id.radiomobile:
-                        accessoryType.setVisibility(View.GONE);
-                        stringProductType = ProductType.Mobile.name();
-                        accessoryType.setText("");
-                        brand.setText("");
-                        modelNo.setText("");
-                        other.setText("");
-                        quantity.getText().clear();
-                        price.getText().clear();
-                        other.setVisibility(View.GONE);
-                        stringModel = null;
-                        stringAccessory = null;
-                        stringBrand = null;
-                        imeitextview.setVisibility(View.VISIBLE);
-                        imei.setVisibility(View.VISIBLE);
-                        starCustomerName.setVisibility(View.VISIBLE);
-                        starMobileNo.setVisibility(View.VISIBLE);
-                        startImei.setVisibility(View.VISIBLE);
+                    }
+                }));
 
-
-                        modelSalesList.clear();
-                        productTypeList.clear();
-                        modelList.clear();
-                        accessoryTypeList.clear();
-                        brandList.clear();
-                        productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
-                            @Override
-                            public boolean apply(BrandModelList input) {
-                                return (input.getType().equalsIgnoreCase(stringProductType));
-                            }
-                        }));
-
-                        Set<String> brandStrings = new HashSet();
-                        for (int i = 0; i < productTypeList.size(); i++) {
-                            brandStrings.add(productTypeList.get(i).getBrand());
-                        }
-                        brandList.addAll(brandStrings);
-
-
-                        break;
-                    case R.id.radioAccessory:
-                        accessoryType.setVisibility(View.VISIBLE);
-                        stringProductType = ProductType.Accessory.name();
-                        accessoryType.setText("");
-                        brand.setText("");
-                        modelNo.setText("");
-                        other.setText("");
-                        quantity.getText().clear();
-                        price.getText().clear();
-                        other.setVisibility(View.GONE);
-                        stringModel = null;
-                        stringAccessory = null;
-                        stringBrand = null;
-                        imeitextview.setVisibility(View.GONE);
-                        imei.setVisibility(View.GONE);
-                        starCustomerName.setVisibility(View.GONE);
-                        starMobileNo.setVisibility(View.GONE);
-                        startImei.setVisibility(View.GONE);
-
-
-                        modelSalesList.clear();
-                        productTypeList.clear();
-                        modelList.clear();
-                        accessoryTypeList.clear();
-                        brandList.clear();
-                        productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
-                            @Override
-                            public boolean apply(BrandModelList input) {
-                                return (input.getType().equalsIgnoreCase(stringProductType));
-                            }
-                        }));
-
-                        Set<String> accessoryStrings = new HashSet();
-                        for (int i = 0; i < productTypeList.size(); i++) {
-                            accessoryStrings.add(productTypeList.get(i).getAccessoryType());
-                        }
-                        accessoryTypeList.addAll(accessoryStrings);
-
+                modelList = new ArrayList<String>();
+                for (int i = 0; i < modelSalesList.size(); i++) {
+                    modelList.add(modelSalesList.get(i).getModelNo());
                 }
-
+                modelList.add("other");
 
             }
         });
 
+        brandModelDialog.show();
+    }
 
-        return v;
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+
+        switch (checkedId) {
+            case R.id.radiomobile:
+                accessoryType.setVisibility(View.GONE);
+                stringProductType = ProductType.Mobile.name();
+                accessoryType.setText("");
+                brand.setText("");
+                modelNo.setText("");
+                other.setText("");
+                quantity.getText().clear();
+                price.getText().clear();
+                other.setVisibility(View.GONE);
+                stringModel = null;
+                stringAccessory = null;
+                stringBrand = null;
+                imeitextview.setVisibility(View.VISIBLE);
+                imei.setVisibility(View.VISIBLE);
+                starCustomerName.setVisibility(View.VISIBLE);
+                starMobileNo.setVisibility(View.VISIBLE);
+                startImei.setVisibility(View.VISIBLE);
+                scanImage.setVisibility(View.VISIBLE);
+
+
+                modelSalesList.clear();
+                productTypeList.clear();
+                modelList.clear();
+                accessoryTypeList.clear();
+                brandList.clear();
+                productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+                    @Override
+                    public boolean apply(BrandModelList input) {
+                        return (input.getType().equalsIgnoreCase(stringProductType));
+                    }
+                }));
+
+                Set<String> brandStrings = new HashSet();
+                for (int i = 0; i < productTypeList.size(); i++) {
+                    brandStrings.add(productTypeList.get(i).getBrand());
+                }
+                brandList.addAll(brandStrings);
+
+
+                break;
+            case R.id.radioAccessory:
+                accessoryType.setVisibility(View.VISIBLE);
+                stringProductType = ProductType.Accessory.name();
+                accessoryType.setText("");
+                brand.setText("");
+                modelNo.setText("");
+                other.setText("");
+                quantity.getText().clear();
+                price.getText().clear();
+                other.setVisibility(View.GONE);
+                stringModel = null;
+                stringAccessory = null;
+                stringBrand = null;
+                imeitextview.setVisibility(View.GONE);
+                imei.setVisibility(View.GONE);
+                starCustomerName.setVisibility(View.GONE);
+                starMobileNo.setVisibility(View.GONE);
+                startImei.setVisibility(View.GONE);
+                scanImage.setVisibility(View.GONE);
+
+
+                modelSalesList.clear();
+                productTypeList.clear();
+                modelList.clear();
+                accessoryTypeList.clear();
+                brandList.clear();
+                productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+                    @Override
+                    public boolean apply(BrandModelList input) {
+                        return (input.getType().equalsIgnoreCase(stringProductType));
+                    }
+                }));
+
+                Set<String> accessoryStrings = new HashSet();
+                for (int i = 0; i < productTypeList.size(); i++) {
+                    accessoryStrings.add(productTypeList.get(i).getAccessoryType());
+                }
+                accessoryTypeList.addAll(accessoryStrings);
+
+        }
+
+
     }
 
 

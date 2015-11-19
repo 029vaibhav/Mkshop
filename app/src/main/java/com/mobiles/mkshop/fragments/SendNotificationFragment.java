@@ -76,7 +76,7 @@ public class SendNotificationFragment extends Fragment {
                     public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
 
 
-                        String sToDate = checkDigit(i3) + "-" + checkDigit(i2 + 1) + "-" + i;
+                        String sToDate = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
 
 
                         date.setText(sToDate);
@@ -142,9 +142,6 @@ public class SendNotificationFragment extends Fragment {
         return viewGroup;
     }
 
-    public String checkDigit(int number) {
-        return number <= 9 ? "0" + number : String.valueOf(number);
-    }
 
 
 }
