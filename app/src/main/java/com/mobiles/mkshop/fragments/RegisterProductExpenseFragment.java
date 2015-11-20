@@ -40,7 +40,7 @@ import retrofit.mime.TypedFile;
 public class RegisterProductExpenseFragment extends Fragment implements ImageChooserListener {
     // TODO: Rename parameter arguments, choose names that match
 
-    public static String TAG = "Sales";
+    public static String TAG = "RegisterProductExpenseFragment";
 
     MaterialDialog materialDialog;
     ImageView header;
@@ -77,7 +77,7 @@ public class RegisterProductExpenseFragment extends Fragment implements ImageCho
                              Bundle savedInstanceState) {
 
 
-        MkShop.SCRREN = "SaleFragment";
+        MkShop.SCRREN = "RegisterProductExpenseFragment";
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_register_product_expense, container, false);
 
         materialDialog = new MaterialDialog.Builder(getActivity())

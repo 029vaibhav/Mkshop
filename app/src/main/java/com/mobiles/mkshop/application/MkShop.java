@@ -22,7 +22,7 @@ public class MkShop extends Controller {
     public static String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static String REGISTRATION_COMPLETE = "registrationComplete";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final String LAST_MODIFIED_DATE = "date";
+    public static final String LAST_VIEWED_DATE = "date";
 
 
     private static MkShop instance;

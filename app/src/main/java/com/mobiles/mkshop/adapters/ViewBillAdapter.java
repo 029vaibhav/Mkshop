@@ -129,7 +129,7 @@ public class ViewBillAdapter extends RecyclerView.Adapter<ViewBillAdapter.ViewHo
                                 case 0:
 
                                     materialDialog.dismiss();
-                                    ViewBillDialogAdapter viewBillDialogAdapter = new ViewBillDialogAdapter(context, productExpenseList.get(getAdapterPosition()).getProductExpenseSingleEntries());
+                                    ViewBillDialogAdapter viewBillDialogAdapter = new ViewBillDialogAdapter(context, productExpenseList.get(getAdapterPosition()).getEntries(productExpenseList.get(getAdapterPosition()).getServerId()));
                                     recyclerView.setAdapter(viewBillDialogAdapter);
                                     backButton.setOnClickListener(new View.OnClickListener() {
                                                                       @Override

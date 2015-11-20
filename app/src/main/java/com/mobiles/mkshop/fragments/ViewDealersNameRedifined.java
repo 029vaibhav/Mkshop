@@ -27,7 +27,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class ViewDealersName extends Fragment implements View.OnClickListener {
+public class ViewDealersNameRedifined extends Fragment implements View.OnClickListener {
 
     String sFromDate, sToDate;
     MaterialDialog materialDialog;
@@ -41,7 +41,7 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
         return fragment;
     }
 
-    public ViewDealersName() {
+    public ViewDealersNameRedifined() {
         // Required empty public constructor
     }
 
@@ -94,7 +94,7 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
             @Override
             public void success(final List<ProductExpense> productExpenses, Response response) {
 
-                sharedPreferences.edit().putString(MkShop.LAST_VIEWED_DATE, sToDate).commit();
+              //  sharedPreferences.edit().putString(MkShop.LAST_VIEWED_DATE, sToDate).commit();
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
                 for (int i = 0; i < productExpenses.size(); i++) {
@@ -106,8 +106,42 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
                 }
                 List<ProductExpense> productExpense = ProductExpense.listAll(ProductExpense.class);
 
-                ViewDealerNameAdapter viewBillAdapter = new ViewDealerNameAdapter(ViewDealersName.this, productExpense);
-                recyclerView.setAdapter(viewBillAdapter);
+//                HashMap<String, DealerPaymentInfo> paymentInfoHashMap = new HashMap<>();
+//                for (ProductExpense productExpense1 : productExpense) {
+//
+//                    List<ProductExpenseSingleEntry> productExpenseSingleEntries = productExpense1.getEntries(productExpense1.getServerId());
+//
+//
+//                    if (paymentInfoHashMap.get(productExpense1.getDealerName()) == null) {
+//                        int amount = 0;
+//                        for (ProductExpenseSingleEntry productExpenseSingleEntry : productExpenseSingleEntries) {
+//                            amount = amount + Integer.parseInt(productExpenseSingleEntry.getAmount());
+//                        }
+//                        paymentInfoHashMap.put(productExpense1.getDealerName(), new DealerPaymentInfo(Integer.parseInt(productExpense1.getTotalAmt()), amount));
+//                    } else {
+//                        DealerPaymentInfo dealerPaymentInfo = paymentInfoHashMap.get(productExpense1.getDealerName());
+//                        int totalAmount = dealerPaymentInfo.getTotalAmount();
+//                        int amount = dealerPaymentInfo.getPaidAmount();
+//                        for (ProductExpenseSingleEntry productExpenseSingleEntry : productExpenseSingleEntries) {
+//                            amount = amount + Integer.parseInt(productExpenseSingleEntry.getAmount());
+//                        }
+//                        totalAmount = totalAmount + Integer.parseInt(productExpense1.getTotalAmt());
+//                        dealerPaymentInfo.setPaidAmount(amount);
+//                        dealerPaymentInfo.setTotalAmount(totalAmount);
+//                        paymentInfoHashMap.put(productExpense1.getDealerName(), dealerPaymentInfo);
+//                    }
+//
+//
+//
+//                }
+//                List<Map.Entry<String, DealerPaymentInfo>> list = new ArrayList(paymentInfoHashMap.entrySet());
+
+//                Set<String> strings = new HashSet<>();
+//                for (ProductExpense abc : productExpense) {
+//                    strings.add(abc.getDealerName());
+//                }
+//                ViewDealerNameAdapter viewBillAdapter = new ViewDealerNameAdapter(ViewDealersName.this, productExpense);
+//                recyclerView.setAdapter(viewBillAdapter);
 
             }
 
@@ -116,14 +150,7 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
 
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-
-                if (error.getResponse().getReason().equalsIgnoreCase("no data available")) {
-                    List<ProductExpense> productExpense = ProductExpense.listAll(ProductExpense.class);
-                    ViewDealerNameAdapter viewBillAdapter = new ViewDealerNameAdapter(ViewDealersName.this, productExpense);
-                    recyclerView.setAdapter(viewBillAdapter);
-
-                } else
-                    MkShop.toast(getActivity(), error.getMessage().toString());
+                MkShop.toast(getActivity(), error.getMessage().toString());
 
             }
         });

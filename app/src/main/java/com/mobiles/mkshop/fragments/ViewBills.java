@@ -1,6 +1,5 @@
 package com.mobiles.mkshop.fragments;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,23 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.ViewBillAdapter;
-import com.mobiles.mkshop.application.Client;
-import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.ProductExpense;
 
-import org.joda.time.DateTime;
-
 import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
 public class ViewBills extends Fragment {
@@ -34,14 +24,25 @@ public class ViewBills extends Fragment {
     MaterialDialog materialDialog;
     RecyclerView recyclerView;
 
-    public static ViewBills newInstance() {
-        ViewBills fragment = new ViewBills();
+    String dealerName;
 
+    public static ViewBills newInstance(String dealerName) {
+        ViewBills fragment = new ViewBills();
+        Bundle args = new Bundle();
+        args.putString("dealerName", dealerName);
+        fragment.setArguments(args);
         return fragment;
     }
 
     public ViewBills() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dealerName = getArguments() != null ? getArguments().getString("dealerName") : "";
+
     }
 
     @Override
@@ -66,59 +67,7 @@ public class ViewBills extends Fragment {
                 .cancelable(false)
                 .build();
 
-        toDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if (fromDate.getText().toString().equalsIgnoreCase("from")) {
-                    MkShop.toast(getActivity(), "please select starting date");
-                } else {
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-
-                            if (datePicker.isShown()) {
-                                String date = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
-
-
-                                toDate.setText(date);
-                                DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
-
-                                sToDate = dt.toString("yyyy-MM-dd");
-
-                                executeQuery();
-                            }
-
-
-                        }
-                    }, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
-                    datePickerDialog.show();
-                }
-            }
-        });
-
-
-        fromDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-
-
-                        String date = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
-
-
-                        fromDate.setText(date);
-                        DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
-                        sFromdate = dt.toString("yyyy-MM-dd");
-                    }
-                }, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
-                datePickerDialog.show();
-            }
-        });
-
+        executeQuery();
 
         return viewGroup;
     }
@@ -127,33 +76,50 @@ public class ViewBills extends Fragment {
 
         materialDialog.show();
 
+        List<ProductExpense> expenses = ProductExpense.find(ProductExpense.class, "dealer_name = ?", dealerName);
 
-        Client.INSTANCE.getPurchasedProduct(MkShop.AUTH, sFromdate, sToDate, new Callback<List<ProductExpense>>() {
-            @Override
-            public void success(final List<ProductExpense> productExpenses, Response response) {
+        ViewBillAdapter viewBillAdapter = new ViewBillAdapter(ViewBills.this, expenses);
+        recyclerView.setAdapter(viewBillAdapter);
 
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
+        materialDialog.dismiss();
 
-                ViewBillAdapter viewBillAdapter = new ViewBillAdapter(ViewBills.this, productExpenses);
-                recyclerView.setAdapter(viewBillAdapter);
-
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
-                MkShop.toast(getActivity(), error.getMessage().toString());
-
-            }
-        });
+//        Client.INSTANCE.getPurchasedProduct(MkShop.AUTH, sFromdate, sToDate, new Callback<List<ProductExpense>>() {
+//            @Override
+//            public void success(final List<ProductExpense> productExpenses, Response response) {
+//
+//                if (materialDialog != null && materialDialog.isShowing())
+//                    materialDialog.dismiss();
+//
+//
+//
+//                for (int i=0;i<productExpenses.size();i++)
+//                {
+//                   List<ProductExpense> expenses= ProductExpense.find(ProductExpense.class, "server_id = ?", productExpenses.get(i).getServerId());
+//                    if(expenses!=null)
+//                    {
+//                        expenses.get(0).save();
+//                    }
+//                }
+//
+//                List<ProductExpense> productExpense = ProductExpense.listAll(ProductExpense.class);
+//
+//                ViewBillAdapter viewBillAdapter = new ViewBillAdapter(ViewBills.this, productExpense);
+//                recyclerView.setAdapter(viewBillAdapter);
+//
+//
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                if (materialDialog != null && materialDialog.isShowing())
+//                    materialDialog.dismiss();
+//                MkShop.toast(getActivity(), error.getMessage().toString());
+//
+//            }
+//        });
 
 
     }
-
-
 
 
 }

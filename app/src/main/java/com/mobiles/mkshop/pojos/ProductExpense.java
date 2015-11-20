@@ -1,14 +1,14 @@
 package com.mobiles.mkshop.pojos;
 
-import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.util.List;
 
 /**
  * Created by vaibhav on 2/10/15.
  */
-public class ProductExpense {
+public class ProductExpense extends SugarRecord<ProductExpense> {
 
 
     public ProductExpense() {
@@ -22,13 +22,25 @@ public class ProductExpense {
     private String amount;
 
     private String created;
-
-    private String modifiedDate;
-
-
+    @Ignore
     private List<ProductExpenseSingleEntry> productExpenseSingleEntries;
 
     private String image;
+
+    private String dealerName;
+
+    private String totalAmt;
+
+    private String note;
+
+    public String getAmount() {
+        return amount;
+    }
+
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
     public int getDueAmount() {
         return dueAmount;
@@ -38,21 +50,6 @@ public class ProductExpense {
         this.dueAmount = dueAmount;
     }
 
-    private String dealerName;
-
-    private String totalAmt;
-
-    private String note;
-
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
     public List<ProductExpenseSingleEntry> getProductExpenseSingleEntries() {
         return productExpenseSingleEntries;
     }
@@ -60,6 +57,26 @@ public class ProductExpense {
     public void setProductExpenseSingleEntries(List<ProductExpenseSingleEntry> productExpenseSingleEntries) {
         this.productExpenseSingleEntries = productExpenseSingleEntries;
     }
+
+
+    public List<ProductExpenseSingleEntry> getEntries(String id) {
+
+        return ProductExpenseSingleEntry.find(ProductExpenseSingleEntry.class, "dealer_id = ?", id);
+    }
+
+    public void setEntries(List<ProductExpenseSingleEntry> productExpenseSingleEntries) {
+
+        for (int i = 0; i < productExpenseSingleEntries.size(); i++) {
+
+            List<ProductExpenseSingleEntry> expenses = ProductExpenseSingleEntry.find(ProductExpenseSingleEntry.class, "server_id = ?", productExpenseSingleEntries.get(i).getServerId());
+            if (expenses == null || expenses.size() == 0) {
+                productExpenseSingleEntries.get(i).save();
+            }
+        }
+
+        this.productExpenseSingleEntries = productExpenseSingleEntries;
+    }
+
 
     public String getServerId() {
         return serverId;
@@ -115,14 +132,6 @@ public class ProductExpense {
 
     public void setNote(String note) {
         this.note = note;
-    }
-
-    public String getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(String modifiedDate) {
-        this.modifiedDate = modifiedDate;
     }
 
     @Override

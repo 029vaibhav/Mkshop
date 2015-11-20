@@ -6,7 +6,7 @@ import com.orm.SugarRecord;
 /**
  * Created by vaibhav on 3/10/15.
  */
-public class ProductExpenseSingleEntry  {
+public class ProductExpenseSingleEntry extends SugarRecord<ProductExpenseSingleEntry> {
 
 
 

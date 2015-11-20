@@ -73,7 +73,7 @@ public class ExpenseManagerFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new ViewBills();
+                Fragment fragment = new ViewDealersName();
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
             }
