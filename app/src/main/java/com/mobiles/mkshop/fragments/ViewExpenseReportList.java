@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.ViewExpenseItemAdapter;
-import com.mobiles.mkshop.pojos.PaymentType;
+import com.mobiles.mkshop.pojos.enums.PaymentType;
 
 
 public class ViewExpenseReportList extends Fragment {

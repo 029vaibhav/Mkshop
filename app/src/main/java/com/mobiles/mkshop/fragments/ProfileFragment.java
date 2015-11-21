@@ -2,7 +2,6 @@ package com.mobiles.mkshop.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -10,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,7 +28,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.ProfileAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.Profile;
+import com.mobiles.mkshop.pojos.models.Profile;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;

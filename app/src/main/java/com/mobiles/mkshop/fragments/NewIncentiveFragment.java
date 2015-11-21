@@ -21,10 +21,9 @@ import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.BrandModelList;
-import com.mobiles.mkshop.pojos.IncentiveEntity;
-import com.mobiles.mkshop.pojos.ProductType;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.models.BrandModelList;
+import com.mobiles.mkshop.pojos.models.IncentiveEntity;
+import com.mobiles.mkshop.pojos.enums.ProductType;
 
 import org.joda.time.DateTime;
 

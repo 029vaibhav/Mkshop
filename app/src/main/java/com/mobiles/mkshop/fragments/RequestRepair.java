@@ -18,7 +18,7 @@ import com.mobiles.mkshop.adapters.ServiceCenterAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.ServiceCenterEntity;
+import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 import com.mobiles.mkshop.R;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class RequestRepair extends Fragment {
                 .build();
 
         listView = (ListView) view.findViewById(R.id.repairlist);
-        search = (EditText) view.findViewById(R.id.editsearch);
+        search = (EditText) view.findViewById(R.id.edit_search);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
 //        fab.attachToListView(listView);

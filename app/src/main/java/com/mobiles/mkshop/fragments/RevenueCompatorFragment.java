@@ -16,7 +16,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.RevenueCompartorAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.PriceCompartorService;
+import com.mobiles.mkshop.pojos.models.PriceCompartorService;
 
 import org.joda.time.DateTime;
 

@@ -14,8 +14,8 @@ import com.google.gson.Gson;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.BrandModelList;
-import com.mobiles.mkshop.pojos.LoginDetails;
+import com.mobiles.mkshop.pojos.models.BrandModelList;
+import com.mobiles.mkshop.pojos.models.LoginDetails;
 
 import java.util.List;
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.ViewBillAdapter;
-import com.mobiles.mkshop.pojos.ProductExpense;
+import com.mobiles.mkshop.pojos.models.ProductExpense;
 
 import java.util.List;
 

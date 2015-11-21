@@ -13,7 +13,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.pojos.Notification;
+import com.mobiles.mkshop.pojos.models.Notification;
 
 import java.util.Collection;
 import java.util.List;

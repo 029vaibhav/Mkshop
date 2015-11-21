@@ -32,22 +32,22 @@ public class ExpenseManagerFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_expense_manager, container, false);
 
-        TextView registerProduct = (TextView) viewGroup.findViewById(R.id.registerProduct);
+      //  TextView registerProduct = (TextView) viewGroup.findViewById(R.id.registerProduct);
         TextView paySalary = (TextView) viewGroup.findViewById(R.id.paySalary);
         TextView viewExpenses = (TextView) viewGroup.findViewById(R.id.viewExpenses);
         TextView viewBill = (TextView) viewGroup.findViewById(R.id.viewBills);
 
-
-        registerProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Fragment fragment = new RegisterProductExpenseFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
-
-            }
-        });
+//
+//        registerProduct.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Fragment fragment = new CreateNewTransaction();
+//                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+//
+//
+//            }
+//        });
 
         paySalary.setOnClickListener(new View.OnClickListener() {
             @Override

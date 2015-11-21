@@ -22,7 +22,7 @@ import com.mobiles.mkshop.adapters.TabsPagerAdapterLeader;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.Leader;
+import com.mobiles.mkshop.pojos.models.Leader;
 import com.mobiles.mkshop.R;
 
 import org.joda.time.DateTime;

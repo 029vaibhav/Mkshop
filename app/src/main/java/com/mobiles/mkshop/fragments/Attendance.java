@@ -31,7 +31,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.LoginDetails;
+import com.mobiles.mkshop.pojos.models.LoginDetails;
 
 import java.lang.reflect.Type;
 

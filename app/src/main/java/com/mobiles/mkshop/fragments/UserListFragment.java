@@ -15,7 +15,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.UserListItemAdpater;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.UserListAttendance;
+import com.mobiles.mkshop.pojos.models.UserListAttendance;
 
 import java.util.List;
 

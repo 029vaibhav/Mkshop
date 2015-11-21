@@ -16,8 +16,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.PartsRequests;
-import com.mobiles.mkshop.pojos.Status;
+import com.mobiles.mkshop.pojos.models.PartsRequests;
+import com.mobiles.mkshop.pojos.enums.Status;
 
 import org.joda.time.DateTime;
 

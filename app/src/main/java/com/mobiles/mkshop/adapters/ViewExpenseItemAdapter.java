@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.ExpenseEntity;
-import com.mobiles.mkshop.pojos.PaymentType;
+import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.enums.PaymentType;
 
 import java.util.List;
 

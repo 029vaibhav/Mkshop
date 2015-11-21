@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.mobiles.mkshop.pojos.PartsRequests;
+import com.mobiles.mkshop.pojos.models.PartsRequests;
 import com.mobiles.mkshop.R;
 
 import org.joda.time.DateTime;

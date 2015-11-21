@@ -24,9 +24,9 @@ import com.mobiles.mkshop.NavigationDrawerFragment;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.fragments.Attendance;
+import com.mobiles.mkshop.fragments.AttendanceThroughWifi;
 import com.mobiles.mkshop.fragments.ExpenseManagerFragment;
-import com.mobiles.mkshop.fragments.GeopointsFragment;
+import com.mobiles.mkshop.fragments.GeoPointsFragment;
 import com.mobiles.mkshop.fragments.Incentive;
 import com.mobiles.mkshop.fragments.LeaderBoardFragment;
 import com.mobiles.mkshop.fragments.OffersFragment;
@@ -43,8 +43,8 @@ import com.mobiles.mkshop.fragments.UserSalesService;
 import com.mobiles.mkshop.fragments.ViewProductFragment;
 import com.mobiles.mkshop.gcm.Controller;
 import com.mobiles.mkshop.gcm.RegistrationIntentService;
-import com.mobiles.mkshop.pojos.LoginDetails;
-import com.mobiles.mkshop.pojos.UserType;
+import com.mobiles.mkshop.pojos.enums.UserType;
+import com.mobiles.mkshop.pojos.models.LoginDetails;
 
 import java.lang.reflect.Type;
 
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity
 
 
         MkShop.Role = loginDetailsList.getRole();
-
 
     }
 
@@ -141,9 +140,9 @@ public class MainActivity extends AppCompatActivity
             switch (position) {
                 case 0:
                     //Attendance
-                    fragment = getSupportFragmentManager().findFragmentByTag(Attendance.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(AttendanceThroughWifi.TAG);
                     if (fragment == null) {
-                        fragment = new Attendance();
+                        fragment = new AttendanceThroughWifi();
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
@@ -257,9 +256,9 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case 9:
                     //set location
-                    fragment = getSupportFragmentManager().findFragmentByTag(GeopointsFragment.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(GeoPointsFragment.TAG);
                     if (fragment == null) {
-                        fragment = new GeopointsFragment();
+                        fragment = new GeoPointsFragment();
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
@@ -269,9 +268,9 @@ public class MainActivity extends AppCompatActivity
             switch (position) {
                 case 0:
                     //Attendance
-                    fragment = getSupportFragmentManager().findFragmentByTag(Attendance.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(AttendanceThroughWifi.TAG);
                     if (fragment == null) {
-                        fragment = new Attendance();
+                        fragment = new AttendanceThroughWifi();
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
@@ -323,9 +322,9 @@ public class MainActivity extends AppCompatActivity
             switch (position) {
                 case 0:
                     //Attendance
-                    fragment = getSupportFragmentManager().findFragmentByTag(Attendance.TAG);
+                    fragment = getSupportFragmentManager().findFragmentByTag(AttendanceThroughWifi.TAG);
                     if (fragment == null) {
-                        fragment = new Attendance();
+                        fragment = new AttendanceThroughWifi();
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;

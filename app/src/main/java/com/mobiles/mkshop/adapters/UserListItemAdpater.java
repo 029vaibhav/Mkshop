@@ -16,9 +16,9 @@ import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.CalendarFragment;
 import com.mobiles.mkshop.fragments.ProfileFragment;
 import com.mobiles.mkshop.fragments.UserListFragment;
-import com.mobiles.mkshop.pojos.ExpenseEntity;
-import com.mobiles.mkshop.pojos.PaymentType;
-import com.mobiles.mkshop.pojos.UserListAttendance;
+import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.enums.PaymentType;
+import com.mobiles.mkshop.pojos.models.UserListAttendance;
 
 import java.util.List;
 

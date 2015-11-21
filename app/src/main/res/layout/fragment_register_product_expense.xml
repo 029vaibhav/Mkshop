@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,13 +19,13 @@
             <ImageView
                 android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="300dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_mkshop" />
 
 
             <TextView
-                android:id="@+id/brandtitle"
+                android:id="@+id/brand_title"
 
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
@@ -45,7 +44,7 @@
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/brandtitle"
+                android:layout_below="@+id/brand_title"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -143,48 +142,12 @@
 
 
             <TextView
-                android:id="@+id/amt_paying_nowtextview"
-
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/quantityEdit"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:dividerPadding="8dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="Amount paying now"
-                android:textSize="14sp" />
-
-
-            <EditText
-                android:id="@+id/amt_paying_now"
-                fontPath="fonts/rr.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/amt_paying_nowtextview"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/md_transparent"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="number"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp" />
-
-
-            <TextView
                 android:id="@+id/text_input_layout"
 
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/amt_paying_now"
+                android:layout_below="@+id/total_edit"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:dividerPadding="8dp"

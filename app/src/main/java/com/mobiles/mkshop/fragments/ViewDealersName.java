@@ -16,11 +16,15 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.ViewDealerNameAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.ProductExpense;
+import com.mobiles.mkshop.pojos.models.PaymentHistory;
+import com.mobiles.mkshop.pojos.models.ProductExpense;
+import com.mobiles.mkshop.pojos.models.PurchaseHistory;
 
 import org.joda.time.DateTime;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -92,19 +96,49 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
 
         Client.INSTANCE.getPurchasedProduct(MkShop.AUTH, sFromDate, sToDate, new Callback<List<ProductExpense>>() {
             @Override
-            public void success(final List<ProductExpense> productExpenses, Response response) {
+            public void success(final List<ProductExpense> serverProductExpenses, Response response) {
 
                 sharedPreferences.edit().putString(MkShop.LAST_VIEWED_DATE, sToDate).commit();
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                for (int i = 0; i < productExpenses.size(); i++) {
-                    List<ProductExpense> expenses = ProductExpense.find(ProductExpense.class, "server_id = ?", productExpenses.get(i).getServerId());
+                for (int i = 0; i < serverProductExpenses.size(); i++) {
+                    List<ProductExpense> expenses = ProductExpense.find(ProductExpense.class, "dealer_name = ?", serverProductExpenses.get(i).getDealerName());
                     if (expenses == null || expenses.size() == 0) {
-                        productExpenses.get(i).setEntries(productExpenses.get(i).getProductExpenseSingleEntries());
-                        productExpenses.get(i).save();
+                        serverProductExpenses.get(i).save();
                     }
+                    serverProductExpenses.get(i).setEntries(serverProductExpenses.get(i).getPaymentHistories());
+                    serverProductExpenses.get(i).setPurchaseEntries(serverProductExpenses.get(i).getPurchaseHistory());
                 }
                 List<ProductExpense> productExpense = ProductExpense.listAll(ProductExpense.class);
+
+                Map<String, PurchaseHistory> map = new HashMap<>();
+
+
+                for (ProductExpense productExpense1 : productExpense) {
+
+                    String dealerName = productExpense1.getDealerName();
+
+                    List<PurchaseHistory> purchaseHistories = PurchaseHistory.find(PurchaseHistory.class, "dealer_name = ?", dealerName);
+
+                    int totalAmount = 0;
+                    for (PurchaseHistory purchaseHistory : purchaseHistories) {
+                        totalAmount += Integer.parseInt(purchaseHistory.getTotalAmt());
+                    }
+
+
+                    List<PaymentHistory> paymentHistories = PaymentHistory.find(PaymentHistory.class, "dealer_id =?", dealerName);
+                    int dueAmount = 0;
+                    for (PaymentHistory paymentHistory : paymentHistories) {
+                        dueAmount += Integer.parseInt(paymentHistory.getAmount());
+                    }
+
+                    productExpense1.setTotalAmt(totalAmount);
+                    productExpense1.setDueAmount(totalAmount - dueAmount);
+                    productExpense1.save();
+
+
+                }
+
 
                 ViewDealerNameAdapter viewBillAdapter = new ViewDealerNameAdapter(ViewDealersName.this, productExpense);
                 recyclerView.setAdapter(viewBillAdapter);
@@ -117,11 +151,8 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
 
-                if (error.getResponse().getReason().equalsIgnoreCase("no data available")) {
-                    List<ProductExpense> productExpense = ProductExpense.listAll(ProductExpense.class);
-                    ViewDealerNameAdapter viewBillAdapter = new ViewDealerNameAdapter(ViewDealersName.this, productExpense);
-                    recyclerView.setAdapter(viewBillAdapter);
-
+                if (error.getKind().equals(RetrofitError.Kind.NETWORK)) {
+                    MkShop.toast(getActivity(), "please check your internet connection");
                 } else
                     MkShop.toast(getActivity(), error.getMessage().toString());
 
@@ -135,7 +166,7 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        Fragment fragment = new RegisterProductExpenseFragment();
+        CreateNewTransaction fragment = CreateNewTransaction.newInstance(null);
         getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
     }
 }

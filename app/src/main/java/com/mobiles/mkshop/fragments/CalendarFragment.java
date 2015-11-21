@@ -11,7 +11,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.Decorators;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.AttendanceDates;
+import com.mobiles.mkshop.pojos.models.AttendanceDates;
 import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
 

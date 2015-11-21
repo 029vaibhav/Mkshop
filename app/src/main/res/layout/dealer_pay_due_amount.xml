@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mobiles.mkshop.fragments.RequestRepair">
+
+
+    <TextView
+        android:id="@+id/brand_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:dividerPadding="8dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="Dealer name"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/dealer_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/brand_title"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/border_text"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:gravity="center"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/modeltitle"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dealer_edit"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:dividerPadding="8dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="Total amount"
+        android:textSize="14sp" />
+
+
+    <EditText
+        android:id="@+id/total_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modeltitle"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/border_text"
+        android:gravity="center"
+        android:inputType="number"
+        android:padding="10dp"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/otheredit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/total_edit"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/border_text"
+        android:drawableRight="@drawable/ic_action_name"
+        android:gravity="center"
+        android:hint="Model no"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+
+    <TextView
+        android:id="@+id/text_input_layout"
+
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/total_edit"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:dividerPadding="8dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="Notes"
+        android:textSize="14sp" />
+
+
+    <EditText
+        android:id="@+id/note"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_input_layout"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/border_text"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:gravity="center"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/submit"
+        style="?android:buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/note"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_background"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="10dp"
+        android:text="submit" />
+
+
+</RelativeLayout>

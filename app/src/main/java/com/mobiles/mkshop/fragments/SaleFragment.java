@@ -24,9 +24,9 @@ import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.interfaces.ScannerCallback;
-import com.mobiles.mkshop.pojos.BrandModelList;
-import com.mobiles.mkshop.pojos.ProductType;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.models.BrandModelList;
+import com.mobiles.mkshop.pojos.enums.ProductType;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import java.util.ArrayList;
 import java.util.HashSet;

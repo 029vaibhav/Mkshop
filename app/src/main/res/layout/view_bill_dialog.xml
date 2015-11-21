@@ -27,38 +27,23 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/back_arrow" />
 
-    <ScrollView
-        android:id="@+id/sv"
+
+    <ImageView
+        android:id="@+id/bill_image"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/empty_view"
-        android:fillViewport="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp" />
 
 
-            <ImageView
-                android:id="@+id/bill_image"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/image_of_bill"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp" />
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/bill_image"
-                android:layout_marginTop="10dp" />
-
-
-        </RelativeLayout>
-
-
-    </ScrollView>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

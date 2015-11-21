@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import java.util.List;
 

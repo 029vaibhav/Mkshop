@@ -18,8 +18,8 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.Leader;
-import com.mobiles.mkshop.pojos.LeaderBoardDetails;
+import com.mobiles.mkshop.pojos.models.Leader;
+import com.mobiles.mkshop.pojos.models.LeaderBoardDetails;
 
 import java.util.Collections;
 import java.util.Comparator;

@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.UserType;
+import com.mobiles.mkshop.pojos.enums.UserType;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -143,7 +143,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
             items.add(new NavigationItem("Send Notification", getResources().getDrawable(R.drawable.ic_action_noti)));
             items.add(new NavigationItem("Incentive", getResources().getDrawable(R.drawable.prize)));
             items.add(new NavigationItem("Expense Manager", getResources().getDrawable(R.drawable.ic_action_rupees)));
-            items.add(new NavigationItem("Location", getResources().getDrawable(R.drawable.ic_action_gps)));
+            items.add(new NavigationItem("Wifi", getResources().getDrawable(R.drawable.ic_action_gps)));
         } else if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name())) {
             items.add(new NavigationItem("Attendance", getResources().getDrawable(R.drawable.ic_action_calendar)));
             items.add(new NavigationItem("Leader Board", getResources().getDrawable(R.drawable.ic_action_leaderboard

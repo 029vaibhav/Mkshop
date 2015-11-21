@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +15,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.application.Client;
-import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.ProductExpense;
-import com.squareup.picasso.Picasso;
+import com.mobiles.mkshop.pojos.models.ProductExpense;
 
 import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by vaibhav on 3/10/15.
@@ -99,7 +91,7 @@ public class ViewBillAdapter extends RecyclerView.Adapter<ViewBillAdapter.ViewHo
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView dealerName, totalAmount, dueAmount, date;
         CardView cardView;
@@ -112,94 +104,94 @@ public class ViewBillAdapter extends RecyclerView.Adapter<ViewBillAdapter.ViewHo
             dueAmount = (TextView) itemView.findViewById(R.id.due_amt);
             date = (TextView) itemView.findViewById(R.id.date);
             cardView = (CardView) itemView.findViewById(R.id.cardlist_item);
-            cardView.setOnClickListener(this);
+          //  cardView.setOnClickListener(this);
 
         }
 
-        @Override
-        public void onClick(View v) {
-
-            new MaterialDialog.Builder(context.getActivity())
-                    .items(R.array.bill_action)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                        @Override
-                        public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
-
-                            switch (i) {
-                                case 0:
-
-                                    materialDialog.dismiss();
-                                    ViewBillDialogAdapter viewBillDialogAdapter = new ViewBillDialogAdapter(context, productExpenseList.get(getAdapterPosition()).getEntries(productExpenseList.get(getAdapterPosition()).getServerId()));
-                                    recyclerView.setAdapter(viewBillDialogAdapter);
-                                    backButton.setOnClickListener(new View.OnClickListener() {
-                                                                      @Override
-                                                                      public void onClick(View v) {
-                                                                          dialog.dismiss();
-                                                                      }
-                                                                  }
-                                    );
-                                    dialog.show();
-                                    Picasso.with(context.getActivity()).load(productExpenseList.get(getAdapterPosition()).getImage()).into(imageView);
-
-
-                                    break;
-                                case 1:
-
-                                    materialDialog.dismiss();
-                                    new MaterialDialog.Builder(context.getActivity())
-                                            .title("Pay Due Amount")
-                                            .inputType(InputType.TYPE_CLASS_NUMBER)
-                                            .input("due amount", "", new MaterialDialog.InputCallback() {
-                                                @Override
-                                                public void onInput(final MaterialDialog dialog, final CharSequence input) {
-
-
-                                                    if (input.length() != 0 && Integer.parseInt(input.toString()) <= productExpenseList.get(getAdapterPosition()).getDueAmount()) {
-
-                                                        progressMaterialDialog.show();
-                                                        Client.INSTANCE.duePayment(MkShop.AUTH, productExpenseList.get(getAdapterPosition()).getServerId(), input.toString(), new Callback<String>() {
-                                                            @Override
-                                                            public void success(String s, Response response) {
-
-                                                                if (dialog != null && dialog.isShowing())
-                                                                    dialog.dismiss();
-
-                                                                if (progressMaterialDialog != null && progressMaterialDialog.isShowing())
-                                                                    progressMaterialDialog.dismiss();
-                                                                MkShop.toast(context.getActivity(), s);
-
-
-                                                            }
-
-                                                            @Override
-                                                            public void failure(RetrofitError error) {
-                                                                if (progressMaterialDialog != null && progressMaterialDialog.isShowing())
-                                                                    progressMaterialDialog.dismiss();
-                                                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                                                    MkShop.toast(context.getActivity(), "please check your internet connection");
-
-
-                                                            }
-                                                        });
-                                                    } else {
-                                                        MkShop.toast(context.getActivity(), "amount cant be greater than due amount or blank");
-                                                    }
-                                                }
-                                            }).show();
-
-                                    break;
-
-                                case 2:
-
-                                    break;
-
-                            }
-
-
-                        }
-                    }).show();
-
-
-        }
+//        @Override
+//        public void onClick(View v) {
+//
+//            new MaterialDialog.Builder(context.getActivity())
+//                    .items(R.array.bill_action)
+//                    .itemsCallback(new MaterialDialog.ListCallback() {
+//                        @Override
+//                        public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+//
+//                            switch (i) {
+//                                case 0:
+//
+//                                    materialDialog.dismiss();
+//                                    ViewBillDialogAdapter viewBillDialogAdapter = new ViewBillDialogAdapter(context, productExpenseList.get(getAdapterPosition()).getEntries(productExpenseList.get(getAdapterPosition()).getServerId()));
+//                                    recyclerView.setAdapter(viewBillDialogAdapter);
+//                                    backButton.setOnClickListener(new View.OnClickListener() {
+//                                                                      @Override
+//                                                                      public void onClick(View v) {
+//                                                                          dialog.dismiss();
+//                                                                      }
+//                                                                  }
+//                                    );
+//                                    dialog.show();
+//                                    Picasso.with(context.getActivity()).load(productExpenseList.get(getAdapterPosition()).getImage()).into(imageView);
+//
+//
+//                                    break;
+//                                case 1:
+//
+//                                    materialDialog.dismiss();
+//                                    new MaterialDialog.Builder(context.getActivity())
+//                                            .title("Pay Due Amount")
+//                                            .inputType(InputType.TYPE_CLASS_NUMBER)
+//                                            .input("due amount", "", new MaterialDialog.InputCallback() {
+//                                                @Override
+//                                                public void onInput(final MaterialDialog dialog, final CharSequence input) {
+//
+//
+//                                                    if (input.length() != 0 && Integer.parseInt(input.toString()) <= productExpenseList.get(getAdapterPosition()).getDueAmount()) {
+//
+//                                                        progressMaterialDialog.show();
+//                                                        Client.INSTANCE.duePayment(MkShop.AUTH, productExpenseList.get(getAdapterPosition()).getServerId(), input.toString(), note, new Callback<String>() {
+//                                                            @Override
+//                                                            public void success(String s, Response response) {
+//
+//                                                                if (dialog != null && dialog.isShowing())
+//                                                                    dialog.dismiss();
+//
+//                                                                if (progressMaterialDialog != null && progressMaterialDialog.isShowing())
+//                                                                    progressMaterialDialog.dismiss();
+//                                                                MkShop.toast(context.getActivity(), s);
+//
+//
+//                                                            }
+//
+//                                                            @Override
+//                                                            public void failure(RetrofitError error) {
+//                                                                if (progressMaterialDialog != null && progressMaterialDialog.isShowing())
+//                                                                    progressMaterialDialog.dismiss();
+//                                                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+//                                                                    MkShop.toast(context.getActivity(), "please check your internet connection");
+//
+//
+//                                                            }
+//                                                        });
+//                                                    } else {
+//                                                        MkShop.toast(context.getActivity(), "amount cant be greater than due amount or blank");
+//                                                    }
+//                                                }
+//                                            }).show();
+//
+//                                    break;
+//
+//                                case 2:
+//
+//                                    break;
+//
+//                            }
+//
+//
+//                        }
+//                    }).show();
+//
+//
+//        }
     }
 }

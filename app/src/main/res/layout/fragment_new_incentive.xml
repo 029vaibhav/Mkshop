@@ -24,7 +24,7 @@
 
 
             <TextView
-                android:id="@+id/brandtitle"
+                android:id="@+id/brand_title"
 
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/brandtitle"
+                android:layout_below="@+id/brand_title"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"

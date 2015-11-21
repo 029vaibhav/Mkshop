@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.ProductType;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.enums.ProductType;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import java.util.Collections;
 import java.util.Comparator;

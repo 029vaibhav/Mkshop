@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.PriceCompartorService;
+import com.mobiles.mkshop.pojos.models.PriceCompartorService;
 
 import java.util.List;
 

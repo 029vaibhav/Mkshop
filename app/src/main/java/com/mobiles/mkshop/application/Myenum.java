@@ -3,16 +3,24 @@ package com.mobiles.mkshop.application;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.mobiles.mkshop.pojos.ExpenseEntity;
-import com.mobiles.mkshop.pojos.Leader;
-import com.mobiles.mkshop.pojos.PartsRequests;
-import com.mobiles.mkshop.pojos.PaymentType;
-import com.mobiles.mkshop.pojos.ProductType;
-import com.mobiles.mkshop.pojos.ServiceCenterEntity;
-import com.mobiles.mkshop.pojos.Sales;
-import com.mobiles.mkshop.pojos.Status;
-import com.mobiles.mkshop.pojos.UserType;
+import com.mobiles.mkshop.pojos.enums.PaymentType;
+import com.mobiles.mkshop.pojos.enums.ProductType;
+import com.mobiles.mkshop.pojos.enums.Status;
+import com.mobiles.mkshop.pojos.enums.UserType;
+import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.models.Leader;
+import com.mobiles.mkshop.pojos.models.PartsRequests;
+import com.mobiles.mkshop.pojos.models.PaymentHistory;
+import com.mobiles.mkshop.pojos.models.PurchaseHistory;
+import com.mobiles.mkshop.pojos.models.Sales;
+import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -34,7 +42,7 @@ public enum Myenum {
     List<Sales> accessorySales;
 
     List<ExpenseEntity> expenseList;
-//    List<ExpenseEntity> productExpenseList;
+    //    List<ExpenseEntity> productExpenseList;
     List<ExpenseEntity> salaryExpenseList;
     List<ExpenseEntity> incentiveExpenseList;
 
@@ -48,7 +56,7 @@ public enum Myenum {
     List<ServiceCenterEntity> doneServiceList;
     List<ServiceCenterEntity> returnServiceList;
     List<ServiceCenterEntity> deliveredServiceList;
-    List<ServiceCenterEntity> proccessingServiceList;
+    List<ServiceCenterEntity> processingServiceList;
     List<ServiceCenterEntity> returnedServiceList;
 
 
@@ -56,6 +64,49 @@ public enum Myenum {
     List<PartsRequests> pendingPartsRequestsList;
     List<PartsRequests> recievedPartsRequestsList;
     List<PartsRequests> deliveredPartsRequestsList;
+
+
+    List<PurchaseHistory> purchaseHistories;
+    List<PaymentHistory> paymentHistories;
+
+    DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+    DateTime dateTime;
+
+    public List<PurchaseHistory> getPurchaseHistories() {
+        return purchaseHistories;
+    }
+
+    public void setPurchaseHistories(List<PurchaseHistory> purchaseHistories) {
+
+        Collections.sort(purchaseHistories, new Comparator<PurchaseHistory>() {
+            @Override
+            public int compare(PurchaseHistory lhs, PurchaseHistory rhs) {
+
+                return formatter.parseDateTime(rhs.getCreated()).compareTo(formatter.parseDateTime(lhs.getCreated()));
+            }
+        });
+
+        Collections.reverse(purchaseHistories);
+        this.purchaseHistories = purchaseHistories;
+    }
+
+    public List<PaymentHistory> getPaymentHistories() {
+        return paymentHistories;
+    }
+
+    public void setPaymentHistories(List<PaymentHistory> paymentHistories) {
+
+        Collections.sort(paymentHistories, new Comparator<PaymentHistory>() {
+            @Override
+            public int compare(PaymentHistory lhs, PaymentHistory rhs) {
+
+                return formatter.parseDateTime(rhs.getCreated()).compareTo(formatter.parseDateTime(lhs.getCreated()));
+            }
+        });
+        Collections.reverse(purchaseHistories);
+
+        this.paymentHistories = paymentHistories;
+    }
 
 
     public List<Leader> getLeaderList(String department) {
@@ -70,7 +121,7 @@ public enum Myenum {
 
     public void setLeaderList(List<Leader> leaderList) {
 
-        if(leaderList!=null) {
+        if (leaderList != null) {
             this.leaderList = leaderList;
             this.salesLeaderList = Lists.newArrayList(Iterables.filter(leaderList, predicateSalesLeaderList));
             this.serviceLeaderList = Lists.newArrayList(Iterables.filter(leaderList, predicateServiceLeaderList));
@@ -144,7 +195,7 @@ public enum Myenum {
             this.doneServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateDoneServiceList));
             this.returnServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateReturnServiceList));
             this.deliveredServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateDeliveredServiceList));
-            this.proccessingServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateProccessingServiceList));
+            this.processingServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateProccessingServiceList));
             this.returnedServiceList = Lists.newArrayList(Iterables.filter(serviceList, predicateReturnedServiceList));
 
         }
@@ -174,7 +225,7 @@ public enum Myenum {
         } else if (status == Status.PNA) {
             return pnaServiceList;
         } else if (status == Status.PROCESSING) {
-            return proccessingServiceList;
+            return processingServiceList;
         } else {
             return serviceList;
         }

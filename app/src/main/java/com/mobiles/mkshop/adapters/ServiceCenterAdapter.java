@@ -14,7 +14,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.ServiceCenterEntity;
+import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 import com.mobiles.mkshop.R;
 
 import java.util.Collection;

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.pojos.LeaderBoardDetails;
+import com.mobiles.mkshop.pojos.models.LeaderBoardDetails;
 
 import java.util.List;
 

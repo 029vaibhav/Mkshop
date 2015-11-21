@@ -1,20 +1,15 @@
 package com.mobiles.mkshop.adapters;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.ProductExpenseSingleEntry;
+import com.mobiles.mkshop.pojos.models.PaymentHistory;
 
-import java.awt.font.TextAttribute;
 import java.util.List;
 
 /**
@@ -22,10 +17,10 @@ import java.util.List;
  */
 public class ViewBillDialogAdapter extends RecyclerView.Adapter<ViewBillDialogAdapter.ViewHolder> {
 
-    List<ProductExpenseSingleEntry> productExpenseSingleEntries;
+    List<PaymentHistory> productExpenseSingleEntries;
     Fragment context;
 
-    public ViewBillDialogAdapter(Fragment userListFragment, List<ProductExpenseSingleEntry> productExpenseSingleEntries)
+    public ViewBillDialogAdapter(Fragment userListFragment, List<PaymentHistory> productExpenseSingleEntries)
 
     {
         context = userListFragment;
@@ -42,9 +37,9 @@ public class ViewBillDialogAdapter extends RecyclerView.Adapter<ViewBillDialogAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        ProductExpenseSingleEntry productExpenseSingleEntry = productExpenseSingleEntries.get(position);
-        holder.totalAmount.setText(productExpenseSingleEntry.getCreated());
-        holder.dealerName.setText(context.getString(R.string.rs) + " " + productExpenseSingleEntry.getAmount());
+        PaymentHistory paymentHistory = productExpenseSingleEntries.get(position);
+        holder.totalAmount.setText(paymentHistory.getCreated());
+        holder.dealerName.setText(context.getString(R.string.rs) + " " + paymentHistory.getAmount());
 
 
     }

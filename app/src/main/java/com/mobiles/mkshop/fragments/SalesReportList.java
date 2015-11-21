@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobiles.mkshop.adapters.SalesReportItemAdapter;
-import com.mobiles.mkshop.pojos.ProductType;
+import com.mobiles.mkshop.pojos.enums.ProductType;
 import com.mobiles.mkshop.R;
 
 

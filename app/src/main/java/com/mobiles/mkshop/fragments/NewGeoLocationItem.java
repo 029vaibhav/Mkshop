@@ -28,14 +28,17 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.Location;
+import com.mobiles.mkshop.pojos.models.Location;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class NewGeoLocationItem extends Fragment implements com.google.android.gms.location.LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class NewGeoLocationItem extends Fragment
+        implements com.google.android.gms.location.LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener
+
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
@@ -49,7 +52,7 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
     private static final String lat = "lat";
     private static final String longi = "longi";
     private static final String prole = "role";
-    private static final String pradius = "radius";
+//    private static final String pradius = "radius";
     private static final String id = "id";
 
     android.location.Location location;
@@ -58,10 +61,11 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
     private String mlat = "lat";
     private String mlongi = "longi";
     private String mrole = "role";
-    private String mradius = "radius";
+//    private String mradius = "radius";
     private String mid = null;
 
-    EditText latitude, longitude, radius;
+    EditText latitude, longitude;
+//    radius;
     AutoCompleteTextView role;
     Button submit, currentLocation;
 
@@ -71,7 +75,7 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
         args.putString(lat, param1);
         args.putString(longi, param2);
         args.putString(prole, param3);
-        args.putString(pradius, param4);
+//        args.putString(pradius, param4);
         args.putString(id, param5);
         fragment.setArguments(args);
         return fragment;
@@ -88,7 +92,7 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
             mlat = getArguments().getString(lat);
             mlongi = getArguments().getString(longi);
             mrole = getArguments().getString(prole);
-            mradius = getArguments().getString(pradius);
+//            mradius = getArguments().getString(pradius);
             mid = getArguments().getString(id);
         }
     }
@@ -102,7 +106,7 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
         latitude = (EditText) viewGroup.findViewById(R.id.latitude);
         longitude = (EditText) viewGroup.findViewById(R.id.longitude);
         role = (AutoCompleteTextView) viewGroup.findViewById(R.id.role);
-        radius = (EditText) viewGroup.findViewById(R.id.radius);
+//        radius = (EditText) viewGroup.findViewById(R.id.radius);
         submit = (Button) viewGroup.findViewById(R.id.submit);
         currentLocation = (Button) viewGroup.findViewById(R.id.currentLocation);
         currentLocation.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +125,7 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
             latitude.setText(mlat);
             longitude.setText(mlongi);
             role.setText(mrole);
-            radius.setText(mradius);
+//            radius.setText(mradius);
         }
         materialDialog = new MaterialDialog.Builder(getActivity())
                 .progress(true, 0)
@@ -136,18 +140,18 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
 
 
                 if (latitude.getText().length() == 0 || longitude.getText().length() == 0)
-                    MkShop.toast(getActivity(), "please select location");
+                    MkShop.toast(getActivity(), "please enter both the wifi or enter Na");
                 else if (role.getText().length() == 0)
                     MkShop.toast(getActivity(), "please enter role");
-                else if (radius.getText().length() == 0)
-                    MkShop.toast(getActivity(), "please enter radius");
+//                else if (radius.getText().length() == 0)
+//                    MkShop.toast(getActivity(), "please enter radius");
                 else {
                     materialDialog.show();
                     Location location = new Location();
                     if (mid != null) location.setId(Integer.parseInt(mid));
                     location.setLatitude(latitude.getText().toString());
                     location.setLongitude(longitude.getText().toString());
-                    location.setRadius(radius.getText().toString());
+//                    location.setRadius(radius.getText().toString());
                     location.setRole(role.getText().toString());
                     Client.INSTANCE.setLocation(MkShop.AUTH, location, new Callback<String>() {
                         @Override
@@ -156,7 +160,7 @@ public class NewGeoLocationItem extends Fragment implements com.google.android.g
                             if (materialDialog != null && materialDialog.isShowing())
                                 materialDialog.dismiss();
                             MkShop.toast(getActivity(), s);
-                            Fragment fragment = new GeopointsFragment();
+                            Fragment fragment = new GeoPointsFragment();
                             getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
                         }

@@ -111,7 +111,7 @@
                     android:layout_below="@+id/accessoryType">
 
                     <TextView
-                        android:id="@+id/brandtitle"
+                        android:id="@+id/brand_title"
 
                         fontPath="fonts/rr.ttf"
                         android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/brandtitle"
+                        android:layout_toRightOf="@+id/brand_title"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="*"

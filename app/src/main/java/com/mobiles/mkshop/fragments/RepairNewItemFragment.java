@@ -20,9 +20,9 @@ import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.BrandModelList;
-import com.mobiles.mkshop.pojos.ServiceCenterEntity;
-import com.mobiles.mkshop.pojos.UserType;
+import com.mobiles.mkshop.pojos.models.BrandModelList;
+import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
+import com.mobiles.mkshop.pojos.enums.UserType;
 
 import java.util.ArrayList;
 import java.util.HashSet;

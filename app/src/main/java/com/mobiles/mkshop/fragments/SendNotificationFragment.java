@@ -17,7 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.Notification;
+import com.mobiles.mkshop.pojos.models.Notification;
 
 import org.joda.time.DateTime;
 

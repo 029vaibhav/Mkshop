@@ -1,22 +1,17 @@
 package com.mobiles.mkshop.adapters;
 
-import android.app.Dialog;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.fragments.ViewBills;
-import com.mobiles.mkshop.pojos.ProductExpense;
+import com.mobiles.mkshop.fragments.PaymentReportOfDealer;
+import com.mobiles.mkshop.pojos.models.ProductExpense;
 
 import java.util.List;
 
@@ -27,33 +22,13 @@ public class ViewDealerNameAdapter extends RecyclerView.Adapter<ViewDealerNameAd
 
     List<ProductExpense> productExpenseList;
     Fragment context;
-    Dialog dialog;
     View view;
-    ImageView imageView, backButton;
-    RecyclerView recyclerView;
-
-    MaterialDialog progressMaterialDialog;
 
 
     public ViewDealerNameAdapter(Fragment viewDealersName, List<ProductExpense> paymentInfoHashMap) {
         this.context = viewDealersName;
         this.productExpenseList = paymentInfoHashMap;
 
-        dialog = new Dialog(context.getActivity(), R.style.AppTheme);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.view_bill_dialog);
-
-        progressMaterialDialog = new MaterialDialog.Builder(context.getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
-
-
-        imageView = (ImageView) dialog.findViewById(R.id.bill_image);
-        backButton = (ImageView) dialog.findViewById(R.id.back_button);
-        recyclerView = (RecyclerView) dialog.findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context.getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
 
     }
 
@@ -114,8 +89,8 @@ public class ViewDealerNameAdapter extends RecyclerView.Adapter<ViewDealerNameAd
         public void onClick(View v) {
 
 
-            ViewBills viewBills = ViewBills.newInstance(productExpenseList.get(getAdapterPosition()).getDealerName());
-            context.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, viewBills).commit();
+            PaymentReportOfDealer viewBills = PaymentReportOfDealer.newInstance(productExpenseList.get(getAdapterPosition()).getDealerName());
+            context.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, viewBills,"DealerReportViewPagerFragment").commit();
         }
     }
 }

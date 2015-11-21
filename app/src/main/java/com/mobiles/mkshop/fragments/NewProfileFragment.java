@@ -16,7 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.NewUser;
+import com.mobiles.mkshop.pojos.models.NewUser;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

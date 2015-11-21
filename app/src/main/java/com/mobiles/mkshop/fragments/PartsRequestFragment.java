@@ -19,7 +19,7 @@ import com.mobiles.mkshop.adapters.PartRequestAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.PartsRequests;
+import com.mobiles.mkshop.pojos.models.PartsRequests;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class PartsRequestFragment extends Fragment {
 
         partsRequestsList = new ArrayList<PartsRequests>();
 
-        final EditText search = (EditText) viewGroup.findViewById(R.id.editsearch);
+        final EditText search = (EditText) viewGroup.findViewById(R.id.edit_search);
 
         materialDialog = new MaterialDialog.Builder(getActivity())
                 .progress(false, 0)

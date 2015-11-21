@@ -22,8 +22,8 @@ import com.mobiles.mkshop.adapters.TabsPagerAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.ProductType;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.enums.ProductType;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import org.joda.time.DateTime;
 

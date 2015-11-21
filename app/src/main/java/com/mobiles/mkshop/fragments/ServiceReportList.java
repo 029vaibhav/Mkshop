@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobiles.mkshop.adapters.ServiceReportItemAdapter;
-import com.mobiles.mkshop.pojos.Status;
+import com.mobiles.mkshop.pojos.enums.Status;
 import com.mobiles.mkshop.R;
 
 

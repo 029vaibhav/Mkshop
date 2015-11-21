@@ -15,7 +15,7 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.Incentive;
 import com.mobiles.mkshop.fragments.IncentiveUserListFragment;
-import com.mobiles.mkshop.pojos.IncentiveEntity;
+import com.mobiles.mkshop.pojos.models.IncentiveEntity;
 
 import java.util.List;
 

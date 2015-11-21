@@ -5,11 +5,9 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,11 +15,10 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.fragments.ViewProductItemFragment;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.models.Sales;
 import com.mobiles.mkshop.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 

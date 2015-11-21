@@ -16,9 +16,9 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.IncentiveUserlistDialogAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.ExpenseEntity;
-import com.mobiles.mkshop.pojos.PaymentType;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.enums.PaymentType;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import java.util.List;
 

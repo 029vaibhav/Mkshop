@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.google.common.collect.ListMultimap;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.fragments.IncentiveSalesUserListFragment;
-import com.mobiles.mkshop.pojos.Sales;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import java.util.ArrayList;
 import java.util.List;

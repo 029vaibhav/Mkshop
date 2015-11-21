@@ -13,7 +13,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.ViewPagerAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.Product;
+import com.mobiles.mkshop.pojos.models.Product;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.List;

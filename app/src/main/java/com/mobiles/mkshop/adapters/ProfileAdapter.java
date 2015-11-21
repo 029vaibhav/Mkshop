@@ -14,8 +14,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.Profile;
-import com.mobiles.mkshop.pojos.UserType;
+import com.mobiles.mkshop.pojos.models.Profile;
+import com.mobiles.mkshop.pojos.enums.UserType;
 
 import java.util.HashMap;
 import java.util.List;

@@ -16,8 +16,8 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.LeaderBoardDialogAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.LeaderBoardDetails;
-import com.mobiles.mkshop.pojos.UserType;
+import com.mobiles.mkshop.pojos.models.LeaderBoardDetails;
+import com.mobiles.mkshop.pojos.enums.UserType;
 
 import org.joda.time.DateTime;
 

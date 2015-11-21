@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.fragments.ServiceReportList;
-import com.mobiles.mkshop.pojos.Status;
+import com.mobiles.mkshop.pojos.enums.Status;
 
 /**
  * Created by vaibhav on 1/7/15.

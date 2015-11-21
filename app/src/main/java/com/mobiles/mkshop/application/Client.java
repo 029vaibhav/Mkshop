@@ -2,22 +2,22 @@ package com.mobiles.mkshop.application;
 
 import android.util.Log;
 
-import com.mobiles.mkshop.pojos.AttendanceDates;
-import com.mobiles.mkshop.pojos.ExpenseEntity;
-import com.mobiles.mkshop.pojos.IncentiveEntity;
-import com.mobiles.mkshop.pojos.Leader;
-import com.mobiles.mkshop.pojos.LeaderBoardDetails;
-import com.mobiles.mkshop.pojos.Location;
-import com.mobiles.mkshop.pojos.LoginDetails;
-import com.mobiles.mkshop.pojos.NewUser;
-import com.mobiles.mkshop.pojos.Notification;
-import com.mobiles.mkshop.pojos.PartsRequests;
-import com.mobiles.mkshop.pojos.PriceCompartorService;
-import com.mobiles.mkshop.pojos.Product;
-import com.mobiles.mkshop.pojos.ProductExpense;
-import com.mobiles.mkshop.pojos.ServiceCenterEntity;
-import com.mobiles.mkshop.pojos.Sales;
-import com.mobiles.mkshop.pojos.UserListAttendance;
+import com.mobiles.mkshop.pojos.models.AttendanceDates;
+import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.models.IncentiveEntity;
+import com.mobiles.mkshop.pojos.models.Leader;
+import com.mobiles.mkshop.pojos.models.LeaderBoardDetails;
+import com.mobiles.mkshop.pojos.models.Location;
+import com.mobiles.mkshop.pojos.models.LoginDetails;
+import com.mobiles.mkshop.pojos.models.NewUser;
+import com.mobiles.mkshop.pojos.models.Notification;
+import com.mobiles.mkshop.pojos.models.PartsRequests;
+import com.mobiles.mkshop.pojos.models.PriceCompartorService;
+import com.mobiles.mkshop.pojos.models.Product;
+import com.mobiles.mkshop.pojos.models.ProductExpense;
+import com.mobiles.mkshop.pojos.models.Sales;
+import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
+import com.mobiles.mkshop.pojos.models.UserListAttendance;
 
 import java.util.List;
 import java.util.Map;
@@ -184,7 +184,7 @@ public enum Client {
         void getPurchasedProduct(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to, Callback<List<ProductExpense>> callback);
 
         @GET("/mk/webservice/duepayment.php")
-        void duePayment(@Header("AUTH") String auth, @Query("dealerId") String dealerId, @Query("amount") String amount, Callback<String> stringCallback);
+        void duePayment(@Header("AUTH") String auth, @Query("dealerId") String dealerId, @Query("amount") String amount, @Query("note") String note, Callback<String> stringCallback);
 
 
     }
@@ -387,8 +387,8 @@ public enum Client {
         mobileService.getPurchasedProduct(auth, from, to, cb);
     }
 
-    public void duePayment(String auth, String dealerId, String amount, Callback<String> stringCallback) {
-        mobileService.duePayment(auth, dealerId, amount, stringCallback);
+    public void duePayment(String auth, String dealerId, String amount, String note, Callback<String> stringCallback) {
+        mobileService.duePayment(auth, dealerId, amount, note, stringCallback);
     }
 
 

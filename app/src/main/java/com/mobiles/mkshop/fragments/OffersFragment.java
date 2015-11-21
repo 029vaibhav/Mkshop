@@ -16,7 +16,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.NotificationAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.Notification;
+import com.mobiles.mkshop.pojos.models.Notification;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class OffersFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_offers, container, false);
         recyclerView = (RecyclerView) viewGroup.findViewById(R.id.notificationList);
-        search = (EditText) viewGroup.findViewById(R.id.editsearch);
+        search = (EditText) viewGroup.findViewById(R.id.edit_search);
 
         materialDialog = new MaterialDialog.Builder(getActivity())
                 .progress(false, 0)
