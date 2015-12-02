@@ -3,11 +3,13 @@ package com.mobiles.mkshop.fragments;
 import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +26,8 @@ import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.interfaces.ScannerCallback;
-import com.mobiles.mkshop.pojos.models.BrandModelList;
 import com.mobiles.mkshop.pojos.enums.ProductType;
+import com.mobiles.mkshop.pojos.models.BrandModelList;
 import com.mobiles.mkshop.pojos.models.Sales;
 
 import java.util.ArrayList;
@@ -163,6 +165,7 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
         startImei = (TextView) v.findViewById(R.id.star_imei);
         scanImage = (TextView) v.findViewById(R.id.scan_image);
         picker = new Scanner();
+        picker.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.AppTheme);
         picker.setCallBack(SaleFragment.this);
 
         brandModelDialog = new Dialog(getActivity(), android.R.style.Theme_Holo_Light_NoActionBar);

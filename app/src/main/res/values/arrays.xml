@@ -29,6 +29,15 @@
     </string-array>
 
 
+    <string-array name="purchase_options">
+        <item name="view_Bill_image">View Image</item>
+        <item name="delete">delete</item>
+    </string-array>
+
+    <string-array name="payment_options">
+        <item name="delete">delete</item>
+    </string-array>
+
     <string-array name="image_option">
         <item name="camera">Camera</item>
         <item name="gallery">Gallery</item>

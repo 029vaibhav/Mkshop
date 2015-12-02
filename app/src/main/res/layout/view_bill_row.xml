@@ -24,6 +24,7 @@
         android:paddingTop="8dp">
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/date"
             fontPath="fonts/Brandon_med.otf"
             android:layout_width="wrap_content"

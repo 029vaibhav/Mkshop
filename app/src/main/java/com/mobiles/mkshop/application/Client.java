@@ -186,6 +186,9 @@ public enum Client {
         @GET("/mk/webservice/duepayment.php")
         void duePayment(@Header("AUTH") String auth, @Query("dealerId") String dealerId, @Query("amount") String amount, @Query("note") String note, Callback<String> stringCallback);
 
+        @GET("/mk/webservice/deletepayment.php")
+        void deletePayment(@Header("AUTH") String auth, @Query("department") String deparment, @Query("serverId") String serverID, Callback<String> stringCallback);
+
 
     }
 
@@ -389,6 +392,10 @@ public enum Client {
 
     public void duePayment(String auth, String dealerId, String amount, String note, Callback<String> stringCallback) {
         mobileService.duePayment(auth, dealerId, amount, note, stringCallback);
+    }
+
+    public void deletePayment(String auth, String department, String id, Callback<String> stringCallback) {
+        mobileService.deletePayment(auth, department, id, stringCallback);
     }
 
 

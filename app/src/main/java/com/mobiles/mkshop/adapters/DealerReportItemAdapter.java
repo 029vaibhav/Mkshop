@@ -18,6 +18,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.enums.TransactionType;
@@ -31,6 +32,9 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Collection;
 import java.util.List;
+
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by vaibhav on 2/7/15.
@@ -186,33 +190,92 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
 
         @Override
         public void onClick(View v) {
+            showDialog();
+        }
 
-            if (transactionType == TransactionType.Purchase) {
-                backButton.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View v) {
-                                                      if (dialog != null && dialog.isShowing())
-                                                          dialog.dismiss();
-                                                  }
-                                              }
-                );
-                dialog.show();
-                Picasso.with(context.getActivity()).load(purchaseHistories.get(getAdapterPosition()).getImage()).into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        progressBar.setVisibility(View.GONE);
-                    }
 
-                    @Override
-                    public void onError() {
+        private void showDialog() {
+            new MaterialDialog.Builder(context.getActivity())
+                    .items(R.array.purchase_options)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                                       @Override
+                                       public void onSelection(final MaterialDialog dialog1, View view, int which, CharSequence text) {
 
-                        progressBar.setVisibility(View.GONE);
-                        MkShop.toast(context.getActivity(), "unable to load image");
-                    }
-                });
+                                           if (dialog1 != null && dialog1.isShowing())
+                                               dialog1.dismiss();
+                                           String serverId = null;
+                                           if (transactionType == TransactionType.Purchase)
+                                               serverId = purchaseHistories.get(getAdapterPosition()).getServerId();
+                                           else if (transactionType == TransactionType.Payment)
+                                               serverId = paymentHistories.get(getAdapterPosition()).getServerId();
 
-            }
 
+                                           switch (which) {
+                                               case 0: //view profile
+                                                   if (transactionType == TransactionType.Purchase) {
+                                                       backButton.setOnClickListener(new View.OnClickListener() {
+                                                                                         @Override
+                                                                                         public void onClick(View v) {
+                                                                                             if (dialog != null && dialog.isShowing())
+                                                                                                 dialog.dismiss();
+                                                                                         }
+                                                                                     }
+                                                       );
+                                                       dialog.show();
+                                                       Picasso.with(context.getActivity()).load(purchaseHistories.get(getAdapterPosition()).getImage()).into(imageView, new Callback() {
+                                                           @Override
+                                                           public void onSuccess() {
+                                                               progressBar.setVisibility(View.GONE);
+                                                           }
+
+                                                           @Override
+                                                           public void onError() {
+
+                                                               progressBar.setVisibility(View.GONE);
+                                                               MkShop.toast(context.getActivity(), "unable to load image");
+                                                           }
+                                                       });
+
+                                                   } else {
+                                                       MkShop.toast(context.getActivity(), "Not applicable");
+                                                   }
+                                                   break;
+                                               case 1: // call api to delete
+                                                   callDeleteApi(serverId);
+                                                   break;
+
+                                           }
+
+
+                                       }
+                                   }
+
+                    )
+                    .
+
+                            show();
+
+        }
+
+        private void callDeleteApi(final String serverId) {
+
+
+            Client.INSTANCE.deletePayment(MkShop.AUTH, transactionType.name(), serverId, new retrofit.Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    MkShop.toast(context.getActivity(), s);
+                    if (transactionType == TransactionType.Purchase)
+                        PurchaseHistory.deleteAll(PurchaseHistory.class, "server_id = ?", serverId);
+                    else if (transactionType == TransactionType.Payment)
+                        PaymentHistory.deleteAll(PaymentHistory.class, "server_id = ?", serverId);
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
         }
     }
 }

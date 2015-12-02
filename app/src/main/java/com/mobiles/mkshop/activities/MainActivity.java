@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,7 +40,6 @@ import com.mobiles.mkshop.fragments.ServiceReport;
 import com.mobiles.mkshop.fragments.UserListFragment;
 import com.mobiles.mkshop.fragments.UserSalesService;
 import com.mobiles.mkshop.fragments.ViewProductFragment;
-import com.mobiles.mkshop.gcm.Controller;
 import com.mobiles.mkshop.gcm.RegistrationIntentService;
 import com.mobiles.mkshop.pojos.enums.UserType;
 import com.mobiles.mkshop.pojos.models.LoginDetails;
@@ -56,13 +54,11 @@ import retrofit.client.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerCallbacks {
 
-    Controller aController;
-    AsyncTask<Void, Void, Void> mRegisterTask;
+
 
     SharedPreferences sharedPreferences;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
-    Bitmap bitmapAvtar = null;
     LoginDetails loginDetailsList;
     long back_pressed;
 
@@ -501,6 +497,7 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
     }
+
 
 
 }

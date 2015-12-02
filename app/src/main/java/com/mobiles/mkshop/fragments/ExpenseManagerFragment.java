@@ -37,17 +37,6 @@ public class ExpenseManagerFragment extends Fragment {
         TextView viewExpenses = (TextView) viewGroup.findViewById(R.id.viewExpenses);
         TextView viewBill = (TextView) viewGroup.findViewById(R.id.viewBills);
 
-//
-//        registerProduct.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Fragment fragment = new CreateNewTransaction();
-//                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-//
-//
-//            }
-//        });
 
         paySalary.setOnClickListener(new View.OnClickListener() {
             @Override

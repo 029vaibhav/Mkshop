@@ -56,6 +56,7 @@ public class BrandModelList extends SugarRecord<BrandModelList> {
         this.type = type;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -214,45 +214,6 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                     })
                     .show();
 
-
-//            new MaterialDialog.Builder(context.getActivity())
-//                    .title("Pay salary")
-//                    .inputType(InputType.TYPE_CLASS_NUMBER)
-//                    .input("", "", new MaterialDialog.InputCallback() {
-//                        @Override
-//                        public void onInput(MaterialDialog dialog, final CharSequence input) {
-//
-//                            if (input.toString().length() != 0) {
-//
-//                                ExpenseEntity expenseEntity = new ExpenseEntity();
-//                                expenseEntity.setPaymentType(PaymentType.Salary.name());
-//                                expenseEntity.setUsername(userListAttendances.get(getAdapterPosition()).getUsername());
-//                                expenseEntity.setAmount(input.toString());
-//
-//                                Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {
-//                                    @Override
-//                                    public void success(String s, Response response) {
-//
-//                                        MkShop.toast(context.getActivity(), s);
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void failure(RetrofitError error) {
-//
-//                                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-//                                            MkShop.toast(context.getActivity(), "please check your internet connection");
-//                                        else
-//                                            MkShop.toast(context.getActivity(), error.getMessage());
-//
-//
-//                                    }
-//                                });
-//                            } else {
-//                                MkShop.toast(context.getActivity(), "please enter some amount");
-//                            }
-//                        }
-//                    }).show();
         }
     }
 }
