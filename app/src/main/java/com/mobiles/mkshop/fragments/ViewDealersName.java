@@ -70,7 +70,6 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
 
 
         recyclerView = (RecyclerView) viewGroup.findViewById(R.id.recycler_view);
-        recyclerView = (RecyclerView) viewGroup.findViewById(R.id.recycler_view);
         fab = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

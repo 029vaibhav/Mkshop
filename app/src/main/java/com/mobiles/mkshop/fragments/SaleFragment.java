@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -235,8 +234,8 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
         } else if (modelNo.getText().length() == 0 || modelNo.getText().toString().equalsIgnoreCase("other") && other.getText().toString().length() == 0) {
             toast(getActivity(), "please select model");
 
-        } else if (price.getText().length() <= 0) {
-            toast(getActivity(), "please enter price");
+        } else if (price.getText().length() <= 0 || price.getText().length() > 7) {
+            toast(getActivity(), "please enter correct price");
 
         } else if (stringProductType.equalsIgnoreCase(ProductType.Mobile.name()) && customerName.getText().length() <= 0) {
             toast(getActivity(), "please enter customer name");
