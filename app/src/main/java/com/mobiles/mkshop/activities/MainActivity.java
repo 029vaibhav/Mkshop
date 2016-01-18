@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mobiles.mkshop.NavigationDrawerCallbacks;
@@ -43,8 +43,12 @@ import com.mobiles.mkshop.fragments.ViewProductFragment;
 import com.mobiles.mkshop.gcm.RegistrationIntentService;
 import com.mobiles.mkshop.pojos.enums.UserType;
 import com.mobiles.mkshop.pojos.models.LoginDetails;
+import com.mobiles.mkshop.pojos.models.MenuMaker;
+import com.mobiles.mkshop.pojos.models.MenuMakerNameClass;
+import com.mobiles.mkshop.utils.DataFeeder;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -53,7 +57,6 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerCallbacks {
-
 
 
     SharedPreferences sharedPreferences;
@@ -78,6 +81,16 @@ public class MainActivity extends AppCompatActivity
 
 
         MkShop.Role = loginDetailsList.getRole();
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
+
+        mNavigationDrawerFragment.setUserData(loginDetailsList.getName(), "", loginDetailsList.getPhoto());
+        // populate the navigation drawer
+
 
     }
 
@@ -107,28 +120,31 @@ public class MainActivity extends AppCompatActivity
         loginDetailsList = new Gson().fromJson(json, type);
 
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
-
-        mNavigationDrawerFragment.setUserData(loginDetailsList.getName(), "", loginDetailsList.getPhoto());
-        // populate the navigation drawer
-
-
     }
 
-
-//    @Override
-//    protected void attachBaseContext(Context newBase) {
-//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-//    }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         Fragment fragment;
+
+
+        MenuMaker menuMaker = DataFeeder.getMenu();
+
+        List<MenuMakerNameClass> menu = menuMaker.getMenu();
+
+        MenuMakerNameClass menuMakerNameClass = menu.get(position);
+
+        try {
+            Class c = Class.forName("com.mobiles.mkshop.fragments." + menuMakerNameClass.getClasses());
+            Object o = c.newInstance();
+            Fragment fragment1 = (Fragment) o;
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment1).commit();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         if (MkShop.Role.equalsIgnoreCase(UserType.TECHNICIAN.name())) {
@@ -498,6 +514,11 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
     }
 
-
-
+    private void logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        Crashlytics.setUserIdentifier(MkShop.getUsername());
+        Crashlytics.setUserEmail("role " + MkShop.Role);
+        Crashlytics.setUserName(MkShop.Username);
+    }
 }

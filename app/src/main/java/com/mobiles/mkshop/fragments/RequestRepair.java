@@ -1,9 +1,8 @@
 package com.mobiles.mkshop.fragments;
 
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,12 +13,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.ServiceCenterAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
-import com.mobiles.mkshop.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +73,7 @@ public class RequestRepair extends Fragment {
 //        fab.attachToListView(listView);
 
 
-        new ListInitializer().execute();
+        listInitializer();
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,58 +114,55 @@ public class RequestRepair extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s != null)
-                    serviceCenterAdapter.filter(s);
+                try {
+                    if (s != null)
+                        serviceCenterAdapter.filter(s);
+                } catch (NullPointerException e) {
+
+                    repairList = Myenum.INSTANCE.getServiceList(null);
+                    if (repairList == null) {
+                        listInitializer();
+                    } else {
+                        serviceCenterAdapter = new ServiceCenterAdapter(getActivity(), repairList);
+                        listView.setAdapter(serviceCenterAdapter);
+
+                    }
+                }
+
+
+            }
+        });
+        return view;
+    }
+
+
+    private void listInitializer() {
+        materialDialog.show();
+
+        Client.INSTANCE.getServiceList(MkShop.AUTH, new Callback<List<ServiceCenterEntity>>() {
+            @Override
+            public void success(List<ServiceCenterEntity> serviceCenterEntiities, Response response) {
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
+                repairList = serviceCenterEntiities;
+                Myenum.INSTANCE.setServiceList(repairList);
+                serviceCenterAdapter = new ServiceCenterAdapter(getActivity(), repairList);
+                listView.setAdapter(serviceCenterAdapter);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
+                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                    MkShop.toast(getActivity(), "please check your internet connection");
+                else
+                    MkShop.toast(getActivity(), error.getMessage());
 
             }
         });
 
 
-        return view;
-    }
-
-
-    private class ListInitializer extends AsyncTask<Void, Void, Void> {
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-
-            materialDialog.show();
-
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            Client.INSTANCE.getServiceList(MkShop.AUTH, new Callback<List<ServiceCenterEntity>>() {
-                @Override
-                public void success(List<ServiceCenterEntity> serviceCenterEntiities, Response response) {
-                    if (materialDialog != null && materialDialog.isShowing())
-                        materialDialog.dismiss();
-                    repairList = serviceCenterEntiities;
-                    Myenum.INSTANCE.setServiceList(repairList);
-                    serviceCenterAdapter = new ServiceCenterAdapter(getActivity(), repairList);
-                    listView.setAdapter(serviceCenterAdapter);
-
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    if (materialDialog != null && materialDialog.isShowing())
-                        materialDialog.dismiss();
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(), "please check your internet connection");
-                    else
-                        MkShop.toast(getActivity(), error.getMessage());
-
-                }
-            });
-
-
-            return null;
-        }
     }
 }

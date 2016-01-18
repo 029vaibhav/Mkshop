@@ -58,11 +58,16 @@ public class RepairListItemFragment extends Fragment {
         initView(v);
 
 
-        problem.setText(service.getProblem());
-        brand.setText(service.getBrand().replace("\\n", ""));
-        modelNo.setText(service.getModel());
-        price.setText("" + service.getPrice());
-        jobNo.setText(service.getJobNo());
+        try {
+            problem.setText(service.getProblem());
+            brand.setText(service.getBrand().replace("\\n", ""));
+            modelNo.setText(service.getModel());
+            price.setText("" + service.getPrice());
+            jobNo.setText(service.getJobNo());
+        } catch (NullPointerException e) {
+            this.onDestroy();
+        }
+
         jobNo.setEnabled(false);
 
         if (service.getResolution() != null && !service.getResolution().equalsIgnoreCase("null"))
