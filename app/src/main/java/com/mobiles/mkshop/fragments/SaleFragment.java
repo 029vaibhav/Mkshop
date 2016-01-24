@@ -62,10 +62,12 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
 
     public static SaleFragment newInstance(String brand, String model) {
         SaleFragment fragment = new SaleFragment();
-        Bundle args = new Bundle();
-        args.putString("brand", brand);
-        args.putString("model", model);
-        fragment.setArguments(args);
+        if (brand != null) {
+            Bundle args = new Bundle();
+            args.putString("brand", brand);
+            args.putString("model", model);
+            fragment.setArguments(args);
+        }
 
         return fragment;
     }

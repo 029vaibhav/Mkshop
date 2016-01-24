@@ -20,5 +20,8 @@
 
     <dimen name="toolbar_double_height">112dp</dimen>
     <dimen name="image_of_bill">300dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
 
 </resources>

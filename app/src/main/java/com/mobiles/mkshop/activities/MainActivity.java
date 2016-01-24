@@ -465,8 +465,6 @@ public class MainActivity extends AppCompatActivity
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
-
-
                 }
 
                 @Override
@@ -503,8 +501,6 @@ public class MainActivity extends AppCompatActivity
             }
 
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/attendace"
+        android:icon="@drawable/ic_action_calendar"
+        android:title="Attendance" />
+    <item
+        android:id="@+id/sale"
+        android:icon="@drawable/mobile"
+        android:title="Do Sale" />
+    <item
+        android:id="@+id/parts"
+        android:icon="@drawable/parts"
+        android:title="Request Part" />
+    <item
+        android:id="@+id/service_center"
+        android:icon="@drawable/repair"
+        android:title="Service center" />
+
+    <item
+        android:id="@+id/view_product"
+        android:icon="@drawable/question"
+        android:title="View Product" />
+    <item
+        android:id="@+id/message"
+        android:icon="@drawable/prize"
+        android:title="Offers/Message" />
+    <item
+        android:id="@+id/my_work"
+        android:icon="@drawable/my_work"
+        android:title="My Sales" />
+</menu>

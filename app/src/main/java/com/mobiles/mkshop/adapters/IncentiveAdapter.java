@@ -64,7 +64,7 @@ public class IncentiveAdapter extends RecyclerView.Adapter<IncentiveAdapter.View
             public void onClick(View v) {
 
                 IncentiveUserListFragment fragment = IncentiveUserListFragment.newInstance(holder.message.getText().toString(), "" + incentiveEntity.getId());
-                context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
 
             }
         });
@@ -83,8 +83,8 @@ public class IncentiveAdapter extends RecyclerView.Adapter<IncentiveAdapter.View
                                     @Override
                                     public void success(String s, Response response) {
 
-                                       // MkShop.toast(context.getActivity(), s);
-                                        Toast.makeText(context.getActivity(),s,Toast.LENGTH_SHORT).show();
+                                        // MkShop.toast(context.getActivity(), s);
+                                        Toast.makeText(context.getActivity(), s, Toast.LENGTH_SHORT).show();
                                         Fragment fragment = new Incentive();
 
                                         context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();

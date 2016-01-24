@@ -89,8 +89,8 @@ public class ViewDealerNameAdapter extends RecyclerView.Adapter<ViewDealerNameAd
         public void onClick(View v) {
 
 
-            PaymentReportOfDealer viewBills = PaymentReportOfDealer.newInstance(productExpenseList.get(getAdapterPosition()).getDealerName());
-            context.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, viewBills,"DealerReportViewPagerFragment").commit();
+            Fragment viewBills = PaymentReportOfDealer.newInstance(productExpenseList.get(getAdapterPosition()).getDealerName());
+            context.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, viewBills, "DealerReportViewPagerFragment").addToBackStack(null).commit();
         }
     }
 }

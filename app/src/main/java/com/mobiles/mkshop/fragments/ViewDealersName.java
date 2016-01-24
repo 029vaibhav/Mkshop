@@ -54,15 +54,9 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.dealer_name, container, false);
-
-
         init(viewGroup);
-
-
         fab.setOnClickListener(this);
-
         executeQuery();
-
         return viewGroup;
     }
 
@@ -165,7 +159,7 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        CreateNewTransaction fragment = CreateNewTransaction.newInstance(null);
-        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        Fragment fragment = CreateNewTransaction.newInstance(null);
+        getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
     }
 }

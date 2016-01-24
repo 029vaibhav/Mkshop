@@ -12,10 +12,10 @@ import com.mobiles.mkshop.R;
 
 public class ExpenseManagerFragment extends Fragment {
 
-    public static String TAG="ExpenseManagerFragment";
+    public static String TAG = "ExpenseManagerFragment";
 
 
-    public static ExpenseManagerFragment newInstance(String param1, String param2) {
+    public static ExpenseManagerFragment newInstance() {
         ExpenseManagerFragment fragment = new ExpenseManagerFragment();
 
         return fragment;
@@ -32,7 +32,7 @@ public class ExpenseManagerFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_expense_manager, container, false);
 
-      //  TextView registerProduct = (TextView) viewGroup.findViewById(R.id.registerProduct);
+        //  TextView registerProduct = (TextView) viewGroup.findViewById(R.id.registerProduct);
         TextView paySalary = (TextView) viewGroup.findViewById(R.id.paySalary);
         TextView viewExpenses = (TextView) viewGroup.findViewById(R.id.viewExpenses);
         TextView viewBill = (TextView) viewGroup.findViewById(R.id.viewBills);
@@ -42,8 +42,8 @@ public class ExpenseManagerFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new UserListFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                Fragment fragment = UserListFragment.newInstance();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
 
             }
         });
@@ -52,8 +52,8 @@ public class ExpenseManagerFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new ViewExpenseFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                Fragment fragment = ViewExpenseFragment.newInstance();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
 
             }
         });
@@ -62,13 +62,11 @@ public class ExpenseManagerFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new ViewDealersName();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                Fragment fragment = ViewDealersName.newInstance();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
 
             }
         });
-
-
 
 
         return viewGroup;

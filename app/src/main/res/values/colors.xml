@@ -10,6 +10,7 @@
 
     <color name="myPrimaryColor">#2196F3</color>
     <color name="velvet">#E3F2FD</color>
+    <color name="transparent_white">#9000</color>
 
     <color name="myPrimaryDarkColor">#1976D2</color>
     <color name="myAccentColor">#FF4081</color>
@@ -17,7 +18,7 @@
     <color name="myWindowBackground">#FFF</color>
     <color name="myTextPrimaryColor">#212121</color>
     <color name="myNavigationColor">#000</color>
-    <color name="flatGreen">#2ecc71</color>
+    <color name="flatGreen">#27ae60</color>
     <color name="borderGrey">#d1d1d1</color>
     <color name="orange">#d35400</color>
     <drawable name="pressed_gray">#0c000000</drawable>

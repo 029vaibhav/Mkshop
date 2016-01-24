@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Reports">
+        <menu>
+            <item
+                android:id="@+id/sales_report"
+                android:icon="@drawable/mobile"
+                android:title="Sales Report" />
+            <item
+                android:id="@+id/service_report"
+                android:icon="@drawable/repair"
+                android:title="Service Report" />
+
+            <item
+                android:id="@+id/revenue_comparator"
+                android:icon="@drawable/ic_action_analysis"
+                android:title="Revenue Comparator" />
+        </menu>
+    </item>
+
+    <item android:title="Employee">
+        <menu>
+
+
+            <item
+                android:id="@+id/user_data"
+                android:icon="@drawable/ic_action_person"
+                android:title="User Data" />
+
+            <item
+                android:id="@+id/leader_board"
+                android:icon="@drawable/ic_action_leaderboard"
+                android:title="Leader Board" />
+
+        </menu>
+    </item>
+
+    <item android:title="Monetary">
+        <menu>
+            <item
+                android:id="@+id/expense_manager"
+                android:icon="@drawable/ic_action_rupees"
+                android:title="Expense Manager" />
+            <item
+                android:id="@+id/incentive"
+                android:icon="@drawable/prize"
+                android:title="Incentive" />
+
+        </menu>
+    </item>
+    <item android:title="Extra">
+        <menu>
+
+            <item
+                android:id="@+id/parts_requested"
+                android:icon="@drawable/parts"
+                android:title="Part Requested" />
+
+            <item
+                android:id="@+id/send_notification"
+                android:icon="@drawable/ic_action_noti"
+                android:title="Send Notification" />
+
+
+            <item
+                android:id="@+id/wifi"
+                android:icon="@drawable/ic_action_gps"
+                android:title="Wifi" />
+        </menu>
+    </item>
+
+
+</menu>

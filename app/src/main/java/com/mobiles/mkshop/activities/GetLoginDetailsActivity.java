@@ -95,7 +95,7 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
                     materialDialog.dismiss();
 
                 sharedPreferences.edit().putString("DETAIL", json).apply();
-                Intent intent = new Intent(GetLoginDetailsActivity.this, MainActivity.class);
+                Intent intent = new Intent(GetLoginDetailsActivity.this, NavigationMenuActivity.class);
                 startActivity(intent);
                 finish();
             }

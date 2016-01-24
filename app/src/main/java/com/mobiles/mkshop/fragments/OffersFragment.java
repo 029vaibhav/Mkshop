@@ -35,7 +35,7 @@ public class OffersFragment extends Fragment {
     MaterialDialog materialDialog;
 
 
-    public static OffersFragment newInstance(String param1, String param2) {
+    public static OffersFragment newInstance() {
         OffersFragment fragment = new OffersFragment();
         return fragment;
     }

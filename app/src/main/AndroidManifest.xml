@@ -82,7 +82,7 @@
         <!-- [END instanceId_listener] -->
         <service
             android:name=".gcm.RegistrationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity
             android:name=".activities.GetLoginDetailsActivity"
@@ -112,8 +112,11 @@
         <activity
             android:name=".activities.NotificationDetailActivity"
             android:label="@string/title_activity_notification_detail"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.NavigationMenuActivity"
+            android:label="@string/title_activity_navigation_menu"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

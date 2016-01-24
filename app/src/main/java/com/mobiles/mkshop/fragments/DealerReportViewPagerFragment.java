@@ -29,7 +29,6 @@ import retrofit.client.Response;
 public class DealerReportViewPagerFragment extends Fragment implements View.OnClickListener {
 
 
-
     public static String TAG = "DealerReportViewPagerFragment";
 
     TransactionType transactionType;
@@ -93,9 +92,6 @@ public class DealerReportViewPagerFragment extends Fragment implements View.OnCl
         recyclerView.setAdapter(listItemAdapter);
 
 
-        fab.setOnClickListener(this);
-
-
         return viewGroup;
     }
 
@@ -103,6 +99,8 @@ public class DealerReportViewPagerFragment extends Fragment implements View.OnCl
 
         recyclerView = (RecyclerView) viewGroup.findViewById(R.id.recycler_view);
         fab = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
+        fab.setOnClickListener(this);
+
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
 
@@ -131,8 +129,8 @@ public class DealerReportViewPagerFragment extends Fragment implements View.OnCl
     public void onClick(View v) {
 
         if (transactionType == TransactionType.Purchase) {
-            CreateNewTransaction fragment = CreateNewTransaction.newInstance(dealerName);
-            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            Fragment fragment = CreateNewTransaction.newInstance(dealerName);
+            getFragmentManager().beginTransaction().add(R.id.container, fragment).addToBackStack(null).commit();
         } else {
 
             dialog.show();
@@ -174,8 +172,11 @@ public class DealerReportViewPagerFragment extends Fragment implements View.OnCl
                 if (progressMaterialDialog != null && progressMaterialDialog.isShowing())
                     progressMaterialDialog.dismiss();
                 MkShop.toast(getActivity(), s);
-
-                Fragment fragment = new ViewDealersName();
+                int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
+                for (int i = 0; i < backStackEntryCount ; i++) {
+                    getFragmentManager().popBackStack();
+                }
+                Fragment fragment = ExpenseManagerFragment.newInstance();
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
 

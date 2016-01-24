@@ -7,6 +7,7 @@
 
 
     <ScrollView
+        android:background="#fff"
         android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,8 +27,6 @@
 
             <TextView
                 android:id="@+id/brand_title"
-
-                fontPath="fonts/rr.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/header"

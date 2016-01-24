@@ -128,6 +128,12 @@ public class CreateNewTransaction extends Fragment implements ImageChooserListen
 
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
+                    int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
+                    for (int i = 0; i < backStackEntryCount ; i++) {
+                        getFragmentManager().popBackStack();
+                    }
+                    Fragment fragment = ExpenseManagerFragment.newInstance();
+                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     MkShop.toast(getActivity(), s);
                 }
 

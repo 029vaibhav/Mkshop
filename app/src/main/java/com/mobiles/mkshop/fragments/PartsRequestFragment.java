@@ -71,7 +71,7 @@ public class PartsRequestFragment extends Fragment {
             public void afterTextChanged(Editable arg0) {
                 // TODO Auto-generated method stub
                 String text = search.getText().toString().toLowerCase(Locale.getDefault());
-                if (text != null)
+                if (text != null && partRequestAdapter != null)
                     partRequestAdapter.Filter(text);
             }
 
@@ -93,7 +93,7 @@ public class PartsRequestFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Myenum.INSTANCE.setRequestRepair(partsRequestsList.get(position));
-                Fragment fragment = new PartsRequestListItemFragment();
+                Fragment fragment = PartsRequestListItemFragment.newInstance();
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });
@@ -101,7 +101,7 @@ public class PartsRequestFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new PartsRequestNewItemFragment();
+                Fragment fragment = PartsRequestNewItemFragment.newInstance();
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });

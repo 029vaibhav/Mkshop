@@ -37,7 +37,7 @@ public class RevenueCompatorFragment extends Fragment {
     RevenueCompartorAdapter listItemAdapter;
     RecyclerView listView;
 
-    public static RevenueCompatorFragment newInstance(String param1, String param2) {
+    public static RevenueCompatorFragment newInstance() {
         RevenueCompatorFragment fragment = new RevenueCompatorFragment();
 
         return fragment;

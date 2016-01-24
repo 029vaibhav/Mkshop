@@ -16,8 +16,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.PartsRequests;
 import com.mobiles.mkshop.pojos.enums.Status;
+import com.mobiles.mkshop.pojos.models.PartsRequests;
 
 import org.joda.time.DateTime;
 
@@ -54,22 +54,15 @@ public class PartsRequestNewItemFragment extends Fragment {
         // Inflate the layout for this fragment
 
         MkShop.SCRREN = "PartsRequestNewItemFragment";
-
-
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.request_part_new_item, container, false);
-
-
         customerName = (EditText) v.findViewById(R.id.customername);
         status = (TextView) v.findViewById(R.id.status);
         dateTitle = (TextView) v.findViewById(R.id.date_title);
-
         date = (TextView) v.findViewById(R.id.datetext);
         price = (EditText) v.findViewById(R.id.priceEdit);
         mobileNo = (EditText) v.findViewById(R.id.mobile);
         part = (EditText) v.findViewById(R.id.partsrequired);
         submit = (Button) v.findViewById(R.id.submit);
-
-
         dialog = new MaterialDialog.Builder(getActivity())
                 .content("please wait")
                 .progress(true, 0).build();

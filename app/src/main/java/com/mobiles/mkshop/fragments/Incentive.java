@@ -32,7 +32,7 @@ public class Incentive extends Fragment {
     MaterialDialog materialDialog;
 
 
-    public static Incentive newInstance(int pos) {
+    public static Incentive newInstance() {
         Incentive fragment = new Incentive();
 
 

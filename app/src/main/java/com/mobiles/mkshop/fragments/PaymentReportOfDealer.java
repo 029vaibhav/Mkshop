@@ -33,8 +33,6 @@ public class PaymentReportOfDealer extends Fragment implements TextWatcher {
     ViewPager viewPager;
     TabsPagerDealerAdapter adapter;
     EditText search;
-
-
     String dealerName;
 
     public static PaymentReportOfDealer newInstance(String dealerName) {
@@ -96,7 +94,6 @@ public class PaymentReportOfDealer extends Fragment implements TextWatcher {
     private void init(ViewGroup viewGroup) {
 
         viewPager = (ViewPager) viewGroup.findViewById(R.id.pager);
-
         totalQuantity = (TextView) viewGroup.findViewById(R.id.totalQuantity);
         totalRevenue = (TextView) viewGroup.findViewById(R.id.totalRevenue);
         search = (EditText) viewGroup.findViewById(R.id.edit_search);

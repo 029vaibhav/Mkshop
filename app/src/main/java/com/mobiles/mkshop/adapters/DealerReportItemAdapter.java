@@ -137,7 +137,7 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
 
 
                         return (input.getCreated().toLowerCase().contains(s) ||
-                                input.getNote().contains(s) ||
+                                input.getNote().toLowerCase().contains(s) ||
                                 input.getAmount().toLowerCase().contains(s));
                     }
                 });
@@ -264,10 +264,35 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
                 @Override
                 public void success(String s, Response response) {
                     MkShop.toast(context.getActivity(), s);
-                    if (transactionType == TransactionType.Purchase)
-                        PurchaseHistory.deleteAll(PurchaseHistory.class, "server_id = ?", serverId);
-                    else if (transactionType == TransactionType.Payment)
-                        PaymentHistory.deleteAll(PaymentHistory.class, "server_id = ?", serverId);
+
+
+                    if (transactionType == TransactionType.Purchase) {
+
+                        try {
+                            PurchaseHistory purchaseHistory = PurchaseHistory.find(PurchaseHistory.class, "server_id = ?", serverId).get(0);
+                            PurchaseHistory.deleteAll(PurchaseHistory.class, "server_id = ?", serverId);
+                            if (purchaseHistory != null) {
+                                List<PurchaseHistory> newPurchaseHistories = PurchaseHistory.find(PurchaseHistory.class, "dealer_name = ?", purchaseHistory.getDealerName());
+                                Myenum.INSTANCE.setPurchaseHistories(newPurchaseHistories);
+                                purchaseHistories = Myenum.INSTANCE.getPurchaseHistories();
+                            }
+                        } catch (IndexOutOfBoundsException e) {
+                        }
+                    } else if (transactionType == TransactionType.Payment) {
+
+                        try {
+                            PaymentHistory paymentHistory = PaymentHistory.find(PaymentHistory.class, "server_id = ?", serverId).get(0);
+                            PaymentHistory.deleteAll(PaymentHistory.class, "server_id = ?", serverId);
+                            if (paymentHistory != null) {
+                                List<PaymentHistory>paymentHistoriesNew = PaymentHistory.find(PaymentHistory.class, "dealer_id =?", paymentHistory.getDealerId());
+                                Myenum.INSTANCE.setPaymentHistories(paymentHistoriesNew);
+                                paymentHistories = Myenum.INSTANCE.getPaymentHistories();
+
+                            }
+                        } catch (IndexOutOfBoundsException e) {
+                        }
+                    }
+                    notifyDataSetChanged();
 
                 }
 

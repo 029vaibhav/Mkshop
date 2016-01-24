@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/backe" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_white" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/ic_mkshop" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="Mobile shop"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="POWERED BY MOBIWEB"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

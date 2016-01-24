@@ -35,7 +35,7 @@ public class SendNotificationFragment extends Fragment {
     String[] roleOption = {"Admin", "Salesman", "Technician", "Receptionist"};
 
 
-    public static SendNotificationFragment newInstance(String param1, String param2) {
+    public static SendNotificationFragment newInstance() {
         SendNotificationFragment fragment = new SendNotificationFragment();
         Bundle args = new Bundle();
 

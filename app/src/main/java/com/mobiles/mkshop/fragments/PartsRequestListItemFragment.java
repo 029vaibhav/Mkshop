@@ -1,9 +1,9 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
-import android.support.v4.app.Fragment;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.models.PartsRequests;
 import com.mobiles.mkshop.pojos.enums.Status;
-import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.pojos.models.PartsRequests;
 
 import org.joda.time.DateTime;
 
@@ -32,7 +32,7 @@ public class PartsRequestListItemFragment extends Fragment {
 
 
     public static String TAG = "PartsRequestListItemFragment";
-    private TextView date, status,dateTitle;
+    private TextView date, status, dateTitle;
     EditText price, customerName, part, mobileNo;
     Button submit;
     String Stringdate, stringStatus;
@@ -57,11 +57,9 @@ public class PartsRequestListItemFragment extends Fragment {
 
         MkShop.SCRREN = "PartsRequestListItemFragment";
 
-
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.request_part_new_item, container, false);
 
         partsRequests = Myenum.INSTANCE.getRequestRepair();
-
         customerName = (EditText) v.findViewById(R.id.customername);
         customerName.setEnabled(false);
         status = (TextView) v.findViewById(R.id.status);
@@ -80,8 +78,7 @@ public class PartsRequestListItemFragment extends Fragment {
         status.setText(partsRequests.getStatus());
 
 
-        if(!partsRequests.getStatus().equalsIgnoreCase(Status.PENDING.name()))
-        {
+        if (!partsRequests.getStatus().equalsIgnoreCase(Status.PENDING.name())) {
             date.setVisibility(View.VISIBLE);
             dateTitle.setVisibility(View.VISIBLE);
         }
@@ -95,7 +92,7 @@ public class PartsRequestListItemFragment extends Fragment {
 
 
         setindex(partsRequests.getStatus());
-        stringStatus =partsRequests.getStatus();
+        stringStatus = partsRequests.getStatus();
 
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +107,7 @@ public class PartsRequestListItemFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
                         Stringdate = "" + year + "-" + monthOfYear + "-" + dayOfMonth;
-                        date.setText("" + dayOfMonth + "-" + monthOfYear+"-"+year);
+                        date.setText("" + dayOfMonth + "-" + monthOfYear + "-" + year);
                         datePickerDialog.dismiss();
 
                     }
@@ -173,10 +170,10 @@ public class PartsRequestListItemFragment extends Fragment {
 
                     partsRequests.setStatus(stringStatus);
 
-                    if(!date.getText().toString().equalsIgnoreCase("date") || date.getText().toString().length() > 0)
-                    partsRequests.setDeliveryDate(Stringdate);
+                    if (!date.getText().toString().equalsIgnoreCase("date") || date.getText().toString().length() > 0)
+                        partsRequests.setDeliveryDate(Stringdate);
 
-                    Client.INSTANCE.sendPartRequest(MkShop.AUTH,partsRequests, new Callback<String>() {
+                    Client.INSTANCE.sendPartRequest(MkShop.AUTH, partsRequests, new Callback<String>() {
                         @Override
                         public void success(String s, Response response) {
 
@@ -189,7 +186,8 @@ public class PartsRequestListItemFragment extends Fragment {
                             Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
-                    });                }
+                    });
+                }
             }
         });
 
@@ -197,33 +195,6 @@ public class PartsRequestListItemFragment extends Fragment {
         return v;
     }
 
-    private class SendData extends AsyncTask<Void, Void, Void> {
-
-        MaterialDialog dialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            dialog = new MaterialDialog.Builder(getActivity())
-                    .content("please wait")
-                    .progress(true, 0)
-                    .show();
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            dialog.dismiss();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-
-            return null;
-        }
-    }
 
     private int setindex(String status) {
 
