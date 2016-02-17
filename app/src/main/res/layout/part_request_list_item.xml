@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        fontPath="fonts/rr.ttf"
+
         android:id="@+id/customerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:textSize="20sp" />
 
     <TextView
-        fontPath="fonts/rr.ttf"
+
         android:layout_toLeftOf="@+id/reapirstatus"
         android:id="@+id/partName"
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
         android:textSize="15sp" />
 
     <TextView
-        fontPath="fonts/rr.ttf"
+
         android:id="@+id/repairjobno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         android:textSize="20sp" />
 
     <TextView
-        fontPath="fonts/rr.ttf"
+
         android:id="@+id/reapirstatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

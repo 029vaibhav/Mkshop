@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.Notification;
@@ -53,9 +54,7 @@ public class SendNotificationFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_send_notification, container, false);
 
-        dialog = new MaterialDialog.Builder(getActivity())
-                .content("please wait")
-                .progress(true, 0).build();
+        dialog = NavigationMenuActivity.materialDialog;
         final EditText message = (EditText) viewGroup.findViewById(R.id.message);
         final TextView date = (TextView) viewGroup.findViewById(R.id.validity);
         final AutoCompleteTextView role = (AutoCompleteTextView) viewGroup.findViewById(R.id.role);

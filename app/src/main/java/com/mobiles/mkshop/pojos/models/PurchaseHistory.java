@@ -5,7 +5,7 @@ import com.orm.SugarRecord;
 /**
  * Created by vaibhav on 21/11/15.
  */
-public class PurchaseHistory extends SugarRecord<PurchaseHistory>  {
+public class PurchaseHistory extends SugarRecord  {
 
 
     public PurchaseHistory() {

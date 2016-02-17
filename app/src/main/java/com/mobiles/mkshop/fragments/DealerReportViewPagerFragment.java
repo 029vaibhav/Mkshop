@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.DealerReportItemAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -117,10 +118,7 @@ public class DealerReportViewPagerFragment extends Fragment implements View.OnCl
         submit = (Button) dialog.findViewById(R.id.submit);
 
 
-        progressMaterialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        progressMaterialDialog = NavigationMenuActivity.materialDialog;
 
     }
 

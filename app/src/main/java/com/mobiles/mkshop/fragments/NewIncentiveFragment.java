@@ -19,6 +19,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.BrandModelList;
@@ -74,10 +75,7 @@ public class NewIncentiveFragment extends Fragment {
         salesList = new ArrayList<>();
         modelList = new ArrayList<>();
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
 
 

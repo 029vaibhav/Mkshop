@@ -19,7 +19,6 @@
             android:id="@+id/paySalary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -27,13 +26,12 @@
             android:gravity="center"
             android:padding="20dp"
             android:text="Pay Salary"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/viewExpenses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -41,13 +39,12 @@
             android:gravity="center"
             android:padding="20dp"
             android:text="View Salary/Incentive"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/viewBills"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -55,7 +52,7 @@
             android:gravity="center"
             android:padding="20dp"
             android:text="Purchases and payment"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
 </RelativeLayout>

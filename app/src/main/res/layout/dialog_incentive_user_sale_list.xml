@@ -14,7 +14,7 @@
 
             <TextView
                 android:id="@+id/message"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -47,7 +47,7 @@
             <Button
                 android:id="@+id/submit"
                 style="?android:buttonBarButtonStyle"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

@@ -14,7 +14,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
             <ImageView
@@ -40,7 +40,7 @@
 
             <EditText
                 android:id="@+id/dealer_edit"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/brand_title"
@@ -87,7 +87,7 @@
 
             <EditText
                 android:id="@+id/otheredit"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/total_edit"
@@ -106,7 +106,7 @@
 
             <TextView
                 android:id="@+id/note_text_input_layout"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/otheredit"
@@ -122,7 +122,7 @@
 
             <EditText
                 android:id="@+id/quantityEdit"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/note_text_input_layout"
@@ -143,7 +143,7 @@
             <TextView
                 android:id="@+id/text_input_layout"
 
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/total_edit"
@@ -158,7 +158,7 @@
 
             <EditText
                 android:id="@+id/note"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_input_layout"

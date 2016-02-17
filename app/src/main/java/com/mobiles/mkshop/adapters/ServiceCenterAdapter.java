@@ -19,6 +19,7 @@ import com.mobiles.mkshop.R;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by vaibhav on 28/6/15.
@@ -92,8 +93,8 @@ public class ServiceCenterAdapter extends BaseAdapter {
                     new Predicate<ServiceCenterEntity>() {
                         @Override
                         public boolean apply(ServiceCenterEntity input) {
-                            return (input.getBrand().toLowerCase().contains(s) || input.getModel().toLowerCase().contains(s) || input.getJobNo().toLowerCase().contains(s)
-                                    || input.getCreated().toLowerCase().contains(s) || input.getStatus().toLowerCase().contains(s));
+                            return (input.getBrand().toLowerCase(Locale.ENGLISH).contains(s) || input.getModel().toLowerCase(Locale.ENGLISH).contains(s) || input.getJobNo().toLowerCase(Locale.ENGLISH).contains(s)
+                                    || input.getCreated().toLowerCase(Locale.ENGLISH).contains(s) || input.getStatus().toLowerCase(Locale.ENGLISH).contains(s));
                         }
                     });
             repairList = Lists.newArrayList(serviceCenterEntityList);

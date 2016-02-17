@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/fromDate"
-            fontPath="fonts/rr.ttf"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/toDate"
-            fontPath="fonts/rr.ttf"
+
 
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
 
         <TextView
             android:id="@+id/quantity"
-            fontPath="fonts/rr.ttf"
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -88,7 +88,7 @@
 
         <TextView
             android:id="@+id/revenue"
-            fontPath="fonts/rr.ttf"
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_below="@+id/Brand"
@@ -127,7 +127,7 @@
             <TextView
                 android:id="@+id/total"
 
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
@@ -138,7 +138,7 @@
 
             <TextView
                 android:id="@+id/totalQuantity"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -151,7 +151,7 @@
 
             <TextView
                 android:id="@+id/totalRevenue"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"

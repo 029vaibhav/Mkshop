@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.IncentiveAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -65,10 +66,7 @@ public class Incentive extends Fragment {
             }
         });
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         materialDialog.show();
 

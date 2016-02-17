@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.NotificationAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -53,11 +54,7 @@ public class OffersFragment extends Fragment {
         recyclerView = (RecyclerView) viewGroup.findViewById(R.id.notificationList);
         search = (EditText) viewGroup.findViewById(R.id.edit_search);
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(false, 0)
-                .content("please wait")
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

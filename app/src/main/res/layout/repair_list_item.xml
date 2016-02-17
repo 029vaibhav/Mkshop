@@ -30,7 +30,7 @@
 
             <TextView
                 android:id="@+id/repairmodel"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/repairdate"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -55,7 +55,7 @@
 
             <TextView
                 android:id="@+id/repairjobno"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -67,7 +67,7 @@
 
             <TextView
                 android:id="@+id/reapirstatus"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

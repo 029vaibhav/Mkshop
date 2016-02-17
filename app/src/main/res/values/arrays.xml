@@ -34,9 +34,7 @@
         <item name="delete">delete</item>
     </string-array>
 
-    <string-array name="payment_options">
-        <item name="delete">delete</item>
-    </string-array>
+
 
     <string-array name="image_option">
         <item name="camera">Camera</item>
@@ -44,13 +42,6 @@
 
     </string-array>
 
-
-    <string-array name="bill_action">
-        <item name="view_bill">View Bill History</item>
-        <item name="pay_bill">Pay Bill</item>
-
-
-    </string-array>
 
 
     <string-array name="revenueComparator">

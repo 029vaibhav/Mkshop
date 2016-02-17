@@ -38,7 +38,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <RadioGroup
                     android:id="@+id/radiogroup"
@@ -51,7 +51,7 @@
 
                     <RadioButton
                         android:id="@+id/radiomobile"
-                        fontPath="fonts/rr.ttf"
+
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -61,7 +61,7 @@
 
                     <RadioButton
                         android:id="@+id/radioAccessory"
-                        fontPath="fonts/rr.ttf"
+
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -73,7 +73,7 @@
                 <TextView
                     android:id="@+id/accessorytitle"
 
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/radiogroup"
@@ -89,7 +89,7 @@
 
                 <TextView
                     android:id="@+id/accessoryType"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/accessorytitle"
@@ -113,7 +113,7 @@
                     <TextView
                         android:id="@+id/brand_title"
 
-                        fontPath="fonts/rr.ttf"
+
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
@@ -147,7 +147,6 @@
                     android:background="@drawable/border_text"
                     android:drawablePadding="10dp"
                     android:drawableRight="@drawable/right_arrow"
-                    android:editable="false"
                     android:gravity="center"
                     android:padding="10dp"
                     android:singleLine="true"
@@ -162,7 +161,7 @@
                     <TextView
                         android:id="@+id/modeltitle"
 
-                        fontPath="fonts/rr.ttf"
+
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
@@ -187,7 +186,7 @@
 
                 <TextView
                     android:id="@+id/modeltext"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relativemodel"
@@ -202,7 +201,7 @@
 
                 <EditText
                     android:id="@+id/otheredit"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/modeltext"
@@ -221,7 +220,7 @@
 
                 <TextView
                     android:id="@+id/priceEdit_text_input_layout"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/otheredit"
@@ -237,7 +236,7 @@
 
                 <EditText
                     android:id="@+id/quantityEdit"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/priceEdit_text_input_layout"
@@ -262,7 +261,7 @@
 
                     <TextView
                         android:id="@+id/imeitextview"
-                        fontPath="fonts/rr.ttf"
+
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
@@ -330,7 +329,7 @@
 
                     <TextView
                         android:id="@+id/text_input_layout"
-                        fontPath="fonts/rr.ttf"
+
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
@@ -355,7 +354,7 @@
 
                 <EditText
                     android:id="@+id/priceEdit"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relativeprice"
@@ -380,7 +379,7 @@
 
                     <TextView
                         android:id="@+id/customerNameTextview"
-                        fontPath="fonts/rr.ttf"
+
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
@@ -406,7 +405,7 @@
 
                 <EditText
                     android:id="@+id/customerName"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relativecustomer"
@@ -430,7 +429,7 @@
 
                     <TextView
                         android:id="@+id/mobileTextview"
-                        fontPath="fonts/rr.ttf"
+
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
@@ -456,7 +455,7 @@
 
                 <EditText
                     android:id="@+id/mobile"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relativemobile"
@@ -478,7 +477,7 @@
 
                     android:id="@+id/submit"
                     style="?android:buttonBarButtonStyle"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mobile"

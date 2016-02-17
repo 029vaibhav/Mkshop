@@ -67,6 +67,7 @@ public class LoginActivity extends Activity {
                 else if (password.getText().length() == 0)
                     MkShop.toast(LoginActivity.this, "please enter password");
                 else {
+                    if ((materialDialog != null) && !materialDialog.isShowing())
                     materialDialog.show();
                     Client.INSTANCE.login(username.getText().toString(), password.getText().toString(), new Callback<String>() {
                         @Override

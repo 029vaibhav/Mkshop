@@ -8,7 +8,6 @@
         android:id="@+id/cardlist_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fortitle"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -24,7 +23,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical">
 
@@ -43,7 +42,7 @@
 
                 <TextView
                     android:id="@+id/brandtext"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -54,7 +53,7 @@
                     android:gravity="center"
                     android:hint="Brand"
                     android:padding="10dp"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -82,7 +81,7 @@
                     android:gravity="center"
                     android:hint="model"
                     android:padding="10dp"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/otheredit"
@@ -97,7 +96,7 @@
                     android:hint="Model no"
                     android:padding="10dp"
                     android:singleLine="true"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -116,7 +115,7 @@
 
                 <TextView
                     android:id="@+id/status"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -127,7 +126,7 @@
                     android:gravity="center"
                     android:hint="status"
                     android:padding="10dp"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
 
                 <TextView
@@ -156,7 +155,7 @@
                     android:hint="Job no"
                     android:padding="10dp"
                     android:singleLine="true"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
 
                 <TextView
@@ -173,7 +172,7 @@
 
                 <EditText
                     android:id="@+id/problemedit"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -184,7 +183,7 @@
                     android:minLines="2"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
 
                 <TextView
@@ -201,7 +200,7 @@
 
                 <EditText
                     android:id="@+id/resolutionEdit"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -210,7 +209,7 @@
                     android:minLines="2"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
 
                 <TextView
@@ -231,8 +230,6 @@
                     android:id="@+id/priceEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/otheredit"
-
 
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/rupees"
@@ -240,17 +237,15 @@
                     android:hint="Price"
                     android:inputType="number"
                     android:padding="10dp"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
                 <!--</LinearLayout>-->
 
                 <Button
                     android:id="@+id/submit"
                     style="?android:buttonBarButtonStyle"
-                    fontPath="fonts/rr.ttf"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/linear"
-                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:background="@drawable/button_selector"

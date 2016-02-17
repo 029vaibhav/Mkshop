@@ -25,6 +25,7 @@ import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.ProfileAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -55,7 +56,6 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
     CollapsingToolbarLayout collapsingToolbar;
     RecyclerView recyclerView;
-    int mutedColor = R.attr.colorPrimary;
     ProfileAdapter simpleRecyclerAdapter;
     Bitmap bitmap;
 
@@ -85,10 +85,7 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
 
         View viewGroup = inflater.inflate(R.layout.fragment_profile, container, false);
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         collapsingToolbar = (CollapsingToolbarLayout) viewGroup.findViewById(R.id.collapsing_toolbar);
 

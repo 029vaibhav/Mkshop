@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.LeaderBoardDialogAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -120,10 +121,7 @@ public class UserSalesService extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(linearLayoutManager);
         fromDatePickerDialog = new DatePickerDialog(getActivity(), fromDateListener, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
         toDatePickerDialog = new DatePickerDialog(getActivity(), toDateListner, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
     }
 
     @Override

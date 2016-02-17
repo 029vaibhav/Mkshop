@@ -19,6 +19,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.ViewProductadapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -66,15 +67,13 @@ public class ViewProductFragment extends Fragment {
 
         salesList = new ArrayList<>();
         brandTextView = (AutoCompleteTextView) viewGroup.findViewById(R.id.brand);
-        scrollView = (ScrollView) viewGroup.findViewById(R.id.scroll);
+        scrollView = (ScrollView) viewGroup.findViewById(R.id.scroll_view);
         gridRecyclerView = (RecyclerView) viewGroup.findViewById(R.id.recyclerView);
 
         search = (AutoCompleteTextView) viewGroup.findViewById(R.id.search);
         submit = (TextView) viewGroup.findViewById(R.id.submit);
-        dialog = new MaterialDialog.Builder(getActivity())
-                .content("please wait")
-                .progress(true, 0)
-                .show();
+        dialog = NavigationMenuActivity.materialDialog;
+        dialog.show();
 
         Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
             @Override
@@ -96,7 +95,8 @@ public class ViewProductFragment extends Fragment {
                 }
                 brandStrings.addAll(brand);
 
-                dialog.dismiss();
+                if (dialog != null && dialog.isShowing())
+                    dialog.dismiss();
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>
                         (getActivity(), android.R.layout.select_dialog_item, brandStrings);
                 brandTextView.setThreshold(1);

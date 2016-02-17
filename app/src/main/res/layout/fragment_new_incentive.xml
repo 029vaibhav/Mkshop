@@ -20,16 +20,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
             <TextView
                 android:id="@+id/brand_title"
 
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/accessoryType"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:dividerPadding="8dp"
@@ -40,7 +39,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/brandtext"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/brand_title"
@@ -59,7 +58,7 @@
 
             <!--<TextView-->
             <!--android:id="@+id/brandtext"-->
-            <!--fontPath="fonts/rr.ttf"-->
+            <!---->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:layout_below="@+id/accessoryType"-->
@@ -76,7 +75,7 @@
             <TextView
                 android:id="@+id/modeltitle"
 
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/brandtext"
@@ -91,7 +90,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/modeltext"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/modeltitle"
@@ -106,7 +105,7 @@
 
             <EditText
                 android:id="@+id/otheredit"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/modeltext"
@@ -125,7 +124,7 @@
 
             <TextView
                 android:id="@+id/priceEdit_text_input_layout"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/otheredit"
@@ -141,7 +140,7 @@
 
             <EditText
                 android:id="@+id/quantityEdit"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/priceEdit_text_input_layout"
@@ -162,7 +161,7 @@
             <TextView
                 android:id="@+id/basePriceTextView"
 
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/quantityEdit"
@@ -177,7 +176,7 @@
 
             <EditText
                 android:id="@+id/basePrice"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/basePriceTextView"
@@ -198,7 +197,7 @@
             <TextView
                 android:id="@+id/incentivetext"
 
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/basePrice"
@@ -213,7 +212,7 @@
 
             <EditText
                 android:id="@+id/incentiveAmount"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/incentivetext"
@@ -233,7 +232,7 @@
 
             <TextView
                 android:id="@+id/quantitytextView"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/incentiveAmount"
@@ -249,7 +248,7 @@
             <EditText
                 android:text="1"
                 android:id="@+id/quantity"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/quantitytextView"
@@ -284,7 +283,7 @@
 
                 android:id="@+id/submit"
                 style="?android:buttonBarButtonStyle"
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/validity"

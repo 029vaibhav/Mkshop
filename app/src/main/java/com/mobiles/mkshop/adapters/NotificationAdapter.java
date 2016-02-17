@@ -17,6 +17,7 @@ import com.mobiles.mkshop.pojos.models.Notification;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by vaibhav on 26/7/15.
@@ -73,7 +74,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     new Predicate<Notification>() {
                         @Override
                         public boolean apply(Notification input) {
-                            return (input.getMessage().toLowerCase().contains(s.toString()));
+                            return (input.getMessage().toLowerCase(Locale.ENGLISH).contains(s.toString()));
                         }
                     });
 

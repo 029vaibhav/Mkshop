@@ -25,7 +25,6 @@
 
         <TextView
             android:id="@+id/date"
-            fontPath="fonts/Brandon_med.otf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|end"
@@ -34,17 +33,16 @@
             android:text="data" />
 
         <LinearLayout
-            android:layout_gravity="center"
             android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="horizontal"
             android:weightSum="10">
 
             <TextView
 
                 android:id="@+id/Brand"
-                fontPath="fonts/Brandon_med.otf"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
@@ -56,24 +54,16 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
-
-
-
             <TextView
                 android:id="@+id/revenue"
-
-                fontPath="fonts/rr.ttf"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/Brand"
                 android:layout_weight="4"
                 android:gravity="right|center_vertical|end"
                 android:paddingRight="10dp"
                 android:text="model"
                 android:textSize="15sp" />
         </LinearLayout>
-
-
 
 
     </LinearLayout>

@@ -11,6 +11,7 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.pojos.models.LeaderBoardDetails;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by vaibhav on 9/10/15.
@@ -41,19 +42,19 @@ public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDi
 
         LeaderBoardDetails leaderBoardDetails = sales.get(position);
 
-        holder.brand.setText(leaderBoardDetails.getModel().toUpperCase());
-        holder.model.setText(leaderBoardDetails.getBrand().toUpperCase());
+        holder.brand.setText(leaderBoardDetails.getModel().toUpperCase(Locale.ENGLISH));
+        holder.model.setText(leaderBoardDetails.getBrand().toUpperCase(Locale.ENGLISH));
         holder.date.setText(leaderBoardDetails.getCreated().substring(0, 10));
         holder.revenue.setText(context.getString(R.string.rs) + "" + leaderBoardDetails.getPrice());
         if (leaderBoardDetails.getAccessoryType() != null)
             holder.accessoryType.setText(leaderBoardDetails.getAccessoryType());
         else if (leaderBoardDetails.getProblem() != null) {
-            holder.accessoryType.setText(leaderBoardDetails.getProblem().replace("\n", "").toUpperCase());
+            holder.accessoryType.setText(leaderBoardDetails.getProblem().replace("\n", "").toUpperCase(Locale.ENGLISH));
         } else
             holder.accessoryType.setVisibility(View.GONE);
 
         if (leaderBoardDetails.getResolution() != null) {
-            holder.resolution.setText(leaderBoardDetails.getResolution().replace("\n", "").toUpperCase());
+            holder.resolution.setText(leaderBoardDetails.getResolution().replace("\n", "").toUpperCase(Locale.ENGLISH));
         } else holder.resolution.setVisibility(View.GONE);
 
 

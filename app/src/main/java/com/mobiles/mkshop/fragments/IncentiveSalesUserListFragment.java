@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.IncentiveUserlistDialogAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -83,10 +84,7 @@ public class IncentiveSalesUserListFragment extends Fragment {
         IncentiveUserlistDialogAdapter incentiveUserlistDialogAdapter = new IncentiveUserlistDialogAdapter(IncentiveSalesUserListFragment.this, salesList);
         recyclerView.setAdapter(incentiveUserlistDialogAdapter);
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

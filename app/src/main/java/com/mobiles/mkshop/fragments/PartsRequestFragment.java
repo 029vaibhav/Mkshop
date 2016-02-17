@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.PartRequestAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -57,11 +58,7 @@ public class PartsRequestFragment extends Fragment {
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_parts_request, container, false);
         partsRequestsList = new ArrayList<PartsRequests>();
         final EditText search = (EditText) viewGroup.findViewById(R.id.edit_search);
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(false, 0)
-                .content("please wait")
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
         listView = (ListView) viewGroup.findViewById(R.id.repairlist);
         FloatingActionButton fab = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
         listInitializer();

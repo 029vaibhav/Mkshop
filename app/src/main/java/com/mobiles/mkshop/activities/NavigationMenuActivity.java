@@ -19,13 +19,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.application.CircleImageView;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.AttendanceThroughWifi;
@@ -64,9 +65,17 @@ public class NavigationMenuActivity extends AppCompatActivity
     LoginDetails loginDetailsList;
     NavigationView navigationView;
     long back_pressed;
-    ImageView imageView;
+    CircleImageView imageView;
     TextView name;
+    public static MaterialDialog materialDialog;
 
+    @Override
+    protected void onPause() {
+        if (materialDialog != null && materialDialog.isShowing()) {
+            materialDialog.dismiss();
+        }
+        super.onPause();
+    }
 
     protected void navigation() {
 
@@ -134,12 +143,16 @@ public class NavigationMenuActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        imageView = ((ImageView) headerView.findViewById(R.id.user_photo));
+        imageView = (CircleImageView) headerView.findViewById(R.id.user_photo);
         name = ((TextView) headerView.findViewById(R.id.name));
         navigation();
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        materialDialog = new com.afollestad.materialdialogs.MaterialDialog.Builder(NavigationMenuActivity.this)
+                .content("please wait")
+                .progress(true, 0)
+                .cancelable(false)
+                .build();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new SplashFragment()).commit();
 
 

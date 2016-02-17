@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.SalesReportItemAdapter;
 import com.mobiles.mkshop.adapters.TabsPagerAdapter;
 import com.mobiles.mkshop.application.Client;
@@ -72,10 +73,7 @@ public class SalesReport extends Fragment {
         MkShop.SCRREN = "SalesReport";
 
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_sales_report, container, false);
         viewPager = (ViewPager) viewGroup.findViewById(R.id.pager);

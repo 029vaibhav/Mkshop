@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.TabsPagerAdapterExpense;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -66,10 +67,7 @@ public class ViewExpenseFragment extends Fragment {
         MkShop.SCRREN = "ViewExpenseFragment";
 
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_view_expense, container, false);
         viewPager = (ViewPager) viewGroup.findViewById(R.id.pager);

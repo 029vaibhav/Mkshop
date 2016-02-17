@@ -54,7 +54,7 @@
         <menu>
 
             <item
-                android:id="@+id/parts_requested"
+                android:id="@+id/parts"
                 android:icon="@drawable/parts"
                 android:title="Part Requested" />
 

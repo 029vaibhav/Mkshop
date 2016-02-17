@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.TabsPagerAdapterService;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -70,10 +71,7 @@ public class ServiceReport extends Fragment {
 
         MkShop.SCRREN = "ServiceReport";
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
 
         viewPager = (ViewPager) viewGroup.findViewById(R.id.pager_report);

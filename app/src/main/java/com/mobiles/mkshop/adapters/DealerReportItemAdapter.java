@@ -18,6 +18,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
@@ -32,6 +33,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -67,10 +69,7 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.view_bill_dialog);
 
-        progressMaterialDialog = new MaterialDialog.Builder(context.getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        progressMaterialDialog = NavigationMenuActivity.materialDialog;
 
 
         imageView = (ImageView) dialog.findViewById(R.id.bill_image);
@@ -126,7 +125,7 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
 
     public void setSearchText(Editable s1) {
 
-        final String s = s1.toString().toLowerCase();
+        final String s = s1.toString().toLowerCase(Locale.ENGLISH);
         if (transactionType == TransactionType.Payment) {
 
 
@@ -136,9 +135,9 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
                     public boolean apply(PaymentHistory input) {
 
 
-                        return (input.getCreated().toLowerCase().contains(s) ||
-                                input.getNote().toLowerCase().contains(s) ||
-                                input.getAmount().toLowerCase().contains(s));
+                        return (input.getCreated().toLowerCase(Locale.ENGLISH).contains(s) ||
+                                input.getNote().toLowerCase(Locale.ENGLISH).contains(s) ||
+                                input.getAmount().toLowerCase(Locale.ENGLISH).contains(s));
                     }
                 });
                 paymentHistories = Lists.newArrayList(filter);
@@ -152,9 +151,9 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
                     public boolean apply(PurchaseHistory input) {
 
 
-                        return (input.getCreated().toLowerCase().contains(s) ||
-                                input.getNote().toLowerCase().contains(s) ||
-                                input.getTotalAmt().toLowerCase().contains(s));
+                        return (input.getCreated().toLowerCase(Locale.ENGLISH).contains(s) ||
+                                input.getNote().toLowerCase(Locale.ENGLISH).contains(s) ||
+                                input.getTotalAmt().toLowerCase(Locale.ENGLISH).contains(s));
                     }
                 });
                 purchaseHistories = Lists.newArrayList(filter);

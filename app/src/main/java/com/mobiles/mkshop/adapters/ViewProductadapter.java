@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by vaibhav on 2/7/15.
@@ -112,7 +113,7 @@ public class ViewProductadapter extends RecyclerView.Adapter<ViewProductadapter.
                     new Predicate<Sales>() {
                         @Override
                         public boolean apply(Sales input) {
-                            return (input.getModelNo().toLowerCase().contains(s.toString()));
+                            return (input.getModelNo().toLowerCase(Locale.ENGLISH).contains(s.toString()));
                         }
                     });
 

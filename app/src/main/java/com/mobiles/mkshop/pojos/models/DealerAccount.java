@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by vaibhav on 16/11/15.
  */
-public class DealerAccount extends SugarRecord<DealerAccount> {
+public class DealerAccount extends SugarRecord {
 
     String dealerName, dealerId;
     List<ProductExpense> productExpenses;

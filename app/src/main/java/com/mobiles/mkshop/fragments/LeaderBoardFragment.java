@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.LeaderBoardItemAdapter;
 import com.mobiles.mkshop.adapters.TabsPagerAdapterLeader;
 import com.mobiles.mkshop.application.Client;
@@ -186,10 +187,7 @@ public class LeaderBoardFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            materialDialog = new MaterialDialog.Builder(getActivity())
-                    .progress(true, 0)
-                    .cancelable(false)
-                    .build();
+            materialDialog = NavigationMenuActivity.materialDialog;
 
             materialDialog.show();
         }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.pojos.models.ProductExpense;
 
 import java.util.List;
@@ -42,10 +43,7 @@ public class ViewBillAdapter extends RecyclerView.Adapter<ViewBillAdapter.ViewHo
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.view_bill_dialog);
 
-        progressMaterialDialog = new MaterialDialog.Builder(context.getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        progressMaterialDialog = NavigationMenuActivity.materialDialog;
 
 
         imageView = (ImageView) dialog.findViewById(R.id.bill_image);

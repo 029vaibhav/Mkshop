@@ -26,7 +26,6 @@
         <TextView
             android:visibility="invisible"
             android:id="@+id/date"
-            fontPath="fonts/Brandon_med.otf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|start"
@@ -45,7 +44,6 @@
             <TextView
 
                 android:id="@+id/dealer_name"
-                fontPath="fonts/Brandon_med.otf"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
@@ -61,7 +59,7 @@
             <TextView
                 android:id="@+id/total_amt"
 
-                fontPath="fonts/rr.ttf"
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/Brand"
@@ -74,7 +72,6 @@
 
         <TextView
             android:id="@+id/due_amt"
-            fontPath="fonts/Brandon_med.otf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|end"

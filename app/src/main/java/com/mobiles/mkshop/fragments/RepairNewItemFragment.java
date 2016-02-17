@@ -18,6 +18,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.BrandModelList;
@@ -82,11 +83,7 @@ public class RepairNewItemFragment extends Fragment {
         salesList = new ArrayList<>();
 
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .content("please wait")
-                .progress(true, 0)
-                .build();
-
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         brand = (AutoCompleteTextView) v.findViewById(R.id.brandtext);
         status = (TextView) v.findViewById(R.id.status);

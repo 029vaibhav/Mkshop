@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.UserListItemAdpater;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -86,10 +87,7 @@ public class UserListFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            dialog = new MaterialDialog.Builder(getActivity())
-                    .content("please wait")
-                    .progress(true, 0)
-                    .show();
+            dialog = NavigationMenuActivity.materialDialog;
         }
 
 

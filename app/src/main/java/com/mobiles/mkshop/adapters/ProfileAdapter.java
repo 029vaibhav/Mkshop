@@ -19,6 +19,7 @@ import com.mobiles.mkshop.pojos.enums.UserType;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -56,7 +57,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
 
 
         if (!list.get(i).getTitle().equalsIgnoreCase("photo")) {
-            versionViewHolder.title.setText(list.get(i).getTitle().toUpperCase());
+            versionViewHolder.title.setText(list.get(i).getTitle().toUpperCase(Locale.ENGLISH));
             versionViewHolder.subTitle.setText(list.get(i).getvalue());
             if (!MkShop.Role.equalsIgnoreCase(UserType.ADMIN.name()) && versionViewHolder.title.getText().toString().equalsIgnoreCase("role"))
                 versionViewHolder.imageView.setVisibility(View.INVISIBLE);
@@ -129,7 +130,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
             super(itemView);
 
             cardItemLayout = (CardView) itemView.findViewById(R.id.cardlist_item);
-            title = (TextView) itemView.findViewById(R.id.title);
+            title = (TextView) itemView.findViewById(R.id.textview_title);
             subTitle = (EditText) itemView.findViewById(R.id.detail);
             imageView = (ImageView) itemView.findViewById(R.id.edit);
 

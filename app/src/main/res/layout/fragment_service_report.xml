@@ -15,7 +15,7 @@
 
 
         <TextView
-            fontPath="fonts/rr.ttf"
+
             android:id="@+id/fromDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/toDate"
-            fontPath="fonts/rr.ttf"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

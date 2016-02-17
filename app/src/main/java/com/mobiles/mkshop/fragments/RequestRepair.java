@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.ServiceCenterAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -60,11 +61,7 @@ public class RequestRepair extends Fragment {
         MkShop.SCRREN = "RequestRepair";
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_request_repair, container, false);
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(false, 0)
-                .content("please wait")
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         listView = (ListView) view.findViewById(R.id.repairlist);
         search = (EditText) view.findViewById(R.id.edit_search);

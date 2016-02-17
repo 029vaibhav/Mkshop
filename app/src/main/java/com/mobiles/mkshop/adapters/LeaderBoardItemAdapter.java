@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
@@ -24,6 +25,7 @@ import com.mobiles.mkshop.pojos.models.LeaderBoardDetails;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -61,10 +63,7 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        materialDialog = new MaterialDialog.Builder(context.getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
 
     }
@@ -81,7 +80,7 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Leader leader = leaderList.get(position);
-        holder.name.setText(leader.getName().toUpperCase());
+        holder.name.setText(leader.getName().toUpperCase(Locale.ENGLISH));
 
         if (leader.getProductDetail() != null) {
 

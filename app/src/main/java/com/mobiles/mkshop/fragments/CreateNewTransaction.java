@@ -23,6 +23,7 @@ import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.ProductExpense;
@@ -151,10 +152,7 @@ public class CreateNewTransaction extends Fragment implements ImageChooserListen
     private void init(ViewGroup viewGroup) {
 
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         dealerNameEditText = (EditText) viewGroup.findViewById(R.id.dealer_edit);
         totalAmt = (EditText) viewGroup.findViewById(R.id.total_edit);

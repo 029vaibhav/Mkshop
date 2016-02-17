@@ -21,6 +21,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -145,10 +146,7 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
 
     private void initViews(ViewGroup v) {
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
         radiogroup = (RadioGroup) v.findViewById(R.id.radiogroup);
         brand = (TextView) v.findViewById(R.id.brandtext);
         accessoryType = (TextView) v.findViewById(R.id.accessoryType);

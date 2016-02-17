@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.ViewBillAdapter;
 import com.mobiles.mkshop.pojos.models.ProductExpense;
 
@@ -62,10 +63,7 @@ public class ViewBills extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         executeQuery();
 

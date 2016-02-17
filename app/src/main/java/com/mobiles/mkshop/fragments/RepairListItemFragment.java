@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
@@ -64,14 +65,14 @@ public class RepairListItemFragment extends Fragment {
             modelNo.setText(service.getModel());
             price.setText("" + service.getPrice());
             jobNo.setText(service.getJobNo());
+            if (service.getResolution() != null && !service.getResolution().equalsIgnoreCase("null"))
+                resolution.setText(service.getResolution());
         } catch (NullPointerException e) {
             this.onDestroy();
         }
 
         jobNo.setEnabled(false);
 
-        if (service.getResolution() != null && !service.getResolution().equalsIgnoreCase("null"))
-            resolution.setText(service.getResolution());
 
         status.setText(service.getStatus());
         stringStatus = service.getStatus();
@@ -169,10 +170,7 @@ public class RepairListItemFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            dialog = new MaterialDialog.Builder(getActivity())
-                    .content("please wait")
-                    .progress(true, 0)
-                    .build();
+            dialog = NavigationMenuActivity.materialDialog;
             dialog.show();
         }
 

@@ -31,7 +31,8 @@ public class ViewProductItemFragment extends Fragment {
 
     Button buyButton;
 
-    EditText brand, model, sim, screenSize, displayType, platform, iMemory, eMemory, fCamera, rCamera, bluetooth, price, battery;
+    EditText brand, model, sim, screenSize, displayType, platform, iMemory, eMemory, fCamera, rCamera, price, battery;
+//    EditText bluetooth;
 
     public static ViewProductItemFragment newInstance(String param1) {
         ViewProductItemFragment fragment = new ViewProductItemFragment();
@@ -70,7 +71,7 @@ public class ViewProductItemFragment extends Fragment {
         eMemory = (EditText) viewGroup.findViewById(R.id.eMemory);
         fCamera = (EditText) viewGroup.findViewById(R.id.fCamera);
         rCamera = (EditText) viewGroup.findViewById(R.id.rCamera);
-        bluetooth = (EditText) viewGroup.findViewById(R.id.bluetooth);
+//        bluetooth = (EditText) viewGroup.findViewById(R.id.bluetooth);
         price = (EditText) viewGroup.findViewById(R.id.price);
         battery = (EditText) viewGroup.findViewById(R.id.battery);
 

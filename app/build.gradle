@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
     }
 
     dependencies {
@@ -13,6 +14,7 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 ext {
@@ -42,9 +44,9 @@ android {
     defaultConfig {
         applicationId "com.mobiles.mkshop"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 22
-        versionName "2.6.3"
+        targetSdkVersion 23
+        versionCode 23
+        versionName "2.6.4"
     }
     buildTypes {
         release {
@@ -56,6 +58,7 @@ android {
     }
     productFlavors {
     }
+
 }
 
 dependencies {
@@ -64,14 +67,12 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-
-
-
-
-    compile 'com.github.satyan:sugar:1.3.1'
+    compile 'com.github.satyan:sugar:1.4'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.afollestad.material-dialogs:core:0.8.0.0@aar'
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
+        transitive = true
+    }
     compile 'joda-time:joda-time:2.3'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'

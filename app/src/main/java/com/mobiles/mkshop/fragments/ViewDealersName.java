@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.ViewDealerNameAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -70,11 +71,7 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
-
+        materialDialog = NavigationMenuActivity.materialDialog;
 
         sharedPreferences = getActivity().getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
 
@@ -91,7 +88,7 @@ public class ViewDealersName extends Fragment implements View.OnClickListener {
             @Override
             public void success(final List<ProductExpense> serverProductExpenses, Response response) {
 
-                sharedPreferences.edit().putString(MkShop.LAST_VIEWED_DATE, sToDate).commit();
+                sharedPreferences.edit().putString(MkShop.LAST_VIEWED_DATE, sToDate).apply();
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
                 for (int i = 0; i < serverProductExpenses.size(); i++) {

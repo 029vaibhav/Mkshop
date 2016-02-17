@@ -5,7 +5,7 @@ import com.orm.SugarRecord;
 /**
  * Created by arvind on 21/8/15.
  */
-public class BrandModelList extends SugarRecord<BrandModelList> {
+public class BrandModelList extends SugarRecord {
 
 
     String brand, modelNo, accessoryType, type;

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by vaibhav on 2/10/15.
  */
-public class ProductExpense extends SugarRecord<ProductExpense> {
+public class ProductExpense extends SugarRecord {
 
 
     public ProductExpense() {

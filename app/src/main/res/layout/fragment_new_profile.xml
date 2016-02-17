@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <ScrollView
-        android:layout_above="@+id/submit"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/submit">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -56,8 +55,6 @@
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/edit"
-                        
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
@@ -107,8 +104,7 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/edit"
-                        
+
                         android:inputType="textEmailAddress"
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
@@ -159,7 +155,6 @@
                         android:id="@+id/mobileNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/edit"
                         android:inputType="number"
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
@@ -211,8 +206,6 @@
                         android:id="@+id/address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/edit"
-                        
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
@@ -264,8 +257,6 @@
                         android:id="@+id/qualification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/edit"
-                        
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
@@ -316,8 +307,6 @@
                         android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/edit"
-                        
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
@@ -326,7 +315,6 @@
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-
 
 
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -371,7 +359,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/edit"
-                        
+
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
@@ -422,8 +410,6 @@
                         android:id="@+id/role"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/edit"
-                        
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
@@ -434,18 +420,17 @@
             </android.support.v7.widget.CardView>
 
 
-
         </LinearLayout>
     </ScrollView>
 
     <TextView
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_orange_dark"
-        android:gravity="center"
-        android:padding="15dp"
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Submit" />
+        android:background="@android:color/holo_orange_dark"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Submit"
+        android:textColor="@android:color/black" />
 </RelativeLayout>

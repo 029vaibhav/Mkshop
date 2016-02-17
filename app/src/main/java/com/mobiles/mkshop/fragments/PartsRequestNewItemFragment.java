@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
+import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.enums.Status;
@@ -63,9 +64,7 @@ public class PartsRequestNewItemFragment extends Fragment {
         mobileNo = (EditText) v.findViewById(R.id.mobile);
         part = (EditText) v.findViewById(R.id.partsrequired);
         submit = (Button) v.findViewById(R.id.submit);
-        dialog = new MaterialDialog.Builder(getActivity())
-                .content("please wait")
-                .progress(true, 0).build();
+        dialog = NavigationMenuActivity.materialDialog;
 
         date.setOnClickListener(new View.OnClickListener() {
 
