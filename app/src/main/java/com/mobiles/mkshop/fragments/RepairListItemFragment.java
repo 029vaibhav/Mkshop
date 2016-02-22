@@ -1,6 +1,5 @@
 package com.mobiles.mkshop.fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -52,9 +51,7 @@ public class RepairListItemFragment extends Fragment {
         // Inflate the layout for this fragment
 
         MkShop.SCRREN = "RepairListItemFragment";
-
         service = Myenum.INSTANCE.getServiceCenterEntity();
-
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_repair_list_item, container, false);
         initView(v);
 
@@ -70,7 +67,6 @@ public class RepairListItemFragment extends Fragment {
         } catch (NullPointerException e) {
             this.onDestroy();
         }
-
         jobNo.setEnabled(false);
 
 
@@ -120,7 +116,7 @@ public class RepairListItemFragment extends Fragment {
                     service.setResolution(resolution.getText().toString());
                 else service.setResolution("");
 
-                new SendData().execute();
+                SendData();
             }
         });
 
@@ -162,56 +158,44 @@ public class RepairListItemFragment extends Fragment {
 
     }
 
-    private class SendData extends AsyncTask<Void, Void, Void> {
+    private void SendData() {
 
-        MaterialDialog dialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            dialog = NavigationMenuActivity.materialDialog;
-            dialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
+        final MaterialDialog dialog;
+        dialog = NavigationMenuActivity.materialDialog;
+        dialog.show();
 
 
-            Client.INSTANCE.sendService(MkShop.AUTH, service, new Callback<String>() {
-                @Override
-                public void success(String s, Response response) {
+        Client.INSTANCE.sendService(MkShop.AUTH, service, new Callback<String>()
 
+                {
+                    @Override
+                    public void success(String s, Response response) {
+                        if (dialog != null && dialog.isShowing())
+                            dialog.dismiss();
+                        MkShop.toast(getActivity(), s);
+                        int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
+                        for (int i = 0; i < backStackEntryCount; i++) {
+                            getFragmentManager().popBackStack();
+                        }
+                        Fragment fragment = RequestRepair.newInstance();
+                        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    }
 
-                    if (dialog != null && dialog.isShowing())
-                        dialog.dismiss();
+                    @Override
+                    public void failure(RetrofitError error) {
+                        if (dialog != null && dialog.isShowing())
+                            dialog.dismiss();
+                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
+                            MkShop.toast(getActivity(), "please check your internet connection");
+                        else
+                            MkShop.toast(getActivity(), error.getMessage());
 
-                    MkShop.toast(getActivity(), s);
-                    Fragment fragment = new RequestRepair();
-
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    }
                 }
 
-                @Override
-                public void failure(RetrofitError error) {
+        );
 
-                    if (dialog != null && dialog.isShowing())
-                        dialog.dismiss();
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(), "please check your internet connection");
-                    else
-                        MkShop.toast(getActivity(), error.getMessage());
 
-                }
-            });
-            return null;
-        }
     }
 
 }

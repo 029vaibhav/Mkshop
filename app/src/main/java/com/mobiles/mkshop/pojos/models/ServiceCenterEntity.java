@@ -1,12 +1,12 @@
 package com.mobiles.mkshop.pojos.models;
 
 
+import java.util.Comparator;
+
 /**
  * Created by vaibhav on 28/6/15.
  */
-//@JsonIgnoreProperties(ignoreUnknown = true)
-public class ServiceCenterEntity {
-
+public class ServiceCenterEntity{
 
     int id;
     String model, brand, problem,modifiedDate, deliveryDate,place;
@@ -120,6 +120,5 @@ public class ServiceCenterEntity {
     public void setStatus(String status) {
         this.status = status;
     }
-
 
 }

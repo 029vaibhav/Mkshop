@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mobiles.mkshop.R;
@@ -102,6 +103,7 @@ public class NavigationMenuActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        logUser();
         setContentView(R.layout.activity_navigation_menu);
 
         sharedPreferences = getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
@@ -190,9 +192,14 @@ public class NavigationMenuActivity extends AppCompatActivity
             if (back_pressed + 2000 > System.currentTimeMillis())
                 super.onBackPressed();
             else {
-                Toast.makeText(getBaseContext(), "Press once again to exit!",
-                        Toast.LENGTH_SHORT).show();
-                back_pressed = System.currentTimeMillis();
+                if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                    Toast.makeText(getBaseContext(), "Press once again to exit!",
+                            Toast.LENGTH_SHORT).show();
+                    back_pressed = System.currentTimeMillis();
+                }
+                else {
+                    super.onBackPressed();
+                }
             }
 
         }
@@ -401,4 +408,10 @@ public class NavigationMenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void logUser() {
+        Crashlytics.setUserIdentifier(MkShop.Role);
+        Crashlytics.setUserName(MkShop.Username);
+    }
+
 }

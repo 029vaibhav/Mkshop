@@ -21,12 +21,19 @@ import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static java.util.Collections.reverse;
+import static java.util.Collections.sort;
 
 
 public class RequestRepair extends Fragment {
@@ -135,13 +142,22 @@ public class RequestRepair extends Fragment {
 
     private void listInitializer() {
         materialDialog.show();
+        final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+
 
         Client.INSTANCE.getServiceList(MkShop.AUTH, new Callback<List<ServiceCenterEntity>>() {
             @Override
-            public void success(List<ServiceCenterEntity> serviceCenterEntiities, Response response) {
+            public void success(List<ServiceCenterEntity> serviceCenterEntiities, final Response response) {
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
                 repairList = serviceCenterEntiities;
+                sort(repairList, new Comparator<ServiceCenterEntity>() {
+                    @Override
+                    public int compare(ServiceCenterEntity lhs, ServiceCenterEntity rhs) {
+                        return formatter.parseDateTime(lhs.getCreated()).compareTo(formatter.parseDateTime(rhs.getCreated()));
+                    }
+                });
+                reverse(repairList);
                 Myenum.INSTANCE.setServiceList(repairList);
                 serviceCenterAdapter = new ServiceCenterAdapter(getActivity(), repairList);
                 listView.setAdapter(serviceCenterAdapter);
