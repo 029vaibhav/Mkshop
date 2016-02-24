@@ -194,16 +194,7 @@ public enum Client {
 
 
     Client() {
-
-
-////
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.registerModule(new JodaModule());
-
-//        JacksonConverter jacksonConverter = new JacksonConverter(new ObjectMapper());
-
         RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint("http://192.168.1.102:80")
                 .setEndpoint("http://mkmobileshop.in:80")
                 .setLog(new RestAdapter.Log() {
                     @Override
@@ -213,10 +204,8 @@ public enum Client {
                 })
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
-
         mobileService = restAdapter.create(MobileService.class);
     }
-
 
     public void login(String username, String password, Callback<String> responseCallback)
 

@@ -51,6 +51,7 @@ import com.mobiles.mkshop.fragments.ViewProductFragment;
 import com.mobiles.mkshop.gcm.RegistrationIntentService;
 import com.mobiles.mkshop.pojos.enums.UserType;
 import com.mobiles.mkshop.pojos.models.LoginDetails;
+import com.mobiles.mkshop.utils.JsoupUtilities;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
@@ -97,6 +98,9 @@ public class NavigationMenuActivity extends AppCompatActivity
         }
         name.setText(loginDetailsList.getName());
         setMenuAccordingToRole(MkShop.Role, navigationView);
+
+        JsoupUtilities jsoupUtilities = new JsoupUtilities();
+        jsoupUtilities.getData();
 
     }
 
