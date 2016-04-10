@@ -1,34 +1,39 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
-import android.support.v4.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.adapters.RevenueCompartorAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.PriceCompartorService;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import org.joda.time.DateTime;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RevenueCompatorFragment extends Fragment {
 
     public static String TAG = "RevenueCompatorFragment";
+    String[] whichString = {"Mobile", "brandService", "Accessory"};
 
 
     TextView toDate, fromDate, totalQuantity, totalRevenue, category;
@@ -74,52 +79,72 @@ public class RevenueCompatorFragment extends Fragment {
                     MkShop.toast(getActivity(), "please select date range");
                 } else {
                     {
-                        new MaterialDialog.Builder(getActivity())
-                                .items(R.array.revenueComparator)
-                                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
-                                    @Override
-                                    public boolean onSelection(MaterialDialog dialog, View view, final int which, CharSequence text) {
+                        final List<String> statusOfParts = Arrays.asList(getResources().getStringArray(R.array.revenueComparator));
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        final ArrayAdapter<String> aa1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_single_choice, statusOfParts);
+                        builder.setSingleChoiceItems(aa1, 0, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-                                        tempQuantity = 0;
-                                        tempRevenue = 0;
-                                        category.setText(text.toString());
-
-                                        Client.INSTANCE.getpricecompator(MkShop.AUTH, sFromdate, sToDate, "" + which, new Callback<List<PriceCompartorService>>() {
-                                            @Override
-                                            public void success(List<PriceCompartorService> response1, Response response) {
-
-
-                                                listItemAdapter = new RevenueCompartorAdapter(getActivity(), response1);
-                                                listView.setAdapter(listItemAdapter);
-
-
-                                                for (int i = 0; i < response1.size(); i++) {
-                                                    tempQuantity = tempQuantity + Integer.parseInt(response1.get(i).getQuantity());
-                                                    if(response1.get(i).getPrice()!=null)
-                                                    tempRevenue = tempRevenue + Integer.parseInt(response1.get(i).getPrice());
-                                                }
-                                                totalRevenue.setText("" + tempRevenue);
-                                                totalQuantity.setText("" + tempQuantity);
-
+                                tempQuantity = 0;
+                                tempRevenue = 0;
+                                String text = statusOfParts.get(which);
+                                category.setText(text);
+                                if (which == 0 || which == 2) {
+                                    Client.INSTANCE.getpricecompator(MkShop.AUTH, sFromdate, sToDate, whichString[which]).enqueue(new Callback<List<Sales>>() {
+                                        @Override
+                                        public void onResponse(Call<List<Sales>> call, Response<List<Sales>> response) {
+                                            listItemAdapter = new RevenueCompartorAdapter(getActivity(), response.body());
+                                            listView.setAdapter(listItemAdapter);
+                                            for (int i = 0; i < response.body().size(); i++) {
+                                                tempQuantity = tempQuantity + Integer.parseInt(response.body().get(i).getQuantity());
+                                                if (response.body().get(i).getPrice() != null)
+                                                    tempRevenue = tempRevenue + Integer.parseInt(response.body().get(i).getPrice());
                                             }
+                                            totalRevenue.setText("" + tempRevenue);
+                                            totalQuantity.setText("" + tempQuantity);
 
-                                            @Override
-                                            public void failure(RetrofitError error) {
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<List<Sales>> call, Throwable t) {
+
+                                                MkShop.toast(getActivity(), t.getMessage());
+
+                                        }
+                                    });
+                                } else if (which == 1) {
+                                    Client.INSTANCE.getPriceComparatorTech(MkShop.AUTH, sFromdate, sToDate).enqueue(new Callback<List<Sales>>() {
+                                        @Override
+                                        public void onResponse(Call<List<Sales>> call, Response<List<Sales>> response) {
 
 
-                                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                                    MkShop.toast(getActivity(), "please check your internet connection");
-                                                else
-                                                    MkShop.toast(getActivity(), error.getMessage());
-
+                                            listItemAdapter = new RevenueCompartorAdapter(getActivity(), response.body());
+                                            listView.setAdapter(listItemAdapter);
+                                            for (int i = 0; i < response.body().size(); i++) {
+                                                tempQuantity = tempQuantity + Integer.parseInt(response.body().get(i).getQuantity());
+                                                if (response.body().get(i).getPrice() != null)
+                                                    tempRevenue = tempRevenue + Integer.parseInt(response.body().get(i).getPrice());
                                             }
-                                        });
+                                            totalRevenue.setText("" + tempRevenue);
+                                            totalQuantity.setText("" + tempQuantity);
 
-                                        return true;
-                                    }
-                                })
-                                .positiveText("select")
-                                .show();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<List<Sales>> call, Throwable t) {
+
+                                                MkShop.toast(getActivity(), t.getMessage());
+                                        }
+                                    });
+                                }
+                            }
+
+                        });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+
+
+
                     }
                 }
 

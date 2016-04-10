@@ -1,6 +1,7 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -16,7 +17,6 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -27,17 +27,18 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.interfaces.ScannerCallback;
 import com.mobiles.mkshop.pojos.enums.ProductType;
-import com.mobiles.mkshop.pojos.models.BrandModelList;
+import com.mobiles.mkshop.pojos.models.Product;
 import com.mobiles.mkshop.pojos.models.Sales;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.mobiles.mkshop.application.MkShop.toast;
 
@@ -47,12 +48,12 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
 
     public static String TAG = "Sales";
 
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
     private RadioGroup radiogroup;
     private TextView brand, accessoryType, modelNo, imeitextview, starCustomerName, starMobileNo, startImei;
     EditText quantity, price, other, customerName, imei, mobile;
     Button submit;
-    List<BrandModelList> modelSalesList, productTypeList, salesList;
+    List<Product> modelSalesList, productTypeList, salesList;
     List<String> brandList, modelList, accessoryTypeList;
     Dialog brandModelDialog;
     Scanner picker;
@@ -121,14 +122,14 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
         accessoryTypeList = new ArrayList<>();
         modelSalesList = new ArrayList<>();
         modelList = new ArrayList<>();
-        salesList = BrandModelList.listAll(BrandModelList.class);
+        salesList = Product.listAll(Product.class);
 
 
         try {
-            productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+            productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
                 @Override
-                public boolean apply(BrandModelList input) {
-                    return (input.getType().equalsIgnoreCase(stringProductType));
+                public boolean apply(Product input) {
+                    return (input.getType().name().equalsIgnoreCase(stringProductType));
                 }
             }));
         } catch (Exception e) {
@@ -271,10 +272,10 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
                 brandModelDialog.dismiss();
                 accessoryType.setText(stringAccessory);
 
-                List<BrandModelList> newArrayList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<BrandModelList>() {
+                List<Product> newArrayList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<Product>() {
                     @Override
-                    public boolean apply(BrandModelList input) {
-                        return (input.getType().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
+                    public boolean apply(Product input) {
+                        return (input.getType().name().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
                     }
                 }));
 
@@ -334,9 +335,9 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
                 stringBrand = brandList.get(position);
                 brandModelDialog.dismiss();
                 brand.setText(stringBrand);
-                modelSalesList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<BrandModelList>() {
+                modelSalesList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<Product>() {
                     @Override
-                    public boolean apply(BrandModelList input) {
+                    public boolean apply(Product input) {
 
                         if (stringAccessory == null)
                             return (input.getBrand().equalsIgnoreCase(stringBrand));
@@ -349,7 +350,7 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
 
                 modelList = new ArrayList<String>();
                 for (int i = 0; i < modelSalesList.size(); i++) {
-                    modelList.add(modelSalesList.get(i).getModelNo());
+                    modelList.add(modelSalesList.get(i).getModel());
                 }
                 modelList.add("other");
 
@@ -390,10 +391,10 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
                 modelList.clear();
                 accessoryTypeList.clear();
                 brandList.clear();
-                productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+                productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
                     @Override
-                    public boolean apply(BrandModelList input) {
-                        return (input.getType().equalsIgnoreCase(stringProductType));
+                    public boolean apply(Product input) {
+                        return (input.getType().name().equalsIgnoreCase(stringProductType));
                     }
                 }));
 
@@ -431,10 +432,10 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
                 modelList.clear();
                 accessoryTypeList.clear();
                 brandList.clear();
-                productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+                productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
                     @Override
-                    public boolean apply(BrandModelList input) {
-                        return (input.getType().equalsIgnoreCase(stringProductType));
+                    public boolean apply(Product input) {
+                        return (input.getType().name().equalsIgnoreCase(stringProductType));
                     }
                 }));
 
@@ -463,7 +464,7 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
 
 
             sales = new Sales();
-            sales.setType(stringProductType);
+            sales.setProductType(ProductType.valueOf(stringProductType));
             sales.setBrand(stringBrand);
             sales.setModel(stringModel);
             if (stringAccessory == null)
@@ -485,32 +486,21 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
         @Override
         protected Void doInBackground(Void... params) {
 
-
-            Client.INSTANCE.sales(MkShop.AUTH, sales, new Callback<String>() {
+            Client.INSTANCE.sales(MkShop.AUTH, sales).enqueue(new Callback<Void>() {
                 @Override
-                public void success(String response, Response response2) {
-
-                    MkShop.toast(getActivity(), response);
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    MkShop.toast(getActivity(), getString(R.string.success_message));
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-
                     submit.setEnabled(false);
-
-
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-
+                public void onFailure(Call<Void> call, Throwable t) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
 
-
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(), "check your internet connection");
-                    else
-                        MkShop.toast(getActivity(), error.getMessage());
-
+                        MkShop.toast(getActivity(), t.getMessage());
                     submit.setEnabled(true);
 
                 }

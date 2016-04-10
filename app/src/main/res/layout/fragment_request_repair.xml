@@ -17,12 +17,12 @@
         android:hint="search"
         android:singleLine="true" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/repairlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/edit_search"
-        android:divider="@null"></ListView>
+        android:divider="@null"></android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

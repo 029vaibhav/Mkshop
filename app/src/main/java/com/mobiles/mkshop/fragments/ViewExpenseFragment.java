@@ -2,6 +2,7 @@ package com.mobiles.mkshop.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,23 +14,22 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.TabsPagerAdapterExpense;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
 import com.mobiles.mkshop.pojos.enums.PaymentType;
+import com.mobiles.mkshop.pojos.models.ExpenseEntity;
 
 import org.joda.time.DateTime;
 
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ViewExpenseFragment extends Fragment {
 
@@ -40,7 +40,7 @@ public class ViewExpenseFragment extends Fragment {
     TabsPagerAdapterExpense adapter;
     String sFromdate, sToDate;
     int tempQuantity = 0, tempRevenue = 0;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
     public static ViewExpenseFragment newInstance() {
         ViewExpenseFragment fragment = new ViewExpenseFragment();
@@ -116,7 +116,7 @@ public class ViewExpenseFragment extends Fragment {
 
                     if (sales1 != null) {
                         for (int i = 0; i < sales1.size(); i++) {
-                        //    tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
+                            //    tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
                             tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getAmount());
                         }
                         totalRevenue.setText("" + tempRevenue);
@@ -127,7 +127,7 @@ public class ViewExpenseFragment extends Fragment {
 
                     if (sales1 != null) {
                         for (int i = 0; i < sales1.size(); i++) {
-                       //     tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
+                            //     tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
                             tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getAmount());
                         }
                         totalRevenue.setText("" + tempRevenue);
@@ -205,46 +205,34 @@ public class ViewExpenseFragment extends Fragment {
 
         materialDialog.show();
 
-
-        Client.INSTANCE.getExpenseReport(MkShop.AUTH, sFromdate, sToDate, new Callback<List<ExpenseEntity>>() {
+        Client.INSTANCE.getExpenseReport(MkShop.AUTH, sFromdate, sToDate).enqueue(new Callback<List<ExpenseEntity>>() {
             @Override
-            public void success(final List<ExpenseEntity> expenseEntities, Response response) {
+            public void onResponse(Call<List<ExpenseEntity>> call, Response<List<ExpenseEntity>> response) {
 
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                Myenum.INSTANCE.setExpenseList(expenseEntities);
+                Myenum.INSTANCE.setExpenseList(response.body());
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
                 adapter = new TabsPagerAdapterExpense(myContext.getSupportFragmentManager());
                 viewPager.setAdapter(adapter);
-
                 tempQuantity = 0;
                 tempRevenue = 0;
-
-//                List<ExpenseEntity> sales1 = Myenum.INSTANCE.getExpenseList(PaymentType.Product);
-//                for (int i = 0; i < sales1.size(); i++) {
-//                    tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
-//                    tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getAmount());
-//                }
                 totalRevenue.setText("" + tempRevenue);
                 totalQuantity.setText("" + tempQuantity);
-
-
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void onFailure(Call<List<ExpenseEntity>> call, Throwable t) {
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                MkShop.toast(getActivity(), error.getMessage().toString());
+                MkShop.toast(getActivity(), t.getMessage().toString());
 
             }
         });
 
 
     }
-
-
 
 
 }

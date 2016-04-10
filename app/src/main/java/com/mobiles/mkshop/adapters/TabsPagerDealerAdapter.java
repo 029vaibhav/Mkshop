@@ -12,14 +12,14 @@ import com.mobiles.mkshop.fragments.DealerReportViewPagerFragment;
  */
 public class TabsPagerDealerAdapter extends FragmentStatePagerAdapter {
 
-    String dealerName;
+    Long dealerId;
 
     public TabsPagerDealerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void setDealerName(String dealerName) {
-        this.dealerName = dealerName;
+    public void setDealerId(Long dealerId) {
+        this.dealerId = dealerId;
     }
 
     private final SparseArray<DealerReportViewPagerFragment> mPageReferences = new SparseArray<DealerReportViewPagerFragment>();
@@ -44,7 +44,7 @@ public class TabsPagerDealerAdapter extends FragmentStatePagerAdapter {
     public android.support.v4.app.Fragment getItem(int position) {
 
 
-        DealerReportViewPagerFragment myFragment = DealerReportViewPagerFragment.newInstance(position,dealerName);
+        DealerReportViewPagerFragment myFragment = DealerReportViewPagerFragment.newInstance(position, dealerId);
         mPageReferences.put(position, myFragment);
         // return  new DealerReportViewPagerFragment().newInstance(position);
         return myFragment;

@@ -24,16 +24,16 @@ public class IncentiveUserlistAdapter extends RecyclerView.Adapter<IncentiveUser
     Fragment context;
     ListMultimap<String, Sales> userlist;
     List<String> list;
-    String id ,message;
+    String id, message;
 
-    public IncentiveUserlistAdapter(Fragment salesReportList, ListMultimap<String, Sales> userlist,String id,String message) {
+    public IncentiveUserlistAdapter(Fragment salesReportList, ListMultimap<String, Sales> userlist, String id, String message) {
         context = salesReportList;
         this.userlist = userlist;
         list = new ArrayList<>();
 
         list.addAll(userlist.asMap().keySet());
-        this.id=id;
-        this.message =message;
+        this.id = id;
+        this.message = message;
 
 
     }
@@ -60,8 +60,8 @@ public class IncentiveUserlistAdapter extends RecyclerView.Adapter<IncentiveUser
 
 
                 IncentiveSalesUserListFragment incentiveSalesUserListFragment =
-                        IncentiveSalesUserListFragment.newInstance(userlist.get(list.get(position)),id,message);
-                context.getFragmentManager().beginTransaction().replace(R.id.container, incentiveSalesUserListFragment).commit();
+                        IncentiveSalesUserListFragment.newInstance(userlist.get(list.get(position)), id, message);
+                context.getFragmentManager().beginTransaction().replace(R.id.container, incentiveSalesUserListFragment).addToBackStack(null).commit();
 
 
             }

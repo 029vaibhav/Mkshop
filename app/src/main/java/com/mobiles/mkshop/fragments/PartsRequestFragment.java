@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.PartRequestAdapter;
@@ -21,13 +21,14 @@ import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.models.PartsRequests;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PartsRequestFragment extends Fragment {
@@ -36,7 +37,7 @@ public class PartsRequestFragment extends Fragment {
 
     PartRequestAdapter partRequestAdapter;
     List<PartsRequests> partsRequestsList;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
     ListView listView;
 
 
@@ -110,26 +111,25 @@ public class PartsRequestFragment extends Fragment {
         if (materialDialog != null)
             materialDialog.show();
         {
-            Client.INSTANCE.getPartList(MkShop.AUTH, new Callback<List<PartsRequests>>() {
+            Client.INSTANCE.getPartList(MkShop.AUTH).enqueue(new Callback<List<PartsRequests>>() {
                 @Override
-                public void success(List<PartsRequests> partsRequestses, Response response) {
+                public void onResponse(Call<List<PartsRequests>> call, Response<List<PartsRequests>> response) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-                    partsRequestsList = partsRequestses;
+                    partsRequestsList = response.body();
                     Myenum.INSTANCE.setPartsRequestsList(partsRequestsList);
                     partRequestAdapter = new PartRequestAdapter(getActivity(), partsRequestsList);
                     listView.setAdapter(partRequestAdapter);
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void onFailure(Call<List<PartsRequests>> call, Throwable t) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK)) {
-                        MkShop.toast(getActivity(), "Please check your internet connection");
-                    } else {
-                        MkShop.toast(getActivity(), error.getMessage());
-                    }
+
+                        MkShop.toast(getActivity(), t.getMessage());
+
+
                 }
             });
 

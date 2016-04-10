@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,10 +23,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.CircleImageView;
 import com.mobiles.mkshop.application.Client;
@@ -53,11 +52,12 @@ import com.mobiles.mkshop.pojos.enums.UserType;
 import com.mobiles.mkshop.pojos.models.LoginDetails;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class NavigationMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,7 +68,7 @@ public class NavigationMenuActivity extends AppCompatActivity
     long back_pressed;
     CircleImageView imageView;
     TextView name;
-    public static MaterialDialog materialDialog;
+    public static ProgressDialog materialDialog;
 
     @Override
     protected void onPause() {
@@ -83,20 +83,26 @@ public class NavigationMenuActivity extends AppCompatActivity
         MkShop.AUTH = sharedPreferences.getString("AUTH", null);
         MkShop.Username = sharedPreferences.getString("USERNAME", null);
         String json = sharedPreferences.getString("DETAIL", null);
-        Type type = new TypeToken<LoginDetails>() {
-        }.getType();
-        loginDetailsList = new Gson().fromJson(json, type);
-        MkShop.Role = loginDetailsList.getRole();
-
-
-        if (loginDetailsList.getPhoto() != null && loginDetailsList.getPhoto().length() > 0 && !loginDetailsList.getPhoto().equals("")) {
-            Picasso.with(this).load(loginDetailsList.getPhoto().replace("\\", "")).into(imageView);
-        } else {
-            Bitmap bitmapAvtar = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
-            imageView.setImageBitmap(bitmapAvtar);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            loginDetailsList = objectMapper.readValue(json, LoginDetails.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        name.setText(loginDetailsList.getName());
-        setMenuAccordingToRole(MkShop.Role, navigationView);
+        if (loginDetailsList != null) {
+            MkShop.Role = loginDetailsList.getUser().getRole();
+            if (loginDetailsList.getUser().getPhoto() != null && loginDetailsList.getUser().getPhoto().length() > 0 && !loginDetailsList.getUser().getPhoto().equals("")) {
+                Picasso.with(this).load(loginDetailsList.getUser().getPhoto().replace("\\", "")).into(imageView);
+            } else {
+                Bitmap bitmapAvtar = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
+                imageView.setImageBitmap(bitmapAvtar);
+            }
+            name.setText(loginDetailsList.getUser().getName());
+            setMenuAccordingToRole(MkShop.Role, navigationView);
+        } else {
+            Toast.makeText(NavigationMenuActivity.this, "Please login again", Toast.LENGTH_SHORT).show();
+            super.onDestroy();
+        }
 
     }
 
@@ -150,11 +156,9 @@ public class NavigationMenuActivity extends AppCompatActivity
         navigation();
         navigationView.setNavigationItemSelectedListener(this);
 
-        materialDialog = new com.afollestad.materialdialogs.MaterialDialog.Builder(NavigationMenuActivity.this)
-                .content("please wait")
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
+        materialDialog = new ProgressDialog(this);
+        materialDialog.setMessage("please wait");
+        materialDialog.setCancelable(false);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new SplashFragment()).commit();
 
 
@@ -196,8 +200,7 @@ public class NavigationMenuActivity extends AppCompatActivity
                     Toast.makeText(getBaseContext(), "Press once again to exit!",
                             Toast.LENGTH_SHORT).show();
                     back_pressed = System.currentTimeMillis();
-                }
-                else {
+                } else {
                     super.onBackPressed();
                 }
             }
@@ -238,26 +241,28 @@ public class NavigationMenuActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.logOut) {
 
-            Client.INSTANCE.logout(MkShop.Username, new Callback<String>() {
+            Call<Void> logout = Client.INSTANCE.logout(MkShop.Username);
+            logout.enqueue(new Callback<Void>() {
                 @Override
-                public void success(String s, Response response) {
+                public void onResponse(Call<Void> call, Response<Void> response) {
+
                     sharedPreferences.edit().putString("AUTH", null).apply();
                     sharedPreferences.edit().putString("USERNAME", null).apply();
                     sharedPreferences.edit().putString("DETAIL", null).apply();
                     Intent intent = new Intent(NavigationMenuActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
+
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void onFailure(Call<Void> call, Throwable t) {
 
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(NavigationMenuActivity.this, "please check your internet connection");
-                    else MkShop.toast(NavigationMenuActivity.this, "something went wrong");
+                    MkShop.toast(NavigationMenuActivity.this, t.getMessage());
 
                 }
             });
+
         } else if (id == R.id.profile) {
 
             Fragment fragment = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);

@@ -11,7 +11,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="PLESE MENTION THE PARTS REQUIRED"
-        android:textColor="@color/md_material_blue_600" />
+        android:textColor="@android:color/holo_blue_light" />
 
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"

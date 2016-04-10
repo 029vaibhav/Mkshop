@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,16 +11,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.Location;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NewWifiNames extends Fragment
@@ -28,7 +30,7 @@ public class NewWifiNames extends Fragment
 
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
     public static String TAG = "NewWifiNames";
     private static final String lat = "lat";
@@ -119,26 +121,21 @@ public class NewWifiNames extends Fragment
                     location.setLongitude(longitude.getText().toString());
                     location.setRadius("");
                     location.setRole(role.getText().toString());
-                    Client.INSTANCE.setLocation(MkShop.AUTH, location, new Callback<String>() {
+                    Client.INSTANCE.setLocation(MkShop.AUTH, location).enqueue(new Callback<String>() {
                         @Override
-                        public void success(String s, Response response) {
-
+                        public void onResponse(Call<String> call, Response<String> response) {
                             if (materialDialog != null && materialDialog.isShowing())
                                 materialDialog.dismiss();
-                            MkShop.toast(getActivity(), s);
+                            MkShop.toast(getActivity(), response.body());
                             Fragment fragment = new GeoPointsFragment();
                             getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             if (materialDialog != null && materialDialog.isShowing())
                                 materialDialog.dismiss();
-                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                MkShop.toast(getActivity(), "check your internet connection");
-                            else MkShop.toast(getActivity(), error.getMessage());
-
+                             MkShop.toast(getActivity(), t.getMessage());
 
                         }
                     });

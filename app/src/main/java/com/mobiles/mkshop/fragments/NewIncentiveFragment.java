@@ -1,6 +1,7 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -22,9 +22,9 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.BrandModelList;
-import com.mobiles.mkshop.pojos.models.IncentiveEntity;
 import com.mobiles.mkshop.pojos.enums.ProductType;
+import com.mobiles.mkshop.pojos.models.IncentiveEntity;
+import com.mobiles.mkshop.pojos.models.Product;
 
 import org.joda.time.DateTime;
 
@@ -33,9 +33,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by vaibhav on 31/7/15.
@@ -46,9 +46,9 @@ public class NewIncentiveFragment extends Fragment {
     EditText basePrice, quantity, incentive;
     Button submit;
     TextView validity;
-    List<BrandModelList> salesList;
-    List<BrandModelList> modelList;
-    MaterialDialog materialDialog;
+    List<Product> salesList;
+    List<Product> modelList;
+    ProgressDialog materialDialog;
     String validityDate;
 
     public static NewIncentiveFragment newInstance(int pos) {
@@ -78,34 +78,30 @@ public class NewIncentiveFragment extends Fragment {
         materialDialog = NavigationMenuActivity.materialDialog;
 
 
+        salesList.clear();
+        materialDialog.dismiss();
 
-                salesList.clear();
-                materialDialog.dismiss();
-
-                List<BrandModelList> sales = BrandModelList.listAll(BrandModelList.class);
-
-
-                salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<BrandModelList>() {
-                    @Override
-                    public boolean apply(BrandModelList input) {
-                        return (input.getType().equalsIgnoreCase(ProductType.Mobile.name()));
-                    }
-                }));
+        List<Product> sales = Product.listAll(Product.class);
 
 
-                List<String> brandStrings = new ArrayList<String>();
-                Set<String> brands = new HashSet();
-                for (int i = 0; i < sales.size(); i++) {
-                    brands.add(sales.get(i).getBrand());
-                }
-                brandStrings.addAll(brands);
-
-                ArrayAdapter<String> mobilelist = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, brandStrings);
-                brand.setThreshold(1);
-                brand.setAdapter(mobilelist);
+        salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<Product>() {
+            @Override
+            public boolean apply(Product input) {
+                return (input.getType() == ProductType.Mobile);
+            }
+        }));
 
 
+        List<String> brandStrings = new ArrayList<String>();
+        Set<String> brands = new HashSet();
+        for (int i = 0; i < sales.size(); i++) {
+            brands.add(sales.get(i).getBrand());
+        }
+        brandStrings.addAll(brands);
 
+        ArrayAdapter<String> mobilelist = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, brandStrings);
+        brand.setThreshold(1);
+        brand.setAdapter(mobilelist);
 
 
         model.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -116,9 +112,9 @@ public class NewIncentiveFragment extends Fragment {
                         MkShop.toast(getActivity(), "please select brand first");
                     else {
 
-                        modelList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+                        modelList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
                             @Override
-                            public boolean apply(BrandModelList input) {
+                            public boolean apply(Product input) {
                                 return (input.getBrand().equalsIgnoreCase(brand.getText().toString()));
                             }
                         }));
@@ -126,7 +122,7 @@ public class NewIncentiveFragment extends Fragment {
                         List<String> brandList = new ArrayList<String>();
                         Set<String> brandStrings = new HashSet();
                         for (int i = 0; i < modelList.size(); i++) {
-                            brandStrings.add(modelList.get(i).getModelNo());
+                            brandStrings.add(modelList.get(i).getModel());
                         }
                         brandList.addAll(brandStrings);
 
@@ -147,21 +143,13 @@ public class NewIncentiveFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-
-
                         String sToDate = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
-
-
                         validity.setText(sToDate);
-                        DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
-
-                        validityDate = dt.toString("yyyy-MM-dd");
-
-
+                        DateTime dt = new DateTime(i, i2 + 1, i3, 23, 59);
+                        validityDate = dt.toString(getString(R.string.date_format));
                     }
                 }, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
                 datePickerDialog.show();
@@ -199,13 +187,12 @@ public class NewIncentiveFragment extends Fragment {
                     incentiveEntity.setValidity(validityDate);
                     incentiveEntity.setQuantity(quantity.getText().toString());
                     incentiveEntity.setIncentiveAmount(incentive.getText().toString());
-
-                    Client.INSTANCE.createIncentive(MkShop.AUTH, incentiveEntity, new Callback<String>() {
+                    Client.INSTANCE.createIncentive(MkShop.AUTH, incentiveEntity).enqueue(new Callback<Void>() {
                         @Override
-                        public void success(String s, Response response) {
+                        public void onResponse(Call<Void> call, Response<Void> response) {
                             if (materialDialog != null && materialDialog.isShowing())
-                            materialDialog.dismiss();
-                            MkShop.toast(getActivity(), s);
+                                materialDialog.dismiss();
+                            MkShop.toast(getActivity(), "Registered Successfully");
 
                             Fragment fragment = getFragmentManager().findFragmentByTag(Incentive.TAG);
                             if (fragment == null) {
@@ -216,16 +203,14 @@ public class NewIncentiveFragment extends Fragment {
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
+                        public void onFailure(Call<Void> call, Throwable t) {
                             if (materialDialog != null && materialDialog.isShowing())
-                            materialDialog.dismiss();
-
-                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                MkShop.toast(getActivity(), "Please check your internet connection");
-                            else MkShop.toast(getActivity(), error.getMessage());
+                                materialDialog.dismiss();
+                            MkShop.toast(getActivity(), t.getMessage());
 
                         }
                     });
+
                 }
 
 

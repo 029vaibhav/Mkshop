@@ -2,9 +2,9 @@ package com.mobiles.mkshop.adapters;
 
 import android.graphics.Color;
 import android.util.Log;
-
-import com.squareup.timessquare.CalendarCellDecorator;
-import com.squareup.timessquare.CalendarCellView;
+//
+//import com.squareup.timessquare.CalendarCellDecorator;
+//import com.squareup.timessquare.CalendarCellView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by vaibhav on 9/7/15.
  */
-public class Decorators implements CalendarCellDecorator {
+public class Decorators/* implements CalendarCellDecorator*/ {
 
     List<String> dateArrayList;
     DateFormat df;
@@ -26,7 +26,7 @@ public class Decorators implements CalendarCellDecorator {
     }
 
 
-    @Override
+   /* @Override
     public void decorate(CalendarCellView cellView, Date date) {
 
         String reportDate = df.format(date);
@@ -39,5 +39,5 @@ public class Decorators implements CalendarCellDecorator {
             cellView.setBackgroundColor(Color.WHITE);
         }
 
-    }
+    }*/
 }

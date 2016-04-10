@@ -1,7 +1,10 @@
 package com.mobiles.mkshop.adapters;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
@@ -23,20 +25,21 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.enums.TransactionType;
-import com.mobiles.mkshop.pojos.models.PaymentHistory;
-import com.mobiles.mkshop.pojos.models.PurchaseHistory;
+import com.mobiles.mkshop.pojos.models.Payment;
+import com.mobiles.mkshop.pojos.models.Purchase;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by vaibhav on 2/7/15.
@@ -45,19 +48,20 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
 
     Fragment context;
     TransactionType transactionType;
-    List<PurchaseHistory> purchaseHistories;
-    List<PaymentHistory> paymentHistories;
+    List<Purchase> purchaseHistories;
+    List<Payment> paymentHistories;
 
     Dialog dialog;
-    MaterialDialog progressMaterialDialog;
+    ProgressDialog progressMaterialDialog;
     ImageView imageView, backButton;
     ProgressBar progressBar;
 
-    DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+    DateTimeFormatter formatter;
 
 
     public DealerReportItemAdapter(Fragment salesReportList, TransactionType transactionType) {
         context = salesReportList;
+        formatter = DateTimeFormat.forPattern(context.getString(R.string.date_format));
         this.transactionType = transactionType;
         if (transactionType == TransactionType.Payment) {
             paymentHistories = Myenum.INSTANCE.getPaymentHistories();
@@ -93,18 +97,18 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
         if (transactionType == TransactionType.Payment) {
             paymentHistories = Myenum.INSTANCE.getPaymentHistories();
 
-            PaymentHistory paymentHistory = paymentHistories.get(position);
-            holder.amount.setText(context.getActivity().getString(R.string.rs) + " " + paymentHistory.getAmount());
-            holder.date.setText(formatter.parseDateTime(paymentHistory.getCreated()).toString("dd/MM/YY"));
-            holder.note.setText(context.getActivity().getString(R.string.rs) + " " + paymentHistory.getNote());
-            holder.month.setText(formatter.parseDateTime(paymentHistory.getCreated()).toString("MMM"));
+            Payment payment = paymentHistories.get(position);
+            holder.amount.setText(context.getActivity().getString(R.string.rs) + " " + payment.getAmount());
+            holder.date.setText(formatter.parseDateTime(payment.getCreated()).toString("dd/MM/YY"));
+            holder.note.setText(context.getActivity().getString(R.string.rs) + " " + payment.getNote());
+            holder.month.setText(formatter.parseDateTime(payment.getCreated()).toString("MMM"));
 
 
         } else {
             purchaseHistories = Myenum.INSTANCE.getPurchaseHistories();
 
-            PurchaseHistory paymentHistory = purchaseHistories.get(position);
-            holder.amount.setText(context.getActivity().getString(R.string.rs) + " " + paymentHistory.getTotalAmt());
+            Purchase paymentHistory = purchaseHistories.get(position);
+            holder.amount.setText(context.getActivity().getString(R.string.rs) + " " + paymentHistory.getAmount());
             holder.date.setText(formatter.parseDateTime(paymentHistory.getCreated()).toString("dd/MM/YY"));
             holder.note.setText(paymentHistory.getNote());
             holder.month.setText(formatter.parseDateTime(paymentHistory.getCreated()).toString("MMM"));
@@ -127,33 +131,27 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
 
         final String s = s1.toString().toLowerCase(Locale.ENGLISH);
         if (transactionType == TransactionType.Payment) {
-
-
             if (s.length() > 0) {
-                Collection<PaymentHistory> filter = Collections2.filter(paymentHistories, new Predicate<PaymentHistory>() {
+
+                Collection<Payment> filter = Collections2.filter(paymentHistories, new Predicate<Payment>() {
                     @Override
-                    public boolean apply(PaymentHistory input) {
-
-
-                        return (input.getCreated().toLowerCase(Locale.ENGLISH).contains(s) ||
-                                input.getNote().toLowerCase(Locale.ENGLISH).contains(s) ||
-                                input.getAmount().toLowerCase(Locale.ENGLISH).contains(s));
+                    public boolean apply(Payment input) {
+                        return (input.getCreated().toLowerCase(Locale.ENGLISH).contains(s.toLowerCase()) ||
+                                input.getNote().toLowerCase(Locale.ENGLISH).contains(s.toLowerCase()) ||
+                                String.valueOf(input.getAmount()).toLowerCase(Locale.ENGLISH).contains(s.toLowerCase())
+                                || formatter.parseDateTime(input.getCreated()).toString("MMM").toLowerCase().contains(s.toLowerCase()));
                     }
                 });
                 paymentHistories = Lists.newArrayList(filter);
             } else paymentHistories = Myenum.INSTANCE.getPaymentHistories();
-
-
         } else {
             if (s.length() > 0) {
-                Collection<PurchaseHistory> filter = Collections2.filter(purchaseHistories, new Predicate<PurchaseHistory>() {
+                Collection<Purchase> filter = Collections2.filter(purchaseHistories, new Predicate<Purchase>() {
                     @Override
-                    public boolean apply(PurchaseHistory input) {
-
-
-                        return (input.getCreated().toLowerCase(Locale.ENGLISH).contains(s) ||
-                                input.getNote().toLowerCase(Locale.ENGLISH).contains(s) ||
-                                input.getTotalAmt().toLowerCase(Locale.ENGLISH).contains(s));
+                    public boolean apply(Purchase input) {
+                        return (input.getCreated().toLowerCase(Locale.ENGLISH).contains(s.toLowerCase()) ||
+                                input.getNote().toLowerCase(Locale.ENGLISH).contains(s.toLowerCase()) ||
+                                String.valueOf(input.getAmount()).toLowerCase(Locale.ENGLISH).contains(s.toLowerCase()));
                     }
                 });
                 purchaseHistories = Lists.newArrayList(filter);
@@ -161,7 +159,7 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
                 purchaseHistories = Myenum.INSTANCE.getPurchaseHistories();
         }
 
-        notifyDataSetChanged();
+        notifyAll();
 
 
     }
@@ -194,112 +192,118 @@ public class DealerReportItemAdapter extends RecyclerView.Adapter<DealerReportIt
 
 
         private void showDialog() {
-            new MaterialDialog.Builder(context.getActivity())
-                    .items(R.array.purchase_options)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                                       @Override
-                                       public void onSelection(final MaterialDialog dialog1, View view, int which, CharSequence text) {
 
-                                           if (dialog1 != null && dialog1.isShowing())
-                                               dialog1.dismiss();
-                                           String serverId = null;
-                                           if (transactionType == TransactionType.Purchase)
-                                               serverId = purchaseHistories.get(getAdapterPosition()).getServerId();
-                                           else if (transactionType == TransactionType.Payment)
-                                               serverId = paymentHistories.get(getAdapterPosition()).getServerId();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context.getActivity());
+            builder.setTitle("Select");
+            builder.setItems(R.array.purchase_options, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog1, int which) {
 
-
-                                           switch (which) {
-                                               case 0: //view profile
-                                                   if (transactionType == TransactionType.Purchase) {
-                                                       backButton.setOnClickListener(new View.OnClickListener() {
-                                                                                         @Override
-                                                                                         public void onClick(View v) {
-                                                                                             if (dialog != null && dialog.isShowing())
-                                                                                                 dialog.dismiss();
-                                                                                         }
-                                                                                     }
-                                                       );
-                                                       dialog.show();
-                                                       Picasso.with(context.getActivity()).load(purchaseHistories.get(getAdapterPosition()).getImage()).into(imageView, new Callback() {
-                                                           @Override
-                                                           public void onSuccess() {
-                                                               progressBar.setVisibility(View.GONE);
-                                                           }
-
-                                                           @Override
-                                                           public void onError() {
-
-                                                               progressBar.setVisibility(View.GONE);
-                                                               MkShop.toast(context.getActivity(), "unable to load image");
-                                                           }
-                                                       });
-
-                                                   } else {
-                                                       MkShop.toast(context.getActivity(), "Not applicable");
-                                                   }
-                                                   break;
-                                               case 1: // call api to delete
-                                                   callDeleteApi(serverId);
-                                                   break;
-
-                                           }
+                    dialog1.dismiss();
+                    Long serverId = null;
+                    if (transactionType == TransactionType.Purchase)
+                        serverId = purchaseHistories.get(getAdapterPosition()).getServerId();
+                    else if (transactionType == TransactionType.Payment)
+                        serverId = paymentHistories.get(getAdapterPosition()).getServerId();
 
 
-                                       }
-                                   }
+                    switch (which) {
+                        case 0: //view profile
+                            if (transactionType == TransactionType.Purchase) {
+                                backButton.setOnClickListener(new View.OnClickListener() {
+                                                                  @Override
+                                                                  public void onClick(View v) {
+                                                                      if (dialog != null && dialog.isShowing())
+                                                                          dialog.dismiss();
+                                                                  }
+                                                              }
+                                );
+                                dialog.show();
+                                Picasso.with(context.getActivity()).load(purchaseHistories.get(getAdapterPosition()).getImage()).into(imageView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
 
-                    )
-                    .
+                                    @Override
+                                    public void onError() {
 
-                            show();
+                                        progressBar.setVisibility(View.GONE);
+                                        MkShop.toast(context.getActivity(), "unable to load image");
+                                    }
+                                });
 
-        }
-
-        private void callDeleteApi(final String serverId) {
-
-
-            Client.INSTANCE.deletePayment(MkShop.AUTH, transactionType.name(), serverId, new retrofit.Callback<String>() {
-                @Override
-                public void success(String s, Response response) {
-                    MkShop.toast(context.getActivity(), s);
-
-
-                    if (transactionType == TransactionType.Purchase) {
-
-                        try {
-                            PurchaseHistory purchaseHistory = PurchaseHistory.find(PurchaseHistory.class, "server_id = ?", serverId).get(0);
-                            PurchaseHistory.deleteAll(PurchaseHistory.class, "server_id = ?", serverId);
-                            if (purchaseHistory != null) {
-                                List<PurchaseHistory> newPurchaseHistories = PurchaseHistory.find(PurchaseHistory.class, "dealer_name = ?", purchaseHistory.getDealerName());
-                                Myenum.INSTANCE.setPurchaseHistories(newPurchaseHistories);
-                                purchaseHistories = Myenum.INSTANCE.getPurchaseHistories();
+                            } else {
+                                MkShop.toast(context.getActivity(), "Not applicable");
                             }
-                        } catch (IndexOutOfBoundsException e) {
-                        }
-                    } else if (transactionType == TransactionType.Payment) {
+                            break;
+                        case 1: // call api to delete
+                            callDeleteApi(serverId);
+                            break;
 
-                        try {
-                            PaymentHistory paymentHistory = PaymentHistory.find(PaymentHistory.class, "server_id = ?", serverId).get(0);
-                            PaymentHistory.deleteAll(PaymentHistory.class, "server_id = ?", serverId);
-                            if (paymentHistory != null) {
-                                List<PaymentHistory>paymentHistoriesNew = PaymentHistory.find(PaymentHistory.class, "dealer_id =?", paymentHistory.getDealerId());
-                                Myenum.INSTANCE.setPaymentHistories(paymentHistoriesNew);
-                                paymentHistories = Myenum.INSTANCE.getPaymentHistories();
-
-                            }
-                        } catch (IndexOutOfBoundsException e) {
-                        }
                     }
-                    notifyDataSetChanged();
-
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
                 }
             });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
+        private void callDeleteApi(final Long serverId) {
+
+            if (transactionType == TransactionType.Payment) {
+
+                Client.INSTANCE.deletePayment(MkShop.AUTH, serverId).enqueue(new retrofit2.Callback<Payment>() {
+                    @Override
+                    public void onResponse(Call<Payment> call, Response<Payment> response) {
+                        MkShop.toast(context.getActivity(), "payment successfully deleted");
+                        if (transactionType == TransactionType.Payment) {
+                            try {
+                                Payment payment = Payment.find(Payment.class, "server_id = ?", String.valueOf(serverId)).get(0);
+                                Payment.deleteAll(Payment.class, "server_id = ?", String.valueOf(serverId));
+                                if (payment != null) {
+                                    List<Payment> paymentHistoriesNew = Payment.find(Payment.class, "dealer_id =?", String.valueOf(payment.getDealerId()));
+                                    Myenum.INSTANCE.setPaymentHistories(paymentHistoriesNew);
+                                    paymentHistories = Myenum.INSTANCE.getPaymentHistories();
+                                }
+                            } catch (IndexOutOfBoundsException e) {
+                            }
+                        }
+                        notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Payment> call, Throwable t) {
+                            MkShop.toast(context.getActivity(), t.getMessage());
+                    }
+                });
+            } else {
+                Client.INSTANCE.deletePurchase(MkShop.AUTH, serverId).enqueue(new retrofit2.Callback<Purchase>() {
+                    @Override
+                    public void onResponse(Call<Purchase> call, Response<Purchase> response) {
+                        MkShop.toast(context.getActivity(), "Purchase deleted successfully");
+                        if (transactionType == TransactionType.Purchase) {
+                            try {
+                                Purchase purchase = Purchase.find(Purchase.class, "server_id = ?", String.valueOf(serverId)).get(0);
+                                Purchase.deleteAll(Purchase.class, "server_id = ?", String.valueOf(serverId));
+                                if (purchase != null) {
+                                    List<Purchase> newPurchaseHistories = Purchase.find(Purchase.class, "dealer_id = ?", String.valueOf(purchase.getDealerId()));
+                                    Myenum.INSTANCE.setPurchaseHistories(newPurchaseHistories);
+                                    purchaseHistories = Myenum.INSTANCE.getPurchaseHistories();
+                                }
+                            } catch (IndexOutOfBoundsException e) {
+                            }
+                        }
+                        notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Purchase> call, Throwable t) {
+                            MkShop.toast(context.getActivity(), t.getMessage());
+
+                    }
+                });
+            }
+
         }
     }
 }
+

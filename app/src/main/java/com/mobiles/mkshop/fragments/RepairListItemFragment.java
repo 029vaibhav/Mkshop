@@ -1,15 +1,18 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
@@ -17,9 +20,13 @@ import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class RepairListItemFragment extends Fragment {
@@ -78,26 +85,27 @@ public class RepairListItemFragment extends Fragment {
         status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialDialog.Builder(getActivity())
-                        .items(R.array.items)
-                        .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                stringStatus = text.toString();
 
-                                if (stringStatus.equalsIgnoreCase("Returned")) {
-                                    price.setVisibility(View.GONE);
-                                    price.setText("0");
-                                } else {
-                                    price.setVisibility(View.VISIBLE);
-                                }
-                                status.setText(stringStatus);
-                                setIndex(stringStatus);
-                                return true;
-                            }
-                        })
-                        .positiveText("select")
-                        .show();
+                final List<String> statusOfParts = Arrays.asList(getResources().getStringArray(R.array.requestPartStatus));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final ArrayAdapter<String> aa1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_single_choice, statusOfParts);
+                builder.setSingleChoiceItems(aa1, index, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+
+                        String stringStatus = statusOfParts.get(item);
+                        if (stringStatus.equalsIgnoreCase("Returned")) {
+                            price.setVisibility(View.GONE);
+                            price.setText("0");
+                        } else {
+                            price.setVisibility(View.VISIBLE);
+                        }
+                        status.setText(stringStatus);
+                        setIndex(stringStatus);
+                    }
+
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
 
@@ -160,40 +168,34 @@ public class RepairListItemFragment extends Fragment {
 
     private void SendData() {
 
-        final MaterialDialog dialog;
+        final ProgressDialog dialog;
         dialog = NavigationMenuActivity.materialDialog;
         dialog.show();
 
 
-        Client.INSTANCE.sendService(MkShop.AUTH, service, new Callback<String>()
-
-                {
-                    @Override
-                    public void success(String s, Response response) {
-                        if (dialog != null && dialog.isShowing())
-                            dialog.dismiss();
-                        MkShop.toast(getActivity(), s);
-                        int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
-                        for (int i = 0; i < backStackEntryCount; i++) {
-                            getFragmentManager().popBackStack();
-                        }
-                        Fragment fragment = RequestRepair.newInstance();
-                        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        if (dialog != null && dialog.isShowing())
-                            dialog.dismiss();
-                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                            MkShop.toast(getActivity(), "please check your internet connection");
-                        else
-                            MkShop.toast(getActivity(), error.getMessage());
-
-                    }
+        Client.INSTANCE.updateService(MkShop.AUTH, service).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (dialog != null && dialog.isShowing())
+                    dialog.dismiss();
+                MkShop.toast(getActivity(), "success");
+                int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
+                for (int i = 0; i < backStackEntryCount; i++) {
+                    getFragmentManager().popBackStack();
                 }
+                Fragment fragment = RequestRepair.newInstance();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            }
 
-        );
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                if (dialog != null && dialog.isShowing())
+                    dialog.dismiss();
+
+                    MkShop.toast(getActivity(), t.getMessage());
+
+            }
+        });
 
 
     }

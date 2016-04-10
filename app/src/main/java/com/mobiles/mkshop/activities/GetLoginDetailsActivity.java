@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,24 +10,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.BrandModelList;
 import com.mobiles.mkshop.pojos.models.LoginDetails;
+import com.mobiles.mkshop.pojos.models.Product;
 
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class GetLoginDetailsActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
     TextView textView;
     Button retry;
 
@@ -37,11 +39,9 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
 
-        materialDialog = new MaterialDialog.Builder(GetLoginDetailsActivity.this)
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
-
+        materialDialog = new ProgressDialog(this);
+        materialDialog.setMessage("please wait");
+        materialDialog.setCancelable(false);
         materialDialog.show();
 
         textView = (TextView) findViewById(R.id.internet);
@@ -56,62 +56,58 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
             }
         });
 
-        Client.INSTANCE.getLoginData(MkShop.AUTH, MkShop.Username, new Callback<LoginDetails>() {
+        Client.INSTANCE.getLoginData(MkShop.AUTH, MkShop.Username).enqueue(new Callback<LoginDetails>() {
             @Override
-            public void success(LoginDetails loginDetails, Response response) {
+            public void onResponse(Call<LoginDetails> call, Response<LoginDetails> response) {
 
+                LoginDetails loginDetails = response.body();
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    String jsonInString = mapper.writeValueAsString(loginDetails);
+                    sharedPreferences.edit().putString("DETAIL", jsonInString).apply();
+                } catch (JsonProcessingException e) {
 
-                String json = new Gson().toJson(loginDetails);
-
-                MkShop.Role = loginDetails.getRole();
-                MkShop.Username = loginDetails.getUsername();
-
-                List<BrandModelList> brandModelLists = loginDetails.getProductList();
-
-                for (int i = 0; i < brandModelLists.size(); i++) {
-                    List<BrandModelList> localParkingEvent = BrandModelList.find(BrandModelList.class, "server_id = ?", "" + brandModelLists.get(i).getId());
-                    if (localParkingEvent == null || localParkingEvent.size() == 0) {
-                        BrandModelList brandModelList = new BrandModelList();
-                        brandModelList.setBrand(brandModelLists.get(i).getBrand().trim());
-                        brandModelList.setModelNo(brandModelLists.get(i).getModelNo());
-                        brandModelList.setType(brandModelLists.get(i).getType());
-                        brandModelList.setAccessoryType(brandModelLists.get(i).getAccessoryType());
-                        brandModelList.setServerId(brandModelLists.get(i).getId());
-                        brandModelList.save();
-                    }
-                    else if(!localParkingEvent.get(0).equals(brandModelLists.get(i)))
-                    {
-                        BrandModelList brandModelList = localParkingEvent.get(0);
-                        brandModelList.setBrand(brandModelLists.get(i).getBrand().trim());
-                        brandModelList.setModelNo(brandModelLists.get(i).getModelNo());
-                        brandModelList.setType(brandModelLists.get(i).getType());
-                        brandModelList.setAccessoryType(brandModelLists.get(i).getAccessoryType());
-                        brandModelList.setServerId(brandModelLists.get(i).getId());
-                        brandModelList.save();
-                    }
-
+                }
+                MkShop.Role = loginDetails.getUser().getRole();
+                MkShop.Username = loginDetails.getUser().getUsername();
+                List<Product> productList = loginDetails.getProducts();
+                for (Product product : productList) {
+                    product.setBrand(product.getBrand());
+                    product.setModel(product.getModel());
+                    product.setSim(product.getSim());
+                    product.setScreenSize(product.getScreenSize());
+                    product.setDisplayType(product.getDisplayType());
+                    product.setOs(product.getOs());
+                    product.setiMemory(product.getiMemory());
+                    product.seteMemory(product.geteMemory());
+                    product.setfCamera(product.getfCamera());
+                    product.setbCamera(product.getbCamera());
+                    product.setWlan(product.getWlan());
+                    product.setBluetooth(product.getBluetooth());
+                    product.setNfc(product.getNfc());
+                    product.setInfrared(product.getInfrared());
+                    product.setRadio(product.getRadio());
+                    product.setBattery(product.getBattery());
+                    product.setPrice(product.getPrice());
+                    product.setType(product.getType());
+                    product.setAccessoryType(product.getAccessoryType());
+                    long save = product.save();
                 }
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-
-                sharedPreferences.edit().putString("DETAIL", json).apply();
                 Intent intent = new Intent(GetLoginDetailsActivity.this, NavigationMenuActivity.class);
                 startActivity(intent);
                 finish();
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void onFailure(Call<LoginDetails> call, Throwable t) {
 
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK)) {
-                    MkShop.toast(GetLoginDetailsActivity.this, "please check your internet connection");
-                    textView.setText("Network Error");
 
-                } else {
-                    textView.setText(error.getMessage());
-                }
+                MkShop.toast(GetLoginDetailsActivity.this, t.getMessage());
+                textView.setText(t.getMessage());
                 retry.setVisibility(View.VISIBLE);
 
 

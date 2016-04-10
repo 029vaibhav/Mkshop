@@ -1,10 +1,15 @@
 package com.mobiles.mkshop.fragments;
 
+import android.Manifest;
 import android.app.Activity;
-import android.support.v4.app.Fragment;import android.content.Intent;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +19,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -31,9 +35,11 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.Location;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NewGeoLocationItem extends Fragment
@@ -45,7 +51,7 @@ public class NewGeoLocationItem extends Fragment
 
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
     public static String TAG = "NewGeoLocationItem";
     GoogleApiClient googleApiClient;
@@ -53,7 +59,7 @@ public class NewGeoLocationItem extends Fragment
     private static final String lat = "lat";
     private static final String longi = "longi";
     private static final String prole = "role";
-//    private static final String pradius = "radius";
+    //    private static final String pradius = "radius";
     private static final String id = "id";
 
     android.location.Location location;
@@ -62,11 +68,11 @@ public class NewGeoLocationItem extends Fragment
     private String mlat = "lat";
     private String mlongi = "longi";
     private String mrole = "role";
-//    private String mradius = "radius";
+    //    private String mradius = "radius";
     private String mid = null;
 
     EditText latitude, longitude;
-//    radius;
+    //    radius;
     AutoCompleteTextView role;
     Button submit, currentLocation;
 
@@ -151,26 +157,21 @@ public class NewGeoLocationItem extends Fragment
                     location.setLongitude(longitude.getText().toString());
 //                    location.setRadius(radius.getText().toString());
                     location.setRole(role.getText().toString());
-                    Client.INSTANCE.setLocation(MkShop.AUTH, location, new Callback<String>() {
+                    Client.INSTANCE.setLocation(MkShop.AUTH, location).enqueue(new Callback<String>() {
                         @Override
-                        public void success(String s, Response response) {
-
+                        public void onResponse(Call<String> call, Response<String> response) {
                             if (materialDialog != null && materialDialog.isShowing())
                                 materialDialog.dismiss();
-                            MkShop.toast(getActivity(), s);
+                            MkShop.toast(getActivity(), "success");
                             Fragment fragment = new GeoPointsFragment();
                             getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             if (materialDialog != null && materialDialog.isShowing())
                                 materialDialog.dismiss();
-                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                MkShop.toast(getActivity(), "check your internet connection");
-                            else MkShop.toast(getActivity(), error.getMessage());
-
+                            MkShop.toast(getActivity(), t.getMessage());
 
                         }
                     });
@@ -285,6 +286,16 @@ public class NewGeoLocationItem extends Fragment
     protected void startLocationUpdates() {
 
         materialDialog.show();
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient,
                 locationRequest,

@@ -1,5 +1,8 @@
 package com.mobiles.mkshop.gcm;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.crashlytics.android.Crashlytics;
 import com.mobiles.mkshop.application.FontsOverride;
 import com.orm.SugarApp;
@@ -21,10 +24,13 @@ public class Controller extends SugarApp {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-
         FontsOverride.setDefaultFont(this, "MONOSPACE", "museo.ttf");
 
     }
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        MultiDex.install(this);
+        super.attachBaseContext(base);
+    }
 }

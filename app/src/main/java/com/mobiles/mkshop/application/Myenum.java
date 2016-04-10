@@ -10,8 +10,8 @@ import com.mobiles.mkshop.pojos.enums.UserType;
 import com.mobiles.mkshop.pojos.models.ExpenseEntity;
 import com.mobiles.mkshop.pojos.models.Leader;
 import com.mobiles.mkshop.pojos.models.PartsRequests;
-import com.mobiles.mkshop.pojos.models.PaymentHistory;
-import com.mobiles.mkshop.pojos.models.PurchaseHistory;
+import com.mobiles.mkshop.pojos.models.Payment;
+import com.mobiles.mkshop.pojos.models.Purchase;
 import com.mobiles.mkshop.pojos.models.Sales;
 import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
@@ -66,21 +66,22 @@ public enum Myenum {
     List<PartsRequests> deliveredPartsRequestsList;
 
 
-    List<PurchaseHistory> purchaseHistories;
-    List<PaymentHistory> paymentHistories;
+    List<Purchase> purchaseHistories;
+    List<Payment> paymentHistories;
 
-    DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+    DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
     DateTime dateTime;
 
-    public List<PurchaseHistory> getPurchaseHistories() {
+    public List<Purchase> getPurchaseHistories() {
         return purchaseHistories;
     }
 
-    public void setPurchaseHistories(List<PurchaseHistory> purchaseHistories) {
+    public void setPurchaseHistories(List<Purchase> purchaseHistories) {
 
-        Collections.sort(purchaseHistories, new Comparator<PurchaseHistory>() {
+        Collections.sort(purchaseHistories, new Comparator<Purchase>() {
             @Override
-            public int compare(PurchaseHistory lhs, PurchaseHistory rhs) {
+            public int compare(Purchase lhs, Purchase rhs) {
+
 
                 return formatter.parseDateTime(rhs.getCreated()).compareTo(formatter.parseDateTime(lhs.getCreated()));
             }
@@ -90,15 +91,15 @@ public enum Myenum {
         this.purchaseHistories = purchaseHistories;
     }
 
-    public List<PaymentHistory> getPaymentHistories() {
+    public List<Payment> getPaymentHistories() {
         return paymentHistories;
     }
 
-    public void setPaymentHistories(List<PaymentHistory> paymentHistories) {
+    public void setPaymentHistories(List<Payment> paymentHistories) {
 
-        Collections.sort(paymentHistories, new Comparator<PaymentHistory>() {
+        Collections.sort(paymentHistories, new Comparator<Payment>() {
             @Override
-            public int compare(PaymentHistory lhs, PaymentHistory rhs) {
+            public int compare(Payment lhs, Payment rhs) {
 
                 return formatter.parseDateTime(rhs.getCreated()).compareTo(formatter.parseDateTime(lhs.getCreated()));
             }
@@ -270,7 +271,7 @@ public enum Myenum {
     Predicate<Leader> predicateSalesLeaderList = new Predicate<Leader>() {
         @Override
         public boolean apply(Leader input) {
-            return (input.getRole().equalsIgnoreCase(UserType.SALESMAN.name()));
+            return (input.getUser().getRole().equalsIgnoreCase(UserType.SALESMAN.name()));
         }
 
     };
@@ -278,7 +279,7 @@ public enum Myenum {
     Predicate<Leader> predicateServiceLeaderList = new Predicate<Leader>() {
         @Override
         public boolean apply(Leader input) {
-            return input.getRole().equalsIgnoreCase(UserType.TECHNICIAN.name());
+            return input.getUser().getRole().equalsIgnoreCase(UserType.TECHNICIAN.name());
         }
 
     };
@@ -287,7 +288,7 @@ public enum Myenum {
     Predicate<Sales> predicateMobileList = new Predicate<Sales>() {
         @Override
         public boolean apply(Sales input) {
-            return input.getType().equalsIgnoreCase(ProductType.Mobile.name());
+            return input.getProductType().equals(ProductType.Mobile);
         }
 
     };
@@ -295,7 +296,7 @@ public enum Myenum {
     Predicate<Sales> predicateAccList = new Predicate<Sales>() {
         @Override
         public boolean apply(Sales input) {
-            return input.getType().equalsIgnoreCase(ProductType.Accessory.name());
+            return input.getProductType().equals(ProductType.Accessory);
         }
 
     };

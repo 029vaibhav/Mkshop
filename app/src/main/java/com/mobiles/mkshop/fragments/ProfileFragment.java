@@ -1,10 +1,10 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -17,11 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
+import com.kbeanie.imagechooser.api.ChosenImages;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.mobiles.mkshop.R;
@@ -30,17 +28,19 @@ import com.mobiles.mkshop.adapters.ProfileAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.Profile;
+import com.mobiles.mkshop.pojos.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.lang.reflect.Type;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
-import retrofit.mime.TypedFile;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ProfileFragment extends Fragment implements ImageChooserListener {
@@ -51,7 +51,7 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
     private String mediaPath;
     ImageView header;
     private ImageChooserManager imageChooserManager;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
 
     CollapsingToolbarLayout collapsingToolbar;
@@ -142,35 +142,33 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
                 if (image != null) {
 
                     materialDialog.show();
-                    TypedFile typedFile = new TypedFile("multipart/form-data", new File(image.getFileThumbnail().toString()));
-
-
-                    Client.INSTANCE.uploadImage(MkShop.AUTH, username, typedFile, "", new Callback<String>() {
-                        @Override
-                        public void success(String s, Response response) {
-                            if (materialDialog != null && materialDialog.isShowing())
-                                materialDialog.dismiss();
-                            header.setImageURI(Uri.parse(new File(image
-                                    .getFileThumbnail()).toString()));
-                            MkShop.toast(getActivity(), "uploaded successfully");
-
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                            if (materialDialog != null && materialDialog.isShowing())
-                                materialDialog.dismiss();
-
-                            if (error != null) {
-                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                    MkShop.toast(getActivity(), "check your internet connection");
-                                else MkShop.toast(getActivity(), "something went wrong");
-
-                            }
-
-                        }
-                    });
+                    RequestBody typedFile = RequestBody.create(MediaType.parse("multipart/form-data"), new File(image.getFileThumbnail().toString()));
+//                    Client.INSTANCE.uploadImage(MkShop.AUTH, username, typedFile, "", new Callback<String>() {
+//                        @Override
+//                        public void success(String s, Response response) {
+//                            if (materialDialog != null && materialDialog.isShowing())
+//                                materialDialog.dismiss();
+//                            header.setImageURI(Uri.parse(new File(image
+//                                    .getFileThumbnail()).toString()));
+//                            MkShop.toast(getActivity(), "uploaded successfully");
+//
+//                        }
+//
+//                        @Override
+//                        public void failure(RetrofitError error) {
+//
+//                            if (materialDialog != null && materialDialog.isShowing())
+//                                materialDialog.dismiss();
+//
+//                            if (error != null) {
+//                                if (t instanceof IOException)
+//                                    MkShop.toast(getActivity(), "check your internet connection");
+//                                else MkShop.toast(getActivity(), "something went wrong");
+//
+//                            }
+//
+//                        }
+//                    });
 
 
                 }
@@ -192,6 +190,11 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
     }
 
     @Override
+    public void onImagesChosen(ChosenImages chosenImages) {
+        onImageChosen(chosenImages.getImage(0));
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("On Activity Result", requestCode + "");
         super.onActivityResult(requestCode, resultCode, data);
@@ -208,7 +211,7 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
 
     private class GetUserData extends AsyncTask<Void, Void, Void> {
 
-        MaterialDialog dialog;
+        ProgressDialog dialog;
 
         @Override
         protected void onPostExecute(Void aVoid) {
@@ -220,56 +223,56 @@ public class ProfileFragment extends Fragment implements ImageChooserListener {
         @Override
         protected Void doInBackground(Void... params) {
 
-            Client.INSTANCE.getProfile(MkShop.AUTH, username, new Callback<Response>() {
+            Client.INSTANCE.getProfile(MkShop.AUTH, username).enqueue(new Callback<User>() {
                 @Override
-                public void success(Response response, Response response2) {
-                    String json = (new String(((TypedByteArray) response.getBody()).getBytes()));
-
+                public void onResponse(Call<User> call, Response<User> response) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-
-                    json = json.replace(",", "},{").replace(":", ",").replace("{\"", "{\"title\":\"").replace("\",\"", "\",\"value\":\"");
-
-                    Log.e("json", json);
-
-
-                    Type listType = new TypeToken<List<Profile>>() {
-                    }.getType();
-                    List<Profile> yourList = new Gson().fromJson(json, listType);
-
-                    String photo = "";
-                    for (int i = 0; i < yourList.size(); i++) {
-                        if (yourList.get(i).getTitle().equalsIgnoreCase("photo")) {
-
-                            photo = yourList.get(i).getvalue();
-                            Log.e("photo", photo);
-                            break;
-                        }
-
-                    }
-
-                    if (photo.length() > 2)
-                        Picasso.with(getActivity()).load(photo.replace("\\", "").replace(",", ":")).into(header);
+                    List<Profile> profiles1 = convertUserToList(response.body());
+                    if (response.body().getPhoto() != null && response.body().getPhoto().length() > 2)
+                        Picasso.with(getActivity()).load(response.body().getPhoto()).into(header);
                     else header.setImageBitmap(bitmap);
 //
-                    simpleRecyclerAdapter = new ProfileAdapter(username, getActivity(), yourList);
+                    simpleRecyclerAdapter = new ProfileAdapter(username, getActivity(), profiles1);
                     recyclerView.setAdapter(simpleRecyclerAdapter);
 
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-
+                public void onFailure(Call<User> call, Throwable t) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(), "please check your internet connection");
-                    else MkShop.toast(getActivity(), error.getMessage());
+                    MkShop.toast(getActivity(), t.getMessage());
 
                 }
             });
             return null;
         }
+    }
+
+    private List<Profile> convertUserToList(User response) {
+
+        List<Profile> profiles = new ArrayList<>();
+
+        Profile profile = new Profile("name", response.getName());
+        profiles.add(profile);
+        profile = new Profile("address", response.getAddress());
+        profiles.add(profile);
+        profile = new Profile("email", response.getEmail());
+        profiles.add(profile);
+        profile = new Profile("photo", response.getPhoto());
+        profiles.add(profile);
+        profile = new Profile("qualification", response.getQualification());
+        profiles.add(profile);
+        profile = new Profile("username", response.getUsername());
+        profiles.add(profile);
+        profile = new Profile("password", response.getPassword());
+        profiles.add(profile);
+        profile = new Profile("role", response.getRole());
+        profiles.add(profile);
+        profile = new Profile("mobile", response.getMobile());
+        profiles.add(profile);
+
+        return profiles;
     }
 }

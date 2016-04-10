@@ -1,15 +1,17 @@
 package com.mobiles.mkshop.pojos.models;
 
 
-import java.util.Comparator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by vaibhav on 28/6/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class ServiceCenterEntity{
 
     int id;
-    String model, brand, problem,modifiedDate, deliveryDate,place;
+    String model, brand, problem, modified, deliveryDate,place;
     String jobNo;
     String created;
     String status;
@@ -32,12 +34,12 @@ public class ServiceCenterEntity{
         this.id = id;
     }
 
-    public String getModifiedDate() {
-        return modifiedDate;
+    public String getModified() {
+        return modified;
     }
 
-    public void setModifiedDate(String modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setModified(String modified) {
+        this.modified = modified;
     }
 
     public String getPlace() {

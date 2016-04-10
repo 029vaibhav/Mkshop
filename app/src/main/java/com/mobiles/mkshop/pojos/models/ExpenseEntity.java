@@ -1,11 +1,12 @@
 package com.mobiles.mkshop.pojos.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by vaibhav on 2/8/15.
  */
-//@JsonIgnoreProperties(ignoreUnknown = true)
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExpenseEntity {
 
     int id;

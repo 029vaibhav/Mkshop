@@ -1,30 +1,33 @@
 package com.mobiles.mkshop.adapters;
 
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.CalendarFragment;
 import com.mobiles.mkshop.fragments.ProfileFragment;
 import com.mobiles.mkshop.fragments.UserListFragment;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
 import com.mobiles.mkshop.pojos.enums.PaymentType;
-import com.mobiles.mkshop.pojos.models.UserListAttendance;
+import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.models.User;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by vaibhav on 4/7/15.
@@ -32,10 +35,10 @@ import retrofit.client.Response;
 public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpater.ViewHolder> {
 
     Fragment context;
-    List<UserListAttendance> userListAttendances;
+    List<User> userListAttendances;
 
 
-    public UserListItemAdpater(Fragment userListFragment, List<UserListAttendance> userListAttendances) {
+    public UserListItemAdpater(Fragment userListFragment, List<User> userListAttendances) {
         context = userListFragment;
         this.userListAttendances = userListAttendances;
 
@@ -54,8 +57,8 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.name.setText(userListAttendances.get(position).getName());
         holder.mobile.setText(userListAttendances.get(position).getMobile());
-        holder.attendance.setText(userListAttendances.get(position).getPresent() + "/" + userListAttendances.get(position).getTotalDay()
-                + "-" + userListAttendances.get(position).getMonth());
+//        holder.attendance.setText(userListAttendances.get(position).getPresent() + "/" + userListAttendances.get(position).getTotalDay()
+//                + "-" + userListAttendances.get(position).getMonth());
 
 
 //        holder.name.setOnClickListener(new View.OnClickListener() {
@@ -110,110 +113,102 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
         @Override
         public void onClick(View v) {
 
+            AlertDialog.Builder builder = new AlertDialog.Builder(context.getActivity());
+            builder.setTitle("Select");
+            builder.setItems(R.array.userActions, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog1, int which) {
 
-            new MaterialDialog.Builder(context.getActivity())
-                    .items(R.array.userActions)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                        @Override
-                        public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
+                    dialog1.dismiss();
+                    final String username = userListAttendances.get(getAdapterPosition()).getUsername();
 
+                    switch (which) {
+                        case 0: //view profile
 
-                            final String username = userListAttendances.get(getAdapterPosition()).getUsername();
+                            ProfileFragment fragment = ProfileFragment.newInstance(username);
+                            context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+                            break;
+                        case 1: // view attendance
 
-                            switch (which) {
-                                case 0: //view profile
-                                    if (dialog != null && dialog.isShowing())
-                                        dialog.dismiss();
-                                    ProfileFragment fragment = ProfileFragment.newInstance(username);
-                                    context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
-                                    break;
-                                case 1: // view attendance
-                                    if (dialog != null && dialog.isShowing())
-                                        dialog.dismiss();
-                                    CalendarFragment calendarFragment = CalendarFragment.newInstance(username);
-                                    context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).addToBackStack(null).commit();
-                                    break;
-                                case 2: // pay salary
-                                    if (dialog != null && dialog.isShowing())
-                                        dialog.dismiss();
-                                    new MaterialDialog.Builder(context.getActivity())
-                                            .title("Pay salary")
-                                            .inputType(InputType.TYPE_CLASS_NUMBER)
-                                            .input("", "", new MaterialDialog.InputCallback() {
-                                                @Override
-                                                public void onInput(MaterialDialog dialog, final CharSequence input) {
+                            CalendarFragment calendarFragment = CalendarFragment.newInstance(username);
+                            context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).addToBackStack(null).commit();
+                            break;
+                        case 2: // pay salary
 
-                                                    if (input.toString().length() != 0) {
+                            showPaySalaryDialog(username);
+                            break;
+                        case 3: // delete user
+                            Client.INSTANCE.deleteUser(MkShop.AUTH, userListAttendances.get(getAdapterPosition()).getUsername()).enqueue(new Callback<User>() {
+                                @Override
+                                public void onResponse(Call<User> call, Response<User> response) {
+                                    MkShop.toast(context.getActivity(), "user sucessfully deleted");
 
-                                                        ExpenseEntity expenseEntity = new ExpenseEntity();
-                                                        expenseEntity.setPaymentType(PaymentType.Salary.name());
-                                                        expenseEntity.setUsername(username);
-                                                        expenseEntity.setAmount(input.toString());
+                                    UserListFragment fragment = UserListFragment.newInstance();
+                                    context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                                }
 
-                                                        Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {
-                                                            @Override
-                                                            public void success(String s, Response response) {
+                                @Override
+                                public void onFailure(Call<User> call, Throwable t) {
 
-                                                                MkShop.toast(context.getActivity(), s);
+                                        MkShop.toast(context.getActivity(), t.getMessage());
+                                }
+                            });
 
-                                                            }
-
-                                                            @Override
-                                                            public void failure(RetrofitError error) {
-
-                                                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                                                    MkShop.toast(context.getActivity(), "please check your internet connection");
-                                                                else
-                                                                    MkShop.toast(context.getActivity(), error.getMessage());
+                            break;
+                    }
 
 
-                                                            }
-                                                        });
-                                                    } else {
-                                                        MkShop.toast(context.getActivity(), "please enter some amount");
-                                                    }
-                                                }
-                                            }).show();
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
 
 
-                                    break;
-                                case 3: // delete user
+        }
 
-                                    Client.INSTANCE.deleteUser(MkShop.AUTH, userListAttendances.get(getAdapterPosition()).getUsername(), new Callback<String>() {
-                                        @Override
-                                        public void success(String s, Response response) {
+        private void showPaySalaryDialog(final String username) {
 
-                                            MkShop.toast(context.getActivity(), s);
+            final AlertDialog.Builder inputAlert = new AlertDialog.Builder(context.getActivity());
+            inputAlert.setTitle("Pay salary");
+            final EditText userInput = new EditText(context.getActivity());
+            userInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+            inputAlert.setView(userInput);
+            inputAlert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-                                            if (dialog != null && dialog.isShowing())
-                                                dialog.dismiss();
+                    if (userInput.length() != 0) {
 
-                                            UserListFragment fragment = UserListFragment.newInstance();
-                                            context.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                        ExpenseEntity expenseEntity = new ExpenseEntity();
+                        expenseEntity.setPaymentType(PaymentType.Salary.name());
+                        expenseEntity.setUsername(username);
+                        expenseEntity.setAmount(userInput.getText().toString());
 
-                                        }
+                        Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity).enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                MkShop.toast(context.getActivity(), "success");
 
-                                        @Override
-                                        public void failure(RetrofitError error) {
-
-
-                                            if (dialog != null && dialog.isShowing())
-                                                dialog.dismiss();
-                                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                                MkShop.toast(context.getActivity(), "Please check your internet connection");
-                                            else
-                                                MkShop.toast(context.getActivity(), error.getMessage());
-                                        }
-                                    });
-
-                                    break;
                             }
 
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
 
-                        }
-                    })
-                    .show();
-
+                                    MkShop.toast(context.getActivity(), t.getMessage());
+                            }
+                        });
+                    } else {
+                        MkShop.toast(context.getActivity(), "please enter some amount");
+                    }
+                }
+            });
+            inputAlert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alertDialog = inputAlert.create();
+            alertDialog.show();
         }
     }
 }

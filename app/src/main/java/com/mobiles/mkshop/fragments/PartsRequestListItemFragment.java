@@ -1,19 +1,20 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
@@ -23,9 +24,12 @@ import com.mobiles.mkshop.pojos.models.PartsRequests;
 
 import org.joda.time.DateTime;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PartsRequestListItemFragment extends Fragment {
@@ -120,29 +124,31 @@ public class PartsRequestListItemFragment extends Fragment {
         status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialDialog.Builder(getActivity())
-                        .items(R.array.requestPartStatus)
-                        .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
-                                if (text != null) {
-                                    stringStatus = text.toString();
-                                    if (!stringStatus.equalsIgnoreCase("Pending")) {
-                                        date.setVisibility(View.VISIBLE);
-                                        dateTitle.setVisibility(View.VISIBLE);
-                                    } else {
-                                        date.setVisibility(View.GONE);
-                                        dateTitle.setVisibility(View.GONE);
-                                    }
-                                    status.setText(stringStatus);
-                                    setindex(stringStatus);
-                                }
-                                return true;
+                final List<String> statusOfParts = Arrays.asList(getResources().getStringArray(R.array.requestPartStatus));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final ArrayAdapter<String> aa1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_single_choice, statusOfParts);
+                builder.setSingleChoiceItems(aa1, index, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+
+                        String text = statusOfParts.get(item);
+                        if (text != null) {
+                            stringStatus = text.toString();
+                            if (!stringStatus.equalsIgnoreCase("Pending")) {
+                                date.setVisibility(View.VISIBLE);
+                                dateTitle.setVisibility(View.VISIBLE);
+                            } else {
+                                date.setVisibility(View.GONE);
+                                dateTitle.setVisibility(View.GONE);
                             }
-                        })
-                        .positiveText("select")
-                        .show();
+                            status.setText(stringStatus);
+                            setindex(stringStatus);
+                        }
+                    }
+
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
 
@@ -172,19 +178,15 @@ public class PartsRequestListItemFragment extends Fragment {
 
                     if (!date.getText().toString().equalsIgnoreCase("date") || date.getText().toString().length() > 0)
                         partsRequests.setDeliveryDate(Stringdate);
-
-                    Client.INSTANCE.sendPartRequest(MkShop.AUTH, partsRequests, new Callback<String>() {
+                    Client.INSTANCE.sendPartRequest(MkShop.AUTH, partsRequests).enqueue(new Callback<String>() {
                         @Override
-                        public void success(String s, Response response) {
-
-                            Toast.makeText(getActivity(), "success " + s, Toast.LENGTH_SHORT).show();
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Toast.makeText(getActivity(), "success ", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
-
-                            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

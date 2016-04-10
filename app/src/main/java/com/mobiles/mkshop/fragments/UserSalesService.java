@@ -1,6 +1,7 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,22 +12,24 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.LeaderBoardDialogAdapter;
+import com.mobiles.mkshop.adapters.LeaderBoardTechDialogAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.LeaderBoardDetails;
 import com.mobiles.mkshop.pojos.enums.UserType;
+import com.mobiles.mkshop.pojos.models.Sales;
+import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
 import org.joda.time.DateTime;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by vaibhav on 15/11/15.
@@ -39,7 +42,7 @@ public class UserSalesService extends Fragment implements View.OnClickListener {
     TextView fromDate, toDate;
     String sToDate, sFromDate;
     DatePickerDialog fromDatePickerDialog, toDatePickerDialog;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
     String department;
 
 
@@ -81,31 +84,45 @@ public class UserSalesService extends Fragment implements View.OnClickListener {
     private void callService() {
 
         materialDialog.show();
-        Client.INSTANCE.getUserSales(MkShop.AUTH, sToDate, sFromDate, MkShop.Username, department, new Callback<List<LeaderBoardDetails>>() {
-            @Override
-            public void success(List<LeaderBoardDetails> sales, Response response) {
 
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
+        if (department.equalsIgnoreCase("Sales"))
+            Client.INSTANCE.getUserSales(MkShop.AUTH, sToDate, sFromDate, MkShop.Username).enqueue(new Callback<List<Sales>>() {
+                @Override
+                public void onResponse(Call<List<Sales>> call, Response<List<Sales>> response) {
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                    LeaderBoardDialogAdapter leaderBoardDialogAdapter = new LeaderBoardDialogAdapter(UserSalesService.this, response.body());
+                    recyclerView.setAdapter(leaderBoardDialogAdapter);
+                }
 
-                LeaderBoardDialogAdapter leaderBoardDialogAdapter = new LeaderBoardDialogAdapter(UserSalesService.this, sales);
-                recyclerView.setAdapter(leaderBoardDialogAdapter);
+                @Override
+                public void onFailure(Call<List<Sales>> call, Throwable t) {
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                    MkShop.toast(getActivity(), t.getMessage());
 
-            }
+                }
+            });
+        else {
+            Client.INSTANCE.getUserService(MkShop.AUTH, sToDate, sFromDate, MkShop.Username).enqueue(new Callback<List<ServiceCenterEntity>>() {
+                @Override
+                public void onResponse(Call<List<ServiceCenterEntity>> call, Response<List<ServiceCenterEntity>> response) {
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                    LeaderBoardTechDialogAdapter leaderBoardDialogAdapter = new LeaderBoardTechDialogAdapter(UserSalesService.this, response.body());
+                    recyclerView.setAdapter(leaderBoardDialogAdapter);
+                }
 
-            @Override
-            public void failure(RetrofitError error) {
+                @Override
+                public void onFailure(Call<List<ServiceCenterEntity>> call, Throwable t) {
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                    else MkShop.toast(getActivity(), t.getMessage());
 
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
+                }
+            });
 
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "please check your internet connection");
-                else MkShop.toast(getActivity(), error.getMessage());
-
-
-            }
-        });
+        }
 
     }
 

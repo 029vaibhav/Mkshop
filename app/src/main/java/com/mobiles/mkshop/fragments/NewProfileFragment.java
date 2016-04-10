@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,16 +13,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.NewUser;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NewProfileFragment extends Fragment {
@@ -30,7 +32,7 @@ public class NewProfileFragment extends Fragment {
     EditText name, mobile, email, username, password, qualification, address;
     TextView submit;
     AutoCompleteTextView role;
-    String[] roleOption = {"Admin", "Salesman", "Technician", "Receptionist","Promoter"};
+    String[] roleOption = {"Admin", "Salesman", "Technician", "Receptionist", "Promoter"};
     NewUser newUser;
 
 
@@ -122,7 +124,7 @@ public class NewProfileFragment extends Fragment {
 
     private class SendData extends AsyncTask<Void, Void, Void> {
 
-        MaterialDialog dialog;
+        ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
@@ -135,29 +137,25 @@ public class NewProfileFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-
-            Client.INSTANCE.createUser(MkShop.AUTH,newUser, new Callback<String>() {
+            Client.INSTANCE.createUser(MkShop.AUTH, newUser).enqueue(new Callback<Void>() {
                 @Override
-                public void success(String s, Response response) {
-
+                public void onResponse(Call<Void> call, Response<Void> response) {
                     if (dialog != null && dialog.isShowing())
-                    dialog.dismiss();
-                    MkShop.toast(getActivity(), s);
-                    Fragment  fragment = new UserListFragment();
+                        dialog.dismiss();
+                    MkShop.toast(getActivity(), "user created successfully");
+                    Fragment fragment = new UserListFragment();
                     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
 
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void onFailure(Call<Void> call, Throwable t) {
                     if (dialog != null && dialog.isShowing())
-                    dialog.dismiss();
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(), "please check your internet connection");
-                    else
-                        MkShop.toast(getActivity(), error.getMessage());
-                    Log.e("error",error.toString());
+                        dialog.dismiss();
+
+                        MkShop.toast(getActivity(), t.getMessage());
+                    Log.e("error", t.getMessage().toString());
+
                 }
             });
 

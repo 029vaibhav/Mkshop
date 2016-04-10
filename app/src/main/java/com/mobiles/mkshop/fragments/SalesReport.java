@@ -2,6 +2,7 @@ package com.mobiles.mkshop.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.SalesReportItemAdapter;
@@ -30,9 +30,9 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SalesReport extends Fragment {
 
@@ -46,7 +46,7 @@ public class SalesReport extends Fragment {
     TabsPagerAdapter adapter;
     String sFromdate, sToDate;
     int tempQuantity = 0, tempRevenue = 0;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
     public static SalesReport newInstance() {
         SalesReport fragment = new SalesReport();
@@ -237,22 +237,18 @@ public class SalesReport extends Fragment {
 
         materialDialog.show();
 
-
-        Client.INSTANCE.getSalesReport(MkShop.AUTH, sFromdate, sToDate, new Callback<List<Sales>>() {
+        Client.INSTANCE.getSalesReport(MkShop.AUTH, sFromdate, sToDate).enqueue(new Callback<List<Sales>>() {
             @Override
-            public void success(final List<Sales> sales, Response response) {
-
+            public void onResponse(Call<List<Sales>> call, Response<List<Sales>> response) {
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                Myenum.INSTANCE.setSalesList(sales);
+                Myenum.INSTANCE.setSalesList(response.body());
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
                 adapter = new TabsPagerAdapter(myContext.getSupportFragmentManager());
                 viewPager.setAdapter(adapter);
-
                 tempQuantity = 0;
                 tempRevenue = 0;
-
                 List<Sales> sales1 = Myenum.INSTANCE.getSalesList(ProductType.Mobile);
                 for (int i = 0; i < sales1.size(); i++) {
                     tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
@@ -260,23 +256,18 @@ public class SalesReport extends Fragment {
                 }
                 totalRevenue.setText("" + tempRevenue);
                 totalQuantity.setText("" + tempQuantity);
-
-
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void onFailure(Call<List<Sales>> call, Throwable t) {
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                MkShop.toast(getActivity(), error.getMessage().toString());
+                MkShop.toast(getActivity(), t.getMessage().toString());
 
             }
         });
 
-
     }
-
-
 
 
 }

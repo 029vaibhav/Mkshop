@@ -2,10 +2,11 @@ package com.mobiles.mkshop.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.support.v4.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.LeaderBoardItemAdapter;
 import com.mobiles.mkshop.adapters.TabsPagerAdapterLeader;
@@ -24,15 +25,15 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.models.Leader;
-import com.mobiles.mkshop.R;
 
 import org.joda.time.DateTime;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LeaderBoardFragment extends Fragment {
@@ -173,14 +174,13 @@ public class LeaderBoardFragment extends Fragment {
         });
 
 
-
         return viewGroup;
     }
 
 
     private class GetData extends AsyncTask<Void, Void, Void> {
 
-        MaterialDialog materialDialog;
+        ProgressDialog materialDialog;
 
 
         @Override
@@ -194,33 +194,24 @@ public class LeaderBoardFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Client.INSTANCE.getLeaderBoard(MkShop.AUTH,sFromdate, sToDate, new Callback<List<Leader>>() {
+            Client.INSTANCE.getLeaderBoard(MkShop.AUTH, sFromdate, sToDate).enqueue(new Callback<List<Leader>>() {
                 @Override
-                public void success(List<Leader> leaders, Response response) {
-
-
-                    Myenum.INSTANCE.setLeaderList(leaders);
-                    if(materialDialog !=null &&materialDialog.isShowing())
-                    materialDialog.dismiss();
+                public void onResponse(Call<List<Leader>> call, Response<List<Leader>> response) {
+                    Myenum.INSTANCE.setLeaderList(response.body());
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
                     adapter = new TabsPagerAdapterLeader(myContext.getSupportFragmentManager());
                     viewPager.setAdapter(adapter);
-                    Myenum.INSTANCE.setToAndFromDate(sFromdate,sToDate);
-
-
+                    Myenum.INSTANCE.setToAndFromDate(sFromdate, sToDate);
 
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void onFailure(Call<List<Leader>> call, Throwable t) {
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
 
-                    if(materialDialog !=null &&materialDialog.isShowing())
-                    materialDialog.dismiss();
-                    if(error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(),"Please check your internet connection");
-                    else if(error!=null)
-                        MkShop.toast(getActivity(), error.getMessage());
-
-
+                        MkShop.toast(getActivity(), t.getMessage());
 
                 }
             });
@@ -229,5 +220,5 @@ public class LeaderBoardFragment extends Fragment {
 
         }
     }
-    }
+}
 

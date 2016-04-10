@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.pojos.models.PriceCompartorService;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ import java.util.List;
 public class RevenueCompartorAdapter extends RecyclerView.Adapter<RevenueCompartorAdapter.ViewHolder> {
 
     Context context;
-    List<PriceCompartorService> priceCompartorServices;
+    List<Sales> priceCompartorServices;
 
 
-    public RevenueCompartorAdapter(Activity activity, List<PriceCompartorService> response1) {
+    public RevenueCompartorAdapter(Activity activity, List<Sales> response1) {
         context = activity;
         priceCompartorServices = response1;
     }
@@ -40,9 +41,9 @@ public class RevenueCompartorAdapter extends RecyclerView.Adapter<RevenueCompart
     public void onBindViewHolder(ViewHolder holder, int position) {
 
 
-        PriceCompartorService priceCompartorService = priceCompartorServices.get(position);
+        Sales priceCompartorService = priceCompartorServices.get(position);
         if (priceCompartorService.getProductType() != null)
-            holder.brand.setText(priceCompartorService.getProductType());
+            holder.brand.setText(priceCompartorService.getProductType().name());
         else
             holder.brand.setText(priceCompartorService.getBrand());
 //        holder.brand.setCompoundDrawablesWithIntrinsicBounds(MkShop.GetImage(priceCompartorService.getBrand()), 0, 0, 0);

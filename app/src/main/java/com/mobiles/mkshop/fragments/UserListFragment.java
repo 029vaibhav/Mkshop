@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,19 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.UserListItemAdpater;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.pojos.models.User;
 import com.mobiles.mkshop.pojos.models.UserListAttendance;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by vaibhav on 4/7/15.
@@ -81,7 +83,7 @@ public class UserListFragment extends Fragment {
 
     private class GetUserLsit extends AsyncTask<Void, Void, Void> {
 
-        MaterialDialog dialog;
+        ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
@@ -93,30 +95,23 @@ public class UserListFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-
-            Client.INSTANCE.getUserList(MkShop.AUTH, new Callback<List<UserListAttendance>>() {
+            Client.INSTANCE.getUserList(MkShop.AUTH).enqueue(new Callback<List<User>>() {
                 @Override
-                public void success(List<UserListAttendance> userListAttendances, Response response) {
-
+                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                     if (dialog != null && dialog.isShowing())
                         dialog.dismiss();
-                    userListItemAdpater = new UserListItemAdpater(UserListFragment.this, userListAttendances);
+                    userListItemAdpater = new UserListItemAdpater(UserListFragment.this, response.body());
                     recyclerView.setAdapter(userListItemAdpater);
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-
+                public void onFailure(Call<List<User>> call, Throwable t) {
                     if (dialog != null && dialog.isShowing())
                         dialog.dismiss();
-
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(), "please check your internet connection");
-                    else
-                        MkShop.toast(getActivity(), error.getMessage());
-
+                        MkShop.toast(getActivity(), t.getMessage());
                 }
             });
+
 
             return null;
         }

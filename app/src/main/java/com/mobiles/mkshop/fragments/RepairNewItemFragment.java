@@ -1,9 +1,12 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -21,18 +23,20 @@ import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.BrandModelList;
-import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 import com.mobiles.mkshop.pojos.enums.UserType;
+import com.mobiles.mkshop.pojos.models.Product;
+import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class RepairNewItemFragment extends Fragment {
@@ -46,14 +50,14 @@ public class RepairNewItemFragment extends Fragment {
     DatePickerDialog datePickerDialog;
     EditText jobNo;
     //  private RadioGroup radiogroup;
-    private TextView  status;
-//    TextView date
+    private TextView status;
+    //    TextView date
     AutoCompleteTextView brand, modelNo;
-//    TextView dateTitle;
-    List<BrandModelList> salesList, modelSalesList;
+    //    TextView dateTitle;
+    List<Product> salesList, modelSalesList;
     List<String> brandList;
 
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
 
     public RepairNewItemFragment() {
@@ -64,7 +68,6 @@ public class RepairNewItemFragment extends Fragment {
         RepairNewItemFragment fragment = new RepairNewItemFragment();
         return fragment;
     }
-
 
 
     @Override
@@ -97,8 +100,8 @@ public class RepairNewItemFragment extends Fragment {
 //        dateTitle = (TextView) v.findViewById(R.id.dateTitle);
 
 
-        salesList = BrandModelList.listAll(BrandModelList.class);
-        List<BrandModelList> sales = BrandModelList.listAll(BrandModelList.class);
+        salesList = Product.listAll(Product.class);
+        List<Product> sales = Product.listAll(Product.class);
         brandList.clear();
         Set<String> brandStrings = new HashSet();
         for (int i = 0; i < sales.size(); i++) {
@@ -121,9 +124,9 @@ public class RepairNewItemFragment extends Fragment {
                         MkShop.toast(getActivity(), "please select brand first");
                     else {
                         brandList.clear();
-                        modelSalesList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<BrandModelList>() {
+                        modelSalesList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
                             @Override
-                            public boolean apply(BrandModelList input) {
+                            public boolean apply(Product input) {
                                 return (input.getBrand().equalsIgnoreCase(brand.getText().toString()));
                             }
                         }));
@@ -131,7 +134,7 @@ public class RepairNewItemFragment extends Fragment {
 
                         Set<String> brandStrings = new HashSet();
                         for (int i = 0; i < modelSalesList.size(); i++) {
-                            brandStrings.add(modelSalesList.get(i).getModelNo());
+                            brandStrings.add(modelSalesList.get(i).getModel());
                         }
                         brandList.addAll(brandStrings);
 
@@ -172,36 +175,31 @@ public class RepairNewItemFragment extends Fragment {
         status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialDialog.Builder(getActivity())
-                        .items(R.array.items)
-                        .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
-                                if (text != null) {
-                                    stringStatus = text.toString();
-//                                    if (!stringStatus.equalsIgnoreCase("Pending") || !stringStatus.equalsIgnoreCase("Delivered") || !stringStatus.equalsIgnoreCase("Returned")) {
-//                                        date.setVisibility(View.VISIBLE);
-//                                        dateTitle.setVisibility(View.VISIBLE);
-//                                    } else {
-//                                        date.setVisibility(View.GONE);
-//                                        dateTitle.setVisibility(View.GONE);
-//                                    }
+                final List<String> statusOfParts = Arrays.asList(getResources().getStringArray(R.array.requestPartStatus));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final ArrayAdapter<String> aa1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_single_choice, statusOfParts);
+                builder.setSingleChoiceItems(aa1, index, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
 
-                                    if (stringStatus.equalsIgnoreCase("Returned")) {
-                                        price.setVisibility(View.GONE);
-                                        price.setText("0");
-                                    } else {
-                                        price.setVisibility(View.VISIBLE);
-                                    }
-                                    status.setText(stringStatus);
-                                    setindex(stringStatus);
-                                }
-                                return true;
+                        String text = statusOfParts.get(item);
+                        if (text != null) {
+                            stringStatus = text;
+                            if (stringStatus.equalsIgnoreCase("Returned")) {
+                                price.setVisibility(View.GONE);
+                                price.setText("0");
+                            } else {
+                                price.setVisibility(View.VISIBLE);
                             }
-                        })
-                        .positiveText("select")
-                        .show();
+                            status.setText(stringStatus);
+                            setindex(stringStatus);
+                        }
+                    }
+
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
             }
         });
 
@@ -295,31 +293,24 @@ public class RepairNewItemFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
+            Client.INSTANCE.sendService(MkShop.AUTH, service).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    MkShop.toast(getActivity(), "success");
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                    materialDialog.dismiss();
+                    Fragment fragment = new RequestRepair();
+                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                }
 
-            Client.INSTANCE.sendService(MkShop.AUTH, service, new Callback<String>() {
-                        @Override
-                        public void success(String s, Response response) {
-                            MkShop.toast(getActivity(), s);
-                            if (materialDialog != null && materialDialog.isShowing())
-                                materialDialog.dismiss();
-
-                            materialDialog.dismiss();
-                            Fragment fragment = new RequestRepair();
-                            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            if (materialDialog != null && materialDialog.isShowing())
-                                materialDialog.dismiss();
-                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                MkShop.toast(getActivity(), "please check your internet connection");
-                            else MkShop.toast(getActivity(), error.getMessage());
-
-                        }
-                    }
-
-            );
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    if (materialDialog != null && materialDialog.isShowing())
+                        materialDialog.dismiss();
+                   MkShop.toast(getActivity(), t.getMessage());
+                }
+            });
             return null;
         }
     }

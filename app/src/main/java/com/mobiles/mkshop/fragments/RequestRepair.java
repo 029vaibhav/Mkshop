@@ -1,18 +1,18 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.ServiceCenterAdapter;
@@ -24,13 +24,14 @@ import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static java.util.Collections.reverse;
 import static java.util.Collections.sort;
@@ -41,10 +42,10 @@ public class RequestRepair extends Fragment {
     public static String TAG = "service";
 
     List<ServiceCenterEntity> repairList;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
     EditText search;
 
-    ListView listView;
+    RecyclerView listView;
     ServiceCenterAdapter serviceCenterAdapter;
 
 
@@ -70,7 +71,9 @@ public class RequestRepair extends Fragment {
 
         materialDialog = NavigationMenuActivity.materialDialog;
 
-        listView = (ListView) view.findViewById(R.id.repairlist);
+        listView = (RecyclerView) view.findViewById(R.id.repairlist);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        listView.setLayoutManager(linearLayoutManager);
         search = (EditText) view.findViewById(R.id.edit_search);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -78,29 +81,11 @@ public class RequestRepair extends Fragment {
 
 
         listInitializer();
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                Myenum.INSTANCE.setServiceCenterEntity(repairList.get(position));
-
-                Fragment fragment = new RepairListItemFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
-            }
-        });
-
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Fragment fragment = new RepairNewItemFragment();
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
-
-
             }
         });
 
@@ -127,7 +112,7 @@ public class RequestRepair extends Fragment {
                     if (repairList == null) {
                         listInitializer();
                     } else {
-                        serviceCenterAdapter = new ServiceCenterAdapter(getActivity(), repairList);
+                        serviceCenterAdapter = new ServiceCenterAdapter(RequestRepair.this, repairList);
                         listView.setAdapter(serviceCenterAdapter);
 
                     }
@@ -142,15 +127,15 @@ public class RequestRepair extends Fragment {
 
     private void listInitializer() {
         materialDialog.show();
-        final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        final DateTimeFormatter formatter = DateTimeFormat.forPattern(getString(R.string.date_format));
 
-
-        Client.INSTANCE.getServiceList(MkShop.AUTH, new Callback<List<ServiceCenterEntity>>() {
+        Client.INSTANCE.getServiceList(MkShop.AUTH).enqueue(new Callback<List<ServiceCenterEntity>>() {
             @Override
-            public void success(List<ServiceCenterEntity> serviceCenterEntiities, final Response response) {
+            public void onResponse(Call<List<ServiceCenterEntity>> call, Response<List<ServiceCenterEntity>> response) {
+
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                repairList = serviceCenterEntiities;
+                repairList = response.body();
                 sort(repairList, new Comparator<ServiceCenterEntity>() {
                     @Override
                     public int compare(ServiceCenterEntity lhs, ServiceCenterEntity rhs) {
@@ -159,19 +144,16 @@ public class RequestRepair extends Fragment {
                 });
                 reverse(repairList);
                 Myenum.INSTANCE.setServiceList(repairList);
-                serviceCenterAdapter = new ServiceCenterAdapter(getActivity(), repairList);
+                serviceCenterAdapter = new ServiceCenterAdapter(RequestRepair.this, repairList);
                 listView.setAdapter(serviceCenterAdapter);
-
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void onFailure(Call<List<ServiceCenterEntity>> call, Throwable t) {
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "please check your internet connection");
-                else
-                    MkShop.toast(getActivity(), error.getMessage());
+
+                    MkShop.toast(getActivity(), t.getMessage());
 
             }
         });

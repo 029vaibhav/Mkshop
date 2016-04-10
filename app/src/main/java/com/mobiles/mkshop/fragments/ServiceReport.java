@@ -2,6 +2,7 @@ package com.mobiles.mkshop.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -14,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.TabsPagerAdapterService;
@@ -27,9 +27,9 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by vaibhav on 3/7/15.
@@ -41,7 +41,7 @@ public class ServiceReport extends Fragment {
     public static String TAG = "ServiceReport";
     TextView toDate, fromDate;
     String sFromDate, sToDate;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
     ViewPager viewPager;
     TabsPagerAdapterService adapter;
@@ -148,29 +148,27 @@ public class ServiceReport extends Fragment {
 
         materialDialog.show();
 
-        Client.INSTANCE.getServiceReport(MkShop.AUTH, sFromDate, sToDate, new Callback<List<ServiceCenterEntity>>() {
-            @Override
-            public void success(final List<ServiceCenterEntity> serviceList, Response response) {
+        Call<List<ServiceCenterEntity>> serviceReport = Client.INSTANCE.getServiceReport(MkShop.AUTH, sFromDate, sToDate);
+        serviceReport.enqueue(new Callback<List<ServiceCenterEntity>>() {
+                                  @Override
+                                  public void onResponse(Call<List<ServiceCenterEntity>> call, Response<List<ServiceCenterEntity>> response) {
+                                      Myenum.INSTANCE.setServiceList(response.body());
+                                      if (materialDialog != null && materialDialog.isShowing())
+                                          materialDialog.dismiss();
+                                      tabLayout.setTabsFromPagerAdapter(adapter);
+                                      viewPager.setAdapter(adapter);
+                                  }
 
+                                  @Override
+                                  public void onFailure(Call<List<ServiceCenterEntity>> call, Throwable t) {
+                                      if (materialDialog != null && materialDialog.isShowing())
+                                          materialDialog.dismiss();
+                                      MkShop.toast(getActivity(), t.getMessage());
 
-                Myenum.INSTANCE.setServiceList(serviceList);
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
-                tabLayout.setTabsFromPagerAdapter(adapter);
-                viewPager.setAdapter(adapter);
+                                  }
+                              }
 
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
-                MkShop.toast(getActivity(), error.getMessage());
-
-
-            }
-        });
+        );
 
 
     }

@@ -1,7 +1,7 @@
 package com.mobiles.mkshop.adapters;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -14,10 +14,9 @@ import android.widget.TextView;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
-import com.mobiles.mkshop.fragments.ViewProductItemFragment;
-import com.mobiles.mkshop.pojos.models.Sales;
 import com.mobiles.mkshop.R;
-import com.squareup.picasso.Picasso;
+import com.mobiles.mkshop.fragments.ViewProductItemFragment;
+import com.mobiles.mkshop.pojos.models.Product;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,11 +29,11 @@ public class ViewProductadapter extends RecyclerView.Adapter<ViewProductadapter.
 
     Context context;
 
-    List<Sales> salesList;
+    List<Product> salesList;
     Fragment fragmentx;
-    private List<Sales> filteredsalesListList;
+    private List<Product> filteredsalesListList;
 
-    public ViewProductadapter(Fragment fragment, Context salesReportList, List<Sales> modelListByBrand) {
+    public ViewProductadapter(Fragment fragment, Context salesReportList, List<Product> modelListByBrand) {
         context = salesReportList;
         salesList = modelListByBrand;
         this.fragmentx = fragment;
@@ -53,24 +52,15 @@ public class ViewProductadapter extends RecyclerView.Adapter<ViewProductadapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final Sales sales = salesList.get(position);
+        final Product sales = salesList.get(position);
 
-        if (sales.getPath() != null) {
-            String url = sales.getPath().replace("\\", "");
-            Picasso.with(context).load(url).into(holder.moibleImageView);
-        } else
-            Picasso.with(context).load("https://www.itelligence.com/Content/Images/no-image.png").into(holder.moibleImageView);
+//        if (sales.getPath() != null && sales.getPath().size()>0) {
+//            String url = sales.getPath().get(0).replace("\\", "");
+//            Picasso.with(context).load(url).into(holder.moibleImageView);
+//        } else
+//            Picasso.with(context).load("https://www.itelligence.com/Content/Images/no-image.png").into(holder.moibleImageView);
 
-        holder.model.setText(sales.getModelNo());
-
-        holder.moibleImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewProductItemFragment fragment = ViewProductItemFragment.newInstance("" + sales.getId());
-//
-                fragmentx.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-            }
-        });
+        holder.model.setText(sales.getModel());
 
 
     }
@@ -84,8 +74,30 @@ public class ViewProductadapter extends RecyclerView.Adapter<ViewProductadapter.
         return salesList.size();
     }
 
+    public void filter(final Editable s) {
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+        if (s.length() > 0) {
+            Collection<Product> salesCollection = Collections2.filter(filteredsalesListList,
+                    new Predicate<Product>() {
+                        @Override
+                        public boolean apply(Product input) {
+                            return (input.getModel().toLowerCase(Locale.ENGLISH).contains(s.toString()));
+                        }
+                    });
+
+            salesList = Lists.newArrayList(salesCollection);
+
+
+        } else {
+
+            salesList = filteredsalesListList;
+
+        }
+        notifyDataSetChanged();
+    }
+
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CardView cardItemLayout;
         public ImageView moibleImageView;
@@ -99,87 +111,20 @@ public class ViewProductadapter extends RecyclerView.Adapter<ViewProductadapter.
             moibleImageView = (ImageView) itemView.findViewById(R.id.mobileImage);
             model = (TextView) itemView.findViewById(R.id.model);
 
+            cardItemLayout.setOnClickListener(this);
 
         }
 
 
-    }
+        @Override
+        public void onClick(View v) {
 
-    public void filter(final Editable s) {
-
-
-        if (s.length() > 0) {
-            Collection<Sales> salesCollection = Collections2.filter(filteredsalesListList,
-                    new Predicate<Sales>() {
-                        @Override
-                        public boolean apply(Sales input) {
-                            return (input.getModelNo().toLowerCase(Locale.ENGLISH).contains(s.toString()));
-                        }
-                    });
-
-            salesList = Lists.newArrayList(salesCollection);
-
-
-        } else {
-
-            salesList = filteredsalesListList;
+            final Product sales = salesList.get(getAdapterPosition());
+            ViewProductItemFragment fragment = ViewProductItemFragment.newInstance(sales.getId());
+            fragmentx.getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
         }
-        notifyDataSetChanged();
-
     }
-
-
-//    private class FilterList extends Filter {
-//
-//        private ViewProductadapter adapter;
-//        private final List<Sales> originalLists;
-//        private List<Sales> filteredList;
-//
-//
-//        private FilterList(ViewProductadapter adapter, List<Sales> salesList) {
-//            super();
-//            this.adapter = adapter;
-//            this.originalLists = salesList;
-//            this.filteredList = new ArrayList<>();
-//
-//        }
-//
-//        @Override
-//        protected FilterResults performFiltering(final CharSequence s) {
-//            filteredList.clear();
-//            final FilterResults results = new FilterResults();
-//            if (s.length() > 0) {
-//                Collection<Sales> salesCollection = Collections2.filter(salesList,
-//                        new Predicate<Sales>() {
-//                            @Override
-//                            public boolean apply(Sales input) {
-//                                return (input.getModelNo().toLowerCase().matches(s.toString()));
-//                            }
-//                        });
-//
-//                filteredList = Lists.newArrayList(salesCollection);
-//
-//
-//            } else {
-//
-//                filteredList.addAll(originalLists);
-//
-//            }
-//            Log.e("size", "" + filteredList);
-//            results.values = filteredList;
-//            results.count = filteredList.size();
-//
-//            return results;
-//        }
-//
-//        @Override
-//        protected void publishResults(CharSequence constraint, FilterResults results) {
-//            adapter.filteredsalesListList.clear();
-//            adapter.filteredsalesListList.addAll((ArrayList<Sales>) results.values);
-//            adapter.notifyDataSetChanged();
-//        }
-//    }
 }
 
 

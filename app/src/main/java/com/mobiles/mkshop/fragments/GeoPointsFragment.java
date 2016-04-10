@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -10,19 +11,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.Location;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class GeoPointsFragment extends Fragment {
@@ -31,7 +32,7 @@ public class GeoPointsFragment extends Fragment {
     public static String TAG = "GeoPointsFragment";
 
     ListView listView;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
 
     public static GeoPointsFragment newInstance() {
@@ -57,15 +58,16 @@ public class GeoPointsFragment extends Fragment {
 
         materialDialog.show();
 
-        Client.INSTANCE.getAllLocation(MkShop.AUTH, new Callback<List<Location>>() {
+        Call<List<Location>> allLocation = Client.INSTANCE.getAllLocation(MkShop.AUTH);
+        allLocation.enqueue(new Callback<List<Location>>() {
             @Override
-            public void success(final List<Location> locations, Response response) {
+            public void onResponse(Call<List<Location>> call, final Response<List<Location>> response) {
 
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
                 List<String> items = new ArrayList<String>();
-                for (int i = 0; i < locations.size(); i++) {
-                    items.add(locations.get(i).getRole());
+                for (int i = 0; i < response.body().size(); i++) {
+                    items.add(response.body().get(i).getRole());
                 }
 
                 ArrayAdapter<String> itemsAdapter =
@@ -76,7 +78,7 @@ public class GeoPointsFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        Location location = locations.get(position);
+                        Location location = response.body().get(position);
 
                         Fragment fragment = NewWifiNames.newInstance(location.getLatitude(),
                                 location.getLongitude(), location.getRole(), "" + location.getId());
@@ -84,16 +86,14 @@ public class GeoPointsFragment extends Fragment {
 
                     }
                 });
-
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void onFailure(Call<List<Location>> call, Throwable t) {
+
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "please check your internet connection");
-                else MkShop.toast(getActivity(), error.getMessage());
+                 MkShop.toast(getActivity(), t.getMessage());
 
             }
         });
@@ -118,3 +118,4 @@ public class GeoPointsFragment extends Fragment {
 
 
 }
+

@@ -1,11 +1,12 @@
 package com.mobiles.mkshop.pojos.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by vaibhav on 18/7/15.
  */
-//@JsonIgnoreProperties(ignoreUnknown = true)
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NewUser {
 
     String name,mobile,email,qualification,username,password,address,role;

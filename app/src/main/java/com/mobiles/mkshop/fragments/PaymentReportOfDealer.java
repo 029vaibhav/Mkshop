@@ -20,8 +20,8 @@ import com.mobiles.mkshop.adapters.DealerReportItemAdapter;
 import com.mobiles.mkshop.adapters.TabsPagerDealerAdapter;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.models.PaymentHistory;
-import com.mobiles.mkshop.pojos.models.PurchaseHistory;
+import com.mobiles.mkshop.pojos.models.Payment;
+import com.mobiles.mkshop.pojos.models.Purchase;
 
 import java.util.List;
 
@@ -33,12 +33,13 @@ public class PaymentReportOfDealer extends Fragment implements TextWatcher {
     ViewPager viewPager;
     TabsPagerDealerAdapter adapter;
     EditText search;
-    String dealerName;
+    Long dealerId;
 
-    public static PaymentReportOfDealer newInstance(String dealerName) {
+    public static PaymentReportOfDealer newInstance(Long dealerId) {
         PaymentReportOfDealer fragment = new PaymentReportOfDealer();
         Bundle args = new Bundle();
-        args.putString("dealerName", dealerName);
+        if(dealerId!=null)
+        args.putLong("dealerName", dealerId);
         fragment.setArguments(args);
         return fragment;
 
@@ -47,7 +48,7 @@ public class PaymentReportOfDealer extends Fragment implements TextWatcher {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dealerName = getArguments() != null ? getArguments().getString("dealerName") : "";
+        dealerId = getArguments() != null ? getArguments().getLong("dealerName") : null;
 
     }
 
@@ -66,7 +67,7 @@ public class PaymentReportOfDealer extends Fragment implements TextWatcher {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        MkShop.SCRREN = "SalesReport";
+        MkShop.SCRREN = "PaymentReportOfDealer";
 
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.dealer_expense_report, container, false);
 
@@ -82,9 +83,8 @@ public class PaymentReportOfDealer extends Fragment implements TextWatcher {
 
     private void initList() {
 
-        List<PurchaseHistory> purchaseHistories = PurchaseHistory.find(PurchaseHistory.class, "dealer_name = ?", dealerName);
-        List<PaymentHistory> paymentHistories = PaymentHistory.find(PaymentHistory.class, "dealer_id =?", dealerName);
-
+        List<Purchase> purchaseHistories = Purchase.find(Purchase.class, "dealer_id = ?", String.valueOf(dealerId));
+        List<Payment> paymentHistories = Payment.find(Payment.class, "dealer_id =?", String.valueOf(dealerId));
 
         Myenum.INSTANCE.setPurchaseHistories(purchaseHistories);
         Myenum.INSTANCE.setPaymentHistories(paymentHistories);
@@ -97,10 +97,8 @@ public class PaymentReportOfDealer extends Fragment implements TextWatcher {
         totalQuantity = (TextView) viewGroup.findViewById(R.id.totalQuantity);
         totalRevenue = (TextView) viewGroup.findViewById(R.id.totalRevenue);
         search = (EditText) viewGroup.findViewById(R.id.edit_search);
-
-
         adapter = new TabsPagerDealerAdapter(myContext.getSupportFragmentManager());
-        adapter.setDealerName(dealerName);
+        adapter.setDealerId(dealerId);
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) viewGroup.findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);

@@ -1,37 +1,25 @@
 package com.mobiles.mkshop.pojos.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mobiles.mkshop.pojos.enums.ProductType;
+import com.orm.SugarRecord;
+
 import java.util.List;
 
 /**
  * Created by vaibhav on 23/7/15.
  */
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 
-public class Product {
+public class Product extends SugarRecord {
 
-    String infrared,brand, modelNo, sim, screenSize, displayType, os, iMemory, eMemory, fCamera, bCamera, bluetooth, wlan,nfc,radio, price, battery;
-
-    List<String> path;
-
-    public List<String> getPath() {
-        return path;
-    }
-
-    public void setPath(List<String> path) {
-        this.path = path;
-    }
-
-    public String getInfrared() {
-        return infrared;
-    }
-
-    public void setInfrared(String infrared) {
-        this.infrared = infrared;
-    }
+    String brand, model, sim, screenSize, displayType, os, iMemory, eMemory, fCamera, bCamera, wlan, bluetooth, nfc, infrared, radio, battery;
+    int price;
+    ProductType type;
+    String accessoryType;
 
     public String getBrand() {
-
         return brand;
     }
 
@@ -39,12 +27,12 @@ public class Product {
         this.brand = brand;
     }
 
-    public String getModelNo() {
-        return modelNo;
+    public String getModel() {
+        return model;
     }
 
-    public void setModelNo(String model) {
-        this.modelNo = model;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getSim() {
@@ -75,8 +63,8 @@ public class Product {
         return os;
     }
 
-    public void setOs(String platform) {
-        this.os = platform;
+    public void setOs(String os) {
+        this.os = os;
     }
 
     public String getiMemory() {
@@ -111,20 +99,20 @@ public class Product {
         this.bCamera = bCamera;
     }
 
+    public String getWlan() {
+        return wlan;
+    }
+
+    public void setWlan(String wlan) {
+        this.wlan = wlan;
+    }
+
     public String getBluetooth() {
         return bluetooth;
     }
 
     public void setBluetooth(String bluetooth) {
         this.bluetooth = bluetooth;
-    }
-
-    public String getWlan() {
-        return wlan;
-    }
-
-    public void setWlan(String wifi) {
-        this.wlan = wifi;
     }
 
     public String getNfc() {
@@ -135,6 +123,14 @@ public class Product {
         this.nfc = nfc;
     }
 
+    public String getInfrared() {
+        return infrared;
+    }
+
+    public void setInfrared(String infrared) {
+        this.infrared = infrared;
+    }
+
     public String getRadio() {
         return radio;
     }
@@ -143,19 +139,60 @@ public class Product {
         this.radio = radio;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public String getBattery() {
         return battery;
     }
 
     public void setBattery(String battery) {
         this.battery = battery;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public ProductType getType() {
+        return type;
+    }
+
+    public void setType(ProductType type) {
+        this.type = type;
+    }
+
+    public String getAccessoryType() {
+        return accessoryType;
+    }
+
+    public void setAccessoryType(String accessoryType) {
+        this.accessoryType = accessoryType;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", sim='" + sim + '\'' +
+                ", screenSize='" + screenSize + '\'' +
+                ", displayType='" + displayType + '\'' +
+                ", os='" + os + '\'' +
+                ", iMemory='" + iMemory + '\'' +
+                ", eMemory='" + eMemory + '\'' +
+                ", fCamera='" + fCamera + '\'' +
+                ", bCamera='" + bCamera + '\'' +
+                ", wlan='" + wlan + '\'' +
+                ", bluetooth='" + bluetooth + '\'' +
+                ", nfc='" + nfc + '\'' +
+                ", infrared='" + infrared + '\'' +
+                ", radio='" + radio + '\'' +
+                ", battery='" + battery + '\'' +
+                ", price=" + price +
+                ", type=" + type +
+                ", accessoryType='" + accessoryType + '\'' +
+                '}';
     }
 }

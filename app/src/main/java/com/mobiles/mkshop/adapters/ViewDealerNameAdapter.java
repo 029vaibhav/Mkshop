@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.fragments.PaymentReportOfDealer;
-import com.mobiles.mkshop.pojos.models.ProductExpense;
+import com.mobiles.mkshop.pojos.models.ExpenseManager;
 
 import java.util.List;
 
@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class ViewDealerNameAdapter extends RecyclerView.Adapter<ViewDealerNameAdapter.ViewHolder> {
 
-    List<ProductExpense> productExpenseList;
+    List<ExpenseManager> expenseManagerList;
     Fragment context;
     View view;
 
 
-    public ViewDealerNameAdapter(Fragment viewDealersName, List<ProductExpense> paymentInfoHashMap) {
+    public ViewDealerNameAdapter(Fragment viewDealersName, List<ExpenseManager> paymentInfoHashMap) {
         this.context = viewDealersName;
-        this.productExpenseList = paymentInfoHashMap;
+        this.expenseManagerList = paymentInfoHashMap;
 
 
     }
@@ -44,19 +44,18 @@ public class ViewDealerNameAdapter extends RecyclerView.Adapter<ViewDealerNameAd
     public void onBindViewHolder(ViewDealerNameAdapter.ViewHolder holder, int position) {
 
 
-        ProductExpense productExpense = productExpenseList.get(position);
-
-
+        ExpenseManager expenseManager = expenseManagerList.get(position);
 //        holder.date.setText(productExpense.getCreated());
-        holder.dealerName.setText(productExpense.getDealerName());
-        holder.totalAmount.setText("Total " + context.getString(R.string.rs) + " " + productExpense.getTotalAmt());
+        holder.dealerName.setText(expenseManager.getDealerInfo().getDealerName());
+        holder.totalAmount.setText("Total " + context.getString(R.string.rs) + " " + expenseManager.getDealerInfo().getTotalAmount());
 
-        if (productExpense.getDueAmount() < 0) {
+        int dueAmount = (int) (expenseManager.getDealerInfo().getTotalAmount() - expenseManager.getDealerInfo().getPayedAmount());
+        if (dueAmount < 0) {
             holder.dueAmount.setTextColor(Color.GREEN);
-            holder.dueAmount.setText("Balance  " + context.getString(R.string.rs) + "  " + -productExpense.getDueAmount());
+            holder.dueAmount.setText("Balance  " + context.getString(R.string.rs) + "  " + -dueAmount);
         } else {
             holder.dueAmount.setTextColor(Color.RED);
-            holder.dueAmount.setText("Due " + context.getString(R.string.rs) + " " + productExpense.getDueAmount());
+            holder.dueAmount.setText("Due " + context.getString(R.string.rs) + " " + dueAmount);
         }
 
 
@@ -64,7 +63,7 @@ public class ViewDealerNameAdapter extends RecyclerView.Adapter<ViewDealerNameAd
 
     @Override
     public int getItemCount() {
-        return productExpenseList.size();
+        return expenseManagerList.size();
     }
 
 
@@ -89,7 +88,7 @@ public class ViewDealerNameAdapter extends RecyclerView.Adapter<ViewDealerNameAd
         public void onClick(View v) {
 
 
-            Fragment viewBills = PaymentReportOfDealer.newInstance(productExpenseList.get(getAdapterPosition()).getDealerName());
+            Fragment viewBills = PaymentReportOfDealer.newInstance(expenseManagerList.get(getAdapterPosition()).getDealerInfo().getServerId());
             context.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, viewBills, "DealerReportViewPagerFragment").addToBackStack(null).commit();
         }
     }

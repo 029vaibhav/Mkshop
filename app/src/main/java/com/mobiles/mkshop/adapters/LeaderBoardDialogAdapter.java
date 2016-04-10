@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.pojos.models.LeaderBoardDetails;
+import com.mobiles.mkshop.pojos.models.Sales;
 
 import java.util.List;
 import java.util.Locale;
@@ -19,9 +19,9 @@ import java.util.Locale;
 public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDialogAdapter.ViewHolder> {
 
     Fragment context;
-    List<LeaderBoardDetails> sales;
+    List<Sales> sales;
 
-    public LeaderBoardDialogAdapter(Fragment context, List<LeaderBoardDetails> sales) {
+    public LeaderBoardDialogAdapter(Fragment context, List<Sales> sales) {
 
         this.context = context;
         this.sales = sales;
@@ -40,7 +40,7 @@ public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        LeaderBoardDetails leaderBoardDetails = sales.get(position);
+        Sales leaderBoardDetails = sales.get(position);
 
         holder.brand.setText(leaderBoardDetails.getModel().toUpperCase(Locale.ENGLISH));
         holder.model.setText(leaderBoardDetails.getBrand().toUpperCase(Locale.ENGLISH));
@@ -48,14 +48,10 @@ public class LeaderBoardDialogAdapter extends RecyclerView.Adapter<LeaderBoardDi
         holder.revenue.setText(context.getString(R.string.rs) + "" + leaderBoardDetails.getPrice());
         if (leaderBoardDetails.getAccessoryType() != null)
             holder.accessoryType.setText(leaderBoardDetails.getAccessoryType());
-        else if (leaderBoardDetails.getProblem() != null) {
-            holder.accessoryType.setText(leaderBoardDetails.getProblem().replace("\n", "").toUpperCase(Locale.ENGLISH));
-        } else
+        else
             holder.accessoryType.setVisibility(View.GONE);
 
-        if (leaderBoardDetails.getResolution() != null) {
-            holder.resolution.setText(leaderBoardDetails.getResolution().replace("\n", "").toUpperCase(Locale.ENGLISH));
-        } else holder.resolution.setVisibility(View.GONE);
+        holder.resolution.setVisibility(View.GONE);
 
 
     }

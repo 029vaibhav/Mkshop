@@ -1,6 +1,7 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,24 +14,23 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.Notification;
+import com.mobiles.mkshop.pojos.models.Message;
 
 import org.joda.time.DateTime;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SendNotificationFragment extends Fragment {
 
-    MaterialDialog dialog;
-
-
+    ProgressDialog dialog;
     public static String TAG = "SendNotificationFragment";
     String validityDate;
     String[] roleOption = {"Admin", "Salesman", "Technician", "Receptionist"};
@@ -69,20 +69,13 @@ public class SendNotificationFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-
-
                         String sToDate = MkShop.checkDigit(i3) + "-" + MkShop.checkDigit(i2 + 1) + "-" + i;
-
-
                         date.setText(sToDate);
                         DateTime dt = new DateTime(i, i2 + 1, i3, 01, 01);
-
-                        validityDate = dt.toString("yyyy-MM-dd");
-
+                        validityDate = dt.toString(getString(R.string.date_format));
 
                     }
                 }, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
@@ -105,29 +98,25 @@ public class SendNotificationFragment extends Fragment {
 
                     dialog.show();
 
-                    Notification notification = new Notification();
-                    notification.setRole(role.getText().toString());
-                    notification.setEndDate(validityDate);
+                    Message messageObject = new Message();
+                    messageObject.setRole(role.getText().toString());
+                    messageObject.setEndDate(validityDate);
 
-                    notification.setMessage(message.getText().toString());
-                    Client.INSTANCE.sendNotification(MkShop.AUTH, notification, new Callback<String>() {
+                    messageObject.setMessage(message.getText().toString());
+                    Client.INSTANCE.sendNotification(MkShop.AUTH, messageObject).enqueue(new Callback<Void>() {
                         @Override
-                        public void success(String s, Response response) {
-
+                        public void onResponse(Call<Void> call, Response<Void> response) {
                             if (dialog != null && dialog.isShowing())
                                 dialog.dismiss();
-
-
-                            MkShop.toast(getActivity(), s);
+                            MkShop.toast(getActivity(), "Message sent successfully");
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
+                        public void onFailure(Call<Void> call, Throwable t) {
                             if (dialog != null && dialog.isShowing())
                                 dialog.dismiss();
 
-                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                MkShop.toast(getActivity(), "please check your internet connection");
+                                MkShop.toast(getActivity(), t.getMessage());
 
                         }
                     });
@@ -140,7 +129,6 @@ public class SendNotificationFragment extends Fragment {
 
         return viewGroup;
     }
-
 
 
 }

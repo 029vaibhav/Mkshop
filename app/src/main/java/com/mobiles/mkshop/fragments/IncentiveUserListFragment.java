@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.base.Function;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimaps;
@@ -20,11 +20,12 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.Sales;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class IncentiveUserListFragment extends Fragment {
@@ -34,7 +35,7 @@ public class IncentiveUserListFragment extends Fragment {
     String id;
     String message;
     RecyclerView listView;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
     public static IncentiveUserListFragment newInstance(String message, String param1) {
         IncentiveUserListFragment fragment = new IncentiveUserListFragment();
@@ -75,45 +76,32 @@ public class IncentiveUserListFragment extends Fragment {
         materialDialog = NavigationMenuActivity.materialDialog;
         materialDialog.show();
 
+        Client.INSTANCE.getIncentiveUserList(MkShop.AUTH, id).enqueue(new Callback<List<Sales>>() {
+            @Override
+            public void onResponse(Call<List<Sales>> call, Response<List<Sales>> response) {
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
 
-        Client.INSTANCE.getIncentiveUserList(MkShop.AUTH, id, new Callback<List<Sales>>() {
-                    @Override
-                    public void success(List<Sales> sales, Response response) {
-                        if (materialDialog != null && materialDialog.isShowing())
-                        materialDialog.dismiss();
-
-                        ListMultimap<String, Sales> multimap = Multimaps.index(sales, new Function<Sales, String>() {
-                            public String apply(Sales source) {
-                                return source.getUsername();
-                            }
-
-                        });
-                        multimap = multimap;
-                        IncentiveUserlistAdapter incentiveUserlistAdapter = new IncentiveUserlistAdapter(IncentiveUserListFragment.this, multimap,id,message);
-                        listView.setAdapter(incentiveUserlistAdapter);
-
-//                        Log.e("multimap", multimap.toString());
-
-
+                ListMultimap<String, Sales> multimap = Multimaps.index(response.body(), new Function<Sales, String>() {
+                    public String apply(Sales source) {
+                        return source.getUsername();
                     }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        if (materialDialog != null && materialDialog.isShowing())
-                        materialDialog.dismiss();
+                });
+                IncentiveUserlistAdapter incentiveUserlistAdapter = new IncentiveUserlistAdapter(IncentiveUserListFragment.this, multimap, id, message);
+                listView.setAdapter(incentiveUserlistAdapter);
 
-                        if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                            MkShop.toast(getActivity(), "please check your internet connection");
+            }
 
-                        else
-                            MkShop.toast(getActivity(), error.getMessage());
+            @Override
+            public void onFailure(Call<List<Sales>> call, Throwable t) {
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
 
-                    }
-                }
+                    MkShop.toast(getActivity(), t.getMessage());
 
-        );
-
-
+            }
+        });
         return viewGroup;
     }
 

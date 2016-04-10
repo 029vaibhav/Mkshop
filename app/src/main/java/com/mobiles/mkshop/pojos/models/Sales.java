@@ -1,15 +1,24 @@
 package com.mobiles.mkshop.pojos.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mobiles.mkshop.pojos.enums.ProductType;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 /**
  * Created by vaibhav on 30/6/15.
  */
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Sales {
 
     long id;
-    String type, brand, modelNo, quantity, price, accessoryType, username, path, customerName, mobile, imei, name,created,model;
+    String brand, model, quantity, price, accessoryType, username, path, customerName, mobile, imei, name, created;
+    ProductType productType;
+    DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     public long getId() {
         return id;
@@ -19,13 +28,18 @@ public class Sales {
         this.id = id;
     }
 
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
     public String getCustomerName() {
         return customerName;
     }
 
-    public String getModel() {
-        return model;
-    }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
@@ -36,6 +50,10 @@ public class Sales {
     }
 
     public String getCreated() {
+        if (created != null) {
+            DateTime dateTime = formatter.parseDateTime(created);
+            return dateTime.toString("yyyy-MM-dd HH:mm:ss");
+        }
         return created;
     }
 
@@ -51,8 +69,8 @@ public class Sales {
         return imei;
     }
 
-    public void setModelNo(String modelNo) {
-        this.modelNo = modelNo;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getName() {
@@ -67,9 +85,6 @@ public class Sales {
         this.imei = imei;
     }
 
-    public String getType() {
-        return type;
-    }
 
     public String getUsername() {
         return username;
@@ -87,10 +102,6 @@ public class Sales {
         this.username = username;
     }
 
-    public void setType(String productType) {
-        this.type = productType;
-    }
-
     public String getBrand() {
         return brand;
     }
@@ -99,12 +110,8 @@ public class Sales {
         this.brand = brand;
     }
 
-    public String getModelNo() {
-        return modelNo;
-    }
-
-    public void setModel(String model) {
-        this.modelNo = model;
+    public String getModel() {
+        return model;
     }
 
 

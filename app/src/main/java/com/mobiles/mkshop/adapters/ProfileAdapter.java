@@ -1,6 +1,8 @@
 package com.mobiles.mkshop.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,21 +12,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.Profile;
 import com.mobiles.mkshop.pojos.enums.UserType;
+import com.mobiles.mkshop.pojos.models.Profile;
+import com.mobiles.mkshop.pojos.models.User;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Suleiman on 14-04-2015.
@@ -69,40 +72,42 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.VersionV
             versionViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new MaterialDialog.Builder(context)
-                            .title("edit " + versionViewHolder.title.getText())
-                            .input(versionViewHolder.title.getText(), versionViewHolder.subTitle.getText(), new MaterialDialog.InputCallback() {
-                                @Override
-                                public void onInput(MaterialDialog dialog, final CharSequence input) {
 
-
-                                    if (input.length() != 0) {
-                                        Map map = new HashMap();
-                                        map.put(versionViewHolder.title.getText(), input.toString());
-                                        Client.INSTANCE.updateProfile(MkShop.AUTH, username, map, new Callback<String>() {
-                                            @Override
-                                            public void success(String s, Response response) {
-
-                                                MkShop.toast(context, s);
-                                                if (s != null && s.equalsIgnoreCase("profile updated"))
-                                                    versionViewHolder.subTitle.setText(input.toString());
-
-                                            }
-
-                                            @Override
-                                            public void failure(RetrofitError error) {
-
-                                                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                                    MkShop.toast(context, "please check your internet connection");
-
-
-                                            }
-                                        });
-                                    } else {
-                                        MkShop.toast(context, "please enter some text");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("edit " + versionViewHolder.title.getText());
+                    final EditText input = new EditText(context);
+                    builder.setView(input);
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (input.length() != 0) {
+                                Map map = new HashMap();
+                                map.put(versionViewHolder.title.getText().toString().toLowerCase(), input.getText().toString());
+                                Client.INSTANCE.updateProfile(MkShop.AUTH, username, map).enqueue(new Callback<User>() {
+                                    @Override
+                                    public void onResponse(Call<User> call, Response<User> response) {
+                                        MkShop.toast(context, "updated successfully");
+                                        versionViewHolder.subTitle.setText(input.getText().toString());
                                     }
-                                }
-                            }).show();
+
+                                    @Override
+                                    public void onFailure(Call<User> call, Throwable t) {
+                                            MkShop.toast(context, t.getMessage());
+                                    }
+                                });
+                            } else {
+                                MkShop.toast(context, "please enter some text");
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             });
 

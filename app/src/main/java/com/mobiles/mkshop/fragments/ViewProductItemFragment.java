@@ -10,21 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.adapters.ViewPagerAdapter;
-import com.mobiles.mkshop.application.Client;
-import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.Product;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 public class ViewProductItemFragment extends Fragment {
 
-    String id;
+    Long id;
     ViewPager viewPager;
     private SlidingUpPanelLayout mLayout;
     Product p;
@@ -34,10 +25,10 @@ public class ViewProductItemFragment extends Fragment {
     EditText brand, model, sim, screenSize, displayType, platform, iMemory, eMemory, fCamera, rCamera, price, battery;
 //    EditText bluetooth;
 
-    public static ViewProductItemFragment newInstance(String param1) {
+    public static ViewProductItemFragment newInstance(Long param1) {
         ViewProductItemFragment fragment = new ViewProductItemFragment();
         Bundle args = new Bundle();
-        args.putString("id", param1);
+        args.putLong("id", param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +41,7 @@ public class ViewProductItemFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id = getArguments().getString("id");
+            id = getArguments().getLong("id");
         }
     }
 
@@ -79,51 +70,34 @@ public class ViewProductItemFragment extends Fragment {
         mLayout = (SlidingUpPanelLayout) viewGroup.findViewById(R.id.sliding_layout);
 
 
-        Client.INSTANCE.getproductid(MkShop.AUTH, id, new Callback<List<Product>>() {
-            @Override
-            public void success(List<Product> prodcutSales, Response response) {
+        Product product = Product.findById(Product.class, id);
+        p = product;
 
+        brand.setText(product.getBrand());
+        model.setText(product.getModel());
+        sim.setText(product.getSim());
+        screenSize.setText(product.getScreenSize());
+        displayType.setText(product.getDisplayType());
+        platform.setText(product.getOs());
+        iMemory.setText(product.getiMemory());
+        eMemory.setText(product.geteMemory());
+        fCamera.setText(product.getfCamera());
+        rCamera.setText(product.getbCamera());
+        //  bluetooth.setText(product.getBluetooth()+"/"+product.getWlan()+"/"+product.getNfc()+"/"+product.getInfrared()+"/"+product.getRadio());
+        price.setText(String.valueOf(product.getPrice()));
+        battery.setText(product.getBattery());
 
-                Product product = prodcutSales.get(0);
-                p = product;
-                ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity(), prodcutSales.get(0).getPath());
-                viewPager.setAdapter(adapter);
-
-                brand.setText(product.getBrand());
-                model.setText(product.getModelNo());
-                sim.setText(product.getSim());
-                screenSize.setText(product.getScreenSize());
-                displayType.setText(product.getDisplayType());
-                platform.setText(product.getOs());
-                iMemory.setText(product.getiMemory());
-                eMemory.setText(product.geteMemory());
-                fCamera.setText(product.getfCamera());
-                rCamera.setText(product.getbCamera());
-                //  bluetooth.setText(product.getBluetooth()+"/"+product.getWlan()+"/"+product.getNfc()+"/"+product.getInfrared()+"/"+product.getRadio());
-                price.setText(product.getPrice());
-                battery.setText(product.getBattery());
-
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "Please check your internet connection");
-                else
-                    MkShop.toast(getActivity(), error.getMessage());
-
-            }
-        });
+    /*
+    * Get the image for the products and than uncomment it !!
+    *
+    * */
+        //                ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity(), prodcutSales.get(0).getPath());
+//                viewPager.setAdapter(adapter);
 
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                SaleFragment fragment = SaleFragment.newInstance(p.getBrand(), p.getModelNo());
-
+                SaleFragment fragment = SaleFragment.newInstance(p.getBrand(), p.getModel());
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             }
         });

@@ -17,12 +17,13 @@ import com.google.android.gms.iid.InstanceID;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
+import com.mobiles.mkshop.pojos.models.User;
 
 import java.io.IOException;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -72,7 +73,7 @@ public class RegistrationIntentService extends IntentService {
 
     /**
      * Persist registration to third-party servers.
-     * <p>
+     * <p/>
      * Modify this method to associate the user's GCM registration token with any server-side account
      * maintained by your application.
      *
@@ -80,24 +81,20 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
-
-        Client.INSTANCE.registerGcm(MkShop.AUTH,MkShop.Username, token, new Callback<String>() {
+        Client.INSTANCE.registerGcm(MkShop.AUTH, MkShop.Username, token).enqueue(new Callback<User>() {
             @Override
-            public void success(String s, Response response) {
-                MkShop.toast(RegistrationIntentService.this, s);
+            public void onResponse(Call<User> call, Response<User> response) {
+                MkShop.toast(RegistrationIntentService.this, "Notification Enabled");
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void onFailure(Call<User> call, Throwable t) {
 
-
-                if(error.getKind().equals(RetrofitError.Kind.NETWORK))
-                MkShop.toast(RegistrationIntentService.this,"Please check your internet connection");
-                else
-                    MkShop.toast(RegistrationIntentService.this,error.getMessage());
+                MkShop.toast(RegistrationIntentService.this, t.getMessage());
 
             }
         });
+
     }
 
     /**

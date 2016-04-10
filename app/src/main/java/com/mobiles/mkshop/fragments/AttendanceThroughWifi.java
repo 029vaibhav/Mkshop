@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
@@ -11,20 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.LoginDetails;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class AttendanceThroughWifi extends Fragment {
@@ -38,7 +37,7 @@ public class AttendanceThroughWifi extends Fragment {
 
     TextView attendance;
     LoginDetails loginDetailsList;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
     WifiManager wifiManager;
     WifiInfo wifiInfo;
@@ -67,9 +66,12 @@ public class AttendanceThroughWifi extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("MKSHOP", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("DETAIL", null);
-        Type type = new TypeToken<LoginDetails>() {
-        }.getType();
-        loginDetailsList = new Gson().fromJson(json, type);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            loginDetailsList = objectMapper.readValue(json, LoginDetails.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         materialDialog = NavigationMenuActivity.materialDialog;
 
@@ -103,24 +105,24 @@ public class AttendanceThroughWifi extends Fragment {
 
 
         if (wifiInfo.getSSID().replace("\"", "").equals(loginDetailsList.getLocation().getLatitude()) || wifiInfo.getSSID().replace("\"", "").equals(loginDetailsList.getLocation().getLongitude())) {
-            Client.INSTANCE.markAttendance(MkShop.AUTH, MkShop.Username, new Callback<String>() {
+
+            Call<String> stringCall = Client.INSTANCE.markAttendance(MkShop.AUTH, MkShop.Username);
+            stringCall.enqueue(new Callback<String>() {
                 @Override
-                public void success(String s, Response response) {
+                public void onResponse(Call<String> call, Response<String> response) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-                    MkShop.toast(getActivity(), s);
+                    MkShop.toast(getActivity(), response.body());
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void onFailure(Call<String> call, Throwable t) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-                    if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                        MkShop.toast(getActivity(), "please check your internet connection");
-                    else MkShop.toast(getActivity(), error.getMessage());
-
+                    MkShop.toast(getActivity(), t.getMessage());
                 }
             });
+
         } else {
             if (materialDialog != null && materialDialog.isShowing())
                 materialDialog.dismiss();

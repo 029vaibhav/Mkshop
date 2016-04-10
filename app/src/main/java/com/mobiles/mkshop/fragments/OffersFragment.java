@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,19 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.NotificationAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.Notification;
+import com.mobiles.mkshop.pojos.models.Message;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OffersFragment extends Fragment {
 
@@ -33,7 +34,7 @@ public class OffersFragment extends Fragment {
     RecyclerView recyclerView;
     EditText search;
     NotificationAdapter listItemAdapter;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
 
     public static OffersFragment newInstance() {
@@ -82,29 +83,22 @@ public class OffersFragment extends Fragment {
 
 
         materialDialog.show();
-        Client.INSTANCE.getNotificationDetail(MkShop.AUTH, MkShop.Role, new Callback<List<Notification>>() {
+        Client.INSTANCE.getNotificationDetail(MkShop.AUTH, MkShop.Role).enqueue(new Callback<List<Message>>() {
             @Override
-            public void success(List<Notification> notifications, Response response) {
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
 
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                listItemAdapter = new NotificationAdapter(getActivity(), notifications);
+                listItemAdapter = new NotificationAdapter(getActivity(), response.body());
                 recyclerView.setAdapter(listItemAdapter);
-
-
             }
 
             @Override
-            public void failure(RetrofitError error) {
-
+            public void onFailure(Call<List<Message>> call, Throwable t) {
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
 
-
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "check your internet connection");
-                else
-                    MkShop.toast(getActivity(), error.getMessage());
+                    MkShop.toast(getActivity(), t.getMessage());
 
             }
         });

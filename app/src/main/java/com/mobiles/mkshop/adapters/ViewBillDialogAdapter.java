@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.pojos.models.PaymentHistory;
+import com.mobiles.mkshop.pojos.models.Payment;
 
 import java.util.List;
 
@@ -17,10 +17,10 @@ import java.util.List;
  */
 public class ViewBillDialogAdapter extends RecyclerView.Adapter<ViewBillDialogAdapter.ViewHolder> {
 
-    List<PaymentHistory> productExpenseSingleEntries;
+    List<Payment> productExpenseSingleEntries;
     Fragment context;
 
-    public ViewBillDialogAdapter(Fragment userListFragment, List<PaymentHistory> productExpenseSingleEntries)
+    public ViewBillDialogAdapter(Fragment userListFragment, List<Payment> productExpenseSingleEntries)
 
     {
         context = userListFragment;
@@ -37,9 +37,9 @@ public class ViewBillDialogAdapter extends RecyclerView.Adapter<ViewBillDialogAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        PaymentHistory paymentHistory = productExpenseSingleEntries.get(position);
-        holder.totalAmount.setText(paymentHistory.getCreated());
-        holder.dealerName.setText(context.getString(R.string.rs) + " " + paymentHistory.getAmount());
+        Payment payment = productExpenseSingleEntries.get(position);
+        holder.totalAmount.setText(payment.getCreated());
+        holder.dealerName.setText(context.getString(R.string.rs) + " " + payment.getAmount());
 
 
     }

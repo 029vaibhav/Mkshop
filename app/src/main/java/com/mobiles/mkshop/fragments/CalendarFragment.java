@@ -8,30 +8,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.adapters.Decorators;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.AttendanceDates;
-import com.squareup.timessquare.CalendarCellDecorator;
-import com.squareup.timessquare.CalendarPickerView;
+//import com.squareup.timessquare.CalendarPickerView;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class CalendarFragment extends Fragment {
 
     public static String TAG = "CalendarFragment";
 
-    private CalendarPickerView calendar;
+//    private CalendarPickerView calendar;
     ArrayList<String> dates;
     String username;
 
@@ -62,10 +59,10 @@ public class CalendarFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        calendar = (CalendarPickerView) viewGroup.findViewById(R.id.calendar_view);
-        calendar.init(DateTime.now().minusYears(1).toDate(), DateTime.now().plusDays(2).toDate())
-                .inMode(CalendarPickerView.SelectionMode.MULTIPLE);
-        new GetAttendanceList().execute();
+//        calendar = (CalendarPickerView) viewGroup.findViewById(R.id.calendar_view);
+//        calendar.init(DateTime.now().minusYears(1).toDate(), DateTime.now().plusDays(2).toDate())
+//                .inMode(CalendarPickerView.SelectionMode.MULTIPLE);
+//        new GetAttendanceList().execute();
 
 
         final Calendar nextYear = Calendar.getInstance();
@@ -107,25 +104,20 @@ public class CalendarFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-            Client.INSTANCE.getUserAttendance(MkShop.AUTH,username, new Callback<List<AttendanceDates>>() {
+            Call<List<AttendanceDates>> userAttendance = Client.INSTANCE.getUserAttendance(MkShop.AUTH, username);
+            userAttendance.enqueue(new Callback<List<AttendanceDates>>() {
                 @Override
-                public void success(List<AttendanceDates> attendanceDates, Response response) {
+                public void onResponse(Call<List<AttendanceDates>> call, Response<List<AttendanceDates>> response) {
 
+                    List<AttendanceDates> body = response.body();
                     List<String> dates = new ArrayList<String>();
-                    for (int i = attendanceDates.size() - 1; i >= 0; i--) {
-                        dates.add(attendanceDates.get(i).getDate());
+                    for (int i = body.size() - 1; i >= 0; i--) {
+                        dates.add(body.get(i).getDate());
                     }
-
-
-                    calendar.setDecorators(Arrays.<CalendarCellDecorator>asList(new Decorators(dates)));
-                    calendar.init(DateTime.now().minusMonths(6).toDate(), DateTime.now().plusDays(2).toDate())
-                            .inMode(CalendarPickerView.SelectionMode.MULTIPLE);
-
-
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void onFailure(Call<List<AttendanceDates>> call, Throwable t) {
 
                 }
             });

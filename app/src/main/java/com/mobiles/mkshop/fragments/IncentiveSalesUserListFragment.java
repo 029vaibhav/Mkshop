@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,21 +12,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.IncentiveUserlistDialogAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
 import com.mobiles.mkshop.pojos.enums.PaymentType;
+import com.mobiles.mkshop.pojos.models.ExpenseEntity;
 import com.mobiles.mkshop.pojos.models.Sales;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class IncentiveSalesUserListFragment extends Fragment {
@@ -35,7 +36,7 @@ public class IncentiveSalesUserListFragment extends Fragment {
     RecyclerView recyclerView;
     EditText amount;
     Button submit;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
     String message, id;
 
 
@@ -96,44 +97,30 @@ public class IncentiveSalesUserListFragment extends Fragment {
 
                     ExpenseEntity expenseEntity = new ExpenseEntity();
                     expenseEntity.setBrand(salesList.get(0).getBrand());
-                    expenseEntity.setModelNo(salesList.get(0).getModelNo());
+                    expenseEntity.setModelNo(salesList.get(0).getModel());
                     expenseEntity.setPaymentType(PaymentType.Incentive.name());
                     expenseEntity.setUsername(salesList.get(0).getUsername());
                     expenseEntity.setAmount(amount.getText().toString());
 
-
-                    Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity, new Callback<String>() {
+                    Call<String> stringCall = Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity);
+                    stringCall.enqueue(new Callback<String>() {
                         @Override
-                        public void success(String s, Response response) {
+                        public void onResponse(Call<String> call, Response<String> response) {
 
                             if (materialDialog != null && materialDialog.isShowing())
-                            materialDialog.dismiss();
-
-                            MkShop.toast(getActivity(), s);
-
+                                materialDialog.dismiss();
+                            MkShop.toast(getActivity(), response.body());
                             IncentiveUserListFragment fragment = IncentiveUserListFragment.newInstance(message, id);
                             getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
-
-                            //Fragment fragment = getFragmentManager().findFragmentByTag(IncentiveUserListFragment.TAG);
-//                            if (fragment == null) {
-//                                fragment = new Incentive();
-//                            }
-//                            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
-
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
+                        public void onFailure(Call<String> call, Throwable t) {
+
                             if (materialDialog != null && materialDialog.isShowing())
-                            materialDialog.dismiss();
+                                materialDialog.dismiss();
 
-                            if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                                MkShop.toast(getActivity(), "please check your internet connection");
-
-                            else
-                                MkShop.toast(getActivity(), error.getMessage());
+                                MkShop.toast(getActivity(), t.getMessage());
                         }
                     });
 

@@ -45,10 +45,9 @@
 
 
     <string-array name="revenueComparator">
-        <item name="brandStore">Brand (Mobile)</item>
-        <item name="salesService">Product Type</item>
+        <item name="Mobile">Brand (Mobile)</item>
         <item name="brandService">Brand (Service Center)</item>
-        <item name="brandStoreOfAcc">Brand (Accessory)</item>
+        <item name="Accessory">Brand (Accessory)</item>
 
     </string-array>
 

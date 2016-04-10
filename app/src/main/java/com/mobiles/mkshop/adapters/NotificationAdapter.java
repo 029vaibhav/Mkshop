@@ -13,7 +13,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
-import com.mobiles.mkshop.pojos.models.Notification;
+import com.mobiles.mkshop.pojos.models.Message;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,15 +26,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
     Context context;
-    List<Notification> notifications;
-    List<Notification> dummyNotifications;
+    List<Message> messages;
+    List<Message> dummyMessages;
 
 
-    public NotificationAdapter(Context context, List<Notification> notifications) {
+    public NotificationAdapter(Context context, List<Message> messages) {
 
         this.context = context;
-        this.notifications = notifications;
-        this.dummyNotifications = notifications;
+        this.messages = messages;
+        this.dummyMessages = messages;
 
     }
 
@@ -51,7 +51,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Notification sales = notifications.get(position);
+        Message sales = messages.get(position);
         holder.message.setText(sales.getMessage());
         holder.validity.setText("valid till " + sales.getEndDate());
 
@@ -60,30 +60,30 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public int getItemCount() {
-        if (notifications == null) {
+        if (messages == null) {
             return 0;
         }
-        return notifications.size();
+        return messages.size();
     }
 
     public void filter(final Editable s) {
 
 
         if (s.length() > 0) {
-            Collection<Notification> salesCollection = Collections2.filter(notifications,
-                    new Predicate<Notification>() {
+            Collection<Message> salesCollection = Collections2.filter(messages,
+                    new Predicate<Message>() {
                         @Override
-                        public boolean apply(Notification input) {
+                        public boolean apply(Message input) {
                             return (input.getMessage().toLowerCase(Locale.ENGLISH).contains(s.toString()));
                         }
                     });
 
-            notifications = Lists.newArrayList(salesCollection);
+            messages = Lists.newArrayList(salesCollection);
 
 
         } else {
 
-            notifications = dummyNotifications;
+            messages = dummyMessages;
 
         }
         notifyDataSetChanged();

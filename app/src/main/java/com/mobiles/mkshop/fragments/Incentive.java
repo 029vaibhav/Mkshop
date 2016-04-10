@@ -1,6 +1,7 @@
 package com.mobiles.mkshop.fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.IncentiveAdapter;
@@ -19,18 +18,19 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.IncentiveEntity;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Incentive extends Fragment {
 
     public static String TAG = "Attendance";
     RecyclerView recyclerView;
-    MaterialDialog materialDialog;
+    ProgressDialog materialDialog;
 
 
     public static Incentive newInstance() {
@@ -70,28 +70,29 @@ public class Incentive extends Fragment {
 
         materialDialog.show();
 
-        Client.INSTANCE.getIncentiveList(MkShop.AUTH, new Callback<List<IncentiveEntity>>() {
-            @Override
-            public void success(List<IncentiveEntity> incentiveEntity, Response response) {
+        Call<List<IncentiveEntity>> incentiveList = Client.INSTANCE.getIncentiveList(MkShop.AUTH);
+        incentiveList.enqueue(new Callback<List<IncentiveEntity>>() {
+                                  @Override
+                                  public void onResponse(Call<List<IncentiveEntity>> call, Response<List<IncentiveEntity>> response) {
 
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
-                IncentiveAdapter incentiveAdapter = new IncentiveAdapter(Incentive.this, incentiveEntity);
-                recyclerView.setAdapter(incentiveAdapter);
+                                      if (materialDialog != null && materialDialog.isShowing())
+                                          materialDialog.dismiss();
+                                      IncentiveAdapter incentiveAdapter = new IncentiveAdapter(Incentive.this, response.body());
+                                      recyclerView.setAdapter(incentiveAdapter);
 
+                                  }
 
-            }
+                                  @Override
+                                  public void onFailure(Call<List<IncentiveEntity>> call, Throwable t) {
 
-            @Override
-            public void failure(RetrofitError error) {
-                if (materialDialog != null && materialDialog.isShowing())
-                    materialDialog.dismiss();
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "please check your internet connection");
-                else MkShop.toast(getActivity(), error.getMessage());
+                                      if (materialDialog != null && materialDialog.isShowing())
+                                          materialDialog.dismiss();
+                                      MkShop.toast(getActivity(), t.getMessage());
 
-            }
-        });
+                                  }
+                              }
+
+        );
 
         return viewGroup;
     }

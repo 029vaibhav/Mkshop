@@ -1,5 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,38 +15,33 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.ViewProductadapter;
-import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.enums.ProductType;
-import com.mobiles.mkshop.pojos.models.Sales;
+import com.mobiles.mkshop.pojos.models.Product;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
 public class ViewProductFragment extends Fragment {
 
     public static String TAG = "ViewProductFragment";
 
-    MaterialDialog dialog;
+    ProgressDialog dialog;
     AutoCompleteTextView brandTextView, search;
     TextView submit;
     RecyclerView gridRecyclerView;
     ScrollView scrollView;
-    List<Sales> salesList;
+    List<Product> salesList;
 
 
     public static ViewProductFragment newInstance() {
@@ -75,100 +71,78 @@ public class ViewProductFragment extends Fragment {
         dialog = NavigationMenuActivity.materialDialog;
         dialog.show();
 
-        Client.INSTANCE.getproduct(MkShop.AUTH, new Callback<List<Sales>>() {
+        Iterator<Product> all = Product.findAll(Product.class);
+        List<Product> sales = Lists.newArrayList(all);
+        salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<Product>() {
             @Override
-            public void success(List<Sales> sales, Response response) {
+            public boolean apply(Product input) {
+                return (input.getType().equals(ProductType.Mobile));
+            }
+        }));
 
-//                salesList = sales;
+        List<String> brandStrings = new ArrayList<String>();
+        Set<String> brand = new HashSet();
+        for (int i = 0; i < sales.size(); i++) {
+            brand.add(sales.get(i).getBrand().trim());
+        }
+        brandStrings.addAll(brand);
 
-                salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<Sales>() {
-                    @Override
-                    public boolean apply(Sales input) {
-                        return (input.getType().equalsIgnoreCase(ProductType.Mobile.name()));
-                    }
-                }));
+        if (dialog != null && dialog.isShowing())
+            dialog.dismiss();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (getActivity(), android.R.layout.select_dialog_item, brandStrings);
+        brandTextView.setThreshold(1);
+        brandTextView.setAdapter(adapter);
 
-                List<String> brandStrings = new ArrayList<String>();
-                Set<String> brand = new HashSet();
-                for (int i = 0; i < sales.size(); i++) {
-                    brand.add(sales.get(i).getBrand().trim());
-                }
-                brandStrings.addAll(brand);
 
-                if (dialog != null && dialog.isShowing())
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (brandTextView.getText().length() <= 0) {
+                    MkShop.toast(getActivity(), "please select brand");
+                } else {
+
+                    dialog.show();
+
+                    List<Product> modelListByBrand = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
+                        @Override
+                        public boolean apply(Product input) {
+                            return (input.getBrand().equalsIgnoreCase(brandTextView.getText().toString()));
+                        }
+                    }));
+                    scrollView.setVisibility(View.GONE);
+                    search.setVisibility(View.VISIBLE);
+                    gridRecyclerView.setVisibility(View.VISIBLE);
+                    gridRecyclerView.setHasFixedSize(true);
+                    gridRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                    final ViewProductadapter listItemAdapter = new ViewProductadapter(ViewProductFragment.this, getActivity(), modelListByBrand);
+                    gridRecyclerView.setAdapter(listItemAdapter);
+                    (brandTextView).setInputType(0);
+
+
                     dialog.dismiss();
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (getActivity(), android.R.layout.select_dialog_item, brandStrings);
-                brandTextView.setThreshold(1);
-                brandTextView.setAdapter(adapter);
-
-
-                submit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (brandTextView.getText().length() <= 0) {
-                            MkShop.toast(getActivity(), "please select brand");
-                        } else {
-
-                            dialog.show();
-
-                            List<Sales> modelListByBrand = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Sales>() {
-                                @Override
-                                public boolean apply(Sales input) {
-                                    return (input.getBrand().equalsIgnoreCase(brandTextView.getText().toString()));
-                                }
-                            }));
-                            scrollView.setVisibility(View.GONE);
-                            search.setVisibility(View.VISIBLE);
-                            gridRecyclerView.setVisibility(View.VISIBLE);
-                            gridRecyclerView.setHasFixedSize(true);
-                            gridRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                            final ViewProductadapter listItemAdapter = new ViewProductadapter(ViewProductFragment.this, getActivity(), modelListByBrand);
-                            gridRecyclerView.setAdapter(listItemAdapter);
-                            (brandTextView).setInputType(0);
-
-
-                            dialog.dismiss();
-                            search.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-                                    if (s != null)
-                                        listItemAdapter.filter(s);
-
-                                }
-                            });
-
+                    search.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                         }
-                    }
-                });
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            if (s != null)
+                                listItemAdapter.filter(s);
+
+                        }
+                    });
 
 
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-                if (dialog != null && dialog.isShowing())
-                    dialog.dismiss();
-
-
-                if (error.getKind().equals(RetrofitError.Kind.NETWORK))
-                    MkShop.toast(getActivity(), "please check your internet connection");
-                else MkShop.toast(getActivity(), error.getMessage());
-
-
+                }
             }
         });
 

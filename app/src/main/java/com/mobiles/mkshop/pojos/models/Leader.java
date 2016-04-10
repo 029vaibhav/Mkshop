@@ -1,82 +1,41 @@
 package com.mobiles.mkshop.pojos.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 /**
  * Created by vaibhav on 4/7/15.
  */
-//@JsonIgnoreProperties(ignoreUnknown = true)
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Leader {
 
-    String name;
-    String quantity;
-    String price;
-    String role;
-    String username;
+    User user;
+    List<Sales> product;
+    List<ServiceCenterEntity> technicals;
 
-    List<ProductDetails>productDetail;
-
-    int id;
-    public String getName() {
-        return name;
+    public List<ServiceCenterEntity> getTechnicals() {
+        return technicals;
     }
 
-    public String getRole() {
-        return role;
+    public void setTechnicals(List<ServiceCenterEntity> technicals) {
+        this.technicals = technicals;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public User getUser() {
+        return user;
     }
 
-    public String getUsername() {
-        return username;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public List<Sales> getProduct() {
+        return product;
     }
 
-    public void setName(String name) {
-
-        this.name = name;
-
+    public void setProduct(List<Sales> product) {
+        this.product = product;
     }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-
-    public String getPrice() {
-        return price;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public List<ProductDetails> getProductDetail() {
-        return productDetail;
-    }
-
-    public void setProductDetail(List<ProductDetails> productDetail) {
-        this.productDetail = productDetail;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-
 }

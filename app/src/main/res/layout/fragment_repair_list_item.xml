@@ -32,11 +32,8 @@
                     android:layout_height="match_parent"
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
-
-
-                    android:paddingTop="8dp"
+                    android:paddingTop="16dp"
                     android:text="Brand"
-                    android:textColor="@color/myPrimaryColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -52,7 +49,7 @@
                     android:drawableRight="@drawable/blank"
                     android:gravity="center"
                     android:hint="Brand"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:textSize="20sp" />
 
                 <TextView
@@ -60,11 +57,9 @@
                     android:layout_height="match_parent"
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
-
-
-                    android:paddingTop="8dp"
+                    android:paddingTop="16dp"
                     android:text="Model"
-                    android:textColor="@color/myPrimaryColor"
+                    
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -80,7 +75,7 @@
                     android:drawableRight="@drawable/blank"
                     android:gravity="center"
                     android:hint="model"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:textSize="20sp" />
 
                 <EditText
@@ -94,7 +89,7 @@
                     android:drawableRight="@drawable/ic_action_name"
                     android:gravity="center"
                     android:hint="Model no"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:singleLine="true"
                     android:textSize="20sp"
                     android:visibility="gone" />
@@ -104,11 +99,9 @@
                     android:layout_height="match_parent"
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
-
-
-                    android:paddingTop="8dp"
+                    android:paddingTop="16dp"
                     android:text="Status"
-                    android:textColor="@color/myPrimaryColor"
+                    
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -125,7 +118,7 @@
                     android:drawableRight="@drawable/ic_action_status"
                     android:gravity="center"
                     android:hint="status"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:textSize="20sp" />
 
 
@@ -134,11 +127,9 @@
                     android:layout_height="match_parent"
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
-
-
-                    android:paddingTop="8dp"
+                    android:paddingTop="16dp"
                     android:text="Job no"
-                    android:textColor="@color/myPrimaryColor"
+                    
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -147,13 +138,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-
-
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/ic_action_name"
                     android:gravity="center"
                     android:hint="Job no"
-                    android:padding="10dp"
+                    android:paddingBottom="8dp"
                     android:singleLine="true"
                     android:textSize="20sp" />
 
@@ -163,9 +152,8 @@
                     android:layout_height="match_parent"
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="16dp"
                     android:text="Problem"
-                    android:textColor="@color/myPrimaryColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -191,9 +179,9 @@
                     android:layout_height="match_parent"
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="16dp"
                     android:text="Resolution"
-                    android:textColor="@color/myPrimaryColor"
+                    
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -219,9 +207,9 @@
                     android:paddingBottom="8dp"
 
 
-                    android:paddingTop="8dp"
+                    android:paddingTop="16dp"
                     android:text="Price"
-                    android:textColor="@color/myPrimaryColor"
+                    
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -236,7 +224,7 @@
                     android:gravity="center"
                     android:hint="Price"
                     android:inputType="number"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:textSize="20sp" />
                 <!--</LinearLayout>-->
 
