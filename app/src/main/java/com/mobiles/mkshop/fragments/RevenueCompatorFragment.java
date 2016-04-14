@@ -85,6 +85,7 @@ public class RevenueCompatorFragment extends Fragment {
                         builder.setSingleChoiceItems(aa1, 0, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
+                                dialog.dismiss();
                                 tempQuantity = 0;
                                 tempRevenue = 0;
                                 String text = statusOfParts.get(which);

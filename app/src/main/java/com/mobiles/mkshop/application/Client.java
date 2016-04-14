@@ -66,11 +66,11 @@ public enum Client {
 
         @Headers("Content-Type: application/json")
         @POST("/mk/webservice/technical")
-        Call<String> sendService(@Header("AUTH") String auth, @Body ServiceCenterEntity service);
+        Call<Void> sendService(@Header("AUTH") String auth, @Body ServiceCenterEntity service);
 
         @Headers("Content-Type: application/json")
         @PUT("/mk/webservice/technical")
-        Call<String> updateService(@Header("AUTH") String auth, @Body ServiceCenterEntity service);
+        Call<Void> updateService(@Header("AUTH") String auth, @Body ServiceCenterEntity service);
 
         @GET("/mk/webservice/technical/getall")
         Call<List<ServiceCenterEntity>> getServiceList(@Header("AUTH") String auth);
@@ -221,7 +221,7 @@ public enum Client {
                     response = chain.proceed(request);
                     unAuthorized = (response.code() > 400);
                     if (unAuthorized) {
-                        throw new IOException(response.message());
+                        throw new IOException(response.body().string());
                     }
                 } catch (IOException e) {
                     if (unAuthorized)
@@ -268,14 +268,14 @@ public enum Client {
 //    }
 
 
-    public Call<String> sendService(String auth, ServiceCenterEntity service) {
-        Call<String> stringCall = mobileService.sendService(auth, service);
+    public Call<Void> sendService(String auth, ServiceCenterEntity service) {
+        Call<Void> stringCall = mobileService.sendService(auth, service);
         return stringCall;
 
     }
 
-    public Call<String> updateService(String auth, ServiceCenterEntity service) {
-        Call<String> stringCall = mobileService.updateService(auth, service);
+    public Call<Void> updateService(String auth, ServiceCenterEntity service) {
+        Call<Void> stringCall = mobileService.updateService(auth, service);
         return stringCall;
 
     }

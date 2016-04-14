@@ -132,7 +132,7 @@ public class LeaderBoardItemAdapter extends RecyclerView.Adapter<LeaderBoardItem
 
                 int accessoryRevenue = 0;
                 for (ServiceCenterEntity sales : technicals) {
-                    accessoryRevenue = accessoryRevenue + Integer.parseInt(sales.getPrice());
+                    accessoryRevenue = accessoryRevenue + sales.getPrice();
                 }
 
                 holder.nameMobile.setText("Mobile");

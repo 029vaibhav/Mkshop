@@ -155,8 +155,7 @@ public class ServiceReport extends Fragment {
                                       Myenum.INSTANCE.setServiceList(response.body());
                                       if (materialDialog != null && materialDialog.isShowing())
                                           materialDialog.dismiss();
-                                      tabLayout.setTabsFromPagerAdapter(adapter);
-                                      viewPager.setAdapter(adapter);
+                                      tabLayout.setupWithViewPager(viewPager);
                                   }
 
                                   @Override

@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 import com.mobiles.mkshop.pojos.enums.Status;
+import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class ServiceReportItemAdapter extends RecyclerView.Adapter<ServiceReport
         holder.revenue.setText(context.getActivity().getString(R.string.rs) + " " + serviceCenterEntity.getPrice());
         holder.revenue.setTextColor(ContextCompat.getColor(context.getActivity(), R.color.flatGreen));
         holder.problem.setText(serviceCenterEntity.getProblem());
-        if (!serviceCenterEntity.getResolution().equals("")) {
+        if (serviceCenterEntity.getResolution() != null && !serviceCenterEntity.getResolution().equals("")) {
             holder.resolution.setText(serviceCenterEntity.getResolution());
             holder.resolution.setVisibility(View.VISIBLE);
 

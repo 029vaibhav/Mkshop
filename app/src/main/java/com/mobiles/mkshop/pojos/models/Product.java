@@ -1,23 +1,38 @@
 package com.mobiles.mkshop.pojos.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mobiles.mkshop.pojos.enums.ProductType;
 import com.orm.SugarRecord;
-
-import java.util.List;
 
 /**
  * Created by vaibhav on 23/7/15.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-
 public class Product extends SugarRecord {
 
     String brand, model, sim, screenSize, displayType, os, iMemory, eMemory, fCamera, bCamera, wlan, bluetooth, nfc, infrared, radio, battery;
     int price;
     ProductType type;
     String accessoryType;
+    String created, modified;
+
+    public Product() {
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
 
     public String getBrand() {
         return brand;

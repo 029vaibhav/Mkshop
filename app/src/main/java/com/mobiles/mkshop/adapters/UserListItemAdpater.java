@@ -15,14 +15,12 @@ import android.widget.TextView;
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.fragments.CalendarFragment;
 import com.mobiles.mkshop.fragments.ProfileFragment;
 import com.mobiles.mkshop.fragments.UserListFragment;
 import com.mobiles.mkshop.pojos.enums.PaymentType;
 import com.mobiles.mkshop.pojos.models.ExpenseEntity;
 import com.mobiles.mkshop.pojos.models.User;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -129,8 +127,9 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                             break;
                         case 1: // view attendance
 
-                            CalendarFragment calendarFragment = CalendarFragment.newInstance(username);
-                            context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).addToBackStack(null).commit();
+                            MkShop.toast(context.getActivity(),"this feature has been disable");
+//                            CalendarFragment calendarFragment = CalendarFragment.newInstance(username);
+//                            context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).addToBackStack(null).commit();
                             break;
                         case 2: // pay salary
 

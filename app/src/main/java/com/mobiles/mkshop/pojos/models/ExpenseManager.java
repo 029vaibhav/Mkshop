@@ -1,8 +1,6 @@
 package com.mobiles.mkshop.pojos.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
 
 import java.util.List;
 

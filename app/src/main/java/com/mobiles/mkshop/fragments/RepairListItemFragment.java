@@ -20,7 +20,6 @@ import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -86,12 +85,13 @@ public class RepairListItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                final List<String> statusOfParts = Arrays.asList(getResources().getStringArray(R.array.requestPartStatus));
+                final List<String> statusOfParts = Arrays.asList(getResources().getStringArray(R.array.items));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final ArrayAdapter<String> aa1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_single_choice, statusOfParts);
                 builder.setSingleChoiceItems(aa1, index, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
 
+                        dialog.dismiss();
                         String stringStatus = statusOfParts.get(item);
                         if (stringStatus.equalsIgnoreCase("Returned")) {
                             price.setVisibility(View.GONE);
@@ -115,7 +115,10 @@ public class RepairListItemFragment extends Fragment {
             public void onClick(View v) {
 
 
-                service.setPrice(price.getText().toString());
+                if (price.getText().length() == 0)
+                    service.setPrice(0);
+                else
+                    service.setPrice(Integer.parseInt(price.getText().toString()));
                 service.setStatus(stringStatus);
                 service.setProblem(problem.getText().toString());
                 service.setDeliveryDate("");
@@ -173,9 +176,9 @@ public class RepairListItemFragment extends Fragment {
         dialog.show();
 
 
-        Client.INSTANCE.updateService(MkShop.AUTH, service).enqueue(new Callback<String>() {
+        Client.INSTANCE.updateService(MkShop.AUTH, service).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (dialog != null && dialog.isShowing())
                     dialog.dismiss();
                 MkShop.toast(getActivity(), "success");
@@ -188,11 +191,11 @@ public class RepairListItemFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 if (dialog != null && dialog.isShowing())
                     dialog.dismiss();
 
-                    MkShop.toast(getActivity(), t.getMessage());
+                MkShop.toast(getActivity(), t.getMessage());
 
             }
         });

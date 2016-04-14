@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class ServiceCenterEntity{
+public class ServiceCenterEntity {
 
     int id;
-    String model, brand, problem, modified, deliveryDate,place;
+    String model, brand, problem, modified, deliveryDate, place;
     String jobNo;
     String created;
-    String status;
-    String price, username;
+    String status, username;
+    int price;
     String resolution;
 
     public String getUsername() {
@@ -83,11 +83,11 @@ public class ServiceCenterEntity{
         this.deliveryDate = deliveryDate;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

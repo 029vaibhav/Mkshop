@@ -107,6 +107,14 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
                     materialDialog.dismiss();
 
                 MkShop.toast(GetLoginDetailsActivity.this, t.getMessage());
+                if (t.getMessage().contains("Unauthorized")) {
+                    sharedPreferences.edit().putString("AUTH", null).apply();
+                    sharedPreferences.edit().putString("USERNAME", null).apply();
+                    sharedPreferences.edit().putString("DETAIL", null).apply();
+                    Intent intent = new Intent(GetLoginDetailsActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 textView.setText(t.getMessage());
                 retry.setVisibility(View.VISIBLE);
 

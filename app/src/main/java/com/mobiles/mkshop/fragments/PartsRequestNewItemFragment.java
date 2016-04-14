@@ -104,6 +104,7 @@ public class PartsRequestNewItemFragment extends Fragment {
                 builder.setSingleChoiceItems(aa1, index, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
 
+                        dialog.dismiss();
                         String text = statusOfParts.get(item);
                         if (text != null) {
                             stringStatus = text.toString();

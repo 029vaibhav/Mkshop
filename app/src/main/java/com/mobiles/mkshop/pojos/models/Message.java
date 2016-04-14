@@ -1,14 +1,15 @@
 package com.mobiles.mkshop.pojos.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by vaibhav on 26/7/15.
  */
-//@JsonIgnoreProperties(ignoreUnknown = true)
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Message {
 
-    String message,role,created,endDate;
+    String message, role, created, endDate;
 
     public String getMessage() {
         return message;

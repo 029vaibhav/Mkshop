@@ -27,7 +27,6 @@ import com.mobiles.mkshop.pojos.enums.UserType;
 import com.mobiles.mkshop.pojos.models.Product;
 import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -176,12 +175,13 @@ public class RepairNewItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                final List<String> statusOfParts = Arrays.asList(getResources().getStringArray(R.array.requestPartStatus));
+                final List<String> statusOfParts = Arrays.asList(getResources().getStringArray(R.array.items));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final ArrayAdapter<String> aa1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_single_choice, statusOfParts);
                 builder.setSingleChoiceItems(aa1, index, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
 
+                        dialog.dismiss();
                         String text = statusOfParts.get(item);
                         if (text != null) {
                             stringStatus = text;
@@ -212,15 +212,7 @@ public class RepairNewItemFragment extends Fragment {
                 } else if (modelNo.getText().toString().length() == 0) {
                     MkShop.toast(getActivity(), "please select model");
 
-                }
-//
-//                else if (!stringStatus.equalsIgnoreCase("Pending") && date.getText().length() <= 0 || date.getText().toString().equalsIgnoreCase("date")) {
-//                    MkShop.toast(getActivity(), "please select date");
-//
-//                }
-//
-
-                else if (price.getText().length() <= 0) {
+                } else if (price.getText().length() <= 0) {
                     MkShop.toast(getActivity(), "please enter price");
 
                 } else {
@@ -229,7 +221,10 @@ public class RepairNewItemFragment extends Fragment {
                     service.setBrand(brand.getText().toString().trim());
                     service.setModel(modelNo.getText().toString().trim());
                     service.setStatus(stringStatus);
-                    service.setPrice("" + price.getText().toString().trim());
+                    if (price.getText().length() == 0)
+                        service.setPrice(0);
+                    else
+                        service.setPrice(Integer.parseInt(price.getText().toString()));
                     service.setJobNo("" + jobNo.getText().toString().trim());
                     service.setDeliveryDate("");
 
@@ -293,9 +288,9 @@ public class RepairNewItemFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-            Client.INSTANCE.sendService(MkShop.AUTH, service).enqueue(new Callback<String>() {
+            Client.INSTANCE.sendService(MkShop.AUTH, service).enqueue(new Callback<Void>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(Call<Void> call, Response<Void> response) {
                     MkShop.toast(getActivity(), "success");
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
@@ -305,10 +300,10 @@ public class RepairNewItemFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(Call<Void> call, Throwable t) {
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
-                   MkShop.toast(getActivity(), t.getMessage());
+                    MkShop.toast(getActivity(), t.getMessage());
                 }
             });
             return null;
