@@ -24,6 +24,7 @@ public class JsoupUtilities {
         Callable<Document> callableList = new Callable<Document>() {
             @Override
             public Document call() throws Exception {
+//                compile 'org.jsoup:jsoup:1.8.3'
 
                 Document document = Jsoup.connect("http://www.gsmarena.com/xiaomi_redmi_1s-6373.php").get();
                 return document;
