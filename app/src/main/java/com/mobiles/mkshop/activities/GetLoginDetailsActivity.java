@@ -107,7 +107,9 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
                     materialDialog.dismiss();
 
                 MkShop.toast(GetLoginDetailsActivity.this, t.getMessage());
-                if (t.getMessage().contains("Unauthorized")) {
+                if (t.getMessage() == null) {
+                    MkShop.toast(GetLoginDetailsActivity.this, "please check your internet connection");
+                } else if (t.getMessage().contains("Unauthorized")) {
                     sharedPreferences.edit().putString("AUTH", null).apply();
                     sharedPreferences.edit().putString("USERNAME", null).apply();
                     sharedPreferences.edit().putString("DETAIL", null).apply();

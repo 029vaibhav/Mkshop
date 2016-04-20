@@ -1,0 +1,295 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.NewProductFragment">
+
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/submit"
+            android:layout_toStartOf="@+id/submit"
+            android:hint="@string/git_hub" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/flatGreen"
+            android:text="Submit" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relative1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="BRAND" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/model"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="MODEL" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/sim"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="SIM" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/screenSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="SCREEN SIZE" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/displayType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="DISPLAY TYPE" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/os"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="OS" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/iMemory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="INTERNAL MEMORY" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/eMemory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="EXTERNAL MEMORY" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/fCamera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="FRONT CAMERA" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/bCamera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="BACK CAMERA" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/wlan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="WLAN" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/bluetooth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="BLUETOOTH" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/nfc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="NFC" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/infrared"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="INFRARED" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="RADIO" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/battery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="BATTERY" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="4dp"
+                android:paddingTop="12dp">
+
+                <EditText
+                    android:id="@+id/price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="PRICE" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/form_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Submit" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

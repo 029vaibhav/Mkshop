@@ -2,6 +2,7 @@ package com.mobiles.mkshop.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +43,7 @@ public class ViewProductFragment extends Fragment {
     RecyclerView gridRecyclerView;
     ScrollView scrollView;
     List<Product> salesList;
+    FloatingActionButton floatingActionButton;
 
 
     public static ViewProductFragment newInstance() {
@@ -65,6 +67,7 @@ public class ViewProductFragment extends Fragment {
         brandTextView = (AutoCompleteTextView) viewGroup.findViewById(R.id.brand);
         scrollView = (ScrollView) viewGroup.findViewById(R.id.scroll_view);
         gridRecyclerView = (RecyclerView) viewGroup.findViewById(R.id.recyclerView);
+        floatingActionButton = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
 
         search = (AutoCompleteTextView) viewGroup.findViewById(R.id.search);
         submit = (TextView) viewGroup.findViewById(R.id.submit);
@@ -89,7 +92,7 @@ public class ViewProductFragment extends Fragment {
 
         if (dialog != null && dialog.isShowing())
             dialog.dismiss();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (getActivity(), android.R.layout.select_dialog_item, brandStrings);
         brandTextView.setThreshold(1);
         brandTextView.setAdapter(adapter);
@@ -137,7 +140,6 @@ public class ViewProductFragment extends Fragment {
                         public void afterTextChanged(Editable s) {
                             if (s != null)
                                 listItemAdapter.filter(s);
-
                         }
                     });
 
@@ -146,6 +148,13 @@ public class ViewProductFragment extends Fragment {
             }
         });
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new NewProductFragment();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+            }
+        });
 
         return viewGroup;
     }

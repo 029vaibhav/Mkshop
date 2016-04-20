@@ -5,8 +5,6 @@
     tools:context="com.mobiles.mkshop.fragments.ViewProductFragment">
 
 
-
-
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
@@ -19,13 +17,13 @@
 
 
             <AutoCompleteTextView
-                android:hint="Brand"
                 android:id="@+id/brand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/border_text"
+                android:hint="Brand"
                 android:padding="10dp"
                 android:textSize="18sp" />
 
@@ -45,22 +43,31 @@
     </ScrollView>
 
     <AutoCompleteTextView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:visibility="gone"
-        android:layout_alignParentTop="true"
-        android:id="@+id/search"
         android:drawableRight="@drawable/ic_action_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/search"
-        android:visibility="gone"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/search"
         android:background="#50F0F7FF"
-        />
+        android:visibility="gone" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_action_plus" />
 
 </RelativeLayout>
