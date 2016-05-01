@@ -11,13 +11,13 @@ import android.widget.EditText;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.pojos.models.Product;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.mobiles.mkshop.slide.SlidingUpPanelLayout;
 
 public class ViewProductItemFragment extends Fragment {
 
     Long id;
     ViewPager viewPager;
-    private SlidingUpPanelLayout mLayout;
+    SlidingUpPanelLayout mLayout;
     Product p;
 
     Button buyButton;

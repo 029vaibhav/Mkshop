@@ -25,4 +25,9 @@
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
+
+    <style name="MyButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/myAccentColor</item>
+        <item name="colorButtonNormal">@color/myPrimaryColor</item>
+    </style>
 </resources>

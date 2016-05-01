@@ -6,9 +6,6 @@ import android.widget.Toast;
 
 import com.mobiles.mkshop.gcm.Controller;
 
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Created by vaibhav on 27/6/15.
  */
@@ -23,6 +20,7 @@ public class MkShop extends Controller {
     public static String REGISTRATION_COMPLETE = "registrationComplete";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static final String LAST_VIEWED_DATE = "date";
+    public static final String LAST_VIEWED_DATE_SPARE_PART = "spare_date";
 
 
     private static MkShop instance;
@@ -52,7 +50,7 @@ public class MkShop extends Controller {
     public static void toast(Context context, String error) {
 
         try {
-            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, error, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
 
         }

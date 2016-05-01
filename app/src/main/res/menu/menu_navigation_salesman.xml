@@ -9,10 +9,10 @@
         android:id="@+id/sale"
         android:icon="@drawable/mobile"
         android:title="Do Sale" />
-    <item
-        android:id="@+id/parts"
-        android:icon="@drawable/parts"
-        android:title="Request Part" />
+    <!--<item-->
+        <!--android:id="@+id/parts"-->
+        <!--android:icon="@drawable/parts"-->
+        <!--android:title="Spare Parts" />-->
     <item
         android:id="@+id/service_center"
         android:icon="@drawable/repair"

@@ -18,7 +18,7 @@ import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.fragments.ProfileFragment;
 import com.mobiles.mkshop.fragments.UserListFragment;
 import com.mobiles.mkshop.pojos.enums.PaymentType;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.models.EmployeeExpense;
 import com.mobiles.mkshop.pojos.models.User;
 
 import java.util.List;
@@ -127,15 +127,19 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                             break;
                         case 1: // view attendance
 
-                            MkShop.toast(context.getActivity(),"this feature has been disable");
+                            MkShop.toast(context.getActivity(), "this feature has been disable");
 //                            CalendarFragment calendarFragment = CalendarFragment.newInstance(username);
 //                            context.getFragmentManager().beginTransaction().replace(R.id.container, calendarFragment).addToBackStack(null).commit();
                             break;
                         case 2: // pay salary
 
-                            showPaySalaryDialog(username);
+                            showPaySalaryDialog(PaymentType.Salary, username);
                             break;
-                        case 3: // delete user
+                        case 3: // pay Incentive
+
+                            showPaySalaryDialog(PaymentType.Incentive, username);
+                            break;
+                        case 4: // delete user
                             Client.INSTANCE.deleteUser(MkShop.AUTH, userListAttendances.get(getAdapterPosition()).getUsername()).enqueue(new Callback<User>() {
                                 @Override
                                 public void onResponse(Call<User> call, Response<User> response) {
@@ -148,7 +152,7 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
                                 @Override
                                 public void onFailure(Call<User> call, Throwable t) {
 
-                                        MkShop.toast(context.getActivity(), t.getMessage());
+                                    MkShop.toast(context.getActivity(), t.getMessage());
                                 }
                             });
 
@@ -164,34 +168,34 @@ public class UserListItemAdpater extends RecyclerView.Adapter<UserListItemAdpate
 
         }
 
-        private void showPaySalaryDialog(final String username) {
+        private void showPaySalaryDialog(final PaymentType incentive, final String username) {
 
             final AlertDialog.Builder inputAlert = new AlertDialog.Builder(context.getActivity());
-            inputAlert.setTitle("Pay salary");
+            inputAlert.setTitle("Pay " + incentive.name());
             final EditText userInput = new EditText(context.getActivity());
             userInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-            inputAlert.setView(userInput);
+            inputAlert.setView(userInput, 50, 0, 50, 0);
             inputAlert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
                     if (userInput.length() != 0) {
 
-                        ExpenseEntity expenseEntity = new ExpenseEntity();
-                        expenseEntity.setPaymentType(PaymentType.Salary.name());
-                        expenseEntity.setUsername(username);
-                        expenseEntity.setAmount(userInput.getText().toString());
+                        EmployeeExpense employeeExpense = new EmployeeExpense();
+                        employeeExpense.setPaymentType(incentive);
+                        employeeExpense.setUsername(username);
+                        employeeExpense.setAmount(Integer.parseInt(userInput.getText().toString()));
 
-                        Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity).enqueue(new Callback<String>() {
+                        Client.INSTANCE.payUserIncentive(MkShop.AUTH, employeeExpense).enqueue(new Callback<EmployeeExpense>() {
                             @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
+                            public void onResponse(Call<EmployeeExpense> call, Response<EmployeeExpense> response) {
                                 MkShop.toast(context.getActivity(), "success");
 
                             }
 
                             @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-
+                            public void onFailure(Call<EmployeeExpense> call, Throwable t) {
+                                if (t.getMessage() != null)
                                     MkShop.toast(context.getActivity(), t.getMessage());
                             }
                         });

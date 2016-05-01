@@ -44,6 +44,7 @@ public class ViewProductFragment extends Fragment {
     ScrollView scrollView;
     List<Product> salesList;
     FloatingActionButton floatingActionButton;
+    FloatingActionButton accessoryFab;
 
 
     public static ViewProductFragment newInstance() {
@@ -68,6 +69,8 @@ public class ViewProductFragment extends Fragment {
         scrollView = (ScrollView) viewGroup.findViewById(R.id.scroll_view);
         gridRecyclerView = (RecyclerView) viewGroup.findViewById(R.id.recyclerView);
         floatingActionButton = (FloatingActionButton) viewGroup.findViewById(R.id.fab);
+        accessoryFab = (FloatingActionButton) viewGroup.findViewById(R.id.accessory_fab);
+
 
         search = (AutoCompleteTextView) viewGroup.findViewById(R.id.search);
         submit = (TextView) viewGroup.findViewById(R.id.submit);
@@ -114,6 +117,8 @@ public class ViewProductFragment extends Fragment {
                         }
                     }));
                     scrollView.setVisibility(View.GONE);
+                    floatingActionButton.setVisibility(View.GONE);
+                    accessoryFab.setVisibility(View.GONE);
                     search.setVisibility(View.VISIBLE);
                     gridRecyclerView.setVisibility(View.VISIBLE);
                     gridRecyclerView.setHasFixedSize(true);
@@ -152,6 +157,14 @@ public class ViewProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new NewProductFragment();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+            }
+        });
+
+        accessoryFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new NewAccessoryFargment();
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });

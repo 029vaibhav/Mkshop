@@ -19,7 +19,7 @@
     <item
         android:id="@+id/parts_requested"
         android:icon="@drawable/parts"
-        android:title="Request Part" />
+        android:title="Spare Parts" />
 
     <item
         android:id="@+id/view_product"

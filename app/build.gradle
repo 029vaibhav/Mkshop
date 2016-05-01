@@ -40,8 +40,8 @@ android {
         applicationId "com.mobiles.mkshop"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 30
-        versionName "2.7.2.1"
+        versionCode 34
+        versionName "2.7.5"
 
     }
     buildTypes {
@@ -68,13 +68,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-    compile('com.sothree.slidinguppanel:library:3.3.0') {
-        exclude group: 'com.android.support'
-    }
     compile('com.kbeanie:image-chooser-library:1.5.8@aar') {
-        exclude group: 'com.android.support'
-    }
-    compile('me.dm7.barcodescanner:zbar:1.8.3') {
         exclude group: 'com.android.support'
     }
     compile 'com.github.satyan:sugar:1.4'
@@ -87,5 +81,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.guava:guava:19.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+    compile 'org.jsoup:jsoup:1.8.3'
     compile 'com.android.support:support-v4:23.3.0'
 }

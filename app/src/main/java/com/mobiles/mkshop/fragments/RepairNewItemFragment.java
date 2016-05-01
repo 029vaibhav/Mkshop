@@ -3,7 +3,6 @@ package com.mobiles.mkshop.fragments;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -45,7 +44,6 @@ public class RepairNewItemFragment extends Fragment {
     Button submit;
     String Stringdate = "", stringModel, stringBrand, stringStatus;
     int index;
-    ServiceCenterEntity service;
     DatePickerDialog datePickerDialog;
     EditText jobNo;
     //  private RadioGroup radiogroup;
@@ -75,46 +73,8 @@ public class RepairNewItemFragment extends Fragment {
         // Inflate the layout for this fragment
 
         MkShop.SCRREN = "RepairNewItemFragment";
-
-
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_repair_new_item, container, false);
-
-
-        modelSalesList = new ArrayList<>();
-        brandList = new ArrayList<>();
-        salesList = new ArrayList<>();
-
-
-        materialDialog = NavigationMenuActivity.materialDialog;
-
-        brand = (AutoCompleteTextView) v.findViewById(R.id.brandtext);
-        status = (TextView) v.findViewById(R.id.status);
-//        date = (TextView) v.findViewById(R.id.datetext);
-        modelNo = (AutoCompleteTextView) v.findViewById(R.id.modeltext);
-        price = (EditText) v.findViewById(R.id.priceEdit);
-        other = (EditText) v.findViewById(R.id.otheredit);
-        jobNo = (EditText) v.findViewById(R.id.jobnoedit);
-        problem = (EditText) v.findViewById(R.id.problemedit);
-        submit = (Button) v.findViewById(R.id.submit);
-//        dateTitle = (TextView) v.findViewById(R.id.dateTitle);
-
-
-        salesList = Product.listAll(Product.class);
-        List<Product> sales = Product.listAll(Product.class);
-        brandList.clear();
-        Set<String> brandStrings = new HashSet();
-        for (int i = 0; i < sales.size(); i++) {
-            brandStrings.add(sales.get(i).getBrand());
-        }
-        brandList.addAll(brandStrings);
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.select_dialog_item, brandList);
-        brand.setThreshold(1);
-        brand.setAdapter(adapter);
-
-
+        init(v);
         modelNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -148,28 +108,6 @@ public class RepairNewItemFragment extends Fragment {
                 }
             }
         });
-
-//        date.setOnClickListener(new View.OnClickListener() {
-//
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//
-//                        Stringdate = "" + dayOfMonth + "-" + monthOfYear + "-" + year;
-//                        date.setText("" + dayOfMonth + "/" + monthOfYear);
-//                        datePickerDialog.dismiss();
-//                        Stringdate = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-//
-//                    }
-//                }, DateTime.now().getYear(), DateTime.now().getMonthOfYear() - 1, DateTime.now().getDayOfMonth());
-//                datePickerDialog.show();
-//            }
-//        });
-
 
         status.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,43 +144,74 @@ public class RepairNewItemFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (brand.getText().length() == 0) {
-                    MkShop.toast(getActivity(), "please select brand");
-
-                } else if (modelNo.getText().toString().length() == 0) {
-                    MkShop.toast(getActivity(), "please select model");
-
-                } else if (price.getText().length() <= 0) {
-                    MkShop.toast(getActivity(), "please enter price");
-
-                } else {
-
-                    service = new ServiceCenterEntity();
-                    service.setBrand(brand.getText().toString().trim());
-                    service.setModel(modelNo.getText().toString().trim());
-                    service.setStatus(stringStatus);
-                    if (price.getText().length() == 0)
-                        service.setPrice(0);
-                    else
-                        service.setPrice(Integer.parseInt(price.getText().toString()));
-                    service.setJobNo("" + jobNo.getText().toString().trim());
-                    service.setDeliveryDate("");
-
-                    if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name()) || MkShop.Role.equalsIgnoreCase(UserType.SALESMAN.name())) {
-                        service.setPlace("SP");
-                    } else if (MkShop.Role.equalsIgnoreCase(UserType.TECHNICIAN.name())) {
-                        service.setPlace("SC");
-                    }
-                    service.setProblem(problem.getText().toString());
-                    service.setUsername(MkShop.Username);
-
-                    new SendData().execute();
-                }
+                validate();
             }
+
+
         });
 
 
         return v;
+    }
+
+    private void validate() {
+        if (brand.getText().length() == 0) {
+            MkShop.toast(getActivity(), "please select brand");
+        } else if (modelNo.getText().toString().length() == 0) {
+            MkShop.toast(getActivity(), "please select model");
+        } else if (price.getText().length() <= 0) {
+            MkShop.toast(getActivity(), "please enter price");
+        } else {
+            ServiceCenterEntity service = new ServiceCenterEntity();
+            service.setBrand(brand.getText().toString().trim());
+            service.setModel(modelNo.getText().toString().trim());
+            service.setStatus(stringStatus);
+            if (price.getText().length() == 0)
+                service.setPrice(0);
+            else
+                service.setPrice(Integer.parseInt(price.getText().toString()));
+            service.setJobNo("" + jobNo.getText().toString().trim());
+            service.setDeliveryDate("");
+
+            if (MkShop.Role.equalsIgnoreCase(UserType.RECEPTIONIST.name()) || MkShop.Role.equalsIgnoreCase(UserType.SALESMAN.name())) {
+                service.setPlace("SP");
+            } else if (MkShop.Role.equalsIgnoreCase(UserType.TECHNICIAN.name())) {
+                service.setPlace("SC");
+            }
+            service.setProblem(problem.getText().toString());
+            service.setUsername(MkShop.Username);
+            SendData(service);
+        }
+    }
+
+    private void init(ViewGroup v) {
+
+        materialDialog = NavigationMenuActivity.materialDialog;
+        brand = (AutoCompleteTextView) v.findViewById(R.id.brandtext);
+        status = (TextView) v.findViewById(R.id.status);
+        modelNo = (AutoCompleteTextView) v.findViewById(R.id.modeltext);
+        price = (EditText) v.findViewById(R.id.priceEdit);
+        other = (EditText) v.findViewById(R.id.otheredit);
+        jobNo = (EditText) v.findViewById(R.id.jobnoedit);
+        problem = (EditText) v.findViewById(R.id.problemedit);
+        submit = (Button) v.findViewById(R.id.submit);
+
+        modelSalesList = new ArrayList<>();
+        brandList = new ArrayList<>();
+        salesList = new ArrayList<>();
+        salesList = Product.listAll(Product.class);
+        List<Product> sales = Product.listAll(Product.class);
+        brandList.clear();
+        Set<String> brandStrings = new HashSet();
+        for (int i = 0; i < sales.size(); i++) {
+            brandStrings.add(sales.get(i).getBrand());
+        }
+        brandList.addAll(brandStrings);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (getActivity(), android.R.layout.select_dialog_item, brandList);
+        brand.setThreshold(1);
+        brand.setAdapter(adapter);
+
     }
 
     private int setindex(String status) {
@@ -268,45 +237,25 @@ public class RepairNewItemFragment extends Fragment {
 
     }
 
-    private class SendData extends AsyncTask<Void, Void, Void> {
+    private void SendData(ServiceCenterEntity service) {
 
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-
-            materialDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            Client.INSTANCE.sendService(MkShop.AUTH, service).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    MkShop.toast(getActivity(), "success");
-                    if (materialDialog != null && materialDialog.isShowing())
-                        materialDialog.dismiss();
+        Client.INSTANCE.sendService(MkShop.AUTH, service).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                MkShop.toast(getActivity(), "success");
+                if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
-                    Fragment fragment = new RequestRepair();
-                    getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                }
+                materialDialog.dismiss();
+                Fragment fragment = new RequestRepair();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    if (materialDialog != null && materialDialog.isShowing())
-                        materialDialog.dismiss();
-                    MkShop.toast(getActivity(), t.getMessage());
-                }
-            });
-            return null;
-        }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                if (materialDialog != null && materialDialog.isShowing())
+                    materialDialog.dismiss();
+                MkShop.toast(getActivity(), t.getMessage());
+            }
+        });
     }
 }

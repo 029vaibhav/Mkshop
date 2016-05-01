@@ -7,13 +7,13 @@ import com.mobiles.mkshop.pojos.enums.PaymentType;
 import com.mobiles.mkshop.pojos.enums.ProductType;
 import com.mobiles.mkshop.pojos.enums.Status;
 import com.mobiles.mkshop.pojos.enums.UserType;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.models.EmployeeExpense;
 import com.mobiles.mkshop.pojos.models.Leader;
-import com.mobiles.mkshop.pojos.models.PartsRequests;
 import com.mobiles.mkshop.pojos.models.Payment;
 import com.mobiles.mkshop.pojos.models.Purchase;
 import com.mobiles.mkshop.pojos.models.Sales;
 import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
+import com.mobiles.mkshop.pojos.models.SparePart;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -35,16 +35,16 @@ public enum Myenum {
     String sToDate;
 
     ServiceCenterEntity serviceCenterEntity;
-    PartsRequests requestRepair;
+    SparePart requestRepair;
 
     List<Sales> salesList;
     List<Sales> mobileSales;
     List<Sales> accessorySales;
 
-    List<ExpenseEntity> expenseList;
+    List<EmployeeExpense> expenseList;
     //    List<ExpenseEntity> productExpenseList;
-    List<ExpenseEntity> salaryExpenseList;
-    List<ExpenseEntity> incentiveExpenseList;
+    List<EmployeeExpense> salaryExpenseList;
+    List<EmployeeExpense> incentiveExpenseList;
 
     List<Leader> leaderList;
     List<Leader> salesLeaderList;
@@ -60,10 +60,10 @@ public enum Myenum {
     List<ServiceCenterEntity> returnedServiceList;
 
 
-    List<PartsRequests> partsRequestsList;
-    List<PartsRequests> pendingPartsRequestsList;
-    List<PartsRequests> recievedPartsRequestsList;
-    List<PartsRequests> deliveredPartsRequestsList;
+    List<SparePart> sparePartList;
+    List<SparePart> pendingSparePartList;
+    List<SparePart> recievedSparePartList;
+    List<SparePart> deliveredSparePartList;
 
 
     List<Purchase> purchaseHistories;
@@ -149,7 +149,7 @@ public enum Myenum {
 
     }
 
-    public List<ExpenseEntity> getExpenseList(PaymentType type) {
+    public List<EmployeeExpense> getExpenseList(PaymentType type) {
 
         if (PaymentType.Incentive == type) {
             return incentiveExpenseList;
@@ -161,7 +161,7 @@ public enum Myenum {
     }
 
 
-    public void setExpenseList(List<ExpenseEntity> expenseList) {
+    public void setExpenseList(List<EmployeeExpense> expenseList) {
 
         if (expenseList != null) {
             this.expenseList = expenseList;
@@ -201,16 +201,16 @@ public enum Myenum {
 
         }
     }
-
-    public void setPartsRequestsList(List<PartsRequests> partsRequestsList) {
-
-        if (partsRequestsList != null) {
-            this.partsRequestsList = partsRequestsList;
-            this.pendingPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicatePendingPartsRequestsList));
-            this.recievedPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicateRecievedPartsRequestsList));
-            this.deliveredPartsRequestsList = Lists.newArrayList(Iterables.filter(partsRequestsList, predicateDeliveredPartsRequestsList));
-        }
-    }
+//
+//    public void setSparePartList(List<SparePart> sparePartList) {
+//
+//        if (sparePartList != null) {
+//            this.sparePartList = sparePartList;
+//            this.pendingSparePartList = Lists.newArrayList(Iterables.filter(sparePartList, predicatePendingPartsRequestsList));
+//            this.recievedSparePartList = Lists.newArrayList(Iterables.filter(sparePartList, predicateRecievedPartsRequestsList));
+//            this.deliveredSparePartList = Lists.newArrayList(Iterables.filter(sparePartList, predicateDeliveredPartsRequestsList));
+//        }
+//    }
 
 
     public List<ServiceCenterEntity> getServiceList(Status status) {
@@ -235,27 +235,27 @@ public enum Myenum {
     }
 
 
-    public List<PartsRequests> getPartsRequestsList(Status status) {
+    public List<SparePart> getPartsRequestsList(Status status) {
 
         if (status == Status.RECIEVED) {
-            return recievedPartsRequestsList;
+            return recievedSparePartList;
         } else if (status == Status.DELIVERED) {
-            return deliveredPartsRequestsList;
+            return deliveredSparePartList;
         } else if (status == Status.PENDING) {
-            return pendingPartsRequestsList;
+            return pendingSparePartList;
         } else {
-            return partsRequestsList;
+            return sparePartList;
         }
 
 
     }
 
 
-    public PartsRequests getRequestRepair() {
+    public SparePart getRequestRepair() {
         return requestRepair;
     }
 
-    public void setRequestRepair(PartsRequests requestRepair) {
+    public void setRequestRepair(SparePart requestRepair) {
         this.requestRepair = requestRepair;
     }
 
@@ -355,51 +355,20 @@ public enum Myenum {
     };
 
 
-    Predicate<PartsRequests> predicatePendingPartsRequestsList = new Predicate<PartsRequests>() {
+    Predicate<EmployeeExpense> predicateSalaryExpenseList = new Predicate<EmployeeExpense>() {
         @Override
-        public boolean apply(PartsRequests input) {
-            return input.getStatus().equalsIgnoreCase(Status.PENDING.name());
+        public boolean apply(EmployeeExpense input) {
+            return input.getPaymentType().equals(PaymentType.Salary);
         }
 
     };
-    Predicate<PartsRequests> predicateRecievedPartsRequestsList = new Predicate<PartsRequests>() {
+    Predicate<EmployeeExpense> predicateIncentiveExpenseList = new Predicate<EmployeeExpense>() {
         @Override
-        public boolean apply(PartsRequests input) {
-            return input.getStatus().equalsIgnoreCase(Status.RECIEVED.name());
+        public boolean apply(EmployeeExpense input) {
+            return input.getPaymentType().equals(PaymentType.Incentive);
         }
 
     };
-
-
-    Predicate<PartsRequests> predicateDeliveredPartsRequestsList = new Predicate<PartsRequests>() {
-        @Override
-        public boolean apply(PartsRequests input) {
-            return input.getStatus().equalsIgnoreCase(Status.DELIVERED.name());
-        }
-
-    };
-
-    Predicate<ExpenseEntity> predicateSalaryExpenseList = new Predicate<ExpenseEntity>() {
-        @Override
-        public boolean apply(ExpenseEntity input) {
-            return input.getPaymentType().equalsIgnoreCase(PaymentType.Salary.name());
-        }
-
-    };
-    Predicate<ExpenseEntity> predicateIncentiveExpenseList = new Predicate<ExpenseEntity>() {
-        @Override
-        public boolean apply(ExpenseEntity input) {
-            return input.getPaymentType().equalsIgnoreCase(PaymentType.Incentive.name());
-        }
-
-    };
-//    Predicate<ExpenseEntity> predicateProductExpenseList = new Predicate<ExpenseEntity>() {
-//        @Override
-//        public boolean apply(ExpenseEntity input) {
-//            return input.getPaymentType().equalsIgnoreCase(PaymentType.Product.name());
-//        }
-//
-//    };
 
 
 }

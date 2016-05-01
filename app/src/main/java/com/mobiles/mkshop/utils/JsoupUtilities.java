@@ -19,14 +19,12 @@ import java.util.concurrent.Future;
  */
 public class JsoupUtilities {
 
-    public void getData() {
+    public HashMap<String, HashMap<String, String>> getData(final String gitHubUrl) {
         ExecutorService executorService = Executors.newCachedThreadPool();
         Callable<Document> callableList = new Callable<Document>() {
             @Override
             public Document call() throws Exception {
-//                compile 'org.jsoup:jsoup:1.8.3'
-
-                Document document = Jsoup.connect("http://www.gsmarena.com/xiaomi_redmi_1s-6373.php").get();
+                Document document = Jsoup.connect(gitHubUrl).get();
                 return document;
             }
         };
@@ -53,15 +51,17 @@ public class JsoupUtilities {
                     }
                 }
                 product.put(title, hashMap);
+
             }
             Log.d("product", product.toString());
+            return product;
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return null;
         } catch (ExecutionException e) {
             e.printStackTrace();
+            return null;
         }
-
-
     }
 
 }

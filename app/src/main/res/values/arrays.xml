@@ -24,6 +24,7 @@
         <item name="view_profile">View Profile</item>
         <item name="view_attendance">View Attendance</item>
         <item name="pay_salary">Pay Salary</item>
+        <item name="pay_incentive">Pay Incentive</item>
         <item name="delete_user">Delete User</item>
 
     </string-array>
@@ -35,13 +36,11 @@
     </string-array>
 
 
-
     <string-array name="image_option">
         <item name="camera">Camera</item>
         <item name="gallery">Gallery</item>
 
     </string-array>
-
 
 
     <string-array name="revenueComparator">

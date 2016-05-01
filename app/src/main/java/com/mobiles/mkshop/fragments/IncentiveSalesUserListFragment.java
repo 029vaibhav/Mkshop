@@ -18,10 +18,9 @@ import com.mobiles.mkshop.adapters.IncentiveUserlistDialogAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.enums.PaymentType;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.models.EmployeeExpense;
 import com.mobiles.mkshop.pojos.models.Sales;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -95,32 +94,29 @@ public class IncentiveSalesUserListFragment extends Fragment {
 
                     materialDialog.show();
 
-                    ExpenseEntity expenseEntity = new ExpenseEntity();
-                    expenseEntity.setBrand(salesList.get(0).getBrand());
-                    expenseEntity.setModelNo(salesList.get(0).getModel());
-                    expenseEntity.setPaymentType(PaymentType.Incentive.name());
-                    expenseEntity.setUsername(salesList.get(0).getUsername());
-                    expenseEntity.setAmount(amount.getText().toString());
+                    EmployeeExpense employeeExpense = new EmployeeExpense();
+                    employeeExpense.setPaymentType(PaymentType.Incentive);
+                    employeeExpense.setUsername(salesList.get(0).getUsername());
+                    employeeExpense.setAmount(Integer.parseInt(amount.getText().toString()));
 
-                    Call<String> stringCall = Client.INSTANCE.payUserIncentive(MkShop.AUTH, expenseEntity);
-                    stringCall.enqueue(new Callback<String>() {
+                    Call<EmployeeExpense> stringCall = Client.INSTANCE.payUserIncentive(MkShop.AUTH, employeeExpense);
+                    stringCall.enqueue(new Callback<EmployeeExpense>() {
                         @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
+                        public void onResponse(Call<EmployeeExpense> call, Response<EmployeeExpense> response) {
 
                             if (materialDialog != null && materialDialog.isShowing())
                                 materialDialog.dismiss();
-                            MkShop.toast(getActivity(), response.body());
-                            IncentiveUserListFragment fragment = IncentiveUserListFragment.newInstance(message, id);
-                            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                            MkShop.toast(getActivity(), "Success");
+                            getActivity().getSupportFragmentManager().popBackStackImmediate();
                         }
 
                         @Override
-                        public void onFailure(Call<String> call, Throwable t) {
+                        public void onFailure(Call<EmployeeExpense> call, Throwable t) {
 
                             if (materialDialog != null && materialDialog.isShowing())
                                 materialDialog.dismiss();
 
-                                MkShop.toast(getActivity(), t.getMessage());
+                            MkShop.toast(getActivity(), t.getMessage());
                         }
                     });
 

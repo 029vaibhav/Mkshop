@@ -3,7 +3,7 @@ package com.mobiles.mkshop.application;
 import com.mobiles.mkshop.pojos.models.AttendanceDates;
 import com.mobiles.mkshop.pojos.models.Auth;
 import com.mobiles.mkshop.pojos.models.DealerInfo;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.models.EmployeeExpense;
 import com.mobiles.mkshop.pojos.models.ExpenseManager;
 import com.mobiles.mkshop.pojos.models.IncentiveEntity;
 import com.mobiles.mkshop.pojos.models.Leader;
@@ -11,12 +11,12 @@ import com.mobiles.mkshop.pojos.models.Location;
 import com.mobiles.mkshop.pojos.models.LoginDetails;
 import com.mobiles.mkshop.pojos.models.Message;
 import com.mobiles.mkshop.pojos.models.NewUser;
-import com.mobiles.mkshop.pojos.models.PartsRequests;
 import com.mobiles.mkshop.pojos.models.Payment;
 import com.mobiles.mkshop.pojos.models.Product;
 import com.mobiles.mkshop.pojos.models.Purchase;
 import com.mobiles.mkshop.pojos.models.Sales;
 import com.mobiles.mkshop.pojos.models.ServiceCenterEntity;
+import com.mobiles.mkshop.pojos.models.SparePart;
 import com.mobiles.mkshop.pojos.models.User;
 
 import java.io.IOException;
@@ -79,13 +79,15 @@ public enum Client {
         Call<List<Sales>> getSalesReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to);
 
 
-        @GET("/mk/webservice/partList.php")
-        Call<List<PartsRequests>> getPartList(@Header("AUTH") String auth);
+        @GET("/mk/webservice/sparepart/modified/{date}")
+        Call<List<SparePart>> getPartList(@Header("AUTH") String auth, @Path("date") String date);
 
 
-        @Headers("Content-Type: application/json")
-        @POST("/mk/webservice/partRequest.php")
-        Call<String> sendPartRequest(@Header("AUTH") String auth, @Body PartsRequests partsRequests);
+        @POST("/mk/webservice/sparepart")
+        Call<SparePart> createSparePart(@Header("AUTH") String auth, @Body SparePart sparePart);
+
+        @PUT("/mk/webservice/sparepart")
+        Call<Void> updateSparePart(@Header("AUTH") String auth, @Body SparePart sparePart);
 
 
         @GET("/mk/webservice/user/username/{username}")
@@ -126,6 +128,12 @@ public enum Client {
         @GET("/mk/webservice/product/getall")
         Call<List<Product>> getproduct(@Header("AUTH") String auth);
 
+        @POST("/mk/webservice/product")
+        Call<Product> createProduct(@Header("AUTH") String auth, @Body Product product);
+
+        @POST("/mk/webservice/product/accessory")
+        Call<Product> createAccessory(@Header("AUTH") String auth, @Body Product product);
+
         @GET("/mk/webservice/product/id/{id}")
         Call<List<Product>> getproductid(@Header("AUTH") String auth, @Path("id") Long id);
 
@@ -163,12 +171,12 @@ public enum Client {
         Call<List<Sales>> getIncentiveUserList(@Header("AUTH") String auth, @Path("id") String id);
 
         @Headers("Content-Type: application/json")
-        @POST("/mk/webservice/expenseinsert.php")
-        Call<String> payUserIncentive(@Header("AUTH") String auth, @Body ExpenseEntity expenseEntity);
+        @POST("/mk/webservice/employeeexpense")
+        Call<EmployeeExpense> payUserIncentive(@Header("AUTH") String auth, @Body EmployeeExpense employeeExpense);
 
 
-        @GET("/mk/webservice/expenseReport.php")
-        Call<List<ExpenseEntity>> getExpenseReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to);
+        @GET("/mk/webservice/employeeexpense/date")
+        Call<List<EmployeeExpense>> getExpenseReport(@Header("AUTH") String auth, @Query("from") String from, @Query("to") String to);
 
         @DELETE("/mk/webservice/incentivemessage/{id}")
         Call<IncentiveEntity> deleteIncentiveMessage(@Header("AUTH") String auth, @Path("id") int id);
@@ -235,6 +243,7 @@ public enum Client {
         });
 
         Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://192.168.0.9:9098")
                 .baseUrl("http://Default-Environment.egdsgf36pr.ap-southeast-1.elasticbeanstalk.com")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(httpClient.build())
@@ -286,14 +295,19 @@ public enum Client {
 
     }
 
-    public Call<List<PartsRequests>> getPartList(String auth) {
-        Call<List<PartsRequests>> partList = mobileService.getPartList(auth);
+    public Call<List<SparePart>> getPartList(String auth, String date) {
+        Call<List<SparePart>> partList = mobileService.getPartList(auth, date);
         return partList;
 
     }
 
-    public Call<String> sendPartRequest(String auth, PartsRequests partsRequests) {
-        return mobileService.sendPartRequest(auth, partsRequests);
+    public Call<SparePart> createSparePart(String auth, SparePart sparePart) {
+        return mobileService.createSparePart(auth, sparePart);
+
+    }
+
+    public Call<Void> updateSparePart(String auth, SparePart sparePart) {
+        return mobileService.updateSparePart(auth, sparePart);
 
     }
 
@@ -342,11 +356,6 @@ public enum Client {
         return mobileService.getproductid(auth, id);
     }
 
-//    public void uploadImage(String auth, String username, TypedFile file, String description) {
-//        return mobileService.upload(auth, username, file, description, callback);
-//    }
-
-
     public Call<List<Location>> getAllLocation(String auth) {
         return mobileService.getAllLocation(auth);
     }
@@ -388,12 +397,12 @@ public enum Client {
         return mobileService.getIncentiveUserList(auth, id);
     }
 
-    public Call<String> payUserIncentive(String auth, ExpenseEntity expenseEntity) {
-        return mobileService.payUserIncentive(auth, expenseEntity);
+    public Call<EmployeeExpense> payUserIncentive(String auth, EmployeeExpense employeeExpense) {
+        return mobileService.payUserIncentive(auth, employeeExpense);
     }
 
 
-    public Call<List<ExpenseEntity>> getExpenseReport(String auth, String from, String to) {
+    public Call<List<EmployeeExpense>> getExpenseReport(String auth, String from, String to) {
         return mobileService.getExpenseReport(auth, from, to);
     }
 
@@ -441,6 +450,14 @@ public enum Client {
 
     public Call<DealerInfo> registerDealerInfo(String auth, DealerInfo dealerInfo) {
         return mobileService.registerDealer(auth, dealerInfo);
+    }
+
+    public Call<Product> createProduct(String auth, Product product) {
+        return mobileService.createProduct(auth, product);
+    }
+
+    public Call<Product> createAccessory(String auth, Product product) {
+        return mobileService.createAccessory(auth, product);
     }
 
 

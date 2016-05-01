@@ -21,7 +21,7 @@ import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.application.Myenum;
 import com.mobiles.mkshop.pojos.enums.PaymentType;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
+import com.mobiles.mkshop.pojos.models.EmployeeExpense;
 
 import org.joda.time.DateTime;
 
@@ -94,48 +94,22 @@ public class ViewExpenseFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
 
-                List<ExpenseEntity> sales1;
+                List<EmployeeExpense> employeeExpenses = null;
                 tempQuantity = 0;
                 tempRevenue = 0;
 
                 if (position == 0) {
-
-
-                    sales1 = Myenum.INSTANCE.getExpenseList(PaymentType.Product);
-                    if (sales1 != null) {
-                        for (int i = 0; i < sales1.size(); i++) {
-                            tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
-                            tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getAmount());
-                        }
-                        totalRevenue.setText("" + tempRevenue);
-                        totalQuantity.setText("" + tempQuantity);
-                    }
-
+                    employeeExpenses = Myenum.INSTANCE.getExpenseList(PaymentType.Salary);
                 } else if (position == 1) {
-                    sales1 = Myenum.INSTANCE.getExpenseList(PaymentType.Salary);
-
-                    if (sales1 != null) {
-                        for (int i = 0; i < sales1.size(); i++) {
-                            //    tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
-                            tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getAmount());
-                        }
-                        totalRevenue.setText("" + tempRevenue);
-                        totalQuantity.setText("");
-                    }
-                } else if (position == 2) {
-                    sales1 = Myenum.INSTANCE.getExpenseList(PaymentType.Incentive);
-
-                    if (sales1 != null) {
-                        for (int i = 0; i < sales1.size(); i++) {
-                            //     tempQuantity = tempQuantity + Integer.parseInt(sales1.get(i).getQuantity());
-                            tempRevenue = tempRevenue + Integer.parseInt(sales1.get(i).getAmount());
-                        }
-                        totalRevenue.setText("" + tempRevenue);
-                        totalQuantity.setText("");
-                    }
+                    employeeExpenses = Myenum.INSTANCE.getExpenseList(PaymentType.Incentive);
                 }
-
-
+                if (employeeExpenses != null) {
+                    for (EmployeeExpense employeeExpense : employeeExpenses) {
+                        tempRevenue = tempRevenue + employeeExpense.getAmount();
+                    }
+                    totalRevenue.setText("" + tempRevenue);
+                    totalQuantity.setText("");
+                }
             }
 
             @Override
@@ -205,9 +179,9 @@ public class ViewExpenseFragment extends Fragment {
 
         materialDialog.show();
 
-        Client.INSTANCE.getExpenseReport(MkShop.AUTH, sFromdate, sToDate).enqueue(new Callback<List<ExpenseEntity>>() {
+        Client.INSTANCE.getExpenseReport(MkShop.AUTH, sFromdate, sToDate).enqueue(new Callback<List<EmployeeExpense>>() {
             @Override
-            public void onResponse(Call<List<ExpenseEntity>> call, Response<List<ExpenseEntity>> response) {
+            public void onResponse(Call<List<EmployeeExpense>> call, Response<List<EmployeeExpense>> response) {
 
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
@@ -223,7 +197,7 @@ public class ViewExpenseFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<ExpenseEntity>> call, Throwable t) {
+            public void onFailure(Call<List<EmployeeExpense>> call, Throwable t) {
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
                 MkShop.toast(getActivity(), t.getMessage().toString());

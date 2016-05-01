@@ -1,15 +1,11 @@
 package com.mobiles.mkshop.pojos.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by vaibhav on 21/3/16.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 public class User {
 
 

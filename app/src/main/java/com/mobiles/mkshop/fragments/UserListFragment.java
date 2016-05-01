@@ -1,7 +1,6 @@
 package com.mobiles.mkshop.fragments;
 
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -19,7 +18,6 @@ import com.mobiles.mkshop.application.MkShop;
 import com.mobiles.mkshop.pojos.models.User;
 import com.mobiles.mkshop.pojos.models.UserListAttendance;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -73,7 +71,7 @@ public class UserListFragment extends Fragment {
         });
 
 
-        new GetUserLsit().execute();
+        GetUserList();
 
 
         return viewGroup;
@@ -81,39 +79,25 @@ public class UserListFragment extends Fragment {
 
     }
 
-    private class GetUserLsit extends AsyncTask<Void, Void, Void> {
+    private void GetUserList() {
 
-        ProgressDialog dialog;
+        final ProgressDialog dialog = NavigationMenuActivity.materialDialog;
+        Client.INSTANCE.getUserList(MkShop.AUTH).enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (dialog != null && dialog.isShowing())
+                    dialog.dismiss();
+                userListItemAdpater = new UserListItemAdpater(UserListFragment.this, response.body());
+                recyclerView.setAdapter(userListItemAdpater);
+            }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                if (dialog != null && dialog.isShowing())
+                    dialog.dismiss();
+                MkShop.toast(getActivity(), t.getMessage());
+            }
+        });
 
-            dialog = NavigationMenuActivity.materialDialog;
-        }
-
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            Client.INSTANCE.getUserList(MkShop.AUTH).enqueue(new Callback<List<User>>() {
-                @Override
-                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                    if (dialog != null && dialog.isShowing())
-                        dialog.dismiss();
-                    userListItemAdpater = new UserListItemAdpater(UserListFragment.this, response.body());
-                    recyclerView.setAdapter(userListItemAdpater);
-                }
-
-                @Override
-                public void onFailure(Call<List<User>> call, Throwable t) {
-                    if (dialog != null && dialog.isShowing())
-                        dialog.dismiss();
-                        MkShop.toast(getActivity(), t.getMessage());
-                }
-            });
-
-
-            return null;
-        }
     }
 }

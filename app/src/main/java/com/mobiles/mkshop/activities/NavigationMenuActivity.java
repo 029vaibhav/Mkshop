@@ -35,7 +35,7 @@ import com.mobiles.mkshop.fragments.GeoPointsFragment;
 import com.mobiles.mkshop.fragments.Incentive;
 import com.mobiles.mkshop.fragments.LeaderBoardFragment;
 import com.mobiles.mkshop.fragments.OffersFragment;
-import com.mobiles.mkshop.fragments.PartsRequestFragment;
+import com.mobiles.mkshop.fragments.SparePartFragment;
 import com.mobiles.mkshop.fragments.ProfileFragment;
 import com.mobiles.mkshop.fragments.RequestRepair;
 import com.mobiles.mkshop.fragments.RevenueCompatorFragment;
@@ -50,7 +50,6 @@ import com.mobiles.mkshop.fragments.ViewProductFragment;
 import com.mobiles.mkshop.gcm.RegistrationIntentService;
 import com.mobiles.mkshop.pojos.enums.UserType;
 import com.mobiles.mkshop.pojos.models.LoginDetails;
-import com.mobiles.mkshop.utils.JsoupUtilities;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -104,9 +103,6 @@ public class NavigationMenuActivity extends AppCompatActivity
             Toast.makeText(NavigationMenuActivity.this, "Please login again", Toast.LENGTH_SHORT).show();
             super.onDestroy();
         }
-
-        JsoupUtilities jsoupUtilities = new JsoupUtilities();
-        jsoupUtilities.getData();
 
     }
 
@@ -380,9 +376,9 @@ public class NavigationMenuActivity extends AppCompatActivity
 
         } else if (id == R.id.parts) {
 
-            fragment = getSupportFragmentManager().findFragmentByTag(PartsRequestFragment.TAG);
+            fragment = getSupportFragmentManager().findFragmentByTag(SparePartFragment.TAG);
             if (fragment == null) {
-                fragment = PartsRequestFragment.newInstance();
+                fragment = SparePartFragment.newInstance();
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 

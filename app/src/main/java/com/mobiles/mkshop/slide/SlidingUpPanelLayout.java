@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -22,7 +23,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
-
+import com.mobiles.mkshop.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
 /**
  * Created by vaibhav on 21/4/16.
  */
+@SuppressWarnings("Range")
 public class SlidingUpPanelLayout extends ViewGroup {
 
     private static final String TAG = SlidingUpPanelLayout.class.getSimpleName();
@@ -288,27 +290,27 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
             defAttrs.recycle();
 
-            TypedArray ta = context.obtainStyledAttributes(attrs, com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout);
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SlidingUpPanelLayout);
 
             if (ta != null) {
-                mPanelHeight = ta.getDimensionPixelSize(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoPanelHeight, -1);
-                mShadowHeight = ta.getDimensionPixelSize(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoShadowHeight, -1);
-                mParallaxOffset = ta.getDimensionPixelSize(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoParallaxOffset, -1);
+                mPanelHeight = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_umanoPanelHeight, -1);
+                mShadowHeight = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_umanoShadowHeight, -1);
+                mParallaxOffset = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_umanoParallaxOffset, -1);
 
-                mMinFlingVelocity = ta.getInt(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoFlingVelocity, DEFAULT_MIN_FLING_VELOCITY);
-                mCoveredFadeColor = ta.getColor(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoFadeColor, DEFAULT_FADE_COLOR);
+                mMinFlingVelocity = ta.getInt(R.styleable.SlidingUpPanelLayout_umanoFlingVelocity, DEFAULT_MIN_FLING_VELOCITY);
+                mCoveredFadeColor = ta.getColor(R.styleable.SlidingUpPanelLayout_umanoFadeColor, DEFAULT_FADE_COLOR);
 
-                mDragViewResId = ta.getResourceId(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoDragView, -1);
-                mScrollableViewResId = ta.getResourceId(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoScrollableView, -1);
+                mDragViewResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_umanoDragView, -1);
+                mScrollableViewResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_umanoScrollableView, -1);
 
-                mOverlayContent = ta.getBoolean(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoOverlay, DEFAULT_OVERLAY_FLAG);
-                mClipPanel = ta.getBoolean(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoClipPanel, DEFAULT_CLIP_PANEL_FLAG);
+                mOverlayContent = ta.getBoolean(R.styleable.SlidingUpPanelLayout_umanoOverlay, DEFAULT_OVERLAY_FLAG);
+                mClipPanel = ta.getBoolean(R.styleable.SlidingUpPanelLayout_umanoClipPanel, DEFAULT_CLIP_PANEL_FLAG);
 
-                mAnchorPoint = ta.getFloat(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoAnchorPoint, DEFAULT_ANCHOR_POINT);
+                mAnchorPoint = ta.getFloat(R.styleable.SlidingUpPanelLayout_umanoAnchorPoint, DEFAULT_ANCHOR_POINT);
 
-                mSlideState = PanelState.values()[ta.getInt(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoInitialState, DEFAULT_SLIDE_STATE.ordinal())];
+                mSlideState = PanelState.values()[ta.getInt(R.styleable.SlidingUpPanelLayout_umanoInitialState, DEFAULT_SLIDE_STATE.ordinal())];
 
-                int interpolatorResId = ta.getResourceId(com.sothree.slidinguppanel.library.R.styleable.SlidingUpPanelLayout_umanoScrollInterpolator, -1);
+                int interpolatorResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_umanoScrollInterpolator, -1);
                 if (interpolatorResId != -1) {
                     scrollerInterpolator = AnimationUtils.loadInterpolator(context, interpolatorResId);
                 }
@@ -330,9 +332,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
         // If the shadow height is zero, don't show the shadow
         if (mShadowHeight > 0) {
             if (mIsSlidingUp) {
-                mShadowDrawable = getResources().getDrawable(com.sothree.slidinguppanel.library.R.drawable.above_shadow);
+                mShadowDrawable = ContextCompat.getDrawable(context, R.drawable.above_shadow);
             } else {
-                mShadowDrawable = getResources().getDrawable(com.sothree.slidinguppanel.library.R.drawable.below_shadow);
+                mShadowDrawable = ContextCompat.getDrawable(context, R.drawable.below_shadow);
             }
         } else {
             mShadowDrawable = null;
@@ -512,6 +514,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * Provides an on click for the portion of the main view that is dimmed. The listener is not
      * triggered if the panel is in a collapsed or a hidden position. If the on click listener is
      * not provided, the clicks on the dimmed area are passed through to the main layout.
+     *
      * @param listener
      */
     public void setFadeOnClickListener(View.OnClickListener listener) {
@@ -573,6 +576,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     /**
      * Sets the current scrollable view helper. See ScrollableViewHelper description for details.
+     *
      * @param helper
      */
     public void setScrollableViewHelper(ScrollableViewHelper helper) {
@@ -1121,7 +1125,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 mMainView.setTranslationY(mainViewOffset);
             } else {
-                AnimatorProxy.wrap(mMainView).setTranslationY(mainViewOffset);
+//                AnimatorProxy.wrap(mMainView).setTranslationY(mainViewOffset);
             }
         }
     }

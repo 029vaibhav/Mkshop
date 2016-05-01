@@ -11,6 +11,7 @@
     <string name="success_message">Successfully Sold</string>
     <string name="date_format">yyyy-MM-dd\'T\'HH:mm:ss</string>
     <string name="git_hub">Paste github link</string>
+    <string name="zing_package">com.google.zxing.client.android</string>
 
 
     <string name="rs">\u20B9</string>

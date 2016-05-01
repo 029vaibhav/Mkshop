@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.application.Myenum;
-import com.mobiles.mkshop.pojos.models.ExpenseEntity;
 import com.mobiles.mkshop.pojos.enums.PaymentType;
+import com.mobiles.mkshop.pojos.models.EmployeeExpense;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class ViewExpenseItemAdapter extends RecyclerView.Adapter<ViewExpenseItem
 
     Fragment context;
     PaymentType paymentType;
-    List<ExpenseEntity> salesList;
+    List<EmployeeExpense> salesList;
     String costsymbol;
 
     public ViewExpenseItemAdapter(Fragment salesReportList, PaymentType paymentType) {
@@ -45,13 +45,10 @@ public class ViewExpenseItemAdapter extends RecyclerView.Adapter<ViewExpenseItem
     public void onBindViewHolder(ViewHolder holder, int position) {
 
 
-        ExpenseEntity sales = salesList.get(position);
-
-        holder.paymentDate.setText(sales.getPaymentDate());
-        holder.brand.setText(sales.getName());
+        EmployeeExpense sales = salesList.get(position);
+        holder.paymentDate.setText(sales.getCreated().split("T")[0]);
+        holder.name.setText(sales.getUsername());
         holder.revenue.setText(costsymbol + " " + sales.getAmount());
-
-
     }
 
 
@@ -67,7 +64,7 @@ public class ViewExpenseItemAdapter extends RecyclerView.Adapter<ViewExpenseItem
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardItemLayout;
-        public TextView brand;
+        public TextView name;
         public TextView revenue;
         public TextView paymentDate;
 
@@ -76,7 +73,7 @@ public class ViewExpenseItemAdapter extends RecyclerView.Adapter<ViewExpenseItem
 
             cardItemLayout = (CardView) itemView.findViewById(R.id.cardlist_item);
 
-            brand = (TextView) itemView.findViewById(R.id.Brand);
+            name = (TextView) itemView.findViewById(R.id.name);
             revenue = (TextView) itemView.findViewById(R.id.revenue);
             paymentDate = (TextView) itemView.findViewById(R.id.date);
 

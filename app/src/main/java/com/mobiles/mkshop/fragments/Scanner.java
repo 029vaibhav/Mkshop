@@ -14,14 +14,14 @@ import android.widget.LinearLayout;
 
 import com.mobiles.mkshop.R;
 import com.mobiles.mkshop.interfaces.ScannerCallback;
-
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
+//
+//import me.dm7.barcodescanner.zbar.Result;
+//import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 /**
  * Created by vaibhav on 15/11/15.
  */
-public class Scanner extends DialogFragment implements ZBarScannerView.ResultHandler, View.OnClickListener {
+public class Scanner {} /*extends DialogFragment implements ZBarScannerView.ResultHandler, View.OnClickListener {
 
     ScannerCallback scannerCallback;
     private ZBarScannerView mScannerView;
@@ -135,3 +135,4 @@ public class Scanner extends DialogFragment implements ZBarScannerView.ResultHan
 
 
 }
+*/

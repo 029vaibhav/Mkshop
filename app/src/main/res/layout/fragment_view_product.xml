@@ -8,12 +8,13 @@
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
 
             <AutoCompleteTextView
@@ -22,7 +23,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/border_text"
                 android:hint="Brand"
                 android:padding="10dp"
                 android:textSize="18sp" />
@@ -34,7 +34,7 @@
                 android:layout_below="@+id/brand"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:background="@color/orange"
+                android:background="@color/myAccentColor"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="Submit" />
@@ -61,13 +61,27 @@
         android:visibility="gone" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/accessory_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/accessory" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_action_plus" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/mobile" />
 
 </RelativeLayout>

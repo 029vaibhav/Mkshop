@@ -72,6 +72,8 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
                 MkShop.Username = loginDetails.getUser().getUsername();
                 List<Product> productList = loginDetails.getProducts();
                 for (Product product : productList) {
+
+
                     product.setBrand(product.getBrand());
                     product.setModel(product.getModel());
                     product.setSim(product.getSim());

@@ -1,10 +1,13 @@
 package com.mobiles.mkshop.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,12 +28,10 @@ import com.mobiles.mkshop.activities.NavigationMenuActivity;
 import com.mobiles.mkshop.adapters.CustomAdapter;
 import com.mobiles.mkshop.application.Client;
 import com.mobiles.mkshop.application.MkShop;
-import com.mobiles.mkshop.interfaces.ScannerCallback;
 import com.mobiles.mkshop.pojos.enums.ProductType;
 import com.mobiles.mkshop.pojos.models.Product;
 import com.mobiles.mkshop.pojos.models.Sales;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,7 +44,7 @@ import retrofit2.Response;
 import static com.mobiles.mkshop.application.MkShop.toast;
 
 
-public class SaleFragment extends Fragment implements ScannerCallback, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class SaleFragment extends Fragment implements /*ScannerCallback, */View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     // TODO: Rename parameter arguments, choose names that match
 
     public static String TAG = "Sales";
@@ -56,7 +57,7 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
     List<Product> modelSalesList, productTypeList, salesList;
     List<String> brandList, modelList, accessoryTypeList;
     Dialog brandModelDialog;
-    Scanner picker;
+    //    Scanner picker;
     String stringBrand = null, stringProductType = ProductType.Mobile.name(), stringAccessory = null, stringModel = null;
     TextView dialogTitle, scanImage;
     ListView dialogListView;
@@ -164,9 +165,9 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
         starMobileNo = (TextView) v.findViewById(R.id.star_mobile_no);
         startImei = (TextView) v.findViewById(R.id.star_imei);
         scanImage = (TextView) v.findViewById(R.id.scan_image);
-        picker = new Scanner();
-        picker.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.AppTheme);
-        picker.setCallBack(SaleFragment.this);
+//        picker = new Scanner();
+//        picker.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.AppTheme);
+//        picker.setCallBack(SaleFragment.this);
 
         brandModelDialog = new Dialog(getActivity(), android.R.style.Theme_Holo_Light_NoActionBar);
         brandModelDialog.setContentView(R.layout.dialog_layout);
@@ -176,14 +177,14 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
 
     }
 
-    @Override
-    public void setIMEI(String imeiNumber) {
-
-        if (imeiNumber != null)
-            imei.setText(imeiNumber);
-        picker.dismiss();
-
-    }
+//    @Override
+//    public void setIMEI(String imeiNumber) {
+//
+//        if (imeiNumber != null)
+//            imei.setText(imeiNumber);
+//        picker.dismiss();
+//
+//    }
 
     @Override
     public void onClick(View v) {
@@ -215,12 +216,55 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
                 break;
 
             case R.id.scan_image:
-                picker.show(getFragmentManager(), "imei scanner");
+
+                boolean b = appInstalledOrNot(getString(R.string.zing_package));
+                if (b) {
+                    Intent intent = new Intent(getString(R.string.zing_package) + ".SCAN");
+                    intent.setPackage(getString(R.string.zing_package));
+                    startActivityForResult(intent, 0);
+                } else {
+                    MkShop.toast(getActivity(), "please install this app");
+                    final String appPackageName = getString(R.string.zing_package);// getPackageName() from Context or Activity object
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                    }
+
+                }
+
+//                picker.show(getFragmentManager(), "imei scanner");
 
                 break;
         }
 
 
+    }
+
+    private boolean appInstalledOrNot(String uri) {
+        PackageManager pm = getActivity().getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                String contents = intent.getStringExtra("SCAN_RESULT");
+                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                imei.setText(contents);
+                // Handle successful scan
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // Handle cancel
+            }
+        }
     }
 
     private void submitClickListener() {
@@ -500,7 +544,7 @@ public class SaleFragment extends Fragment implements ScannerCallback, View.OnCl
                     if (materialDialog != null && materialDialog.isShowing())
                         materialDialog.dismiss();
 
-                        MkShop.toast(getActivity(), t.getMessage());
+                    MkShop.toast(getActivity(), t.getMessage());
                     submit.setEnabled(true);
 
                 }
