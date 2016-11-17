@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.mobiles.mkshop.activities.NavigationMenuActivity"
+    tools:context="com.mobiles.msm.activities.NavigationMenuActivity"
     tools:showIn="@layout/app_bar_navigation_menu">
 
 </RelativeLayout>

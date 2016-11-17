@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.mobiles.mkshop.slide.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    <com.mobiles.msm.slide.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -711,6 +711,6 @@
 
 
         </LinearLayout>
-    </com.mobiles.mkshop.slide.SlidingUpPanelLayout>
+    </com.mobiles.msm.slide.SlidingUpPanelLayout>
 
 </RelativeLayout>

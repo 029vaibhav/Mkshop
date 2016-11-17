@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent_white" />
 
-    <com.mobiles.mkshop.application.CircleImageView
+    <com.mobiles.msm.application.CircleImageView
         android:id="@+id/user_photo"
         android:layout_width="80dp"
         android:layout_height="80dp"
