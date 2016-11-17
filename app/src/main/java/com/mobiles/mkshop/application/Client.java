@@ -64,7 +64,6 @@ public enum Client {
         Call<Void> sales(@Header("AUTH") String auth, @Body Sales sales);
 
 
-        @Headers("Content-Type: application/json")
         @POST("/mk/webservice/technical")
         Call<Void> sendService(@Header("AUTH") String auth, @Body ServiceCenterEntity service);
 
@@ -244,7 +243,7 @@ public enum Client {
 
         Retrofit retrofit = new Retrofit.Builder()
 //                .baseUrl("http://192.168.0.9:9098")
-                .baseUrl("http://Default-Environment.egdsgf36pr.ap-southeast-1.elasticbeanstalk.com")
+                .baseUrl("http://Default-Environment.ztywmxfmrh.ap-southeast-1.elasticbeanstalk.com")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
