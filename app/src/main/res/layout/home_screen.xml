@@ -28,7 +28,7 @@
         android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:text="Mobile shop"
+        android:text="@string/mobile_shop"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
@@ -38,6 +38,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:text="POWERED BY MOBIWEB"
+        android:text="@string/powered_by_mobiweb"
         android:textColor="@android:color/white" />
 </RelativeLayout>

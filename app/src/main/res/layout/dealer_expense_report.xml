@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:drawableRight="@drawable/ic_action_search"
-        android:hint="search"
-        android:singleLine="true" />
+        android:hint="@string/search" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/sliding_tabs"
@@ -28,7 +27,7 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/linear2"></android.support.v4.view.ViewPager>
+            android:layout_above="@+id/linear2"/>
 
         <LinearLayout
             android:id="@+id/linear2"
@@ -48,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:gravity="center"
-                android:text="Total"
+                android:text="@string/total"
                 android:textColor="@color/myDrawerBackground"
                 android:textSize="20sp" />
 
@@ -59,7 +58,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:shadowRadius="0"
-                android:text="0"
+                android:text="@string/Zero"
                 android:textColor="@color/myDrawerBackground"
                 android:textSize="15sp" />
 
@@ -70,7 +69,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
-                android:text="0"
+                android:text="@string/Zero"
                 android:textColor="@color/myDrawerBackground"
                 android:textSize="15sp" />
         </LinearLayout>

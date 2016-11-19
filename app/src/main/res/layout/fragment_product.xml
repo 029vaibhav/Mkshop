@@ -23,13 +23,14 @@
             android:hint="@string/git_hub" />
 
         <Button
+            android:contentDescription="@string/submit"
             android:id="@+id/gsm_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@color/flatGreen"
-            android:text="Submit" />
+            android:text="@string/submit" />
 
     </RelativeLayout>
 
@@ -40,7 +41,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -54,7 +55,7 @@
                     android:id="@+id/brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="BRAND" />
+                    android:hint="@string/brand" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -68,7 +69,7 @@
                     android:id="@+id/model"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="MODEL" />
+                    android:hint="@string/model" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -82,7 +83,7 @@
                     android:id="@+id/sim"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SIM" />
+                    android:hint="@string/sim" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -96,7 +97,7 @@
                     android:id="@+id/screenSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SCREEN SIZE" />
+                    android:hint="@string/screen_size" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -110,7 +111,7 @@
                     android:id="@+id/displayType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="DISPLAY TYPE" />
+                    android:hint="@string/display_type" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -124,7 +125,7 @@
                     android:id="@+id/os"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="OS" />
+                    android:hint="@string/os" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -138,7 +139,7 @@
                     android:id="@+id/iMemory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="INTERNAL MEMORY" />
+                    android:hint="@string/internal_memory" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -152,7 +153,7 @@
                     android:id="@+id/eMemory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="EXTERNAL MEMORY" />
+                    android:hint="@string/external_memory" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -166,7 +167,7 @@
                     android:id="@+id/fCamera"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="FRONT CAMERA" />
+                    android:hint="@string/front_camera" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -180,7 +181,7 @@
                     android:id="@+id/bCamera"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="BACK CAMERA" />
+                    android:hint="@string/back_camera" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -194,7 +195,7 @@
                     android:id="@+id/wlan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="WLAN" />
+                    android:hint="@string/wlan" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -208,7 +209,7 @@
                     android:id="@+id/bluetooth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="BLUETOOTH" />
+                    android:hint="@string/bluetooth" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -220,7 +221,7 @@
                     android:id="@+id/nfc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="NFC" />
+                    android:hint="@string/nfc" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -234,7 +235,7 @@
                     android:id="@+id/infrared"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="INFRARED" />
+                    android:hint="@string/infrared" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -248,7 +249,7 @@
                     android:id="@+id/radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="RADIO" />
+                    android:hint="@string/radio" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -262,7 +263,7 @@
                     android:id="@+id/battery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="BATTERY" />
+                    android:hint="@string/battery" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -276,19 +277,20 @@
                     android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="PRICE"
+                    android:hint="@string/price"
                     android:inputType="number" />
 
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:contentDescription="@string/submit"
                 android:id="@+id/form_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Submit" />
+                android:text="@string/submit" />
 
 
         </LinearLayout>

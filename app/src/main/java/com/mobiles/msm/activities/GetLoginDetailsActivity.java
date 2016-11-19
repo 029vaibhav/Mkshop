@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobiles.msm.R;
 import com.mobiles.msm.application.Client;
 import com.mobiles.msm.application.MyApplication;
+import com.mobiles.msm.contentprovider.ProductHelper;
 import com.mobiles.msm.pojos.models.LoginDetails;
 import com.mobiles.msm.pojos.models.Product;
 
@@ -71,30 +72,7 @@ public class GetLoginDetailsActivity extends AppCompatActivity {
                 MyApplication.Role = loginDetails.getUser().getRole();
                 MyApplication.Username = loginDetails.getUser().getUsername();
                 List<Product> productList = loginDetails.getProducts();
-                for (Product product : productList) {
-
-
-                    product.setBrand(product.getBrand());
-                    product.setModel(product.getModel());
-                    product.setSim(product.getSim());
-                    product.setScreenSize(product.getScreenSize());
-                    product.setDisplayType(product.getDisplayType());
-                    product.setOs(product.getOs());
-                    product.setiMemory(product.getiMemory());
-                    product.seteMemory(product.geteMemory());
-                    product.setfCamera(product.getfCamera());
-                    product.setbCamera(product.getbCamera());
-                    product.setWlan(product.getWlan());
-                    product.setBluetooth(product.getBluetooth());
-                    product.setNfc(product.getNfc());
-                    product.setInfrared(product.getInfrared());
-                    product.setRadio(product.getRadio());
-                    product.setBattery(product.getBattery());
-                    product.setPrice(product.getPrice());
-                    product.setType(product.getType());
-                    product.setAccessoryType(product.getAccessoryType());
-                    long save = product.save();
-                }
+                ProductHelper.bulkUpdateOrCreate(getContentResolver(), productList);
                 if (materialDialog != null && materialDialog.isShowing())
                     materialDialog.dismiss();
                 Intent intent = new Intent(GetLoginDetailsActivity.this, NavigationMenuActivity.class);

@@ -14,9 +14,11 @@
         android:id="@+id/flash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_margin="10dp"
         android:padding="25dp"
-        android:src="@drawable/ic_action_flash_off" />
+        android:src="@drawable/ic_action_flash_off"
+        android:contentDescription="@string/flash_on_off" />
 </RelativeLayout>

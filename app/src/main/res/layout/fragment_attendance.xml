@@ -8,24 +8,24 @@
     <TextView
 
         android:id="@+id/attendancetext"
-        android:padding="15dp"
-        android:textSize="21sp"
-        android:background="@drawable/button_selector"
-        android:layout_centerInParent="true"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mark Attendace" />
+        android:layout_centerInParent="true"
+        android:background="@drawable/button_selector"
+
+        android:padding="15dp"
+        android:text="@string/mark_attend"
+        android:textSize="21sp" />
 
     <TextView
 
-        android:visibility="invisible"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/attendancetext"
-        android:padding="15dp"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mark Attendace" />
+        android:layout_below="@+id/attendancetext"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:text="@string/mark_attend"
+        android:visibility="invisible" />
 
 </RelativeLayout>

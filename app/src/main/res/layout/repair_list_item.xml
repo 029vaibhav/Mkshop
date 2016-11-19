@@ -36,9 +36,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/repairjobno"
                 android:ellipsize="marquee"
-                android:gravity="left|start"
+                android:gravity="start"
                 android:padding='5dp'
-                android:text="model"
+                android:text="@string/model"
                 android:textSize="20sp" />
 
             <TextView
@@ -50,7 +50,7 @@
                 android:layout_below="@+id/repairmodel"
                 android:gravity="center"
                 android:padding='5dp'
-                android:text="date"
+                android:text="@string/date"
                 android:textSize="15sp" />
 
             <TextView
@@ -62,7 +62,7 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:padding='5dp'
-                android:text="job no"
+                android:text="@string/job_no"
                 android:textSize="20sp" />
 
             <TextView
@@ -75,7 +75,7 @@
                 android:layout_below="@+id/repairjobno"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="pending"
+                android:text="@string/pending"
                 android:textSize="15sp" />
         </RelativeLayout>
 

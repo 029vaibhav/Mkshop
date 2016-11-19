@@ -40,7 +40,7 @@
                 android:ellipsize="marquee"
                 android:gravity="center_vertical"
                 android:paddingRight="10dp"
-                android:text="Brand"
+                android:text="@string/brand"
                 android:textSize="16sp" />
 
 
@@ -52,7 +52,7 @@
                 android:drawableLeft="@drawable/ic_action_calendar2"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="20/30 june"
+                android:text="@string/_20_30_june"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -66,7 +66,7 @@
             android:ellipsize="marquee"
             android:gravity="center_vertical"
             android:paddingRight="10dp"
-            android:text="Brand"
+            android:text="@string/brand"
             android:textSize="14sp" />
 
 

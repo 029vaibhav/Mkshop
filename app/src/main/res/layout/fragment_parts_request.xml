@@ -23,9 +23,9 @@
                 android:background="@drawable/border_text"
                 android:drawableEnd="@drawable/ic_action_search"
                 android:drawableRight="@drawable/ic_action_search"
-                android:hint="search"
+                android:hint="@string/search"
                 android:padding="7dp"
-                android:singleLine="true" />
+                android:maxLines="1" />
         </android.support.v7.widget.CardView>
     </LinearLayout>
 

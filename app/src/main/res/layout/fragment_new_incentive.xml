@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Please fill the sales form" />
+        android:text="@string/form_text" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Brand"
+                android:text="@string/brand"
                 android:textSize="14sp" />
 
             <AutoCompleteTextView
@@ -47,12 +47,13 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
+                android:drawableEnd="@drawable/ic_action_transparent"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_action_transparent"
                 android:ems="10"
                 android:gravity="center"
+                android:maxLines="1"
                 android:padding="10dp"
-                android:singleLine="true"
                 android:textSize="18sp" />
 
 
@@ -74,8 +75,6 @@
 
             <TextView
                 android:id="@+id/modeltitle"
-
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/brandtext"
@@ -84,7 +83,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Model"
+                android:text="@string/model"
                 android:textSize="14sp" />
 
 
@@ -98,7 +97,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
+                android:drawableEnd="@drawable/ic_action_transparent"
                 android:drawableRight="@drawable/ic_action_transparent"
+
                 android:gravity="center"
                 android:padding="10dp"
                 android:textSize="18sp" />
@@ -113,11 +114,13 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
+                android:drawableEnd="@drawable/ic_action_name"
                 android:drawableRight="@drawable/ic_action_name"
+
                 android:gravity="center"
-                android:hint="Model no"
+                android:hint="@string/model"
+                android:maxLines="1"
                 android:padding="10dp"
-                android:singleLine="true"
                 android:textSize="18sp"
                 android:visibility="gone" />
 
@@ -133,7 +136,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Quantity"
+                android:text="@string/qty"
                 android:textSize="14sp"
                 android:visibility="gone" />
 
@@ -147,13 +150,15 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
+                android:drawableEnd="@drawable/ic_action_transparent"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_action_transparent"
+
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="number"
+                android:maxLines="1"
                 android:padding="10dp"
-                android:singleLine="true"
                 android:textSize="18sp"
                 android:visibility="gone" />
 
@@ -170,7 +175,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Base Price"
+                android:text="@string/price"
                 android:textSize="14sp" />
 
 
@@ -184,13 +189,15 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
+                android:drawableEnd="@drawable/ic_action_rupees"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_action_rupees"
+
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="number"
+                android:maxLines="1"
                 android:padding="10dp"
-                android:singleLine="true"
                 android:textSize="18sp" />
 
 
@@ -206,7 +213,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Incentive Amount"
+                android:text="@string/incentive"
                 android:textSize="14sp" />
 
 
@@ -220,13 +227,15 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
+                android:drawableEnd="@drawable/ic_action_rupees"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_action_rupees"
+
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="number"
+                android:maxLines="1"
                 android:padding="10dp"
-                android:singleLine="true"
                 android:textSize="18sp" />
 
 
@@ -241,27 +250,29 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Min Quantity "
+                android:text="@string/min_qty"
                 android:textSize="14sp" />
 
 
             <EditText
-                android:text="1"
                 android:id="@+id/quantity"
-
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/quantitytextView"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/border_text"
+                android:drawableEnd="@drawable/ic_action_quantity"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_action_quantity"
+
                 android:ems="10"
                 android:gravity="center"
+                android:maxLines="1"
                 android:padding="10dp"
-                android:singleLine="true"
+                android:text="@string/One"
                 android:textSize="18sp" />
 
 
@@ -274,16 +285,18 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/border_text"
                 android:drawableLeft="@drawable/ic_action_calendar2"
+                android:drawableStart="@drawable/ic_action_calendar2"
+
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Validity" />
+                android:text="@string/validity" />
 
 
             <Button
 
                 android:id="@+id/submit"
                 style="?android:buttonBarButtonStyle"
-
+android:contentDescription="@string/submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/validity"
@@ -296,7 +309,7 @@
                 android:paddingRight="30dp"
                 android:paddingTop="10dp"
                 android:shadowRadius="0"
-                android:text="submit" />
+                android:text="@string/submit" />
 
         </RelativeLayout>
 

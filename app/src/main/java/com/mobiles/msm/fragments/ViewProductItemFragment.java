@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.mobiles.msm.R;
+import com.mobiles.msm.contentprovider.ProductHelper;
 import com.mobiles.msm.pojos.models.Product;
 import com.mobiles.msm.slide.SlidingUpPanelLayout;
 
@@ -70,7 +71,7 @@ public class ViewProductItemFragment extends Fragment {
         mLayout = (SlidingUpPanelLayout) viewGroup.findViewById(R.id.sliding_layout);
 
 
-        Product product = Product.findById(Product.class, id);
+        Product product = ProductHelper.getProduct(getActivity().getContentResolver(), id);
         p = product;
 
         brand.setText(product.getBrand());
@@ -79,10 +80,10 @@ public class ViewProductItemFragment extends Fragment {
         screenSize.setText(product.getScreenSize());
         displayType.setText(product.getDisplayType());
         platform.setText(product.getOs());
-        iMemory.setText(product.getiMemory());
-        eMemory.setText(product.geteMemory());
-        fCamera.setText(product.getfCamera());
-        rCamera.setText(product.getbCamera());
+        iMemory.setText(product.getIMemory());
+        eMemory.setText(product.getEMemory());
+        fCamera.setText(product.getFCamera());
+        rCamera.setText(product.getBCamera());
         //  bluetooth.setText(product.getBluetooth()+"/"+product.getWlan()+"/"+product.getNfc()+"/"+product.getInfrared()+"/"+product.getRadio());
         price.setText(String.valueOf(product.getPrice()));
         battery.setText(product.getBattery());

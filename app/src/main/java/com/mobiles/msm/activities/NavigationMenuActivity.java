@@ -415,8 +415,8 @@ public class NavigationMenuActivity extends AppCompatActivity
     }
 
     private void logUser() {
-        Crashlytics.setUserIdentifier(MyApplication.Role);
-        Crashlytics.setUserName(MyApplication.Username);
+//        Crashlytics.setUserIdentifier(MyApplication.Role);
+//        Crashlytics.setUserName(MyApplication.Username);
     }
 
 }

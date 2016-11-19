@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="Brand"
+                android:hint="@string/brand"
                 android:padding="10dp"
                 android:textSize="18sp" />
 
@@ -37,7 +37,7 @@
                 android:background="@color/myAccentColor"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Submit" />
+                android:text="@string/submit" />
 
         </RelativeLayout>
     </ScrollView>

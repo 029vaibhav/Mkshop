@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="PLEASE FILL THE SALES FORM"
+        android:text="@string/form_text"
         android:textColor="@android:color/holo_blue_light" />
 
 
@@ -57,7 +57,7 @@
                         android:layout_weight="1"
                         android:checked="true"
                         android:gravity="center"
-                        android:text="Mobile" />
+                        android:text="@string/mobile" />
 
                     <RadioButton
                         android:id="@+id/radioAccessory"
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Accessory" />
+                        android:text="@string/accessory" />
                 </RadioGroup>
 
 
@@ -82,7 +82,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
-                    android:text="Brand"
+                    android:text="@string/brand"
                     android:textSize="14sp"
                     android:visibility="gone" />
 
@@ -99,7 +99,7 @@
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/right_arrow"
                     android:gravity="center"
-                    android:hint="Accessory"
+                    android:hint="@string/accessory"
                     android:padding="10dp"
                     android:textSize="18sp"
                     android:visibility="gone" />
@@ -120,7 +120,7 @@
                         android:dividerPadding="8dp"
                         android:paddingBottom="8dp"
                         android:paddingTop="8dp"
-                        android:text="Brand"
+                        android:text="@string/brand"
                         android:textSize="14sp" />
 
                     <TextView
@@ -129,7 +129,7 @@
                         android:layout_toRightOf="@+id/brand_title"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="*"
+                        android:text="@string/plus"
                         android:textColor="@android:color/holo_red_dark" />
 
 
@@ -149,8 +149,8 @@
                     android:drawableRight="@drawable/right_arrow"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:singleLine="true"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:maxLines="1" />
 
                 <RelativeLayout
                     android:id="@+id/relativemodel"
@@ -168,7 +168,7 @@
                         android:dividerPadding="8dp"
                         android:paddingBottom="8dp"
                         android:paddingTop="8dp"
-                        android:text="Model"
+                        android:text="@string/model"
                         android:textSize="14sp" />
 
                     <TextView
@@ -177,7 +177,7 @@
                         android:layout_toRightOf="@+id/modeltitle"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="*"
+                        android:text="@string/plus"
                         android:textColor="@android:color/holo_red_dark" />
 
 
@@ -477,7 +477,7 @@
 
                     android:id="@+id/submit"
                     style="?android:buttonBarButtonStyle"
-
+android:contentDescription="@string/submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mobile"

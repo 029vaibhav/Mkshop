@@ -52,10 +52,11 @@
                     android:layout_toLeftOf="@+id/submit"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Specification"
+                    android:text="@string/specification"
                     android:textSize="15sp" />
 
                 <Button
+                    android:contentDescription="@string/sale"
                     android:id="@+id/submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,7 +65,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@color/orange"
                     android:padding="10dp"
-                    android:text="Sale" />
+                    android:text="@string/sale" />
 
 
             </RelativeLayout>
@@ -72,8 +73,7 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/submit">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -107,14 +107,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="10dp"
-                                android:text="Brand"
+                                android:text="@string/brand"
                                 android:textSize="12sp" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -158,14 +158,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="10dp"
-                                android:text="Model no"
+                                android:text="@string/model"
                                 android:textSize="12sp" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -217,7 +217,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -269,7 +269,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -315,14 +315,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="10dp"
-                                android:text="Display type"
+                                android:text="@string/display_type"
                                 android:textSize="12sp" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -367,14 +367,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="10dp"
-                                android:text="Platform"
+                                android:text="@string/platform"
                                 android:textSize="12sp" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -420,14 +420,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="10dp"
-                                android:text="Internal memory"
+                                android:text="@string/internal_memory"
                                 android:textSize="12sp" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -479,7 +479,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -531,7 +531,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -583,7 +583,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -635,7 +635,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText
@@ -687,7 +687,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/drop_shadow"></View>
+                                android:background="@drawable/drop_shadow"/>
 
 
                             <EditText

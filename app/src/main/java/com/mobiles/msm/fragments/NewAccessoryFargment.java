@@ -2,8 +2,12 @@ package com.mobiles.msm.fragments;
 
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +20,10 @@ import com.mobiles.msm.R;
 import com.mobiles.msm.activities.NavigationMenuActivity;
 import com.mobiles.msm.application.Client;
 import com.mobiles.msm.application.MyApplication;
+import com.mobiles.msm.contentprovider.ProductHelper;
 import com.mobiles.msm.pojos.enums.ProductType;
 import com.mobiles.msm.pojos.models.Product;
+import com.mobiles.msm.pojos.models.ProductTable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,7 +39,7 @@ import retrofit2.Response;
  * Use the {@link NewAccessoryFargment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewAccessoryFargment extends Fragment {
+public class NewAccessoryFargment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,11 +48,14 @@ public class NewAccessoryFargment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    List<Product> products;
+    private boolean synchronizedComp = false;
 
     AppCompatAutoCompleteTextView brandEditText, modelEditText, accessoryTypeEditText;
     EditText priceEditText;
     Button submit;
     ProgressDialog progressDialog;
+    ViewGroup viewGroup;
 
 
     public NewAccessoryFargment() {
@@ -81,20 +90,24 @@ public class NewAccessoryFargment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_new_accessory, container, false);
-
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_new_accessory, container, false);
         initView(viewGroup);
-
-
+        progressDialog.show();
         return viewGroup;
     }
 
-    private void initView(ViewGroup viewGroup) {
 
-        List<Product> products = Product.find(Product.class, "type = ?", "Accessory");
+    private void initData() {
+        progressDialog.dismiss();
         Set<String> brand = new HashSet<>(), model = new HashSet<>(), accessoryType = new HashSet<>();
         for (Product product : products) {
             brand.add(product.getBrand());
@@ -104,29 +117,31 @@ public class NewAccessoryFargment extends Fragment {
         ArrayAdapter<String> brandAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, new ArrayList<>(brand));
         ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, new ArrayList<>(model));
         ArrayAdapter<String> accessoryAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, new ArrayList<>(accessoryType));
-
-        brandEditText = (AppCompatAutoCompleteTextView) viewGroup.findViewById(R.id.brand);
-        brandEditText.setThreshold(1);
         brandEditText.setAdapter(brandAdapter);
-        modelEditText = (AppCompatAutoCompleteTextView) viewGroup.findViewById(R.id.model);
-        modelEditText.setThreshold(1);
         modelEditText.setAdapter(modelAdapter);
-        accessoryTypeEditText = (AppCompatAutoCompleteTextView) viewGroup.findViewById(R.id.accessory_type);
-        accessoryTypeEditText.setThreshold(1);
         accessoryTypeEditText.setAdapter(accessoryAdapter);
-        priceEditText = (EditText) viewGroup.findViewById(R.id.price);
-        submit = (Button) viewGroup.findViewById(R.id.form_submit);
-        progressDialog = NavigationMenuActivity.materialDialog;
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 validateAccessory();
             }
-
-
         });
+
+
+    }
+
+    private void initView(ViewGroup viewGroup) {
+
+        brandEditText = (AppCompatAutoCompleteTextView) viewGroup.findViewById(R.id.brand);
+        brandEditText.setThreshold(1);
+        modelEditText = (AppCompatAutoCompleteTextView) viewGroup.findViewById(R.id.model);
+        modelEditText.setThreshold(1);
+        accessoryTypeEditText = (AppCompatAutoCompleteTextView) viewGroup.findViewById(R.id.accessory_type);
+        accessoryTypeEditText.setThreshold(1);
+        priceEditText = (EditText) viewGroup.findViewById(R.id.price);
+        submit = (Button) viewGroup.findViewById(R.id.form_submit);
+        progressDialog = NavigationMenuActivity.materialDialog;
 
 
     }
@@ -143,8 +158,8 @@ public class NewAccessoryFargment extends Fragment {
             MyApplication.toast(getActivity(), "please enter price");
         } else {
             progressDialog.show();
-            Product product = new Product();
-            product.setType(ProductType.Accessory);
+            final Product product = new Product();
+            product.setType(ProductType.Accessory.name());
             product.setAccessoryType(accessoryTypeEditText.getText().toString());
             product.setModel(modelEditText.getText().toString());
             product.setBrand(brandEditText.getText().toString());
@@ -157,7 +172,7 @@ public class NewAccessoryFargment extends Fragment {
                         progressDialog.dismiss();
                     if (response.isSuccessful()) {
                         MyApplication.toast(getActivity(), "Successfully registered a new Accessory");
-                        Product.save(response.body());
+                        ProductHelper.createProduct(getActivity().getContentResolver(), product);
                     } else {
                         MyApplication.toast(getActivity(), "something went wrong please contact admin");
                     }
@@ -179,4 +194,24 @@ public class NewAccessoryFargment extends Fragment {
 
     }
 
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(), ProductTable.CONTENT_URI,
+                null,
+                ProductTable.FIELD_TYPE + " = ?",
+                new String[]{ProductType.Accessory.name()},
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        products = ProductTable.getRows(data, true);
+        initData();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        synchronizedComp = false;
+    }
 }

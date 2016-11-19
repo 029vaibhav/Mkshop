@@ -23,12 +23,12 @@ import com.mobiles.msm.R;
 import com.mobiles.msm.activities.NavigationMenuActivity;
 import com.mobiles.msm.adapters.ViewProductadapter;
 import com.mobiles.msm.application.MyApplication;
+import com.mobiles.msm.contentprovider.ProductHelper;
 import com.mobiles.msm.pojos.enums.ProductType;
 import com.mobiles.msm.pojos.models.Product;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -77,8 +77,7 @@ public class ViewProductFragment extends Fragment {
         dialog = NavigationMenuActivity.materialDialog;
         dialog.show();
 
-        Iterator<Product> all = Product.findAll(Product.class);
-        List<Product> sales = Lists.newArrayList(all);
+        List<Product> sales = ProductHelper.getAllProducts(getActivity().getContentResolver());
         salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<Product>() {
             @Override
             public boolean apply(Product input) {

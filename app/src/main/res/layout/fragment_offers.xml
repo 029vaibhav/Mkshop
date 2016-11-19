@@ -11,9 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
+        android:drawableEnd="@drawable/ic_action_search"
         android:drawableRight="@drawable/ic_action_search"
-        android:hint="search"
-        android:singleLine="true" />
+        android:hint="@string/search"
+        android:maxLines="1" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/notificationList"

@@ -17,12 +17,14 @@ import com.mobiles.msm.R;
 import com.mobiles.msm.activities.NavigationMenuActivity;
 import com.mobiles.msm.application.Client;
 import com.mobiles.msm.application.MyApplication;
+import com.mobiles.msm.contentprovider.ProductHelper;
 import com.mobiles.msm.pojos.models.Product;
 import com.mobiles.msm.pojos.models.SparePart;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -97,11 +99,10 @@ public class SparePartListItemFragment extends Fragment {
         }
 
         Set<String> brands = new HashSet<>();
-        Iterator<Product> all1 = Product.findAll(Product.class);
-        while (all1.hasNext()) {
-            Product next = all1.next();
-            brands.add(next.getBrand());
-            brands.add(next.getModel());
+        List<Product> all1 = ProductHelper.getAllProducts(getActivity().getContentResolver());
+        for (Product product:all1) {
+            brands.add(product.getBrand());
+            brands.add(product.getModel());
         }
         final ArrayAdapter<String> brandAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, new ArrayList<>(brands));
         ArrayAdapter<String> keywords = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, new ArrayList<>(strings));

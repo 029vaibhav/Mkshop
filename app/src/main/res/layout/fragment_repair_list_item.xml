@@ -33,7 +33,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Brand"
+                    android:text="@string/brand"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -47,8 +47,10 @@
 
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/blank"
+                    android:drawableEnd="@drawable/blank"
+
                     android:gravity="center"
-                    android:hint="Brand"
+                    android:hint="@string/brand"
                     android:padding="8dp"
                     android:textSize="20sp" />
 
@@ -58,7 +60,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Model"
+                    android:text="@string/model"
                     
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -73,8 +75,9 @@
 
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/blank"
+                    android:drawableEnd="@drawable/blank"
                     android:gravity="center"
-                    android:hint="model"
+                    android:hint="@string/model"
                     android:padding="8dp"
                     android:textSize="20sp" />
 
@@ -87,10 +90,12 @@
 
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/ic_action_name"
+                    android:drawableEnd="@drawable/ic_action_name"
+
                     android:gravity="center"
-                    android:hint="Model no"
+                    android:hint="@string/model"
                     android:padding="8dp"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:textSize="20sp"
                     android:visibility="gone" />
 
@@ -100,7 +105,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Status"
+                    android:text="@string/status"
                     
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -117,7 +122,7 @@
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/ic_action_status"
                     android:gravity="center"
-                    android:hint="status"
+                    android:hint="@string/status"
                     android:padding="8dp"
                     android:textSize="20sp" />
 
@@ -128,7 +133,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Job no"
+                    android:text="@string/job_no"
                     
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -140,11 +145,13 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/ic_action_name"
+                    android:drawableEnd="@drawable/ic_action_name"
+
                     android:gravity="center"
-                    android:hint="Job no"
+                    android:hint="@string/job_no"
                     android:paddingBottom="8dp"
-                    android:singleLine="true"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:maxLines="1" />
 
 
                 <TextView
@@ -153,7 +160,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Problem"
+                    android:text="@string/problem"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -167,7 +174,7 @@
 
 
                     android:background="@drawable/border_text"
-                    android:hint="Problems"
+                    android:hint="@string/problem"
                     android:minLines="2"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -180,7 +187,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Resolution"
+                    android:text="@string/resolution"
                     
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -193,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/border_text"
-                    android:hint="Resolution"
+                    android:hint="@string/resolution"
                     android:minLines="2"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -208,7 +215,7 @@
 
 
                     android:paddingTop="16dp"
-                    android:text="Price"
+                    android:text="@string/price"
                     
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -221,8 +228,10 @@
 
                     android:background="@drawable/border_text"
                     android:drawableRight="@drawable/rupees"
+                    android:drawableEnd="@drawable/rupees"
+
                     android:gravity="center"
-                    android:hint="Price"
+                    android:hint="@string/price"
                     android:inputType="number"
                     android:padding="8dp"
                     android:textSize="20sp" />
@@ -231,7 +240,7 @@
                 <Button
                     android:id="@+id/submit"
                     style="?android:buttonBarButtonStyle"
-
+android:contentDescription="@string/submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -242,7 +251,7 @@
                     android:paddingRight="30dp"
                     android:paddingTop="10dp"
                     android:shadowRadius="0"
-                    android:text="submit" />
+                    android:text="@string/submit" />
 
 
             </LinearLayout>

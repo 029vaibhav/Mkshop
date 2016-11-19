@@ -35,7 +35,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Dealer name"
+                android:text="@string/dealer_name"
                 android:textSize="14sp" />
 
             <EditText
@@ -52,7 +52,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:padding="10dp"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:textSize="18sp" />
 
 
@@ -67,7 +67,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Total amount"
+                android:text="@string/total"
                 android:textSize="14sp" />
 
 
@@ -97,7 +97,7 @@
                 android:background="@drawable/border_text"
                 android:drawableRight="@drawable/ic_action_name"
                 android:gravity="center"
-                android:hint="Model no"
+                android:hint="@string/model"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textSize="18sp"
@@ -115,7 +115,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Quantity"
+                android:text="@string/quantity"
                 android:textSize="14sp"
                 android:visibility="gone" />
 
@@ -135,7 +135,7 @@
                 android:gravity="center"
                 android:inputType="number"
                 android:padding="10dp"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:textSize="18sp"
                 android:visibility="gone" />
 
@@ -152,7 +152,7 @@
                 android:dividerPadding="8dp"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Notes"
+                android:text="@string/notes"
                 android:textSize="14sp" />
 
 
@@ -170,10 +170,11 @@
                 android:ems="10"
                 android:gravity="center"
                 android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:maxLines="1" />
 
             <Button
+                android:contentDescription="@string/submit"
                 android:id="@+id/submit"
                 style="?android:buttonBarButtonStyle"
                 android:layout_width="wrap_content"
@@ -187,7 +188,7 @@
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:paddingTop="10dp"
-                android:text="submit" />
+                android:text="@string/submit" />
 
 
         </RelativeLayout>

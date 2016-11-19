@@ -38,27 +38,31 @@
                 android:layout_alignParentBottom="true"
                 android:layout_margin="10dp"
                 android:layout_toLeftOf="@+id/submit"
+                android:layout_toStartOf="@+id/submit"
+
                 android:background="@drawable/border_text"
-                android:hint="Incentive amount"
+                android:hint="@string/incentive"
                 android:inputType="date"
-                android:padding="10dp"
-                android:singleLine="true" />
+                android:maxLines="1"
+                android:padding="10dp" />
 
             <Button
+
                 android:id="@+id/submit"
                 style="?android:buttonBarButtonStyle"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_selector"
+                android:contentDescription="@string/pay"
                 android:gravity="center"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:shadowRadius="0"
-                android:text="Pay" />
+                android:text="@string/pay" />
         </RelativeLayout>
     </ScrollView>
 

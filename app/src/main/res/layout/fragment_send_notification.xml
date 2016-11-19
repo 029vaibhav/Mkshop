@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="10dp"
-        android:text="Message" />
+        android:text="@string/message" />
 
     <EditText
         android:id="@+id/message"
@@ -32,7 +32,7 @@
         android:layout_below="@+id/message"
         android:layout_margin="10dp"
         android:padding="10dp"
-        android:text="Role" />
+        android:text="@string/role" />
 
 
     <AutoCompleteTextView
@@ -55,10 +55,11 @@
         android:drawableLeft="@drawable/ic_action_calendar2"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Validity" />
+        android:text="@string/validity" />
 
 
     <Button
+        android:contentDescription="@string/notify"
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,7 +67,7 @@
         android:background="@color/orange"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Notify" />
+        android:text="@string/notify" />
 
 
 </RelativeLayout>

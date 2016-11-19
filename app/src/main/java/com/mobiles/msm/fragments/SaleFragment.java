@@ -28,6 +28,7 @@ import com.mobiles.msm.activities.NavigationMenuActivity;
 import com.mobiles.msm.adapters.CustomAdapter;
 import com.mobiles.msm.application.Client;
 import com.mobiles.msm.application.MyApplication;
+import com.mobiles.msm.contentprovider.ProductHelper;
 import com.mobiles.msm.pojos.enums.ProductType;
 import com.mobiles.msm.pojos.models.Product;
 import com.mobiles.msm.pojos.models.Sales;
@@ -123,14 +124,14 @@ public class SaleFragment extends Fragment implements /*ScannerCallback, */View.
         accessoryTypeList = new ArrayList<>();
         modelSalesList = new ArrayList<>();
         modelList = new ArrayList<>();
-        salesList = Product.listAll(Product.class);
+        salesList = ProductHelper.getAllProducts(getActivity().getContentResolver());;
 
 
         try {
             productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
                 @Override
                 public boolean apply(Product input) {
-                    return (input.getType().name().equalsIgnoreCase(stringProductType));
+                    return (input.getType().equalsIgnoreCase(stringProductType));
                 }
             }));
         } catch (Exception e) {
@@ -319,7 +320,7 @@ public class SaleFragment extends Fragment implements /*ScannerCallback, */View.
                 List<Product> newArrayList = Lists.newArrayList(Iterables.filter(productTypeList, new Predicate<Product>() {
                     @Override
                     public boolean apply(Product input) {
-                        return (input.getType().name().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
+                        return (input.getType().equalsIgnoreCase(stringProductType) && input.getAccessoryType().equalsIgnoreCase(stringAccessory));
                     }
                 }));
 
@@ -438,7 +439,7 @@ public class SaleFragment extends Fragment implements /*ScannerCallback, */View.
                 productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
                     @Override
                     public boolean apply(Product input) {
-                        return (input.getType().name().equalsIgnoreCase(stringProductType));
+                        return (input.getType().equalsIgnoreCase(stringProductType));
                     }
                 }));
 
@@ -479,7 +480,7 @@ public class SaleFragment extends Fragment implements /*ScannerCallback, */View.
                 productTypeList = Lists.newArrayList(Iterables.filter(salesList, new Predicate<Product>() {
                     @Override
                     public boolean apply(Product input) {
-                        return (input.getType().name().equalsIgnoreCase(stringProductType));
+                        return (input.getType().equalsIgnoreCase(stringProductType));
                     }
                 }));
 

@@ -24,7 +24,7 @@
             android:drawableLeft="@drawable/ic_action_smallcalendar"
             android:gravity="center"
             android:padding="1dp"
-            android:text="From" />
+            android:text="@string/from" />
 
         <TextView
             android:id="@+id/toDate"
@@ -37,7 +37,7 @@
             android:drawableLeft="@drawable/ic_action_smallcalendar"
             android:gravity="center"
             android:padding="1dp"
-            android:text="To" />
+            android:text="@string/to" />
 
     </LinearLayout>
 

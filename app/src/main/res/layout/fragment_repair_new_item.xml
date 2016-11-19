@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="8dp"
-        android:text="PLEASE FILL THE SERVICE FORM"
+        android:text="@string/form_text"
         android:textColor="@android:color/holo_blue_bright" />
 
 
@@ -43,7 +43,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Brand"
+                    android:text="@string/brand"
                     android:textSize="14sp" />
 
                 <AutoCompleteTextView
@@ -62,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Model"
+                    android:text="@string/model"
                     android:textSize="14sp" />
 
                 <AutoCompleteTextView
@@ -83,7 +83,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Status"
+                    android:text="@string/status"
                     android:textSize="14sp" />
 
                 <TextView
@@ -103,7 +103,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Job no"
+                    android:text="@string/job_no"
                     android:textSize="14sp" />
 
                 <EditText
@@ -115,8 +115,8 @@
                     android:drawableRight="@drawable/ic_action_transparent"
                     android:ems="10"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:padding="8dp"
-                    android:singleLine="true"
                     android:textSize="18sp" />
 
 
@@ -126,7 +126,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Problem"
+                    android:text="@string/problem"
                     android:textSize="14sp" />
 
                 <EditText
@@ -138,8 +138,8 @@
                     android:drawableRight="@drawable/ic_action_transparent"
                     android:ems="10"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:padding="8dp"
-                    android:singleLine="false"
                     android:textSize="18sp" />
 
 
@@ -149,7 +149,7 @@
                     android:dividerPadding="8dp"
                     android:paddingBottom="8dp"
                     android:paddingTop="16dp"
-                    android:text="Price"
+                    android:text="@string/price"
                     android:textSize="14sp" />
 
 
@@ -163,11 +163,12 @@
                     android:ems="10"
                     android:gravity="center"
                     android:inputType="number"
+                    android:maxLines="1"
                     android:padding="8dp"
-                    android:singleLine="true"
                     android:textSize="18sp" />
 
                 <Button
+                    android:contentDescription="@string/submit"
                     android:id="@+id/submit"
                     style="?android:buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -180,7 +181,7 @@
                     android:paddingRight="30dp"
                     android:paddingTop="10dp"
                     android:shadowRadius="0"
-                    android:text="submit" />
+                    android:text="@string/submit" />
             </LinearLayout>
 
         </ScrollView>

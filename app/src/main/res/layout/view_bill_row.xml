@@ -31,7 +31,7 @@
             android:layout_gravity="left|start"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:text="date" />
+            android:text="@string/date" />
 
         <LinearLayout
             android:id="@+id/linear"
@@ -51,7 +51,7 @@
                 android:gravity="center_vertical"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:text="Brand"
+                android:text="@string/brand"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
@@ -66,7 +66,7 @@
                 android:layout_weight="4"
                 android:gravity="right|center_vertical|end"
                 android:paddingRight="10dp"
-                android:text="model"
+                android:text="@string/model"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -77,7 +77,7 @@
             android:layout_gravity="right|end"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:text="due" />
+            android:text="@string/due" />
 
 
     </LinearLayout>

@@ -2,9 +2,13 @@ package com.mobiles.msm.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +29,7 @@ import com.mobiles.msm.application.MyApplication;
 import com.mobiles.msm.pojos.enums.ProductType;
 import com.mobiles.msm.pojos.models.IncentiveEntity;
 import com.mobiles.msm.pojos.models.Product;
+import com.mobiles.msm.pojos.models.ProductTable;
 
 import org.joda.time.DateTime;
 
@@ -40,7 +45,7 @@ import retrofit2.Response;
 /**
  * Created by vaibhav on 31/7/15.
  */
-public class NewIncentiveFragment extends Fragment {
+public class NewIncentiveFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     AutoCompleteTextView brand, model;
     EditText basePrice, quantity, incentive;
@@ -50,6 +55,7 @@ public class NewIncentiveFragment extends Fragment {
     List<Product> modelList;
     ProgressDialog materialDialog;
     String validityDate;
+    List<Product> sales;
 
     public static NewIncentiveFragment newInstance(int pos) {
         NewIncentiveFragment fragment = new NewIncentiveFragment();
@@ -60,11 +66,17 @@ public class NewIncentiveFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getLoaderManager().initLoader(0, null, this);
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_new_incentive, container, false);
-
         brand = (AutoCompleteTextView) viewGroup.findViewById(R.id.brandtext);
         model = (AutoCompleteTextView) viewGroup.findViewById(R.id.modeltext);
         basePrice = (EditText) viewGroup.findViewById(R.id.basePrice);
@@ -74,20 +86,21 @@ public class NewIncentiveFragment extends Fragment {
         submit = (Button) viewGroup.findViewById(R.id.submit);
         salesList = new ArrayList<>();
         modelList = new ArrayList<>();
-
         materialDialog = NavigationMenuActivity.materialDialog;
-
-
         salesList.clear();
+        initData();
+
+
+        return viewGroup;
+    }
+
+    private void initData() {
+
         materialDialog.dismiss();
-
-        List<Product> sales = Product.listAll(Product.class);
-
-
         salesList = Lists.newArrayList(Iterables.filter(sales, new Predicate<Product>() {
             @Override
             public boolean apply(Product input) {
-                return (input.getType() == ProductType.Mobile);
+                return (input.getType().equalsIgnoreCase(ProductType.Mobile.name()));
             }
         }));
 
@@ -217,9 +230,26 @@ public class NewIncentiveFragment extends Fragment {
             }
         });
 
-
-        return viewGroup;
     }
 
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(), ProductTable.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        sales = ProductTable.getRows(data, true);
+        initData();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
 }

@@ -41,14 +41,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Name"
+                        android:text="@string/name"
                         android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/drop_shadow"></View>
+                        android:background="@drawable/drop_shadow" />
 
 
                     <EditText
@@ -56,8 +56,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
+                        android:paddingStart="10dp"
                         android:textSize="16sp" />
 
 
@@ -90,14 +92,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Email"
+                        android:text="@string/email"
                         android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/drop_shadow"></View>
+                        android:background="@drawable/drop_shadow" />
 
 
                     <EditText
@@ -107,8 +109,10 @@
 
                         android:inputType="textEmailAddress"
                         android:paddingBottom="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
+                        android:paddingStart="10dp"
                         android:textSize="16sp" />
 
 
@@ -141,14 +145,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Mobile"
+                        android:text="@string/mobile"
                         android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/drop_shadow"></View>
+                        android:background="@drawable/drop_shadow" />
 
 
                     <EditText
@@ -157,8 +161,10 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:paddingBottom="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
+                        android:paddingStart="10dp"
                         android:textSize="16sp" />
 
 
@@ -192,14 +198,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Address"
+                        android:text="@string/address"
                         android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/drop_shadow"></View>
+                        android:background="@drawable/drop_shadow" />
 
 
                     <EditText
@@ -207,8 +213,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
+                        android:paddingStart="10dp"
                         android:textSize="16sp" />
 
 
@@ -243,14 +251,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Qualification"
+                        android:text="@string/qualification"
                         android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/drop_shadow"></View>
+                        android:background="@drawable/drop_shadow" />
 
 
                     <EditText
@@ -258,8 +266,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
+                        android:paddingStart="10dp"
                         android:textSize="16sp" />
 
 
@@ -293,14 +303,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Username"
+                        android:text="@string/username"
                         android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/drop_shadow"></View>
+                        android:background="@drawable/drop_shadow" />
 
 
                     <EditText
@@ -308,8 +318,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
+                        android:paddingStart="10dp"
                         android:textSize="16sp" />
 
 
@@ -344,25 +356,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Password"
+                        android:text="@string/pass"
                         android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/drop_shadow"></View>
+                        android:background="@drawable/drop_shadow" />
 
 
                     <EditText
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/edit"
-
                         android:paddingBottom="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
+                        android:paddingStart="10dp"
                         android:textSize="16sp" />
 
 
@@ -403,7 +415,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/drop_shadow"></View>
+                        android:background="@drawable/drop_shadow" />
 
 
                     <AutoCompleteTextView
@@ -411,8 +423,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="20dp"
+                        android:paddingStart="10dp"
                         android:textSize="16sp" />
 
 
@@ -431,6 +445,6 @@
         android:background="@android:color/holo_orange_dark"
         android:gravity="center"
         android:padding="15dp"
-        android:text="Submit"
+        android:text="@string/submit"
         android:textColor="@android:color/black" />
 </RelativeLayout>

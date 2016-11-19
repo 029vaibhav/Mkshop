@@ -3,7 +3,53 @@
     <string name="drawer_open">Menu opened</string>
     <string name="drawer_close">Menu closed</string>
     <string name="action_settings">Settings</string>
+    <string name="email">Email</string>
+    <string name="qualification">Qualification</string>
+
+    <string name="mobile">Mobile</string>
+    <string name="address">Address</string>
+
+    <string name="price">Price</string>
+    <string name="form_text">Please fill the form</string>
+    <string name="validity">Validity</string>
+
+    <string name="revenue">Revenue</string>
+    <string name="acc">Accessory Type</string>
+
+    <string name="to">To</string>
+    <string name="qty">QTY</string>
+    <string name="min_qty">Minimum Quantity</string>
+
+    <string name="message">Message</string>
+    <string name="from">From</string>
+
+    <string name="pay_salary">Pay Salary</string>
+    <string name="view_salary">View Salary/Incentive</string>
+    <string name="pay">Pay</string>
+    <string name="name">Name</string>
+    <string name="date">Date</string>
+    <string name="purchase_pay">purchases and payment</string>
+    <string name="mark_attend">Mark Attendance</string>
+
+    <string name="incentive">Incentive amount</string>
+    <string name="brand">Brand</string>
+
+    <string name="submit">Submit</string>
+
+    <string name="dealer_name">Dealer name</string>
+    <string name="notes">Notes</string>
+
+    <string name="model">Model</string>
+
+    <string name="total">Total</string>
+    <string name="Zero">0</string>
+    <string name="One">1</string>
+
+    <string name="search">Search</string>
+
     <string name="logout">Log Out</string>
+    <string name="login">Login</string>
+
     <string name="myprofile">My profile</string>
     <string name="Rs">\u20B9</string>
     <string name="gcm_defaultSenderId">530000338474</string>
@@ -12,6 +58,9 @@
     <string name="date_format">yyyy-MM-dd\'T\'HH:mm:ss</string>
     <string name="git_hub">Paste github link</string>
     <string name="zing_package">com.google.zxing.client.android</string>
+    <string name="retry">Retry</string>
+    <string name="username">Username</string>
+    <string name="pass">Password</string>
 
 
     <string name="rs">\u20B9</string>
@@ -29,6 +78,52 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sim">SIM</string>
+    <string name="screen_size">SCREEN SIZE</string>
+    <string name="display_type">DISPLAY TYPE</string>
+    <string name="os">OS</string>
+    <string name="internal_memory">INTERNAL MEMORY</string>
+    <string name="external_memory">EXTERNAL MEMORY</string>
+    <string name="front_camera">FRONT CAMERA</string>
+    <string name="back_camera">BACK CAMERA</string>
+    <string name="wlan">WLAN</string>
+    <string name="bluetooth">BLUETOOTH</string>
+    <string name="nfc">NFC</string>
+    <string name="infrared">INFRARED</string>
+    <string name="radio">RADIO</string>
+    <string name="battery">BATTERY</string>
+    <string name="quantity">Quantity</string>
+    <string name="status">Status</string>
+    <string name="job_no">Job no</string>
+    <string name="problem">Problem</string>
+    <string name="resolution">Resolution</string>
+    <string name="category">category</string>
+    <string name="accessory">Accessory</string>
+    <string name="plus">*</string>
+    <string name="role">Role</string>
+    <string name="notify">Notify</string>
+    <string name="specification">Specification</string>
+    <string name="sale">Sale</string>
+    <string name="platform">Platform</string>
+    <string name="fetch_location">Fetch Location</string>
+    <string name="wifi_2">Wifi 2</string>
+    <string name="mobile_shop">Mobile shop</string>
+    <string name="powered_by_mobiweb">POWERED BY MOBIWEB</string>
+    <string name="android_studio">Android Studio</string>
+    <string name="type">type</string>
+    <string name="compatible_model">Compatible model</string>
+    <string name="heading">heading</string>
+    <string name="pending">pending</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="expected_delivery_date">Expected Delivery date</string>
+    <string name="hundered">100</string>
+    <string name="flash_on_off">flash on/off</string>
+    <string name="service">service</string>
+    <string name="samsung_elite_the_day_of_the_humans">samsung elite the day of the humans</string>
+    <string name="_20_30_june">20/30 june</string>
+    <string name="due">due</string>
+    <string name="appwidget_text">MSM</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>

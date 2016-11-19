@@ -14,6 +14,7 @@ import com.mobiles.msm.R;
 import com.mobiles.msm.activities.NavigationMenuActivity;
 import com.mobiles.msm.application.Client;
 import com.mobiles.msm.application.MyApplication;
+import com.mobiles.msm.contentprovider.ProductHelper;
 import com.mobiles.msm.pojos.enums.ProductType;
 import com.mobiles.msm.pojos.models.Product;
 import com.mobiles.msm.utils.JsoupUtilities;
@@ -93,7 +94,7 @@ public class NewProductFragment extends Fragment {
 
     private void validateMobile() {
 
-        Product product = convertEditTextToProducts();
+        final Product product = convertEditTextToProducts();
         if (product.getBrand() == null || product.getBrand().length() == 0) {
             MyApplication.toast(getActivity(), "Brand cannot be empty");
         } else if (product.getModel() == null || product.getModel().length() == 0) {
@@ -102,7 +103,7 @@ public class NewProductFragment extends Fragment {
             MyApplication.toast(getActivity(), "Price of a mobile cannot be 0");
         } else {
             progressDialog.show();
-            product.setType(ProductType.Mobile);
+            product.setType(ProductType.Mobile.name());
             Call<Product> productCall = Client.INSTANCE.createProduct(MyApplication.AUTH, product);
             productCall.enqueue(new Callback<Product>() {
                 @Override
@@ -112,7 +113,7 @@ public class NewProductFragment extends Fragment {
                         progressDialog.dismiss();
                     if (response.isSuccessful()) {
                         MyApplication.toast(getActivity(), "Successfully registered a new Mobile");
-                        Product.save(response.body());
+                        ProductHelper.createProduct(getActivity().getContentResolver(),response.body());
                     }
 
                 }
@@ -160,16 +161,16 @@ public class NewProductFragment extends Fragment {
             product.setOs(osEditText.getText().toString().trim().toUpperCase());
         }
         if (iMemoryEditText.getText() != null && iMemoryEditText.getText().length() > 0) {
-            product.setiMemory(iMemoryEditText.getText().toString().trim().toUpperCase());
+            product.setIMemory(iMemoryEditText.getText().toString().trim().toUpperCase());
         }
         if (eMemoryEditText.getText() != null && eMemoryEditText.getText().length() > 0) {
-            product.seteMemory(eMemoryEditText.getText().toString().trim().toUpperCase());
+            product.setEMemory(eMemoryEditText.getText().toString().trim().toUpperCase());
         }
         if (fCameraEditText.getText() != null && fCameraEditText.getText().length() > 0) {
-            product.setfCamera(fCameraEditText.getText().toString().trim().toUpperCase());
+            product.setFCamera(fCameraEditText.getText().toString().trim().toUpperCase());
         }
         if (bCameraEditText.getText() != null && bCameraEditText.getText().length() > 0) {
-            product.setbCamera(bCameraEditText.getText().toString().trim().toUpperCase());
+            product.setBCamera(bCameraEditText.getText().toString().trim().toUpperCase());
         }
         if (wlanEditText.getText() != null && wlanEditText.getText().length() > 0) {
             product.setWlan(wlanEditText.getText().toString().trim().toUpperCase());
@@ -206,14 +207,14 @@ public class NewProductFragment extends Fragment {
             displayTypeEditText.setText(product.getDisplayType());
         if (product.getOs() != null)
             osEditText.setText(product.getOs());
-        if (product.getiMemory() != null)
-            iMemoryEditText.setText(product.getiMemory());
-        if (product.geteMemory() != null)
-            eMemoryEditText.setText(product.geteMemory());
-        if (product.getfCamera() != null)
-            fCameraEditText.setText(product.getfCamera());
-        if (product.getbCamera() != null)
-            bCameraEditText.setText(product.getbCamera());
+        if (product.getIMemory() != null)
+            iMemoryEditText.setText(product.getIMemory());
+        if (product.getEMemory() != null)
+            eMemoryEditText.setText(product.getEMemory());
+        if (product.getFCamera() != null)
+            fCameraEditText.setText(product.getFCamera());
+        if (product.getBCamera() != null)
+            bCameraEditText.setText(product.getBCamera());
         if (product.getWlan() != null)
             wlanEditText.setText(product.getWlan());
         if (product.getBluetooth() != null)
@@ -268,8 +269,8 @@ public class NewProductFragment extends Fragment {
                 }
                 HashMap<String, String> camera = data.get("Camera");
                 if (camera != null) {
-                    product.setbCamera(camera.get("Secondary"));
-                    product.setfCamera(camera.get("Primary"));
+                    product.setBCamera(camera.get("Secondary"));
+                    product.setFCamera(camera.get("Primary"));
                 }
                 HashMap<String, String> comms = data.get("Comms");
                 if (comms != null) {
@@ -280,8 +281,8 @@ public class NewProductFragment extends Fragment {
                 }
                 HashMap<String, String> memory = data.get("Memory");
                 if (memory != null) {
-                    product.seteMemory(memory.get("Card slot"));
-                    product.setiMemory(memory.get("Internal"));
+                    product.setEMemory(memory.get("Card slot"));
+                    product.setIMemory(memory.get("Internal"));
                 }
                 HashMap<String, String> battery = data.get("Battery");
                 if (battery != null)

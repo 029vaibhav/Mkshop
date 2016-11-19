@@ -11,6 +11,8 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.neenbedankt.android-apt'
+
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -21,10 +23,21 @@ ext {
     logbackLoglevel = "INFO"
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        config {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
-
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -35,7 +48,6 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
-
     defaultConfig {
         applicationId "com.mobiles.msm"
         minSdkVersion 16
@@ -45,24 +57,20 @@ android {
         multiDexEnabled true
 
 
-
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-
+            signingConfig signingConfigs.config
         }
     }
     productFlavors {
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-
 }
 
 dependencies {
@@ -87,7 +95,9 @@ dependencies {
     compile 'com.android.support:support-v4:25.0.0'
     compile 'com.google.android.gms:play-services-location:9.8.0'
     compile 'com.google.guava:guava:20.0'
-    compile 'com.android.support:multidex:1.0.0'
-
-
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.squareup:javapoet:1.2.0'
+    compile 'ckm.simple:simple_sql_provider_annotation:1.0.6'
+    compile 'ckm.simple:simple_sql_provider_processor:1.0.6'
+    compile 'com.google.code.findbugs:jsr305:2.0.1'
 }

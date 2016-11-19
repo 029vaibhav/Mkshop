@@ -1,37 +1,68 @@
 package com.mobiles.msm.pojos.models;
 
 
+import android.util.Log;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mobiles.msm.pojos.enums.ProductType;
-import com.orm.SugarRecord;
+
+import ckm.simple.sql_provider.annotation.SimpleSQLColumn;
+import ckm.simple.sql_provider.annotation.SimpleSQLTable;
 
 /**
  * Created by vaibhav on 23/7/15.
  */
-public class Product extends SugarRecord {
+@SimpleSQLTable(table = "Product", provider = "ProductProvider")
 
-    String brand, model, sim, screenSize, displayType, os, iMemory, eMemory, fCamera, bCamera, wlan, bluetooth, nfc, infrared, radio, battery;
-    int price;
-    ProductType type;
-    String accessoryType;
-    String created, modified;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Product {
+
+    @SimpleSQLColumn("brand")
+    private String brand;
+    @SimpleSQLColumn("model")
+    private String model;
+    @SimpleSQLColumn("sim")
+    private String sim;
+    @SimpleSQLColumn("screenSize")
+    private String screenSize;
+    @SimpleSQLColumn("displayType")
+    private String displayType;
+    @SimpleSQLColumn("os")
+    private String os;
+    @SimpleSQLColumn("iMemory")
+    private String iMemory;
+    @SimpleSQLColumn("eMemory")
+    private String eMemory;
+    @SimpleSQLColumn("fCamera")
+    private String fCamera;
+    @SimpleSQLColumn("bCamera")
+    private String bCamera;
+    @SimpleSQLColumn("wlan")
+    private String wlan;
+    @SimpleSQLColumn("bluetooth")
+    private String bluetooth;
+    @SimpleSQLColumn("nfc")
+    private String nfc;
+    @SimpleSQLColumn("infrared")
+    private String infrared;
+    @SimpleSQLColumn("radio")
+    private String radio;
+    @SimpleSQLColumn("battery")
+    private String battery;
+    @SimpleSQLColumn("price")
+    private int price;
+    @SimpleSQLColumn("type")
+    private String type;
+    @SimpleSQLColumn("accessoryType")
+    private String accessoryType;
+    @SimpleSQLColumn("created")
+    private String created;
+    @SimpleSQLColumn("modified")
+    private String modified;
+    @SimpleSQLColumn("id")
+    private Long id;
 
     public Product() {
-    }
-
-    public String getModified() {
-        return modified;
-    }
-
-    public void setModified(String modified) {
-        this.modified = modified;
-    }
-
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
     }
 
     public String getBrand() {
@@ -82,35 +113,35 @@ public class Product extends SugarRecord {
         this.os = os;
     }
 
-    public String getiMemory() {
+    public String getIMemory() {
         return iMemory;
     }
 
-    public void setiMemory(String iMemory) {
+    public void setIMemory(String iMemory) {
         this.iMemory = iMemory;
     }
 
-    public String geteMemory() {
+    public String getEMemory() {
         return eMemory;
     }
 
-    public void seteMemory(String eMemory) {
+    public void setEMemory(String eMemory) {
         this.eMemory = eMemory;
     }
 
-    public String getfCamera() {
+    public String getFCamera() {
         return fCamera;
     }
 
-    public void setfCamera(String fCamera) {
+    public void setFCamera(String fCamera) {
         this.fCamera = fCamera;
     }
 
-    public String getbCamera() {
+    public String getBCamera() {
         return bCamera;
     }
 
-    public void setbCamera(String bCamera) {
+    public void setBCamera(String bCamera) {
         this.bCamera = bCamera;
     }
 
@@ -170,11 +201,11 @@ public class Product extends SugarRecord {
         this.price = price;
     }
 
-    public ProductType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(ProductType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -186,28 +217,27 @@ public class Product extends SugarRecord {
         this.accessoryType = accessoryType;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", sim='" + sim + '\'' +
-                ", screenSize='" + screenSize + '\'' +
-                ", displayType='" + displayType + '\'' +
-                ", os='" + os + '\'' +
-                ", iMemory='" + iMemory + '\'' +
-                ", eMemory='" + eMemory + '\'' +
-                ", fCamera='" + fCamera + '\'' +
-                ", bCamera='" + bCamera + '\'' +
-                ", wlan='" + wlan + '\'' +
-                ", bluetooth='" + bluetooth + '\'' +
-                ", nfc='" + nfc + '\'' +
-                ", infrared='" + infrared + '\'' +
-                ", radio='" + radio + '\'' +
-                ", battery='" + battery + '\'' +
-                ", price=" + price +
-                ", type=" + type +
-                ", accessoryType='" + accessoryType + '\'' +
-                '}';
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Message" />
+            android:text="@string/message" />
 
 
     </LinearLayout>
